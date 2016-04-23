@@ -2,6 +2,10 @@ package model;
 
 import java.util.SortedSet;
 
+/**
+ * @author Luca
+ *
+ */
 public class Gioco {
 
 	private SortedSet<Giocatore> giocatori;

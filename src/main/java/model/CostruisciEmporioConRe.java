@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Luca
+ *
+ */
 public class CostruisciEmporioConRe extends Azione {
 
 	private Re re;

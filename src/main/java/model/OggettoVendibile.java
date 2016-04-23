@@ -18,7 +18,7 @@ public class OggettoVendibile <T> {
 	 * 
 	 * build the object
 	 */
-	public <T> OggettoVendibile(T oggetto, int prezzo, Giocatore giocatore){
+	public OggettoVendibile(T oggetto, int prezzo, Giocatore giocatore){
 		this.oggetto=oggetto;
 		this.prezzo=prezzo;
 		this.giocatore=giocatore;
