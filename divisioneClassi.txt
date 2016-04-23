@@ -1,0 +1,6 @@
+Luca:
+Gioco,CartaPolitica,Assistente,Giocatore,Emporio,Azione,x(8);
+Riccardo:
+Mercato,OggettoVendibile,Tabellone,Regione,Città,Consiglio,Re,Consigliere,OggettoconBonus,TesseraBonus,TesseraCostruzione
+Massimiliano:
+Percorso(tutti),Caselle(tutti),Bonus(tutti)
