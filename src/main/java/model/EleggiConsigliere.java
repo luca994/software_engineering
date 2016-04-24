@@ -6,5 +6,26 @@ package model;
  */
 public class EleggiConsigliere extends Azione {
 
-	public void eseguiAzione (Consigliere consigliere,Consiglio consiglio){};
+	private Consigliere consigliere;
+	private Consiglio consiglio;
+	
+	
+	//Setter
+	public void setConsigliere(Consigliere consigliere) {
+		this.consigliere = consigliere;
+	}
+
+	//Setter
+	public void setConsiglio(Consiglio consiglio) {
+		this.consiglio = consiglio;
+	}
+
+
+
+	@Override
+	public void eseguiAzione (){
+		this.consiglio.removeConsigliere();
+		this.consiglio.addConsigliere(this.consigliere);
+		
+	}
 }
