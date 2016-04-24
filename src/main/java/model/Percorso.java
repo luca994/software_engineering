@@ -54,7 +54,7 @@ public class Percorso {
 			int posizione=0;
 			//funzionamento analogo a muoviGiocatoreAvanti
 			Iterator<Casella> itcasella=caselle.iterator();
-			while(itcasella.hasNext()||trovato==false)
+			while(itcasella.hasNext()&&trovato==false)
 			{
 				Iterator<Giocatore> itgiocatore=itcasella.next().getGiocatori().iterator();
 				posizione++;
