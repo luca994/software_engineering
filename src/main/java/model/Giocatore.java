@@ -2,6 +2,10 @@ package model;
 
 import java.util.List;
 
+/**
+ * @author Luca
+ *
+ */
 public class Giocatore {
 
 		private int id;
