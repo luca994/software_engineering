@@ -20,7 +20,7 @@ public abstract class Casella {
 	 * @return the list of giocatori in the current box(casella)
 	 */
 	public Set<Giocatore> getGiocatori() {
-		return giocatori;
+		return this.giocatori;
 	}
 
 	/**

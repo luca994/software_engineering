@@ -20,7 +20,7 @@ public class Percorso {
 		//uso il for per ripetere l'avanzamento del percorso il numero di passi richiesto
 		for(int i=0;i<passi;i++)
 		{
-			Iterator<Casella> itcasella=caselle.iterator();
+			Iterator<Casella> itcasella=this.caselle.iterator();
 			while(itcasella.hasNext())//mentre scorro le caselle controllo di non essere in fondo al percorso
 			{
 				//inizializzo l'iteratore dei giocatori della prossima casella(il next() fa avanzare di uno il cursore)
