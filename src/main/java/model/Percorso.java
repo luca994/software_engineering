@@ -17,16 +17,13 @@ public class Percorso {
 			Iterator<Giocatore> itgiocatore=itcasella.next().getGiocatori().iterator();
 			if(!itcasella.hasNext())
 				{
-					System.out.println("Sei alla fine del percorso\n"); 
+					System.out.println("Sei alla fine del percorso, nell'ultima casella\n"); 
 					break;
 				}
 			while(itgiocatore.hasNext())
 				if(itgiocatore.next().equals(giocatore))
-					if(itgiocatore.hasNext())
-					{
 						itgiocatore.remove();
-						itcasella.next().add(giocatore);
-					}
+						itcasella.next().getGiocatori().add(giocatore);
 		}
 		
 	}

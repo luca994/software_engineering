@@ -26,10 +26,6 @@ public abstract class Casella {
 	/**
 	 * @param giocatore
 	 */
-	public void add(Giocatore giocatore) {
-		this.giocatori.add(giocatore);
-		
-	}
 
 	/*/**
 	 * @param giocatori the giocatori to set
