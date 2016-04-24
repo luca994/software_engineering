@@ -22,8 +22,10 @@ public class Percorso {
 				}
 			while(itgiocatore.hasNext())
 				if(itgiocatore.next().equals(giocatore))
+				{
 						itgiocatore.remove();
 						itcasella.next().getGiocatori().add(giocatore);
+				}
 		}
 		
 	}
