@@ -3,12 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 /**
  * 
  * @author Riccardo
  *
  */
-public class Città {
+
+public class Città extends OggettoConBonus {
 
 	private final String nome;
 	private final String colore;
