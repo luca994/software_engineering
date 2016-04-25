@@ -7,9 +7,9 @@ package model;
  */
 public class OggettoVendibile <T> {
 
-	private T oggetto;
-	private int prezzo;
-	private Giocatore giocatore;
+	private final T oggetto;
+	private final int prezzo;
+	private final Giocatore giocatore;
 	
 	/**
 	 * @param oggetto the object you want to sell
@@ -23,4 +23,27 @@ public class OggettoVendibile <T> {
 		this.prezzo=prezzo;
 		this.giocatore=giocatore;
 	}
+	/**
+	 * return the object
+	 * @return
+	 */
+	public T getOggetto() {
+		return oggetto;
+	}
+	/**
+	 * return the price
+	 * @return 
+	 */
+	public int getPrezzo() {
+		return prezzo;
+	}
+	/**
+	 * return the owner of the object
+	 * @return
+	 */
+	public Giocatore getGiocatore() {
+		return giocatore;
+	}
+	
+	
 }
