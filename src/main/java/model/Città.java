@@ -19,6 +19,67 @@ public class Città extends OggettoConBonus {
 	private Set<Città> cittàVicina;
 	private Set<Bonus> bonus;
 	
+	/**
+	 * 
+	 * @return return the name of the city
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	/**
+	 * 
+	 * @return return the color of the city
+	 */
+	public String getColore() {
+		return colore;
+	}
+
+	/**
+	 * 
+	 * @return return the set of emporium in the city
+	 */
+	public Set<Emporio> getEmpori() {
+		return empori;
+	}
+
+	/**
+	 * 
+	 * @return return the reference to the king, if it is in the city
+	 */
+	public Re getRe() {
+		return re;
+	}
+
+	/**
+	 * 
+	 * @return return the set of near cities
+	 */
+	public Set<Città> getCittàVicina() {
+		return cittàVicina;
+	}
+
+	/**
+	 * 
+	 * @return return the set of bonus of the city
+	 */
+	public Set<Bonus> getBonus() {
+		return bonus;
+	}
+	
+	/**
+	 * set the reference to the king
+	 * @param re the reference to the king
+	 */
+	public void setRe(Re re) {
+		this.re = re;
+	}
+
+	/**
+	 * build a city
+	 * @param nome the name of the city
+	 * @param colore the color of the city
+	 */
 	public Città(String nome,String colore){
 		this.nome=nome;
 		this.colore=colore;
@@ -44,7 +105,7 @@ public class Città extends OggettoConBonus {
 	 * @return return a list of near cities which have the player' s emporium
 	 */
 	public List<Città> cittàVicinaConEmporio(Giocatore giocatore){
-		List<Città> cittàVicineConEmpori=new ArrayList();
+		List<Città> cittàVicineConEmpori=new ArrayList<Città>();
 		for(Città c:cittàVicina){
 			if (c.presenzaEmporio(giocatore)){
 				cittàVicineConEmpori.add(c);
