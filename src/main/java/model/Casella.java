@@ -16,22 +16,15 @@ public abstract class Casella {
 	
 	private Set<Giocatore> giocatori;
 
+	
+	public void setGiocatori(Set<Giocatore> giocatori) {
+		this.giocatori = giocatori;
+	}
+
 	/**
 	 * @return the list of giocatori in the current box(casella)
 	 */
 	public Set<Giocatore> getGiocatori() {
 		return this.giocatori;
 	}
-
-	/**
-	 * @param giocatore
-	 */
-
-	/*/**
-	 * @param giocatori the giocatori to set
-	 
-	public void setGiocatori(SortedSet<Giocatore> giocatori) {
-		this.giocatori = giocatori;
-	}
-	*/
 }

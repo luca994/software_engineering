@@ -17,11 +17,13 @@ public class Percorso {
 	}
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
 	{
+		boolean trovato;
 		//uso il for per ripetere l'avanzamento del percorso il numero di passi richiesto
 		for(int i=0;i<passi;i++)
 		{
+			trovato=false;
 			Iterator<Casella> itcasella=this.caselle.iterator();
-			while(itcasella.hasNext())//mentre scorro le caselle controllo di non essere in fondo al percorso
+			while(itcasella.hasNext()&&trovato==false)//mentre scorro le caselle controllo di non essere in fondo al percorso
 			{
 				//inizializzo l'iteratore dei giocatori della prossima casella(il next() fa avanzare di uno il cursore)
 				//all'inizio non sono in nessuna casella e la dichiarazione dell'iteratore mi fa spostare sulla prima casella
@@ -30,10 +32,9 @@ public class Percorso {
 				if(!itcasella.hasNext())
 				{
 					System.out.println("Sei alla fine del percorso, nell'ultima casella\n"); 
-					break;
 				}
 				//inizio a scorrere i giocatori, controllo sempre che esistano
-				while(itgiocatore.hasNext())
+				while(itgiocatore.hasNext()&&trovato==false)
 				{
 					//controllo che il giocatore sia quello passato come parametro
 					if(itgiocatore.next().equals(giocatore))
@@ -41,7 +42,7 @@ public class Percorso {
 						//se è quello cercato lo levo, incremento la casella e aggiungo un riferimento alla casella successiva con il giocatore del parametro
 						itgiocatore.remove();
 						itcasella.next().getGiocatori().add(giocatore);
-						break;
+						trovato=true;
 					}
 				}
 			}
