@@ -50,7 +50,7 @@ public class Mercato {
 			//aggiungo l' oggetto al giocatore che lo compra
 			giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
 		}
-		//uguali al metodo sopra
+		//uguali all' if sopra
 		if(oggetto.getOggetto() instanceof CartaPolitica){
 			Iterator<CartaPolitica> itrCarte = oggetto.getGiocatore().getCartePolitica().iterator();
 			while(itrCarte.hasNext()){
