@@ -3,17 +3,38 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 /**
  * 
  * @author Massimiliano Ventura
  *This class is used to implement all the routes; the generic type "Casella"
- *allow the program to use only this class to implement every kind of route
+ *allow the program to use only this class to implement every kind of route.
  *
  */
-public class Percorso {
+public class Percorso 
+{
 	private List<Casella> caselle;
-	public Percorso(){
+	public Percorso()
+	{
 		this.caselle=new ArrayList<Casella>();
+	}
+	/**
+	 * This method is used to move the player along the route(Percorso) if the number of steps(passi)
+	 * is negative the player will move backwards.
+	 * @param giocatore
+	 * @param passi
+	 */
+	public void muoviGiocatore(Giocatore giocatore, int passi)
+	{
+		if (passi>0)
+			muoviGiocatoreAvanti(giocatore, passi);
+		else if(passi<0)
+		{
+			passi=0-passi;
+			muoviGiocatoreIndietro(giocatore, passi);
+		}
+		else if(passi==0)
+			System.out.println("Srsly??, muovi di zero passi?");
 	}
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
 	{
@@ -22,7 +43,7 @@ public class Percorso {
 		for(int i=0;i<passi;i++)
 		{
 			trovato=false;
-			Iterator<Casella> itcasella=this.caselle.iterator();
+			ListIterator<Casella> itcasella=this.caselle.listIterator();
 			while(itcasella.hasNext()&&trovato==false)//mentre scorro le caselle controllo di non essere in fondo al percorso
 			{
 				//inizializzo l'iteratore dei giocatori della prossima casella(il next() fa avanzare di uno il cursore)
@@ -32,6 +53,7 @@ public class Percorso {
 				if(!itcasella.hasNext())
 				{
 					System.out.println("Sei alla fine del percorso, nell'ultima casella\n"); 
+					break;
 				}
 				//inizio a scorrere i giocatori, controllo sempre che esistano
 				while(itgiocatore.hasNext()&&trovato==false)
@@ -48,6 +70,34 @@ public class Percorso {
 			}
 		}
 				
+	}
+	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
+	{
+		boolean trovato;
+		ListIterator<Casella> itcasella=this.caselle.listIterator(caselle.size());
+		for(int i=0;i<passi;i++)
+		{
+			trovato=false;
+			while(itcasella.hasPrevious()&&trovato==false)
+			{
+				Iterator<Giocatore> itgiocatore=itcasella.previous().getGiocatori().iterator();
+				if(!itcasella.hasPrevious())
+				{
+					System.out.println("Sei all'inizio del percorso, nella prima casella\n"); 
+					break;
+				}
+				while(itgiocatore.hasNext()&&trovato==false)
+				{
+					if(itgiocatore.next().equals(giocatore))
+					{
+						itgiocatore.remove();
+						itcasella.previous().getGiocatori().add(giocatore);
+						trovato=true;
+					}
+				}
+			}
+		}
+		
 	}
 	public int posizioneAttualeGiocatore(Giocatore giocatore)
 		{
