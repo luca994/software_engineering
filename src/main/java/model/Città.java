@@ -2,7 +2,7 @@ package model;
 
 import java.util.Set;
 
-public class Città {
+public class Città extends OggettoConBonus {
 
 	private String nome;
 	private String colore;

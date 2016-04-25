@@ -8,22 +8,11 @@ package model;
  *
  */
 public class BonusPuntoVittoria extends Bonus {
-
 	private Percorso percorsoVittoria;
 	private int steps;
-
-	/**
-	 * @return the percorsoVittoria
-	 */
-	public Percorso getPercorsoVittoria() {
-		return percorsoVittoria;
-	}
-
-	/**
-	 * @param percorsoVittoria the percorsoVittoria to set
-	 */
-	public void setPercorsoVittoria(Percorso percorsoVittoria) {
+	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
 		this.percorsoVittoria = percorsoVittoria;
+		this.steps=steps;
 	}
 	/**
 	 * @return the steps
@@ -32,15 +21,18 @@ public class BonusPuntoVittoria extends Bonus {
 		return steps;
 	}
 	/**
+	 * @return the percorsoVittoria
+	 */
+	public Percorso getPercorsoVittoria() {
+		return percorsoVittoria;
+	}
+	/**
 	 * @param steps the steps to set
 	 */
-	public void setSteps(int steps) {
-		this.steps = steps;
-	}
 	@Override
-	public void azioneBonus(Giocatore giocatore) {
+	public void azioneBonus(Giocatore giocatore) 
+	{
 		percorsoVittoria.muoviGiocatoreAvanti(giocatore, steps);
 
 	}
-
 }
