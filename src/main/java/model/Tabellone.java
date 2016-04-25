@@ -15,9 +15,20 @@ public class Tabellone {
 	private Set<Consiglio> consigli;
 	
 	/**
+	 * 
+	 * @param consigliereInTab
+	 * @return Returns true if this list contains the specified element
+	 */
+	public boolean ifConsigliereDisponibile(Consigliere consigliereInTab){
+			return consiglieriDisponibili.contains(consigliereInTab);
+	}
+	
+	
+	/**
 	 * @author Luca
+	 * This method appends the specified element to the end of this list
 	 * @param consigliereDaAggiungere
-	 * Appends the specified element to the end of this list
+	 * 
 	 */
 	public void addConsigliereDisponibile(Consigliere consigliereDaAggiungere){
 		try{
@@ -38,7 +49,27 @@ public class Tabellone {
 		catch(IllegalArgumentException e4){
 			System.out.println("Alcune proprietà dell'elemento impediscono di aggiungerlo"
 					+ "correttamente alla lista consiglierDisponibili del Tabellone");
+		}}
+	
+	/**
+	 * This method removes the first occurrence of the specified 
+	 * element from this list, if it is present
+	 * @author Luca
+	 * @param consigliereDaRimuovere
+	 */
+	public void removeConsigliereDisponibile(Consigliere consigliereDaRimuovere){
+		try{
+			consiglieriDisponibili.remove(consigliereDaRimuovere);
 		}
+		catch(ClassCastException e1){
+			System.out.println("Il tipo specificato non è compatibile con la lista");
 		}
+		catch(NullPointerException e2){
+			System.out.println("Il tipo specificato è Null ");
+		}
+		catch(UnsupportedOperationException e3){
+			System.out.println("l'operazione di rimozione non è supportata dalla lista");
+		}
+	}
 	
 }

@@ -36,15 +36,22 @@ public class Consiglio {
 	 * @author Luca
 	 * 
 	 * Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
-	 * INCOMPLETO:Il metodo deve anche Rimuovere il consigliere che viene aggiunto
-	 * a questo consiglio dalla lista Tabellone.consiglieriDisponibli!
+	 * 
 	 */
-	public void addConsigliere(Consigliere consigliereDaAggiungere){
+	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try{
-			consiglio.add(consigliereDaAggiungere);
+			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere)==true){
+			tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
+			consiglio.add(consigliereDaAggiungere);}
+			else{
+				System.out.println("Il consigliere selezionato non è disponibile"
+						+ ", sceglierne un altro.");
+				return false;
+			}
 			}
 			catch (IllegalStateException e){
 				System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
 			}
+		return true;
 	}
 }
