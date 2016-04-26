@@ -1,9 +1,5 @@
 package model;
 
-import java.util.Set;
-
-public class Città {
-=======
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
