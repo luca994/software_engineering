@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @author Massimiliano Ventura
- *
+ *This class asks the player which city bonuses wants to obtain with this particular bonus.
  */
 public class BonusGettoneCittà extends Bonus {
 
