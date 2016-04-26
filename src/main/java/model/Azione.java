@@ -1,6 +1,21 @@
 package model;
 
+/**
+ * @author Luca
+ *
+ */
 public abstract class Azione {
 
-		public void eseguiAzione(){};
+		private Giocatore giocatore;
+		
+
+		/**
+		 * @return the giocatore
+		 */
+		public Giocatore getGiocatore() {
+			return giocatore;
+		}
+
+
+		public abstract void eseguiAzione();
 }

@@ -1,6 +1,8 @@
 package model;
 
-import java.util.SortedSet;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Massimiliano Ventura
@@ -8,5 +10,21 @@ import java.util.SortedSet;
  *in every route(Percorso)
  */
 public abstract class Casella {
-	private SortedSet<Giocatore> giocatori;
+	public Casella(){
+		this.giocatori= new HashSet<Giocatore>();
+	}
+	
+	private Set<Giocatore> giocatori;
+
+	
+	public void setGiocatori(Set<Giocatore> giocatori) {
+		this.giocatori = giocatori;
+	}
+
+	/**
+	 * @return the list of giocatori in the current box(casella)
+	 */
+	public Set<Giocatore> getGiocatori() {
+		return this.giocatori;
+	}
 }
