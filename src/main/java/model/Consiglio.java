@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -11,7 +13,15 @@ public class Consiglio {
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglio;
 	private int id;
+	private Regione regione;
 	
+	
+	public ArrayList<String> acquisisciColoriConsiglio(){
+		ArrayList<String> colori= new ArrayList<String>(); 
+		for(Consigliere c : consiglio)
+			colori.add(c.getColore());
+		return colori;
+	}
 	/**
 	 * this method retrieves and remove the head of this queue,
 	 * it throws an exception if this queue is empty.
@@ -53,5 +63,12 @@ public class Consiglio {
 				System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
 			}
 		return true;
+	}
+	
+	/**
+	 * @return the regione
+	 */
+	public Regione getRegione() {
+		return regione;
 	}
 }

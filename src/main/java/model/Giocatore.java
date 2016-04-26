@@ -22,6 +22,32 @@ public class Giocatore {
 		private Tabellone tabellone;
 		private boolean connesso;
 		
+		
+		/**
+		 * this method add tessereV to the list tessereValide
+		 * @param tessereV
+		 */
+		public void addTessereValide(OggettoConBonus tessereV){
+			tessereValide.add(tessereV);
+		}
+		
+		/**
+		 * this method add tessereU to the list tessereUsate
+		 * @param tessereU
+		 */
+		public void addTessereUsate(OggettoConBonus tessereU){
+			tessereUsate.add(tessereU);
+		}
+		/**
+		 * this method verify if the list in imput is contained by the list of giocatore's card
+		 * @param carteDaVerificare
+		 * @return
+		 */
+		public boolean containsAllCarte(List<CartaPolitica> carteDaVerificare){
+			return cartePolitica.containsAll(carteDaVerificare);
+		}
+		
+		
 		/**
 		 * @param azionePrincipale the azionePrincipale to set
 		 */

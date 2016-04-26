@@ -39,11 +39,14 @@ public class EleggiConsigliere implements Azione {
 		this.consiglio = consiglio;
 	}
 
-
+/**
+ * This method performs the move and if all went well , set the boolean AzionePrincipale to true
+ */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		if(this.consiglio.addConsigliere(this.consigliere)){
 		this.consiglio.removeConsigliere();
-		percorsoRicchezza.muoviGiocatoreAvanti(giocatore, MONETE_ELEZIONE_CONSIGLIERE);}
+		percorsoRicchezza.muoviGiocatoreAvanti(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+		giocatore.setAzionePrincipale(true);}
 	}
 }
