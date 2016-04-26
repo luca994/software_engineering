@@ -4,7 +4,7 @@ package model;
  * @author Luca
  *
  */
-public class IngaggioAiutante extends Azione {
+public class IngaggioAiutante implements Azione {
 
-	public void eseguiAzione (){};
+	public void eseguiAzione (Giocatore giocatore){};
 }

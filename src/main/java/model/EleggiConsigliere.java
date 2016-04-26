@@ -4,30 +4,46 @@ package model;
  * @author Luca
  *
  */
-public class EleggiConsigliere extends Azione {
+public class EleggiConsigliere implements Azione {
 
+	private static final int MONETE_ELEZIONE_CONSIGLIERE = 4;
 	private Consigliere consigliere;
 	private Consiglio consiglio;
 	private Percorso percorsoRicchezza;
 	
-	
-	//Setter
+		/**Constructor method
+	 * @param consigliere
+	 * @param consiglio
+	 * @param percorsoRicchezza
+	 */
+	public EleggiConsigliere(Consigliere consigliere, Consiglio consiglio, Percorso percorsoRicchezza) {
+		super();
+		this.consigliere = consigliere;
+		this.consiglio = consiglio;
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
+
+
+	/**
+	 * @param consigliere the consigliere to set
+	 */
 	public void setConsigliere(Consigliere consigliere) {
 		this.consigliere = consigliere;
 	}
 
-	//Setter
+
+	/**
+	 * @param consiglio the consiglio to set
+	 */
 	public void setConsiglio(Consiglio consiglio) {
 		this.consiglio = consiglio;
 	}
 
 
-
 	@Override
-	public void eseguiAzione (){
+	public void eseguiAzione (Giocatore giocatore){
+		if(this.consiglio.addConsigliere(this.consigliere)){
 		this.consiglio.removeConsigliere();
-		while(this.consiglio.addConsigliere(this.consigliere)==false);
-		//se ritorna true il while viene eseguito una sola volta. SBAGLIATO!
-		percorsoRicchezza.muoviGiocatoreAvanti(getGiocatore(), 4);
+		percorsoRicchezza.muoviGiocatoreAvanti(giocatore, MONETE_ELEZIONE_CONSIGLIERE);}
 	}
 }

@@ -4,10 +4,9 @@ package model;
  * @author Luca
  *
  */
-public class CostruisciEmporioConTessera extends Azione {
+public class CostruisciEmporioConTessera implements Azione {
 
-	private Emporio emporio;
 	private Città città;
 	
-	public void eseguiAzione (){};
+	public void eseguiAzione (Giocatore giocatore){};
 }

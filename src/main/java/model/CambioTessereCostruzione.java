@@ -4,9 +4,9 @@ package model;
  * @author Luca
  *
  */
-public class CambioTessereCostruzione extends Azione {
+public class CambioTessereCostruzione implements Azione {
 
 	private Regione regione;
 	
-	public void eseguiAzione (){};
+	public void eseguiAzione (Giocatore giocatore){};
 }

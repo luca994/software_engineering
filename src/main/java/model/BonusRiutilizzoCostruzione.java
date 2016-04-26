@@ -11,7 +11,7 @@ import java.util.Iterator;
  *a tile(tesseraCostruzione), chosen from the player from his set of used card
  *the moment that azioneBonus is called.
  */
-public class BonusRiutilizzoCostruzione extends Bonus {
+public class BonusRiutilizzoCostruzione implements Bonus {
 
 	private TesseraCostruzione tessera;
 	/**

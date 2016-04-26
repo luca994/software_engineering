@@ -4,7 +4,7 @@ package model;
  * @author Luca
  *
  */
-public class AzionePrincipaleAggiuntiva extends Azione {
+public class AzionePrincipaleAggiuntiva implements Azione {
 
-	public void eseguiAzione (){};
+	public void eseguiAzione (Giocatore giocatore){};
 }

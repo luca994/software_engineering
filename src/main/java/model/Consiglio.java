@@ -40,7 +40,7 @@ public class Consiglio {
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try{
-			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere)==true){
+			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere)){
 			tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
 			consiglio.add(consigliereDaAggiungere);}
 			else{
