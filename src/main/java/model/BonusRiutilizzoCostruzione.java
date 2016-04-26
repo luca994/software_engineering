@@ -7,9 +7,9 @@ import java.util.Iterator;
 
 /**
  * @author Massimiliano Ventura
- *To make the method azioneBonus work you have to set the tile that have the bonus you 
- *want to reuse with this bonus. Then you can call the method passing the player that 
- *owns the previously set tile.
+ *To make the method azioneBonus work the class need a method(tesseraDalGiocatore)that returns
+ *a tile(tesseraCostruzione), chosen from the player from his set of used card
+ *the moment that azioneBonus is called.
  */
 public class BonusRiutilizzoCostruzione extends Bonus {
 
@@ -28,6 +28,7 @@ public class BonusRiutilizzoCostruzione extends Bonus {
 	}
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
+		this.tessera=tesseraDalGiocatore(giocatore);
 		Iterator<Bonus> itbonus=tessera.getElencoBonus().iterator();
 		while(itbonus.hasNext())
 		{
