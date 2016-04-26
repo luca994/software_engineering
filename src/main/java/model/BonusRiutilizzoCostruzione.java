@@ -28,7 +28,7 @@ public class BonusRiutilizzoCostruzione extends Bonus {
 	}
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		this.tessera=tesseraDalGiocatore(giocatore);
+		this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
 		Iterator<Bonus> itbonus=tessera.getElencoBonus().iterator();
 		while(itbonus.hasNext())
 		{
