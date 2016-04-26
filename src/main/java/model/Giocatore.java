@@ -22,6 +22,19 @@ public class Giocatore {
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
+		
+		/**
+		 * @param azionePrincipale the azionePrincipale to set
+		 */
+		public void setAzionePrincipale(boolean azionePrincipale) {
+			this.azionePrincipale = azionePrincipale;
+		}
+		/**
+		 * @param azioneOpzionale the azioneOpzionale to set
+		 */
+		public void setAzioneOpzionale(boolean azioneOpzionale) {
+			this.azioneOpzionale = azioneOpzionale;
+		}
 		public int getId() {
 			return id;
 		}
