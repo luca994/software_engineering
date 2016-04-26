@@ -8,7 +8,7 @@ public class EleggiConsigliere extends Azione {
 
 	private Consigliere consigliere;
 	private Consiglio consiglio;
-	private PercorsoRicchezza percorsoRicchezza;
+	private Percorso percorsoRicchezza;
 	
 	
 	//Setter
@@ -27,7 +27,7 @@ public class EleggiConsigliere extends Azione {
 	public void eseguiAzione (){
 		this.consiglio.removeConsigliere();
 		while(this.consiglio.addConsigliere(this.consigliere)==false);
-		//se ritorna true il while viene eseguito una sola volta
+		//se ritorna true il while viene eseguito una sola volta. SBAGLIATO!
 		percorsoRicchezza.muoviGiocatoreAvanti(getGiocatore(), 4);
 	}
 }
