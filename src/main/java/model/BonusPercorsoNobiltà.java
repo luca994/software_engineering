@@ -7,8 +7,13 @@ package model;
  *along the victory route
  */
 public class BonusPercorsoNobiltà extends Bonus {
-	private int steps;
-	private Percorso percorsoNobiltà;
+	private final int steps;
+	private final Percorso percorsoNobiltà;
+	public BonusPercorsoNobiltà(Percorso percorsoNobiltà, int steps)
+	{
+		this.percorsoNobiltà=percorsoNobiltà;
+		this.steps=steps;
+	}
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		percorsoNobiltà.muoviGiocatoreAvanti(giocatore, steps);
@@ -19,23 +24,13 @@ public class BonusPercorsoNobiltà extends Bonus {
 	public int getSteps() {
 		return steps;
 	}
-	/**
-	 * @param steps the steps to set
-	 */
-	public void setSteps(int steps) {
-		this.steps = steps;
-	}
+	
 	/**
 	 * @return the percorsoNobiltà
 	 */
 	public Percorso getPercorsoNobiltà() {
 		return percorsoNobiltà;
 	}
-	/**
-	 * @param percorsoNobiltà the percorsoNobiltà to set
-	 */
-	public void setPercorsoNobiltà(Percorso percorsoNobiltà) {
-		this.percorsoNobiltà = percorsoNobiltà;
-	}
+	
 	
 }

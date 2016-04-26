@@ -8,8 +8,8 @@ package model;
  *
  */
 public class BonusPuntoVittoria extends Bonus {
-	private Percorso percorsoVittoria;
-	private int steps;
+	private final Percorso percorsoVittoria;
+	private final int steps;
 	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
 		this.percorsoVittoria = percorsoVittoria;
 		this.steps=steps;
