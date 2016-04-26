@@ -105,6 +105,12 @@ public class Città extends OggettoConBonus {
 		return cittàVicineConEmpori;
 	}
 	
+	/**
+	 * checks if there is already a player's emporium.
+	 * If there is not, add a player's emporium.
+	 * @param giocatore the player who wants to add the emporium  
+	 * @return return true if there is a player's emporium
+	 */
 	public boolean aggiungiEmporio(Giocatore giocatore){
 		if(presenzaEmporio(giocatore)==false){
 			empori.add(giocatore);
@@ -113,6 +119,10 @@ public class Città extends OggettoConBonus {
 		return false;
 	}
 	
+	/**
+	 * it does the action of the bonuses in the city
+	 * @param giocatore the player who wants to add the emporium
+	 */
 	public void eseguiAzioneBonus(Giocatore giocatore){
 		Iterator<Bonus> itrBonus= bonus.iterator();
 		while(itrBonus.hasNext()){
