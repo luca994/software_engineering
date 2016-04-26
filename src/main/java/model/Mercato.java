@@ -41,7 +41,7 @@ public class Mercato {
 			Iterator<OggettoConBonus> itrTessere = oggetto.getGiocatore().getTessereValide().iterator();
 			//scorro la lista finchè non trovo l' oggetto e lo rimuovo
 			while(itrTessere.hasNext()){
-				if(itrTessere==oggetto.getOggetto()){
+				if(itrTessere.next()==oggetto.getOggetto()){
 					itrTessere.remove();
 					break;
 				}
@@ -54,7 +54,7 @@ public class Mercato {
 		if(oggetto.getOggetto() instanceof CartaPolitica){
 			Iterator<CartaPolitica> itrCarte = oggetto.getGiocatore().getCartePolitica().iterator();
 			while(itrCarte.hasNext()){
-				if(itrCarte==oggetto.getOggetto()){
+				if(itrCarte.next()==oggetto.getOggetto()){
 					itrCarte.remove();
 					break;
 				}
@@ -65,7 +65,7 @@ public class Mercato {
 		if(oggetto.getOggetto() instanceof TesseraCostruzione){
 			Iterator<Assistente> itrAssistenti = oggetto.getGiocatore().getAssistenti().iterator();
 			while(itrAssistenti.hasNext()){
-				if(itrAssistenti==oggetto.getOggetto()){
+				if(itrAssistenti.next()==oggetto.getOggetto()){
 					itrAssistenti.remove();
 					break;
 				}
@@ -74,7 +74,7 @@ public class Mercato {
 			giocatore.getAssistenti().add((Assistente) oggetto.getOggetto());
 		}
 		
-		//manca la parte che scala i soldi
+		
 		
 	}
 }

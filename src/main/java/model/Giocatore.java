@@ -10,7 +10,6 @@ public class Giocatore {
 
 		private int id;
 		private String nome;
-		private List<Emporio> emporiRimasti;
 		private List<Assistente> assistenti;
 		private List<CartaPolitica> cartePolitica;
 		private boolean azionePrincipale;
@@ -22,14 +21,24 @@ public class Giocatore {
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
+		
+		/**
+		 * @param azionePrincipale the azionePrincipale to set
+		 */
+		public void setAzionePrincipale(boolean azionePrincipale) {
+			this.azionePrincipale = azionePrincipale;
+		}
+		/**
+		 * @param azioneOpzionale the azioneOpzionale to set
+		 */
+		public void setAzioneOpzionale(boolean azioneOpzionale) {
+			this.azioneOpzionale = azioneOpzionale;
+		}
 		public int getId() {
 			return id;
 		}
 		public String getNome() {
 			return nome;
-		}
-		public List<Emporio> getEmporiRimasti() {
-			return emporiRimasti;
 		}
 		public List<Assistente> getAssistenti() {
 			return assistenti;

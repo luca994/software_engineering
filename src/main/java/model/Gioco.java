@@ -14,5 +14,14 @@ public class Gioco {
 	private int id;
 	private Mercato mercato;
 	
+	
+	/**
+	 * @return the tabellone
+	 */
+	public Tabellone getTabellone() {
+		return tabellone;
+	}
+
+
 	public void gioco(){}
 }
