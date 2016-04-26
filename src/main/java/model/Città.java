@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class Città extends OggettoConBonus {
 
 	private final String nome;
 	private final String colore;
-	private Set<Emporio> empori;
+	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
 	private Set<Bonus> bonus;
@@ -33,14 +34,6 @@ public class Città extends OggettoConBonus {
 	 */
 	public String getColore() {
 		return colore;
-	}
-
-	/**
-	 * 
-	 * @return return the set of emporium in the city
-	 */
-	public Set<Emporio> getEmpori() {
-		return empori;
 	}
 
 	/**
@@ -91,10 +84,8 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is an emporium of the player
 	 */
 	public boolean presenzaEmporio(Giocatore giocatore){
-		for(Emporio e:empori){
-			if(e.getGiocatore()==giocatore){
-				return true;
-			}
+		if(empori.contains(giocatore)){
+			return true;
 		}
 		return false;
 	}
@@ -112,6 +103,21 @@ public class Città extends OggettoConBonus {
 			}
 		}
 		return cittàVicineConEmpori;
+	}
+	
+	public boolean aggiungiEmporio(Giocatore giocatore){
+		if(presenzaEmporio(giocatore)==false){
+			empori.add(giocatore);
+			return true;
+		}
+		return false;
+	}
+	
+	public void eseguiAzioneBonus(Giocatore giocatore){
+		Iterator<Bonus> itrBonus= bonus.iterator();
+		while(itrBonus.hasNext()){
+			itrBonus.next().azioneBonus(giocatore);
+		}
 	}
 	
 }

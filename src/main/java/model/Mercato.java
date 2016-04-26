@@ -11,7 +11,6 @@ import java.util.List;
 public class Mercato {
 
 	List<OggettoVendibile> oggettiInVendita;
-	Gioco gioco;
 	
 	/**
 	 * build the object
@@ -39,23 +38,43 @@ public class Mercato {
 		//controlla di che tipo è l' oggetto all' interno dell' oggetto vendibile e in base a questo
 		//rimuove l' oggetto nella lista "giusta" del giocatore.
 		if(oggetto.getOggetto() instanceof TesseraCostruzione){
-			//rimuovo l'oggetto dalla lista del giocatore che lo ha venduto
-			oggetto.getGiocatore().getTessereValide().remove(oggetto.getOggetto());
+			Iterator<OggettoConBonus> itrTessere = oggetto.getGiocatore().getTessereValide().iterator();
+			//scorro la lista finchè non trovo l' oggetto e lo rimuovo
+			while(itrTessere.hasNext()){
+				if(itrTessere.next()==oggetto.getOggetto()){
+					itrTessere.remove();
+					break;
+				}
+				itrTessere.next();
+			}
 			//aggiungo l' oggetto al giocatore che lo compra
 			giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
 		}
 		//uguali all' if sopra
 		if(oggetto.getOggetto() instanceof CartaPolitica){
-			oggetto.getGiocatore().getCartePolitica().remove(oggetto.getOggetto());
+			Iterator<CartaPolitica> itrCarte = oggetto.getGiocatore().getCartePolitica().iterator();
+			while(itrCarte.hasNext()){
+				if(itrCarte.next()==oggetto.getOggetto()){
+					itrCarte.remove();
+					break;
+				}
+				itrCarte.next();
+			}
 			giocatore.getCartePolitica().add((CartaPolitica) oggetto.getOggetto());
 		}
 		if(oggetto.getOggetto() instanceof TesseraCostruzione){
-			oggetto.getGiocatore().getAssistenti().remove(oggetto.getOggetto());
+			Iterator<Assistente> itrAssistenti = oggetto.getGiocatore().getAssistenti().iterator();
+			while(itrAssistenti.hasNext()){
+				if(itrAssistenti.next()==oggetto.getOggetto()){
+					itrAssistenti.remove();
+					break;
+				}
+				itrAssistenti.next();
+			}
 			giocatore.getAssistenti().add((Assistente) oggetto.getOggetto());
 		}
 		
-		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -oggetto.getPrezzo());
-		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(oggetto.getGiocatore(), oggetto.getPrezzo());
+		
 		
 	}
 }

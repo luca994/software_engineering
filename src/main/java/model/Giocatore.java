@@ -10,7 +10,6 @@ public class Giocatore {
 
 		private int id;
 		private String nome;
-		private List<Emporio> emporiRimasti;
 		private List<Assistente> assistenti;
 		private List<CartaPolitica> cartePolitica;
 		private boolean azionePrincipale;
@@ -40,9 +39,6 @@ public class Giocatore {
 		}
 		public String getNome() {
 			return nome;
-		}
-		public List<Emporio> getEmporiRimasti() {
-			return emporiRimasti;
 		}
 		public List<Assistente> getAssistenti() {
 			return assistenti;
