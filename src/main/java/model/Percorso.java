@@ -24,14 +24,23 @@ public class Percorso
 	 * @param giocatore
 	 * @param passi
 	 */
-	public void muoviGiocatore(Giocatore giocatore, int passi)
+	public void muoviGiocatore (Giocatore giocatore, int passi) throws IndexOutOfBoundsException
 	{
 		if (passi>0)
 			muoviGiocatoreAvanti(giocatore, passi);
 		else if(passi<0)
 		{
-			passi=0-passi;
-			muoviGiocatoreIndietro(giocatore, passi);
+			int posizione=posizioneAttualeGiocatore(giocatore);
+			if(posizione>=passi)
+			{
+				passi=0-passi;
+				muoviGiocatoreIndietro(giocatore, passi);
+			}
+			else
+			{
+				throw new IndexOutOfBoundsException("Soldi insufficienti per eseguire la mossa");
+			}
+			
 		}
 		else if(passi==0)
 			System.out.println("Srsly??, muovi di zero passi?");
