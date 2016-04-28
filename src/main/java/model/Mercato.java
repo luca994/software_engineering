@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,46 +34,15 @@ public class Mercato {
 	 * @param giocatore the player who wants to buy the object
 	 */
 	public void transazione(OggettoVendibile oggetto,Giocatore giocatore){
-		//controlla di che tipo è l' oggetto all' interno dell' oggetto vendibile e in base a questo
-		//rimuove l' oggetto nella lista "giusta" del giocatore.
-		if(oggetto.getOggetto() instanceof TesseraCostruzione){
-			Iterator<OggettoConBonus> itrTessere = oggetto.getGiocatore().getTessereValide().iterator();
-			//scorro la lista finchè non trovo l' oggetto e lo rimuovo
-			while(itrTessere.hasNext()){
-				if(itrTessere.next()==oggetto.getOggetto()){
-					itrTessere.remove();
-					break;
-				}
-				itrTessere.next();
-			}
-			//aggiungo l' oggetto al giocatore che lo compra
-			giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
-		}
-		//uguali all' if sopra
-		if(oggetto.getOggetto() instanceof CartaPolitica){
-			Iterator<CartaPolitica> itrCarte = oggetto.getGiocatore().getCartePolitica().iterator();
-			while(itrCarte.hasNext()){
-				if(itrCarte.next()==oggetto.getOggetto()){
-					itrCarte.remove();
-					break;
-				}
-				itrCarte.next();
-			}
-			giocatore.getCartePolitica().add((CartaPolitica) oggetto.getOggetto());
-		}
-		if(oggetto.getOggetto() instanceof TesseraCostruzione){
-			Iterator<Assistente> itrAssistenti = oggetto.getGiocatore().getAssistenti().iterator();
-			while(itrAssistenti.hasNext()){
-				if(itrAssistenti.next()==oggetto.getOggetto()){
-					itrAssistenti.remove();
-					break;
-				}
-				itrAssistenti.next();
-			}
+		if(oggetto.getOggetto() instanceof Assistente){
 			giocatore.getAssistenti().add((Assistente) oggetto.getOggetto());
 		}
-		
-		
-		
+		if(oggetto.getOggetto() instanceof TesseraCostruzione){
+			giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
+		}
+		if(oggetto.getOggetto() instanceof CartaPolitica){
+			giocatore.getCartePolitica().add((CartaPolitica) oggetto.getOggetto());
+		}
+		oggettiInVendita.remove(oggetto.getOggetto());
 	}
 }

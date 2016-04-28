@@ -24,7 +24,7 @@ public class Percorso
 	 * @param giocatore
 	 * @param passi
 	 */
-	public void muoviGiocatore (Giocatore giocatore, int passi) throws IndexOutOfBoundsException
+	public void muoviGiocatore (Giocatore giocatore, int passi)
 	{
 		if (passi>0)
 			muoviGiocatoreAvanti(giocatore, passi);
