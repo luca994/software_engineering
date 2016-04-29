@@ -7,7 +7,7 @@ package model;
  * @author Massimiliano Ventura
  *
  */
-public class BonusAssistenti extends Bonus {
+public class BonusAssistenti implements Bonus {
 	public BonusAssistenti(int numeroAssistenti){
 		this.numeroAssistenti=numeroAssistenti;
 	}

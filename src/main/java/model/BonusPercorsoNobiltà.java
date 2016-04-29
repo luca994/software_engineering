@@ -6,7 +6,7 @@ package model;
  *previously set of steps (from file) 
  *along the victory route
  */
-public class BonusPercorsoNobiltà extends Bonus {
+public class BonusPercorsoNobiltà implements Bonus {
 	private final int steps;
 	private final Percorso percorsoNobiltà;
 	public BonusPercorsoNobiltà(Percorso percorsoNobiltà, int steps)

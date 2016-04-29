@@ -7,7 +7,7 @@ package model;
  * @author Massimiliano Ventura
  *
  */
-public class BonusCartaPolitica extends Bonus {
+public class BonusCartaPolitica implements Bonus {
 	/**
 	 * This object is obtained via factory method, yet to be implemented;
 	 */

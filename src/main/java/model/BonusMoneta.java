@@ -7,7 +7,7 @@ package model;
  * @author Massimiliano Ventura
  *
  */
-public class BonusMoneta extends Bonus {
+public class BonusMoneta implements Bonus {
 	private final int step;
 	private final Percorso percorsoVittoria;
 	public BonusMoneta(Percorso percorsoVittoria, int step)
