@@ -9,12 +9,17 @@ package model;
  */
 public class BonusCartaPolitica implements Bonus {
 	
-	private CartaPolitica cartaPolitica=new CartaPolitica();
-	
+	public BonusCartaPolitica(int numeroCarte)
+	{
+		this.numeroCarte=numeroCarte;
+	}
+	private int numeroCarte;
 	@Override
 	public void azioneBonus(Giocatore giocatore) 
 	{
-		giocatore.getCartePolitica().add(cartaPolitica);
+		
+		for(int i=0;i<this.numeroCarte;i++)
+		giocatore.getCartePolitica().add(new CartaPolitica());
 
 	}
 

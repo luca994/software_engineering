@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<percorsoVittoria>
+	<QuantitàCaselle>100</QuantitàCaselle>
+	<Casella numero="99">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="98">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="97">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="96">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="95">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="94">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="93">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="92">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="91">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="90">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="89">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="88">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="87">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="86">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="85">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="84">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="83">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="82">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="81">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="80">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="79">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="78">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="77">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="76">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="75">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="74">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="73">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="72">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="71">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="70">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="69">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="68">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="67">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="66">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="65">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="64">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="63">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="62">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="61">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="60">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="59">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="58">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="57">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="56">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="55">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="54">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="53">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="52">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="51">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="50">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="49">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="48">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="47">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="46">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="45">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="44">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="43">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="42">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="41">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="40">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="39">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="38">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="37">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="36">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="35">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="34">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="33">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="32">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="31">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="30">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="29">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="28">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="27">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="26">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="25">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="24">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="23">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="22">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="21">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="20">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="19">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="18">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="17">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="16">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="15">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="14">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="13">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="12">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="11">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="10">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="9">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="8">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="7">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="6">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="5">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="4">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="3">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="2">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="1">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+	<Casella numero="0">
+		<Bonus id="NessunBonus"/>
+	</Casella>
+</percorsoVittoria>
