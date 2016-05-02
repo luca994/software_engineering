@@ -11,7 +11,8 @@ public class IngaggioAiutante implements Azione {
 	
 	/**
 	 * @author Riccardo
-	 * the player buy an assistant for 3 coins.
+	 * the player add an assistant to his assistants's list and come back of
+	 * COSTO_AIUTANTE in the richness route
 	 * @param giocatore the player who wants to buy an assistant
 	 */
 	public void eseguiAzione (Giocatore giocatore){
