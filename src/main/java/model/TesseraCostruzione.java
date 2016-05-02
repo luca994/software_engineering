@@ -30,4 +30,13 @@ public class TesseraCostruzione extends OggettoConBonus {
 	public void setElencoBonus(Set<Bonus> elencoBonus) {
 		this.elencoBonus = elencoBonus;
 	}
+	
+	public void eseguiBonus (Giocatore giocatore){
+		for(Bonus b : elencoBonus){
+			b.azioneBonus(giocatore);
+		}
+		}
+	public boolean verifyCittà(Città cittàDaVerificare){
+		return nomeCittà.contains(cittàDaVerificare);
+	}
 }

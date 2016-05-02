@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class AcquistaPermesso implements Azione {
 
-	private OggettoConBonus tessera;
+	private TesseraCostruzione tessera;
 	private List<CartaPolitica> cartePolitica;
 	private Consiglio consiglioDaSoddisfare;
 	private Percorso percorsoRicchezza;
@@ -18,7 +18,7 @@ public class AcquistaPermesso implements Azione {
 	/**
 	 * @param tessera the tessera to set
 	 */
-	public void setTessera(OggettoConBonus tessera) {
+	public void setTessera(TesseraCostruzione tessera) {
 		this.tessera = tessera;
 	}
 
@@ -38,7 +38,7 @@ public class AcquistaPermesso implements Azione {
 
 	
 	/**
-	 * this method verifies that the c
+	 * 
 	 */
 	public void eseguiAzione (Giocatore giocatore){
 		if(giocatore.containsAllCarte(cartePolitica)){
@@ -72,8 +72,9 @@ public class AcquistaPermesso implements Azione {
 		List<OggettoConBonus> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
 			giocatore.addTessereValide(tessera);
-			//INCOMPLETO!!Manca da Applicare i bonus della tessera.
-			//Perchè TesseraCostruzione ha un set di bonus? non dovrebbe essere list???
+			tessera.eseguiBonus(giocatore);
+			//Scopri dal mazzetto una nuova tessera costruzione
+			giocatore.setAzionePrincipale(true);
 		}
 	}
 }
