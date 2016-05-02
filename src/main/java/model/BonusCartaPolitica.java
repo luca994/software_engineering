@@ -8,9 +8,7 @@ package model;
  *
  */
 public class BonusCartaPolitica implements Bonus {
-	/**
-	 * This object is obtained via factory method, yet to be implemented;
-	 */
+	
 	private CartaPolitica cartaPolitica=new CartaPolitica();
 	
 	@Override

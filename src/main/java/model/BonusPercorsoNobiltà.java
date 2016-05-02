@@ -1,10 +1,9 @@
 package model;
 
 /**
- * @author Massimiliano Ventura
  *This specific bonus moves the player-token a
- *previously set of steps (from file) 
- *along the victory route
+ *previously set number of steps (from file) along the victory route
+ * @author Massimiliano Ventura
  */
 public class BonusPercorsoNobiltà implements Bonus {
 	private final int steps;

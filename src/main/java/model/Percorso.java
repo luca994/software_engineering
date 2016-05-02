@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 /**
- * 
- * @author Massimiliano Ventura
- *This class is used to implement all the routes; the generic type "Casella"
+ * This class is used to implement all the routes; the generic type "Casella"
  *allow the program to use only this class to implement every kind of route.
+ * @author Massimiliano Ventura
  *
  */
 public class Percorso 
@@ -40,92 +40,71 @@ public class Percorso
 			{
 				throw new IndexOutOfBoundsException("Soldi insufficienti per eseguire la mossa");
 			}
-			
 		}
-		else if(passi==0)
-			System.out.println("Srsly??, muovi di zero passi?");
 	}
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
 	{
-		boolean trovato;
-		//uso il for per ripetere l'avanzamento del percorso il numero di passi richiesto
-		for(int i=0;i<passi;i++)
+		ListIterator<Casella> itcasella=this.caselle.listIterator();
+		while(itcasella.hasNext())//mentre scorro le caselle controllo di non essere in fondo al percorso
 		{
-			trovato=false;
-			ListIterator<Casella> itcasella=this.caselle.listIterator();
-			while(itcasella.hasNext()&&trovato==false)//mentre scorro le caselle controllo di non essere in fondo al percorso
+			Set<Giocatore> giocatoriCasellaCorrente=itcasella.next().getGiocatori();
+			if(!itcasella.hasNext())
 			{
-				//inizializzo l'iteratore dei giocatori della prossima casella(il next() fa avanzare di uno il cursore)
-				//all'inizio non sono in nessuna casella e la dichiarazione dell'iteratore mi fa spostare sulla prima casella
-				Iterator<Giocatore> itgiocatore=itcasella.next().getGiocatori().iterator();
-				//siccome la dichiarazione dell'iteratore dei giocatori ha avanzato di uno il cursore, controllo che la casella successiva esista
-				if(!itcasella.hasNext())
-				{
-					System.out.println("Sei alla fine del percorso, nell'ultima casella\n"); 
-					break;
-				}
-				//inizio a scorrere i giocatori, controllo sempre che esistano
-				while(itgiocatore.hasNext()&&trovato==false)
-				{
-					//controllo che il giocatore sia quello passato come parametro
-					if(itgiocatore.next().equals(giocatore))
-					{
-						//se è quello cercato lo levo, incremento la casella e aggiungo un riferimento alla casella successiva con il giocatore del parametro
-						itgiocatore.remove();
-						itcasella.next().getGiocatori().add(giocatore);
-						trovato=true;
-					}
-				}
+				//System.out.println("Sei alla fine del percorso, nell'ultima casella\n"); 
+				break;
+			}
+			if (giocatoriCasellaCorrente.contains(giocatore))
+			{
+				giocatoriCasellaCorrente.remove(giocatore);
+				for(int j=0;j<passi&&itcasella.hasNext();j++)
+					giocatoriCasellaCorrente=itcasella.next().getGiocatori();
+				giocatoriCasellaCorrente.add(giocatore);
+				break;
+			}
+		}				
+	}
+	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
+	{
+		ListIterator<Casella> itcasella=this.caselle.listIterator(caselle.size());
+		while(itcasella.hasPrevious())
+		{
+			Set<Giocatore> giocatoriCasellaCorrente=itcasella.previous().getGiocatori();
+			if(!itcasella.hasPrevious())
+			{
+				//System.out.println("Sei all'inizio del percorso, nella prima casella\n"); 
+				break;
+			}
+			if (giocatoriCasellaCorrente.contains(giocatore))
+			{
+				giocatoriCasellaCorrente.remove(giocatore);
+				for(int j=0;j<passi&&itcasella.hasPrevious();j++)
+					giocatoriCasellaCorrente=itcasella.previous().getGiocatori();
+				giocatoriCasellaCorrente.add(giocatore);
+				break;
 			}
 		}
 				
 	}
-	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
-	{
-		boolean trovato;
-		ListIterator<Casella> itcasella=this.caselle.listIterator(caselle.size());
-		for(int i=0;i<passi;i++)
-		{
-			trovato=false;
-			while(itcasella.hasPrevious()&&trovato==false)
-			{
-				Iterator<Giocatore> itgiocatore=itcasella.previous().getGiocatori().iterator();
-				if(!itcasella.hasPrevious())
-				{
-					System.out.println("Sei all'inizio del percorso, nella prima casella\n"); 
-					break;
-				}
-				while(itgiocatore.hasNext()&&trovato==false)
-				{
-					if(itgiocatore.next().equals(giocatore))
-					{
-						itgiocatore.remove();
-						itcasella.previous().getGiocatori().add(giocatore);
-						trovato=true;
-					}
-				}
-			}
-		}
-		
-	}
+	/**
+	 * The position number  of giocatore in the current route, Throws IllegalArgumentExeption 
+	 * when can't find giocatore in the route
+	 * @param giocatore
+	 * 
+	 */
 	public int posizioneAttualeGiocatore(Giocatore giocatore)
 		{
 			boolean trovato=false;
-			int posizione=0;
+			int posizione=-1;
 			//funzionamento analogo a muoviGiocatoreAvanti
 			Iterator<Casella> itcasella=caselle.iterator();
-			while(itcasella.hasNext()&&trovato==false)
+			while(itcasella.hasNext()&&!trovato)
 			{
-				Iterator<Giocatore> itgiocatore=itcasella.next().getGiocatori().iterator();
-				posizione++;
-				while(itcasella.hasNext())
-				{
-					if(itgiocatore.next().equals(giocatore))
+				posizione++;				
+					if(itcasella.next().getGiocatori().contains(giocatore))
 						trovato=true;
-				}
 			}
-			if(trovato==false)
-				System.out.println("il giocatore non esiste, o il parametro passato è sbagliato oppure lo è il metodo, spera nella prima\n");
+			if(!trovato)
+				throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 			return posizione;
 		}
 }

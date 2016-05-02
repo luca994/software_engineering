@@ -1,15 +1,10 @@
-/**
- * 
- */
 package model;
 
-import java.util.Iterator;
-import java.util.Set;
-
 
 /**
+ * This class asks the player which city bonuses wants to obtain with this particular bonus.
  * @author Massimiliano Ventura
- *This class asks the player which city bonuses wants to obtain with this particular bonus.
+ *
  */
 public class BonusGettoneCittà implements Bonus {
 

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Massimiliano Ventura
  *This class represent the generic box
  *in every route(Percorso)
+ * @author Massimiliano Ventura
  */
 public abstract class Casella {
 	public Casella(){
@@ -15,8 +15,6 @@ public abstract class Casella {
 	}
 	
 	private Set<Giocatore> giocatori;
-
-	
 	public void setGiocatori(Set<Giocatore> giocatori) {
 		this.giocatori = giocatori;
 	}
