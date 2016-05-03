@@ -23,6 +23,14 @@ public class Giocatore {
 		private boolean connesso;
 		
 		
+		public void moveTesseraValidaToTesseraUsata (OggettoConBonus tesseraToMove){
+			/*si potrebbe inserire l'eccezione che viene lanciata
+			 * se la tessera selezionata non è nella lista di tessere valide
+			 */
+			tessereValide.remove(tesseraToMove);  //gestire le eccezioni lanciate
+			tessereUsate.add(tesseraToMove);  //anche qua gestire eccezioni
+		}
+		
 		/**
 		 * this method add tessereV to the list tessereValide
 		 * @param tessereV
@@ -47,6 +55,22 @@ public class Giocatore {
 			return cartePolitica.containsAll(carteDaVerificare);
 		}
 		
+		/**
+		 * this method verify if the object in imput is contained by the list of giocatore's tessereUsate
+		 * @param tesseraUsataDaVerificare
+		 * @return
+		 */
+		public boolean containsTesseraUsata(OggettoConBonus tesseraUsataDaVerificare){
+			return tessereUsate.contains(tesseraUsataDaVerificare);
+		}
+		/**
+		 * this method verify if the object in imput is contained by the list of giocatore's tessereValide
+		 * @param tesseraValidaDaVerificare
+		 * @return
+		 */
+		public boolean containsTesseraValide(OggettoConBonus tesseraValidaDaVerificare){
+			return tessereValide.contains(tesseraValidaDaVerificare);
+		}
 		
 		/**
 		 * @param azionePrincipale the azionePrincipale to set
