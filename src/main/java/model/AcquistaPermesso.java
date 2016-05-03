@@ -56,11 +56,11 @@ public class AcquistaPermesso implements Azione {
 				if(car.getColore()=="jolly")
 					counter++;}
 		switch(counter){
-			case 1: percorsoRicchezza.muoviGiocatoreIndietro(giocatore, 10);
+			case 1: percorsoRicchezza.muoviGiocatore(giocatore, -10);
 					break;
-			case 2: percorsoRicchezza.muoviGiocatoreIndietro(giocatore, 7);
+			case 2: percorsoRicchezza.muoviGiocatore(giocatore, -7);
 					break;
-			case 3: percorsoRicchezza.muoviGiocatoreIndietro(giocatore, 4);
+			case 3: percorsoRicchezza.muoviGiocatore(giocatore, -4);
 					break;
 			case 4: 
 					break;

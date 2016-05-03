@@ -3,16 +3,11 @@
  */
 package model;
 
-import java.util.Iterator;
-
 /**
- *To make the method azioneBonus work the class need a method(tesseraDalGiocatore)that returns
- *a tile(tesseraCostruzione), chosen from the player from his set of used card
- *the moment that azioneBonus is called.
  * @author Massimiliano Ventura
  *
  */
-public class BonusRiutilizzoCostruzione implements Bonus {
+public class BonusTesseraPermesso implements Bonus {
 
 	private TesseraCostruzione tessera;
 	/**
@@ -30,12 +25,8 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
-		Iterator<Bonus> itbonus=tessera.getElencoBonus().iterator();
-		while(itbonus.hasNext())
-		{
-			itbonus.next().azioneBonus(giocatore);
-		}
 		
+		giocatore.addTessereValide(this.tessera);
 	}
 
 }
