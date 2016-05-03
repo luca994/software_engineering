@@ -27,6 +27,8 @@ public class BonusTesseraPermesso implements Bonus {
 		//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
 		
 		giocatore.addTessereValide(this.tessera);
+		//rimuovi tessera da quelle disponibili per essere comprate
+		//scopri una nuova tessera
 	}
 
 }
