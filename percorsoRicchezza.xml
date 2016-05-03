@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<percorsoRicchezza>
-	<QuantitàCaselle>21</QuantitàCaselle>
+<percorsoRicchezza QuantitàCaselle="21">
 	<Casella numero="20">
 		<Bonus id="NessunBonus"/>
 	</Casella>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<percorsoNobiltà>
-	<QuantitàCaselle>21</QuantitàCaselle>
+<percorsoNobiltà QuantitàCaselle="21">
 	<Casella numero="20">
 		<Bonus id="BonusPuntoVittoria" passi="3"/>
 	</Casella>
