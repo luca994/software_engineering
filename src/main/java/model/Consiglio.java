@@ -16,17 +16,17 @@ public class Consiglio {
 	private Regione regione;
 	
 	
-	public ArrayList<String> acquisisciColoriConsiglio(){
-		ArrayList<String> colori= new ArrayList<String>(); 
+	public List<String> acquisisciColoriConsiglio(){
+		List<String> colori= new ArrayList<String>(); 
 		for(Consigliere c : consiglio)
 			colori.add(c.getColore());
 		return colori;
 	}
 	/**
-	 * this method retrieves and remove the head of this queue,
+	 * retrieves and remove the head of this queue,
 	 * it throws an exception if this queue is empty.
 	 * @author Luca
-	 * Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido
+	 *Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
 	 */
 	public void removeConsigliere(){
 		try{

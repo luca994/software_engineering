@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,30 @@ public class Regione {
 	private Consiglio consiglio;
 	private String nome;
 	private List<OggettoConBonus> tessereCostruzione;
+	private List<OggettoConBonus> tessereCoperte;
 	
+	public Regione(List<OggettoConBonus> tessereCoperte){
+		this.tessereCoperte=tessereCoperte;
+		Collections.shuffle(this.tessereCoperte);
+		this.tessereCostruzione.add(this.tessereCoperte.get(0));
+		this.tessereCostruzione.add(this.tessereCoperte.get(1));
+		for(OggettoConBonus tessera: this.tessereCostruzione)
+		{
+			this.tessereCoperte.remove(tessera);
+		}
+			
+	}
+	/**
+	 *Removes the parameter tessera from the list of obtainable Tessere Permesso Costruzione and moves the first
+	 *element of the covered Tessere Permesso Costruzione in to the list of obtainable Tessere
+	 * @param tessera
+	 */
+	public void nuovaTessera(OggettoConBonus tessera)
+	{
+		this.tessereCostruzione.remove(tessera);
+		this.tessereCostruzione.add(this.tessereCoperte.get(0));
+		this.tessereCoperte.remove(0);
+	}
 	/**
 	 * @return the città
 	 */
