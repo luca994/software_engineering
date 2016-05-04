@@ -8,6 +8,35 @@ public class EleggiConsigliereRapido implements Azione {
 
 	private Consigliere consigliere;
 	private Consiglio consiglio;
-	
-	public void eseguiAzione (Giocatore giocatore){};
+	/**
+	 *Elects a specified Consigliere, 
+	 *Throws IllegalStateException if giocatore hasn't enough Aiutanti 
+	 *@param giocatore
+	 */
+	@Override
+	public void eseguiAzione (Giocatore giocatore)
+	{
+		if(!giocatore.getAssistenti().isEmpty()){
+			if(this.consiglio.addConsigliere(this.consigliere))
+			{
+				this.consiglio.removeConsigliere();
+				giocatore.getAssistenti().remove(0);
+				giocatore.setAzioneOpzionale(true);
+			}
+		}
+		else
+			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
+	}
+	/**
+	 * @param consiglio the consiglio to set
+	 */
+	public void setConsiglio(Consiglio consiglio) {
+		this.consiglio = consiglio;
+	}
+	/**
+	 * @param consigliere the consigliere to set
+	 */
+	public void setConsigliere(Consigliere consigliere) {
+		this.consigliere = consigliere;
+	}
 }

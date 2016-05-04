@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TesserePianura QuantitàTessere="15">
+	<Tessera>
+		<SetCittà>
+			<Città id="Indur"></Città>
+			<Città id="Juvelar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus>
+			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Hellar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="4"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Framek"></Città>
+			<Città id="Juvelar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus>
+			<Bonus id="BonusMoneta" step="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Graden"></Città>
+			<Città id="Hellar"></Città>
+			<Città id="Indur"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Framek"></Città>
+			<Città id="Graden"></Città>
+			<Città id="Hellar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus>
+			<Bonus id="BonusMoneta" step="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Juvelar"></Città>
+			<Città id="Hellar"></Città>
+			<Città id="Indur"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Graden"></Città>
+			<Città id="Hellar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="3"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Framek"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus>
+			<Bonus id="BonusMoneta" step="4"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Framek"></Città>
+			<Città id="Graden"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusMoneta" step="5"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Juvelar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAzionePrincipale"></Bonus>
+			<Bonus id="BonusPuntoVittoria" passi="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Hellar"></Città>
+			<Città id="Indur"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="5"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Graden"></Città>
+			<Città id="Framek"></Città>
+			<Città id="Juvelar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusMoneta" step="2"></Bonus>
+			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Indur"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Graden"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" passi="2"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Indur"></Città>
+			<Città id="Framek"></Città>
+			<Città id="Juvelar"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus>
+			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></SetBonus></Tessera></TesserePianura>

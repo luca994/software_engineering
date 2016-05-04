@@ -21,8 +21,24 @@ public class Giocatore {
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
+		private int emporiRimasti;
 		
 		
+		/**
+		 * @return the emporiRimasti
+		 */
+		public int getEmporiRimasti() {
+			return emporiRimasti;
+		}
+
+		/**
+		 * @param emporiRimasti the emporiRimasti to set
+		 */
+		public int decrementaEmporiRimasti() {
+			emporiRimasti = emporiRimasti-1;
+			return emporiRimasti;
+		}
+
 		public void moveTesseraValidaToTesseraUsata (OggettoConBonus tesseraToMove){
 			/*si potrebbe inserire l'eccezione che viene lanciata
 			 * se la tessera selezionata non è nella lista di tessere valide

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ElencoBonus QuantitàBonus="14"><Set>
+	<Bonus id="BonusMoneta" step="3"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusMoneta" step="2"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusPuntoVittoria" passi="3"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
+		<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusMoneta" step="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus>
+		<Bonus id="BonusMoneta" step="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusPuntoVittoria" passi="2"></Bonus></Set>
+	<Set>
+		<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
+		<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></Set>
+</ElencoBonus>

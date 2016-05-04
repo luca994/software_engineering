@@ -15,7 +15,7 @@ public class AcquistaPermesso implements Azione {
 	private List<CartaPolitica> cartePolitica;
 	private Consiglio consiglioDaSoddisfare;
 	private Percorso percorsoRicchezza;
-	private int counter=0;
+	
 	
 	/**
 	 * @param tessera the tessera to set
@@ -41,13 +41,16 @@ public class AcquistaPermesso implements Azione {
 	
 	/**
 	 * Executes the action of buying a Tessera Permesso di Costruzione; 
-	 * throws IllegalStateException if the number of Carta Politica is less than one or more than four,
-	 * throws IndexOutOfBoundsException if an error occurs during the count of the money and the cards needed for the action
+	 * Throws IllegalStateException if the number of Carta Politica is less than one or more than four,
+	 * Throws IndexOutOfBoundsException if an error occurs during the count of the cards
+	 * Throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
 	 */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
 		int numeroCartePolitica=cartePolitica.size();
+		int jollyUsati=0;
+		int counter=0;
 		if(numeroCartePolitica<1||numeroCartePolitica>4)
 			throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 		//Creazione copie liste dei colori del consiglio
@@ -56,6 +59,8 @@ public class AcquistaPermesso implements Azione {
 		Collections.copy(cpycolori, colori);
 	//		if(giocatore.containsAllCarte(cartePolitica)){
 			for(CartaPolitica car : cartePolitica){
+				if(car.getColore().equals("JOLLY"))
+					jollyUsati++;//conto i jolly usati
 				for(String col : cpycolori){
 				if(car.getColore().equals(col))
 					{
@@ -65,9 +70,9 @@ public class AcquistaPermesso implements Azione {
 					}
 				}			
 			}
-			int jollyUsati=Collections.frequency(cartePolitica, "JOLLY");
-				
-		switch(counter){
+			
+		switch(counter)
+		{
 			case 1: percorsoRicchezza.muoviGiocatore(giocatore, 0-10-jollyUsati);
 					break;
 			case 2: percorsoRicchezza.muoviGiocatore(giocatore, 0-7-jollyUsati);
@@ -77,8 +82,7 @@ public class AcquistaPermesso implements Azione {
 			case 4: 
 					break;
 			default: throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
-					}
-			giocatore.setAzionePrincipale(true);
+		}
 		//}
 		//Rimozione tessere selezionate dalla mano del giocatore
 			giocatore.getCartePolitica().removeAll(cartePolitica);
