@@ -16,17 +16,17 @@ public class Consiglio {
 	private Regione regione;
 	
 	
-	public ArrayList<String> acquisisciColoriConsiglio(){
-		ArrayList<String> colori= new ArrayList<String>(); 
+	public List<String> acquisisciColoriConsiglio(){
+		List<String> colori= new ArrayList<String>(); 
 		for(Consigliere c : consiglio)
 			colori.add(c.getColore());
 		return colori;
 	}
 	/**
-	 * this method retrieves and remove the head of this queue,
+	 * retrieves and remove the head of this queue,
 	 * it throws an exception if this queue is empty.
 	 * @author Luca
-	 * Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido
+	 *Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
 	 */
 	public void removeConsigliere(){
 		try{
@@ -34,7 +34,7 @@ public class Consiglio {
 		consiglio.remove();
 		}
 		catch (Exception NoSuchElementException){
-			System.out.println("Errore:il consiglio"+ id +" è vuoto!");
+			System.err.println("Errore:il consiglio"+ id +" è vuoto!");
 		}
 	}
 	
@@ -49,19 +49,23 @@ public class Consiglio {
 	 * 
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
-		try{
-			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere)){
-			tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
-			consiglio.add(consigliereDaAggiungere);}
-			else{
-				System.out.println("Il consigliere selezionato non è disponibile"
-						+ ", sceglierne un altro.");
-				return false;
+		try
+		{
+			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere))
+			{
+				tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
+				consiglio.add(consigliereDaAggiungere);
 			}
+			else
+			{
+					System.out.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
+					return false;
 			}
-			catch (IllegalStateException e){
-				System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
-			}
+		}
+		catch (IllegalStateException e)
+		{
+			System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
+		}
 		return true;
 	}
 	

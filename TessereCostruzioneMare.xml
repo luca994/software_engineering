@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TessereMare QuantitàTessere="15">
+	<Tessera>
+		<SetCittà>
+			<Città id="Arkon"></Città>
+			<Città id="Burgen"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusMoneta" step="3"></Bonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Burgen"></Città>
+			<Città id="Castrum"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="3"></Bonus>
+			<Bonus id="BonusMoneta" step="3"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Dortid"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="7"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Castrum"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus>
+			<Bonus id="BonusMoneta" step="3"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Burgen"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="3"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Arkon"></Città>
+			<Città id="Dortid"></Città>
+			<Città id="Esti"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusMoneta" step="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" passi="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Arkon"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="4"></Bonus>
+			<Bonus id="BonusMoneta" step="3"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Esti"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAzionePrincipale"></Bonus>
+			<Bonus id="BonusMoneta" step="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Esti"></Città>
+			<Città id="Castrum"></Città>
+			<Città id="Dortid"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
+			<Bonus id="BonusPercorsoNobilta" steps="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Arkon"></Città>
+			<Città id="Burgen"></Città>
+			<Città id="Esti"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusMoneta" step="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Arkon"></Città>
+			<Città id="Castrum"></Città>
+			<Città id="Burgen"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Burgen"></Città>
+			<Città id="Castrum"></Città>
+			<Città id="Dortid"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Esti"></Città>
+			<Città id="Arkon"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPercorsoNobilta" steps="2"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Esti"></Città>
+			<Città id="Dortid"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></SetBonus></Tessera>
+	<Tessera>
+		<SetCittà>
+			<Città id="Castrum"></Città>
+			<Città id="Dortid"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus>
+			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus></SetBonus></Tessera></TessereMare>

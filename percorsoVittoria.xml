@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<percorsoVittoria>
-	<QuantitàCaselle>100</QuantitàCaselle>
+<?xml version="1.0" encoding="UTF-8"?>
+<percorsoVittoria QuantitàCaselle="100">
 	<Casella numero="99">
 		<Bonus id="NessunBonus"/>
 	</Casella>

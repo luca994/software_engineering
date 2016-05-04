@@ -46,7 +46,7 @@ public class EleggiConsigliere implements Azione {
 	public void eseguiAzione (Giocatore giocatore){
 		if(this.consiglio.addConsigliere(this.consigliere)){
 		this.consiglio.removeConsigliere();
-		percorsoRicchezza.muoviGiocatoreAvanti(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+		percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
 		giocatore.setAzionePrincipale(true);}
 	}
 }

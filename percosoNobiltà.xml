@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<percorsoNobiltà>
-	<QuantitàCaselle>21</QuantitàCaselle>
+<?xml version="1.0" encoding="UTF-8"?>
+<percorsoNobiltà QuantitàCaselle="21">
 	<Casella numero="20">
 		<Bonus id="BonusPuntoVittoria" passi="3"/>
 	</Casella>
@@ -39,7 +38,7 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="8">
-		<Bonus id="BonusPuntoVittoria" passi="3"/>
+		<Bonus id="BonusPuntoVittoria" passi="3"/><Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
 	</Casella>
 	<Casella numero="7">
 		<Bonus id="NessunBonus"/>
