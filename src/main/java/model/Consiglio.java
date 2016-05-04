@@ -26,8 +26,9 @@ public class Consiglio {
 	 * retrieves and remove the head of this queue,
 	 * it throws an exception if this queue is empty.
 	 * @author Luca
-	 *Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
+	 *
 	 */
+	//Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
 	public void removeConsigliere(){
 		try{
 		tabellone.addConsigliereDisponibile(consiglio.element());

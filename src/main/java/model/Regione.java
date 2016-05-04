@@ -62,5 +62,11 @@ public class Regione {
 	public List<OggettoConBonus> getTessereCostruzione() {
 		return tessereCostruzione;
 	}
+	/**
+	 * @return the tessereCoperte
+	 */
+	public List<OggettoConBonus> getTessereCoperte() {
+		return tessereCoperte;
+	}
 	
 }
