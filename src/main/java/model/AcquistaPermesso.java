@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -82,11 +81,11 @@ public class AcquistaPermesso implements Azione {
 			giocatore.setAzionePrincipale(true);
 		//}
 		//Rimozione tessere selezionate dalla mano del giocatore
-		for(CartaPolitica cartaSelezionata: cartePolitica)
-			giocatore.getCartePolitica().remove(cartaSelezionata);
+			giocatore.getCartePolitica().removeAll(cartePolitica);
 		
 		List<OggettoConBonus> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
+		//Aggiunta tessera acquistata al set di tessere valide del giocatore
 			giocatore.addTessereValide(tessera);
 			tessera.eseguiBonus(giocatore);
 			//Scopri dal mazzetto una nuova tessera costruzione
