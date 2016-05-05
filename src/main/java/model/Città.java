@@ -13,7 +13,7 @@ import java.util.Set;
 public class Città extends OggettoConBonus {
 
 	private final String nome;
-	private final String colore;
+	private String colore;
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
@@ -26,7 +26,7 @@ public class Città extends OggettoConBonus {
 	public String getNome() {
 		return nome;
 	}
-
+	
 	/**
 	 * 
 	 * @return return the color of the city
@@ -72,11 +72,17 @@ public class Città extends OggettoConBonus {
 	 * @param nome the name of the city
 	 * @param colore the color of the city
 	 */
-	public Città(String nome,String colore){
+	public Città(String nome){//Leggi colora e collega
 		this.nome=nome;
-		this.colore=colore;
 	}
 	
+	/**
+	 * @param colore the colore to set
+	 */
+	public void setColore(String colore) {
+		this.colore = colore;
+	}
+
 	/**
 	 * 
 	 * @param giocatore the owner of the emporium
@@ -128,6 +134,7 @@ public class Città extends OggettoConBonus {
 		while(itrBonus.hasNext()){
 			itrBonus.next().azioneBonus(giocatore);
 		}
+	
 	}
 	
 }

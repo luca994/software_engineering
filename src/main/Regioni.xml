@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SetRegioni>
+	<Regione id="Mare">
+		<Città id="Arkon"></Città>
+		<Città id="Burgen"></Città>
+		<Città id="Castrum"></Città>
+		<Città id="Dortid"></Città>
+		<Città id="Esti"></Città></Regione>
+	<Regione id="Montagna">
+		<Città id="Framek"></Città>
+		<Città id="Graden"></Città>
+		<Città id="Hellar"></Città>
+		<Città id="Indur"></Città>
+		<Città id="Juvelar"></Città></Regione>
+	<Regione id="Pianura">
+		<Città id="Kultos"></Città>
+		<Città id="Lyram"></Città>
+		<Città id="Merkatim"></Città>
+		<Città id="Naris"></Città>
+		<Città id="Osium"></Città></Regione></SetRegioni>

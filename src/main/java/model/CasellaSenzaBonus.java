@@ -1,7 +1,5 @@
 package model;
 
-import java.util.SortedSet;
-
 /**
  * @author Massimiliano Ventura
  * This is the class that represents
@@ -12,5 +10,4 @@ public class CasellaSenzaBonus extends Casella {
 	/**
 	 * giocatori: current set of players standing on this specific box(casella)
 	 */
-	private SortedSet<Giocatore> giocatori;
 }

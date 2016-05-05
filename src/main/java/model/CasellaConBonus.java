@@ -17,6 +17,8 @@ public class CasellaConBonus extends Casella {
 	 * giocatori: current set of players standing on this specific box(casella)
 	 * bouns: set of bonuses assigned to this box, it may be empty, with one or two bonuses
 	 */
-	private SortedSet<Giocatore> giocatori;
 	private Set<Bonus> bonus;
+	public CasellaConBonus (Set<Bonus> bonus){
+		this.bonus=bonus;
+	}
 }

@@ -11,7 +11,15 @@ public class Consigliere {
 	/**
 	 * @return the colore
 	 */
+
 	public String getColore() {
 		return colore;
+	}
+
+	/**
+	 * @param colore
+	 */
+	public Consigliere(String colore) {
+		this.colore = colore;
 	}
 }

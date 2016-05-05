@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mappa2>
-	<QuantitàCittà>15</QuantitàCittà>
-	<Città nome="Arkon" colore="Blu" regione="Mare">
-		<Collegamento>Burgen</Collegamento>
+<mappa7 QuantitàCittà="15">
+	<Città nome="Arkon" colore="Giallo" regione="Mare">
 		<Collegamento>Castrum</Collegamento>
 	</Città>
-	<Città nome="Burgen" colore="Giallo" regione="Mare">
-		<Collegamento>Arkon</Collegamento>
-		<Collegamento>Dortid</Collegamento>
+	<Città nome="Burgen" colore="Rosso" regione="Mare">
 		<Collegamento>Esti</Collegamento>
 	</Città>
 	<Città nome="Castrum" colore="Grigio" regione="Mare">
 		<Collegamento>Arkon</Collegamento>
 		<Collegamento>Framek</Collegamento>
+		<Collegamento>Dortid</Collegamento>
 	</Città>
-	<Città nome="Dortid" colore="Grigio" regione="Mare">
-		<Collegamento>Burgen</Collegamento>
+	<Città nome="Dortid" colore="Blu" regione="Mare">
+		<Collegamento>Castrum</Collegamento>
 		<Collegamento>Graden</Collegamento>
 	</Città>
-	<Città nome="Esti" colore="Rosso" regione="Mare">
+	<Città nome="Esti" colore="Grigio" regione="Mare">
 		<Collegamento>Burgen</Collegamento>
 		<Collegamento>Hellar</Collegamento>
 	</Città>
@@ -50,23 +47,21 @@
 	</Città>
 	<Città nome="Kultos" colore="Giallo" regione="Montagna">
 		<Collegamento>Indur</Collegamento>
+		<Collegamento>Lyram</Collegamento>
+	</Città>
+	<Città nome="Lyram" colore="Blu" regione="Montagna">
+		<Collegamento>Juvelar</Collegamento>
+		<Collegamento>Kultos</Collegamento>
 		<Collegamento>Naris</Collegamento>
 	</Città>
-	<Città nome="Lyram" colore="Grigio" regione="Montagna">
-		<Collegamento>Juvelar</Collegamento>
-		<Collegamento>Osium</Collegamento>
-	</Città>
-	<Città nome="Merkatim" colore="Blu" regione="Montagna">
+	<Città nome="Merkatim" colore="Grigio" regione="Montagna">
 		<Collegamento>Juvelar</Collegamento>
 		<Collegamento>Osium</Collegamento>
 	</Città>
 	<Città nome="Naris" colore="Rosso" regione="Montagna">
-		<Collegamento>Kultos</Collegamento>
-		<Collegamento>Osium</Collegamento>
+		<Collegamento>Lyram</Collegamento>
 	</Città>
 	<Città nome="Osium" colore="Giallo" regione="Montagna">
-		<Collegamento>Naris</Collegamento>
-		<Collegamento>Lyram</Collegamento>
 		<Collegamento>Merkatim</Collegamento>
 	</Città>
-</mappa2>
+</mappa7>

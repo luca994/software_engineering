@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,20 @@ public class Regione {
 	private List<OggettoConBonus> tessereCostruzione;
 	private List<OggettoConBonus> tessereCoperte;
 	
-	public Regione(List<OggettoConBonus> tessereCoperte){
+	public Regione(String nomeRegione, List<String> nomiCittà, Tabellone tabellone){
+		this.nome=nomeRegione;
+		this.città=new HashSet<Città>();
+		for(String nome: nomiCittà)//Creo città, ricordati di collegarle
+		{
+			this.città.add(new Città(nome));
+		}		
+		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
+		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
+		this.consiglio=new Consiglio(tabellone);
+		
+	}
+	
+	public void setTessereCoperte(List<OggettoConBonus> tessereCoperte){
 		this.tessereCoperte=tessereCoperte;
 		Collections.shuffle(this.tessereCoperte);
 		this.tessereCostruzione.add(this.tessereCoperte.get(0));

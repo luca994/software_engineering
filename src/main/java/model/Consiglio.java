@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -15,7 +16,15 @@ public class Consiglio {
 	private int id;
 	private Regione regione;
 	
-	
+	public Consiglio(Tabellone tabellone)
+	{
+		this.consiglio=new LinkedList<Consigliere>();
+		for(int i=0;i<4;i++)//Prendo quattro consiglieri da quelli disponibili e li metto nel consiglio
+		{
+			consiglio.add(tabellone.getConsiglieriDisponibili().get(0));
+			tabellone.getConsiglieriDisponibili().remove(0);
+		}
+	}
 	public List<String> acquisisciColoriConsiglio(){
 		List<String> colori= new ArrayList<String>(); 
 		for(Consigliere c : consiglio)
