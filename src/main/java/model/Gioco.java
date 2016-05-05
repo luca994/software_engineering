@@ -25,11 +25,12 @@ public class Gioco {
 	public Tabellone getTabellone() {
 		return tabellone;
 	}
-	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
+	public Gioco () throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
 		String nomeMappaScelta="mappacollegamenti0.xml";// Ottenuta dal controller
 		this.tabellone=new Tabellone(nomeMappaScelta);
+		//ottengo elenco nome giocatori
 		
 	}//mettere i catch delle eccezioni della lettura xml
 

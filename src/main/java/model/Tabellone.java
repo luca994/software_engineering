@@ -104,6 +104,7 @@ public class Tabellone {
 			}
 			gettoniCittà.add(bonus);//Aggiungo i set di bonus alla lista di bonus
 		}
+		Collections.shuffle(gettoniCittà);
 		
 		//Collego, coloro le città(devo passare attraverso le regioni), creo e assegno bonus, piazzo il re
 		SAXBuilder builderCollegamenti = new SAXBuilder();
@@ -120,6 +121,13 @@ public class Tabellone {
 					if(cittàMappa.getAttributeValue("nome")==cit.getNome())
 					{
 						cit.setColore(cittàMappa.getAttributeValue("colore"));
+						if(cit.getColore().equals("Viola"))
+							cit.setRe(new Re("Blallo", cit, new Consiglio(this)));//Quale dovrebbe essere il colore del re??
+						else
+						{
+							cit.getBonus().addAll(gettoniCittà.get(0));
+							gettoniCittà.remove(0);
+						}
 						List<Element> elencoCollegamenti =cittàMappa.getChildren();
 						for(Element coll:elencoCollegamenti)
 						{

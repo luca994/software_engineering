@@ -53,7 +53,7 @@ public class Città extends OggettoConBonus {
 
 	/**
 	 * 
-	 * @return return the set of bonus of the city
+	 * @return the set of bonus of the city
 	 */
 	public Set<Bonus> getBonus() {
 		return bonus;

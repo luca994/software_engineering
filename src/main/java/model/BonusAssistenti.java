@@ -17,8 +17,8 @@ public class BonusAssistenti implements Bonus {
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
+		for(int i=0;i<numeroAssistenti;i++)
 		giocatore.getAssistenti().add(new Assistente());
-		
 	}
 	
 }

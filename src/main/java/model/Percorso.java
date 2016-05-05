@@ -22,6 +22,7 @@ import org.jdom2.input.SAXBuilder;
 public class Percorso 
 {
 	private List<Casella> caselle;
+	private Casella casellacorrente;
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
 		SAXBuilder builderPercorso = new SAXBuilder();
@@ -96,8 +97,15 @@ public class Percorso
 			{
 				giocatoriCasellaCorrente.remove(giocatore);
 				for(int j=0;j<passi&&itcasella.hasNext();j++)
-					giocatoriCasellaCorrente=itcasella.next().getGiocatori();
+				{
+					casellacorrente=itcasella.next();
+					giocatoriCasellaCorrente=casellacorrente.getGiocatori();					
+				}
 				giocatoriCasellaCorrente.add(giocatore);
+				if (casellacorrente instanceof CasellaConBonus) {
+					for(Bonus bon : ((CasellaConBonus) casellacorrente).getBonus())
+						bon.azioneBonus(giocatore);
+				    }
 				break;
 			}
 		}				
