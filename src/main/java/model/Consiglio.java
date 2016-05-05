@@ -23,8 +23,8 @@ public class Consiglio {
 		return colori;
 	}
 	/**
-	 * retrieves and remove the head of this queue,
-	 * it throws an exception if this queue is empty.
+	 * Retrieves and remove the head of this queue,
+	 * Throws NoSuchElementException if this queue is empty.
 	 * @author Luca
 	 *
 	 */
@@ -65,7 +65,7 @@ public class Consiglio {
 		}
 		catch (IllegalStateException e)
 		{
-			System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
+			System.err.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
 		}
 		return true;
 	}

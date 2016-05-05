@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -95,11 +94,12 @@ public class Città extends OggettoConBonus {
 	 * @param giocatore the owner of the emporium
 	 * @return return a list of near cities which have the player' s emporium
 	 */
-	public List<Città> cittàVicinaConEmporio(Giocatore giocatore){
-		List<Città> cittàVicineConEmpori=new ArrayList<Città>();
+	//cittàVicineConEmpori inizialmente vuota
+	public List<Città> cittàVicinaConEmporio(Giocatore giocatore,List<Città> cittàVicineConEmpori){
 		for(Città c:cittàVicina){
-			if (c.presenzaEmporio(giocatore)){
+			if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
 				cittàVicineConEmpori.add(c);
+				c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
 			}
 		}
 		return cittàVicineConEmpori;
@@ -112,7 +112,7 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is a player's emporium
 	 */
 	public boolean aggiungiEmporio(Giocatore giocatore){
-		if(presenzaEmporio(giocatore)==false){
+		if(!presenzaEmporio(giocatore)){
 			empori.add(giocatore);
 			return true;
 		}

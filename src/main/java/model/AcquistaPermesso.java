@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.sound.midi.SysexMessage;
+
 /**
  *
  * @author Luca
@@ -41,14 +43,14 @@ public class AcquistaPermesso implements Azione {
 	
 	/**
 	 * Executes the action of buying a Tessera Permesso di Costruzione; 
-	 * Throws IllegalStateException if the number of Carta Politica is less than one or more than four,
-	 * Throws IndexOutOfBoundsException if an error occurs during the count of the cards
-	 * Throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
+	 * @throws IllegalStateException if the number of Carta Politica is less than one or more than four,
+	 * @throws IndexOutOfBoundsException if an error occurs during the count of the cards
+	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
 	 */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
-		int numeroCartePolitica=cartePolitica.size();
+		try{int numeroCartePolitica=cartePolitica.size();
 		int jollyUsati=0;
 		int counter=0;
 		if(numeroCartePolitica<1||numeroCartePolitica>4)
@@ -95,6 +97,12 @@ public class AcquistaPermesso implements Azione {
 			//Scopri dal mazzetto una nuova tessera costruzione
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tessera);
 			giocatore.setAzionePrincipale(true);
+		}}
+		catch(IllegalStateException e){
+			System.err.println(e.getLocalizedMessage());
+		}
+		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getLocalizedMessage());
 		}
 	}
 }

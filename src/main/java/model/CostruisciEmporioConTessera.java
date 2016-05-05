@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Luca
  *
@@ -35,17 +38,31 @@ public class CostruisciEmporioConTessera implements Azione {
 	 * Build a new emporio using a Tessera Costruzione owned by the player
 	 * Throws IllegalStateException if Tessera Costruzione is not appropriated for this city or the player alredy has an emporio
 	 */
+
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
-		if(giocatore.containsTesseraValide(tessera) && tessera.verifyCittà(città)&&città.presenzaEmporio(giocatore)){
-			//azione da definire, chiedere a richi come funzionano i metodi di città
-			giocatore.moveTesseraValidaToTesseraUsata(tessera);
-			città.aggiungiEmporio(giocatore);
-			giocatore.decrementaEmporiRimasti();
-			giocatore.setAzionePrincipale(true);
-		}
+		try{
+			if(giocatore.containsTesseraValide(tessera) && tessera.verifyCittà(città)&&città.presenzaEmporio(giocatore)){
+				//azione da definire, chiedere a richi come funzionano i metodi di città
+				giocatore.moveTesseraValidaToTesseraUsata(tessera);
+				città.aggiungiEmporio(giocatore);
+				giocatore.decrementaEmporiRimasti();
+				//Mi piglio i bonus di questa e delle città collegate
+				List<Città> cittàConBonusDaOttenere=new ArrayList<Città>();
+				cittàConBonusDaOttenere.add(città);
+				città.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
+				for(Città citt: cittàConBonusDaOttenere)
+					citt.eseguiAzioneBonus(giocatore);
+				giocatore.setAzionePrincipale(true);
+			
+			}
 		else 
 			throw new IllegalStateException("L'emporio è già presente oppure la tessera non è appropriata");
+		}
+		catch(IllegalStateException e){
+			System.err.println(e.getLocalizedMessage());
+			//Non viene eseguito nulla, il turno del giocatore continua
+		}
 	}
 
 	

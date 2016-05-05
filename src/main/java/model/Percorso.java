@@ -19,8 +19,8 @@ public class Percorso
 		this.caselle=new ArrayList<Casella>();
 	}
 	/**
-	 * This method is used to move the player along the route(Percorso) if the number of steps(passi)
-	 * is negative the player will move backwards.
+	 * Moves the player along the route(Percorso) if the number of steps(passi) is negative the player will move backwards.
+	 * @Throws IndexOutOfBoundsException if giocatore hasn't enough money
 	 * @param giocatore
 	 * @param passi
 	 */
@@ -86,7 +86,8 @@ public class Percorso
 				
 	}
 	/**
-	 * The position number  of giocatore in the current route, Throws IllegalArgumentExeption 
+	 * @returns the position number  of giocatore in the current route, 
+	 * @Throws IllegalArgumentExeption 
 	 * when can't find giocatore in the route
 	 * @param giocatore
 	 * 
