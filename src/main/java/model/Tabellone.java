@@ -21,9 +21,9 @@ import org.jdom2.input.SAXBuilder;
 public class Tabellone {
 
 	private Set<Regione> regioni;
-	private Set<OggettoConBonus> tessereBonusRegione;
-	private Set<OggettoConBonus> tessereBonusCittà;
-	private Set<OggettoConBonus> tesserePremioRe;
+	private Set<TesseraBonus> tessereBonusRegione;
+	private Set<TesseraBonus> tessereBonusCittà;
+	private Set<TesseraBonus> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
 	private Set<Consiglio> consigli;
 	private Percorso percorsoNobiltà;
@@ -193,9 +193,13 @@ public class Tabellone {
 	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
 	 * reading them from a file
 	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws IOException throw an exception if the method doesn't found the file or
+	 *         there is another error about the file
 	 */
 	public void creaTessereBonus() throws JDOMException, IOException{
+		this.tessereBonusCittà=new HashSet<TesseraBonus>();
+		this.tessereBonusRegione=new HashSet<TesseraBonus>();
+		this.tesserePremioRe=new HashSet<TesseraBonus>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
 		Document documentTessereBonus = builderTessereBonus.build(new File("TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
@@ -285,6 +289,8 @@ public class Tabellone {
 	
 	/**
 	 * check if a player has an emporium in all the city of a color
+	 * @param giocatore the player who has to check the bonus
+	 * @param città the city in which the method take the color
 	 * @author riccardo
 	 * @return return true if the player has an emporium in all the city of a color
 	 */
@@ -307,7 +313,7 @@ public class Tabellone {
 	 * @param città the city in which the player build the emporium
 	 * @return return true if the player has an emporium in all the city of a region
 	 */
-	public boolean verficaEmporioRegioneBonus(Giocatore giocatore,Città città){
+	public boolean verificaEmporioRegioneBonus(Giocatore giocatore,Città città){
 		for(Città c:città.getRegione().getCittà()){
 			if(!c.getEmpori().contains(giocatore)){
 				return false;
@@ -315,6 +321,27 @@ public class Tabellone {
 		}
 		return true;
 	}
+	
+	public void prendiTesseraBonus(Giocatore giocatore,Città città){
+		if(verificaEmporioColoreBonus(giocatore, città)){
+			for(TesseraBonus t:tessereBonusCittà){
+				if(città.getColore().equals(t.getColore())){
+					t.eseguiBonus(giocatore);
+					tessereBonusCittà.remove(t);
+				}
+			}
+		}
+		if(verificaEmporioRegioneBonus(giocatore, città)){
+			for(TesseraBonus t:tessereBonusRegione){
+				if(t.getRegione().equals(città.getRegione())){
+					t.eseguiBonus(giocatore);
+					tessereBonusRegione.remove(t);
+				}
+			}
+		}
+		//manca da aggiungere la tessera premio del re, se ce ne sono ancora
+	}
+	
 	/**
 	 * This method removes the first occurrence of the specified 
 	 * element from this list, if it is present

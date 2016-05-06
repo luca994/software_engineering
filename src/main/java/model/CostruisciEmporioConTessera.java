@@ -11,14 +11,16 @@ public class CostruisciEmporioConTessera implements Azione {
 
 	private Città città;
 	private TesseraCostruzione tessera;
+	private Tabellone tabellone;
 	/**
 	 * @param città
 	 * @param tessera
 	 */
-	public CostruisciEmporioConTessera(Città città, TesseraCostruzione tessera) {
+	public CostruisciEmporioConTessera(Città città, TesseraCostruzione tessera, Tabellone tabellone) {
 		super();
 		this.città = città;
 		this.tessera = tessera;
+		this.tabellone=tabellone;
 	}
 
 	/**
@@ -34,11 +36,11 @@ public class CostruisciEmporioConTessera implements Azione {
 	public void setTessera(TesseraCostruzione tessera) {
 		this.tessera = tessera;
 	}
+	
 	/**
 	 * Build a new emporio using a Tessera Costruzione owned by the player
 	 * Throws IllegalStateException if Tessera Costruzione is not appropriated for this city or the player alredy has an emporio
 	 */
-
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		try{
@@ -54,10 +56,11 @@ public class CostruisciEmporioConTessera implements Azione {
 				for(Città citt: cittàConBonusDaOttenere)
 					citt.eseguiBonus(giocatore);
 				giocatore.setAzionePrincipale(true);
-			
+				//controllo se ho gli empori in tutte le città di un colore o d una regione
+				tabellone.prendiTesseraBonus(giocatore, città);
 			}
-		else 
-			throw new IllegalStateException("L'emporio è già presente oppure la tessera non è appropriata");
+			else 
+				throw new IllegalStateException("L'emporio è già presente oppure la tessera non è appropriata");
 		}
 		catch(IllegalStateException e){
 			System.err.println(e.getLocalizedMessage());

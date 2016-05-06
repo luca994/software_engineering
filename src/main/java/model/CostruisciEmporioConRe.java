@@ -14,6 +14,7 @@ public class CostruisciEmporioConRe implements Azione {
 	private Città città;
 	private List<CartaPolitica> cartePolitica;
 	private Percorso percorsoRicchezza;
+	private Tabellone tabellone;
 	
 	/**
 	 * Builds an emporio in the same city where the king is situated. 
@@ -74,6 +75,7 @@ public class CostruisciEmporioConRe implements Azione {
 			for(Città citt: cittàConBonusDaOttenere)
 			citt.eseguiBonus(giocatore);
 			giocatore.setAzionePrincipale(true);
+			tabellone.prendiTesseraBonus(giocatore, città);
 	
 		}
 		catch(IndexOutOfBoundsException e){
