@@ -37,6 +37,6 @@ public class TesseraCostruzione extends OggettoConBonus {
 		}
 		}
 	public boolean verifyCittà(Città cittàDaVerificare){
-		return nomeCittà.contains(cittàDaVerificare);
+		return nomeCittà.contains(cittàDaVerificare.getNome());
 	}
 }

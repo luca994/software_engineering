@@ -28,8 +28,5 @@ public class TesseraBonus extends OggettoConBonus {
 	public void eseguiBonus (Giocatore giocatore){
 		for(Bonus b : bonus){
 			b.azioneBonus(giocatore);
-		}
-			
-			
-	}
+		}}
 }
