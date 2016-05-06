@@ -25,17 +25,19 @@ public class Consiglio {
 			tabellone.getConsiglieriDisponibili().remove(0);
 		}
 	}
+	
+	
 	public List<String> acquisisciColoriConsiglio(){
 		List<String> colori= new ArrayList<String>(); 
 		for(Consigliere c : consiglio)
 			colori.add(c.getColore());
 		return colori;
 	}
+	
 	/**
 	 * Retrieves and remove the head of this queue,
 	 * Throws NoSuchElementException if this queue is empty.
 	 * @author Luca
-	 *
 	 */
 	//Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
 	public void removeConsigliere(){
@@ -52,11 +54,7 @@ public class Consiglio {
 	 * this method Inserts the specified element into this queue if it is possible
 	 * to do so immediately without violating capacity restrictions, returning true upon 
 	 * success and throwing an IllegalStateException if no space is currently available.
-	 * 
 	 * @author Luca
-	 * 
-	 * Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
-	 * 
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try

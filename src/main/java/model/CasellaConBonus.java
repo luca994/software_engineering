@@ -17,14 +17,15 @@ public class CasellaConBonus extends Casella {
 	 * bouns: set of bonuses assigned to this box, it may be empty, with one or two bonuses
 	 */
 	private Set<Bonus> bonus;
+	
 	public CasellaConBonus (Set<Bonus> bonus){
 		this.bonus=bonus;
 	}
+	
 	/**
 	 * @return
 	 */
 	public Set<Bonus> getBonus() {
-		// TODO Auto-generated method stub
 		return bonus;
 	}
 }

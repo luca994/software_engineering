@@ -14,6 +14,7 @@ public class CostruisciEmporioConRe implements Azione {
 	private Città città;
 	private List<CartaPolitica> cartePolitica;
 	private Percorso percorsoRicchezza;
+	
 	/**
 	 * Builds an emporio in the same city where the king is situated. 
 	 * @throws IllegalStateException when giocatore has already an emporio in the city. 
@@ -71,7 +72,7 @@ public class CostruisciEmporioConRe implements Azione {
 			cittàConBonusDaOttenere.add(città);
 			città.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
 			for(Città citt: cittàConBonusDaOttenere)
-			citt.eseguiAzioneBonus(giocatore);
+			citt.eseguiBonus(giocatore);
 			giocatore.setAzionePrincipale(true);
 	
 		}

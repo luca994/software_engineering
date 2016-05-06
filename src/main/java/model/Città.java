@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -17,8 +16,8 @@ public class Città extends OggettoConBonus {
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
-	private Set<Bonus> bonus;
 	private final Regione regione;
+
 	
 	/**
 	 * 
@@ -73,7 +72,7 @@ public class Città extends OggettoConBonus {
 	 * @return the set of bonus of the city
 	 */
 	public Set<Bonus> getBonus() {
-		return bonus;
+		return this.getBonus();
 	}
 	
 	/**
@@ -83,22 +82,23 @@ public class Città extends OggettoConBonus {
 	public void setRe(Re re) {
 		this.re = re;
 	}
-
-	/**
-	 * build a city
-	 * @param nome the name of the city
-	 * @param colore the color of the city
-	 */
-	public Città(String nome,Regione regione){//Leggi colora e collega
-		this.nome=nome;
-		this.regione=regione;
-	}
 	
 	/**
 	 * @param colore the colore to set
 	 */
 	public void setColore(String colore) {
 		this.colore = colore;
+	}
+	
+	
+	/**
+	 * @param nome
+	 * @param regione
+	 */
+	public Città(String nome, Regione regione) {
+		super(null);
+		this.nome = nome;
+		this.regione = regione;
 	}
 
 	/**
@@ -141,18 +141,6 @@ public class Città extends OggettoConBonus {
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * it does the action of the bonuses in the city
-	 * @param giocatore the player who wants to add the emporium
-	 */
-	public void eseguiAzioneBonus(Giocatore giocatore){
-		Iterator<Bonus> itrBonus= bonus.iterator();
-		while(itrBonus.hasNext()){
-			itrBonus.next().azioneBonus(giocatore);
-		}
-	
 	}
 	
 }

@@ -5,38 +5,50 @@ import java.util.Set;
 public class TesseraCostruzione extends OggettoConBonus {
 
 	private Set<Città> città;
-	private Set<Bonus> elencoBonus;
-	
-	
+	private Regione regioneDiAppartenenza;
 	
 	/**
+	 * @param bonus
 	 * @param città
-	 * @param elencoBonus
+	 * @param regioneDiAppartenenza
 	 */
-	public TesseraCostruzione(Set<Città> città, Set<Bonus> elencoBonus) {
+	public TesseraCostruzione(Set<Bonus> bonus, Set<Città> città, Regione regioneDiAppartenenza) {
+		super(bonus);
 		this.città = città;
-		this.elencoBonus = elencoBonus;
-	}
-	/**
-	 * @return the elencoBonus
-	 */
-	public Set<Bonus> getElencoBonus() {
-		return this.elencoBonus;
-	}
-	/**
-	 * @param elencoBonus the elencoBonus to set
-	 */
-	public void setElencoBonus(Set<Bonus> elencoBonus) {
-		this.elencoBonus = elencoBonus;
+		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 	
-	public void eseguiBonus (Giocatore giocatore){
-		for(Bonus b : elencoBonus){
-			b.azioneBonus(giocatore);
-		}
-	}
 	public boolean verifyCittà(Città cittàDaVerificare){
-
 		return this.città.contains(cittàDaVerificare);
 		}
+	
+	/**
+	 * @return the città
+	 */
+	public Set<Città> getCittà() {
+		return città;
+	}
+	
+	/**
+	 * @return the regioneDiAppartenenza
+	 */
+	public Regione getRegioneDiAppartenenza() {
+		return regioneDiAppartenenza;
+	}
+
+
+	/**
+	 * @param città the città to set
+	 */
+	public void setCittà(Set<Città> città) {
+		this.città = città;
+	}
+
+
+	/**
+	 * @param regioneDiAppartenenza the regioneDiAppartenenza to set
+	 */
+	public void setRegioneDiAppartenenza(Regione regioneDiAppartenenza) {
+		this.regioneDiAppartenenza = regioneDiAppartenenza;
+	}
 }

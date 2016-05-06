@@ -1,6 +1,9 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
@@ -25,7 +28,9 @@ public class Gioco {
 		int numGiocatore=1;
 		for(Giocatore gio:giocatori)
 		{
-			//id, nome,empori rimasti(10) e stringa sono già settati
+			//id, nome, e colore sono già settati
+			//setto empori rimasti a 10
+			gio.setEmporiRimasti(10);
 			//setto assistenti
 			for(int i=0;i<numGiocatore;i++)
 				gio.getAssistenti().add(new Assistente());
@@ -41,9 +46,18 @@ public class Gioco {
 				gio.getCartePolitica().add(new CartaPolitica());
 			}
 			numGiocatore++;
-		}
-			
+		}			
 		this.giocatori=giocatori;
+		if(numGiocatore==2)
+		{
+			Giocatore dummy=new Giocatore(null, "colore");
+			for(Regione regi: tabellone.getRegioni() ){
+				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
+				cit.aggiungiEmporio(dummy);
+					Collections.shuffle(regi.getTessereCoperte());
+			}
+			
+		}
 	}//mettere i catch delle eccezioni della lettura xml
 /**
 	 * @return the tabellone

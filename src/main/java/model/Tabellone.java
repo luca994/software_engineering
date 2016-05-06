@@ -30,6 +30,53 @@ public class Tabellone {
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	
+
+	/**
+	 * @return the regioni
+	 */
+	public Set<Regione> getRegioni() {
+		return regioni;
+	}
+
+	/**
+	 * @return the consiglieriDisponibili
+	 */
+	public List<Consigliere> getConsiglieriDisponibili() {
+		return consiglieriDisponibili;
+	}
+
+
+	/**
+	 * @return the consigli
+	 */
+	public Set<Consiglio> getConsigli() {
+		return consigli;
+	}
+
+
+	/**
+	 * @return the percorsoNobiltà
+	 */
+	public Percorso getPercorsoNobiltà() {
+		return percorsoNobiltà;
+	}
+
+
+	/**
+	 * @return the percorsoRicchezza
+	 */
+	public Percorso getPercorsoRicchezza() {
+		return percorsoRicchezza;
+	}
+
+
+	/**
+	 * @return the percorsoVittoria
+	 */
+	public Percorso getPercorsoVittoria() {
+		return percorsoVittoria;
+	}
+	
 	/**
 	 * constructor called by gioco.setup()
 	 * @throws IOException 
@@ -157,19 +204,19 @@ public class Tabellone {
 			
 			//leggo il tipo di bonus e l' attributo da assegnare alla tessera
 			Element tipoBonus = e.getChild("Bonus");
-			Bonus bonus;
+			Set<Bonus> bonus= new HashSet<Bonus>();
 			if(tipoBonus.getAttributeValue("id").equals("BonusMoneta"))
-				bonus = new BonusMoneta(percorsoVittoria,Integer.parseInt(tipoBonus.getAttributeValue("step")));
+				bonus.add(new BonusMoneta(percorsoVittoria,Integer.parseInt(tipoBonus.getAttributeValue("step"))));
 			else if(tipoBonus.getAttributeValue("id").equals("BonusPuntoVittoria"))
-				bonus = new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(tipoBonus.getAttributeValue("passi")));
+				bonus.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(tipoBonus.getAttributeValue("passi"))));
 			else if(tipoBonus.getAttributeValue("id").equals("BonusCartaPolitica"))
-				bonus = new BonusCartaPolitica(Integer.parseInt(tipoBonus.getAttributeValue("numeroCarte")));
+				bonus.add(new BonusCartaPolitica(Integer.parseInt(tipoBonus.getAttributeValue("numeroCarte"))));
 			else if(tipoBonus.getAttributeValue("id").equals("BonusAssistenti"))
-				bonus = new BonusAssistenti(Integer.parseInt(tipoBonus.getAttributeValue("numeroAssistenti")));
+				bonus.add(new BonusAssistenti(Integer.parseInt(tipoBonus.getAttributeValue("numeroAssistenti"))));
 			else if(tipoBonus.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-				bonus = new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(tipoBonus.getAttributeValue("steps")));
+				bonus.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(tipoBonus.getAttributeValue("steps"))));
 			else if(tipoBonus.getAttributeValue("id").equals("AzionePrincipale"))
-				bonus = new BonusAzionePrincipale();
+				bonus.add(new BonusAzionePrincipale());
 			
 			//creo le tessere bonus per la regione
 			if(e.getAttributeValue("id").equals("regione")){
@@ -287,64 +334,5 @@ public class Tabellone {
 		catch(UnsupportedOperationException e3){
 			System.out.println("l'operazione di rimozione non è supportata dalla lista");
 		}
-	}
-
-
-	/**
-	 * @return the regioni
-	 */
-	public Set<Regione> getRegioni() {
-		return regioni;
-	}
-
-
-	/**
-	 * @return the tessereBonus
-	 */
-	public Set<OggettoConBonus> getTessereBonus() {
-		return tessereBonus;
-	}
-
-
-	/**
-	 * @return the consiglieriDisponibili
-	 */
-	public List<Consigliere> getConsiglieriDisponibili() {
-		return consiglieriDisponibili;
-	}
-
-
-	/**
-	 * @return the consigli
-	 */
-	public Set<Consiglio> getConsigli() {
-		return consigli;
-	}
-
-
-	/**
-	 * @return the percorsoNobiltà
-	 */
-	public Percorso getPercorsoNobiltà() {
-		return percorsoNobiltà;
-	}
-
-
-	/**
-	 * @return the percorsoRicchezza
-	 */
-	public Percorso getPercorsoRicchezza() {
-		return percorsoRicchezza;
-	}
-
-
-	/**
-	 * @return the percorsoVittoria
-	 */
-	public Percorso getPercorsoVittoria() {
-		return percorsoVittoria;
-	}
-	
-	
-	
+	}	
 }

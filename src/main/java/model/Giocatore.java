@@ -17,13 +17,22 @@ public class Giocatore {
 		private String colore;
 		private List<OggettoConBonus> tessereUsate;
 		private List<OggettoConBonus> tessereValide;
-		private Azione azione;
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
 		private int emporiRimasti;
 		
-		
+		public Giocatore(String nome, String colore){
+			this.colore=colore;
+			this.nome=nome;
+		}
+		/**
+		 * @param emporiRimasti the emporiRimasti to set
+		 */
+		public void setEmporiRimasti(int emporiRimasti) {
+			this.emporiRimasti = emporiRimasti;
+		}
+
 		/**
 		 * @return the emporiRimasti
 		 */
@@ -127,9 +136,7 @@ public class Giocatore {
 		public List<OggettoConBonus> getTessereValide() {
 			return tessereValide;
 		}
-		public Azione getAzione() {
-			return azione;
-		}
+		
 		public Gioco getGioco() {
 			return gioco;
 		}
@@ -145,6 +152,13 @@ public class Giocatore {
 		}
 		public boolean isConnesso() {
 			return connesso;
+		}
+
+		/**
+		 * @param i
+		 */
+		public void setId(int id) {
+			this.id=id;			
 		}
 
 		

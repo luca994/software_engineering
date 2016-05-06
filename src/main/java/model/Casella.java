@@ -10,7 +10,9 @@ import java.util.Set;
  * @author Massimiliano Ventura
  */
 public abstract class Casella {
+	
 	private Set<Giocatore> giocatori;
+	
 	public Casella(){
 		this.giocatori= new HashSet<Giocatore>();
 	}

@@ -8,7 +8,9 @@ package model;
  *
  */
 public class BonusCartaPolitica implements Bonus {
+	
 	private int numeroCarte;
+	
 	public BonusCartaPolitica(int numeroCarte)
 	{
 		this.numeroCarte=numeroCarte;

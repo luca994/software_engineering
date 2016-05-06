@@ -77,7 +77,7 @@ public class Regione {
 					}
 				}
 			}
-			elencoRiferimentiTessere.add(new TesseraCostruzione(elencoRiferimentiCittà,bonusTessera));
+			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera,elencoRiferimentiCittà,this));
 		}
 		setTessereCoperte(elencoRiferimentiTessere);
 	}
