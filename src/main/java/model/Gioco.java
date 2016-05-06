@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
