@@ -17,6 +17,7 @@ public class MuoviRe implements Azione {
 	@Override
 	public void eseguiAzione(Giocatore giocatore) {
 		boolean azioneFinita=false;
+
 		Città cittàSuccessiva= new Città("ciao",null);
 		//		while(!azioneFinita)
 		{

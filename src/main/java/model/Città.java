@@ -16,8 +16,17 @@ public class Città extends OggettoConBonus {
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
-	private Regione regione;
+	private final Regione regione;
+
 	
+	/**
+	 * 
+	 * @return return the set of emporiums built in the city
+	 */
+	public Set<Giocatore> getEmpori() {
+		return empori;
+	}
+
 	/**
 	 * 
 	 * @return return the name of the city
@@ -40,6 +49,14 @@ public class Città extends OggettoConBonus {
 	 */
 	public Re getRe() {
 		return re;
+	}
+
+	/**
+	 * 
+	 * @return return the region of the city
+	 */
+	public Regione getRegione() {
+		return regione;
 	}
 
 	/**

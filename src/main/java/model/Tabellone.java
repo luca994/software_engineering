@@ -241,6 +241,38 @@ public class Tabellone {
 		}}
 	
 	/**
+	 * check if a player has an emporium in all the city of a color
+	 * @author riccardo
+	 * @return return true if the player has an emporium in all the city of a color
+	 */
+	public boolean verificaEmporioColoreBonus(Giocatore giocatore,Città città){
+		for(Regione r:regioni){
+			for(Città c:r.getCittà()){
+				if (città.getColore()==c.getColore()){
+					if(!c.getEmpori().contains(giocatore)){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param giocatore the player who builds the emporium
+	 * @param città the city in which the player build the emporium
+	 * @return return true if the player has an emporium in all the city of a region
+	 */
+	public boolean verficaEmporioRegioneBonus(Giocatore giocatore,Città città){
+		for(Città c:città.getRegione().getCittà()){
+			if(!c.getEmpori().contains(giocatore)){
+				return false;
+			}
+		}
+		return true;
+	}
+	/**
 	 * This method removes the first occurrence of the specified 
 	 * element from this list, if it is present
 	 * @author Luca

@@ -22,7 +22,17 @@ public class Giocatore {
 		private boolean connesso;
 		private int emporiRimasti;
 		
-		
+		public Giocatore(String nome, String colore){
+			this.colore=colore;
+			this.nome=nome;
+		}
+		/**
+		 * @param emporiRimasti the emporiRimasti to set
+		 */
+		public void setEmporiRimasti(int emporiRimasti) {
+			this.emporiRimasti = emporiRimasti;
+		}
+
 		/**
 		 * @return the emporiRimasti
 		 */
@@ -142,6 +152,13 @@ public class Giocatore {
 		}
 		public boolean isConnesso() {
 			return connesso;
+		}
+
+		/**
+		 * @param i
+		 */
+		public void setId(int id) {
+			this.id=id;			
 		}
 
 		
