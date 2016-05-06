@@ -76,7 +76,7 @@ public class Tabellone {
 				nomiCittà.add(città.getAttributeValue("id"));
 			}
 			//Costruisco la regione
-			this.regioni.add(new Regione(regione.getAttributeValue("id"),nomiCittà,this));
+			this.regioni.add(new Regione(percorsoRicchezza,percorsoNobiltà,percorsoVittoria,regione.getAttributeValue("id"),nomiCittà,this));
 		}
 		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
 		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);

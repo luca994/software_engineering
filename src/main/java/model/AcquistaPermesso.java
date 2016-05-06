@@ -1,10 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.sound.midi.SysexMessage;
 
 /**
  *
@@ -57,17 +53,15 @@ public class AcquistaPermesso implements Azione {
 			throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 		//Creazione copie liste dei colori del consiglio
 		List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-		List<String> cpycolori= new ArrayList<>();
-		Collections.copy(cpycolori, colori);
 	//		if(giocatore.containsAllCarte(cartePolitica)){
 			for(CartaPolitica car : cartePolitica){
 				if(car.getColore().equals("JOLLY"))
 					jollyUsati++;//conto i jolly usati
-				for(String col : cpycolori){
+				for(String col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
-						cpycolori.remove(col);
+						colori.remove(col);
 						break;
 					}
 				}			
@@ -89,7 +83,7 @@ public class AcquistaPermesso implements Azione {
 		//Rimozione tessere selezionate dalla mano del giocatore
 			giocatore.getCartePolitica().removeAll(cartePolitica);
 		
-		List<OggettoConBonus> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
+		List<TesseraCostruzione> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
 		//Aggiunta tessera acquistata al set di tessere valide del giocatore
 			giocatore.addTessereValide(tessera);
