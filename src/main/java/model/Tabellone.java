@@ -21,7 +21,9 @@ import org.jdom2.input.SAXBuilder;
 public class Tabellone {
 
 	private Set<Regione> regioni;
-	private Set<OggettoConBonus> tessereBonus;
+	private Set<OggettoConBonus> tessereBonusRegione;
+	private Set<OggettoConBonus> tessereBonusCittà;
+	private Set<OggettoConBonus> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
 	private Set<Consiglio> consigli;
 	private Percorso percorsoNobiltà;
@@ -137,7 +139,57 @@ public class Tabellone {
 				}
 			}
 		}
+		creaTessereBonus();
 	}
+	
+	/**
+	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
+	 * reading them from a file
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void creaTessereBonus() throws JDOMException, IOException{
+		SAXBuilder builderTessereBonus = new SAXBuilder();
+		Document documentTessereBonus = builderTessereBonus.build(new File("TessereBonus.xml"));
+		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
+		List<Element> tessere = tessereBonusRootElement.getChildren();
+		for(Element e:tessere){
+			
+			//leggo il tipo di bonus e l' attributo da assegnare alla tessera
+			Element tipoBonus = e.getChild("Bonus");
+			Bonus bonus;
+			if(tipoBonus.getAttributeValue("id").equals("BonusMoneta"))
+				bonus = new BonusMoneta(percorsoVittoria,Integer.parseInt(tipoBonus.getAttributeValue("step")));
+			else if(tipoBonus.getAttributeValue("id").equals("BonusPuntoVittoria"))
+				bonus = new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(tipoBonus.getAttributeValue("passi")));
+			else if(tipoBonus.getAttributeValue("id").equals("BonusCartaPolitica"))
+				bonus = new BonusCartaPolitica(Integer.parseInt(tipoBonus.getAttributeValue("numeroCarte")));
+			else if(tipoBonus.getAttributeValue("id").equals("BonusAssistenti"))
+				bonus = new BonusAssistenti(Integer.parseInt(tipoBonus.getAttributeValue("numeroAssistenti")));
+			else if(tipoBonus.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
+				bonus = new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(tipoBonus.getAttributeValue("steps")));
+			else if(tipoBonus.getAttributeValue("id").equals("AzionePrincipale"))
+				bonus = new BonusAzionePrincipale();
+			
+			//creo le tessere bonus per la regione
+			if(e.getAttributeValue("id").equals("regione")){
+				for(Regione r:regioni){
+					if(r.getNome().equals(e.getAttributeValue("regione"))){
+						tessereBonusRegione.add(new TesseraBonus(r,null,bonus));
+					}
+				}
+			}
+			//costruisco le tessere bonus per le città
+			if(e.getAttributeValue("id").equals("città")){
+				tessereBonusCittà.add(new TesseraBonus(null,e.getAttributeValue("colore"),bonus));
+			}
+			//costruisco le tessere premio del re
+			if(e.getAttributeValue("id").equals("premioRe")){
+				tesserePremioRe.add(new TesseraBonus(null, null, bonus));
+			}
+		}
+	}
+	
 	public Città cercaCittà(String nome)
 	{
 		for(Regione regione:this.regioni)

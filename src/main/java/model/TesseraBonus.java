@@ -9,24 +9,12 @@ import java.util.Set;
  */
 public class TesseraBonus extends OggettoConBonus {
 
-	private Set<Bonus> bonus;
+	private Regione regione;
+	private String colore;
 
-	/**
-	 * @return the bonus
-	 */
-	public Set<Bonus> getBonus() {
-		return bonus;
+	public TesseraBonus(Regione regione, String colore, Set<Bonus> bonus){
+		super(bonus);
+		this.regione=regione;
+		this.colore=colore;
 	}
-
-	/**
-	 * @param bonus the bonus to set
-	 */
-	public void setBonus(Set<Bonus> bonus) {
-		this.bonus = bonus;
-	}	
-	
-	public void eseguiBonus (Giocatore giocatore){
-		for(Bonus b : bonus){
-			b.azioneBonus(giocatore);
-		}}
 }
