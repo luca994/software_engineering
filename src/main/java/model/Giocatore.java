@@ -133,12 +133,21 @@ public class Giocatore {
 		public Gioco getGioco() {
 			return gioco;
 		}
+		/**
+		 * @param gioco the gioco to set
+		 */
+		public void setGioco(Gioco gioco) {
+			this.gioco = gioco;
+		}
+
 		public Tabellone getTabellone() {
 			return tabellone;
 		}
 		public boolean isConnesso() {
 			return connesso;
 		}
+
+		
 		
 		
 }

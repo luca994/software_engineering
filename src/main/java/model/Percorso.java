@@ -155,4 +155,10 @@ public class Percorso
 				throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 			return posizione;
 		}
+	/**
+	 * @return the caselle
+	 */
+	public List<Casella> getCaselle() {
+		return this.caselle;
+	}
 }
