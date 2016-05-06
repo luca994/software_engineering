@@ -14,7 +14,7 @@ public class BonusAzionePrincipale implements Bonus {
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		giocatore.setAzionePrincipale(true);
+		giocatore.setAzionePrincipale(false);
 	}
 
 }
