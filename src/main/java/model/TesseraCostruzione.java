@@ -4,19 +4,18 @@ import java.util.Set;
 
 public class TesseraCostruzione extends OggettoConBonus {
 
-	private Set<String> nomeCittà;
+	private Set<Città> città;
 	private Set<Bonus> elencoBonus;
+	
+	
+	
 	/**
-	 * @return the nomeCittà
+	 * @param città
+	 * @param elencoBonus
 	 */
-	public Set<String> getNomeCittà() {
-		return nomeCittà;
-	}
-	/**
-	 * @param nomeCittà the nomeCittà to set
-	 */
-	public void setNomeCittà(Set<String> nomeCittà) {
-		this.nomeCittà = nomeCittà;
+	public TesseraCostruzione(Set<Città> città, Set<Bonus> elencoBonus) {
+		this.città = città;
+		this.elencoBonus = elencoBonus;
 	}
 	/**
 	 * @return the elencoBonus
@@ -35,8 +34,9 @@ public class TesseraCostruzione extends OggettoConBonus {
 		for(Bonus b : elencoBonus){
 			b.azioneBonus(giocatore);
 		}
-		}
-	public boolean verifyCittà(Città cittàDaVerificare){
-		return nomeCittà.contains(cittàDaVerificare.getNome());
 	}
+	public boolean verifyCittà(Città cittàDaVerificare){
+
+		return this.città.contains(cittàDaVerificare);
+		}
 }

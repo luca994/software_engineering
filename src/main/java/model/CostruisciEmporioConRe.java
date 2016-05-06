@@ -91,9 +91,9 @@ public class CostruisciEmporioConRe implements Azione {
 
 	/**
 	 * @param re
-	 * @param emporio
+	 *
 	 */
-	public CostruisciEmporioConRe(Re re, Emporio emporio, List<CartaPolitica> cartePolitica) {
+	public CostruisciEmporioConRe(Re re, List<CartaPolitica> cartePolitica) {
 		this.re = re;
 		this.città=re.getCittà();
 		this.cartePolitica=cartePolitica;

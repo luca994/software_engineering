@@ -60,7 +60,7 @@ public class Percorso
 	}
 	/**
 	 * Moves the player along the route(Percorso) if the number of steps(passi) is negative the player will move backwards.
-	 * @Throws IndexOutOfBoundsException if giocatore hasn't enough money
+	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money
 	 * @param giocatore
 	 * @param passi
 	 */
@@ -155,4 +155,10 @@ public class Percorso
 				throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 			return posizione;
 		}
+	/**
+	 * @return the caselle
+	 */
+	public List<Casella> getCaselle() {
+		return this.caselle;
+	}
 }

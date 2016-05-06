@@ -1,6 +1,5 @@
 package model;
 
-
 import java.util.List;
 
 /**
@@ -84,7 +83,7 @@ public class AcquistaPermesso implements Azione {
 		//Rimozione tessere selezionate dalla mano del giocatore
 			giocatore.getCartePolitica().removeAll(cartePolitica);
 		
-		List<OggettoConBonus> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
+		List<TesseraCostruzione> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
 		//Aggiunta tessera acquistata al set di tessere valide del giocatore
 			giocatore.addTessereValide(tessera);

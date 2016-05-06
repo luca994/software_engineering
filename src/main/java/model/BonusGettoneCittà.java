@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -40,9 +39,14 @@ public class BonusGettoneCittà implements Bonus {
 		//this.città=bonusCittàDalGiocatore(giocatore, numeroCittà);
 		//metodo del controller che prende i bonus della città dal giocatore 
 		//le città devono essere diverse  
-		Iterator<Città> itcittà=this.città.iterator();
+		/*Iterator<Città> itcittà=this.città.iterator();
 		while(itcittà.hasNext())
-			itcittà.next().eseguiAzioneBonus(giocatore);
+			itcittà.next().eseguiAzioneBonus(giocatore);*/
+		for(Città  cit:this.città)
+		{
+			if(cit.presenzaEmporio(giocatore))
+				cit.eseguiAzioneBonus(giocatore);
+		}
 	}
 
 }
