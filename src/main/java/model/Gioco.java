@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.jdom2.JDOMException;
@@ -50,7 +51,11 @@ public class Gioco {
 		if(numGiocatore==2)
 		{
 			Giocatore dummy=new Giocatore(null, "colore");
-			List<TesseraCostruzione> tessereInizio= new ArrayList<TesseraCostruzione>(3);
+			for(Regione regi: tabellone.getRegioni() ){
+				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
+				cit.aggiungiEmporio(dummy);
+					Collections.shuffle(regi.getTessereCoperte());
+			}
 			
 		}
 	}//mettere i catch delle eccezioni della lettura xml
