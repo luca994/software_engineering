@@ -30,7 +30,7 @@ public class Regione {
 		this.città=new HashSet<Città>();
 		for(String nome: nomiCittà)//Creo città, ricordati di collegarle
 		{
-			this.città.add(new Città(nome));
+			this.città.add(new Città(nome,this));
 		}		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
