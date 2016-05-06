@@ -8,10 +8,14 @@ package model;
  *
  */
 public class BonusAssistenti implements Bonus {
+
+	private int numeroAssistenti;
+	
+	
 	public BonusAssistenti(int numeroAssistenti){
 		this.numeroAssistenti=numeroAssistenti;
 	}
-	private int numeroAssistenti;
+	
 	/* (non-Javadoc)
 	 * @see model.Bonus#azioneBonus(model.Giocatore)
 	 */
