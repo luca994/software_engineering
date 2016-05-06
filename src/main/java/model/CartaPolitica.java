@@ -5,8 +5,13 @@ package model;
  *
  */
 public class CartaPolitica {
+	
+	private final String colore;
+	
 	public CartaPolitica(){
+		
 		int numero = (int)(Math.random()*89);
+		
 		if(numero>=0&&numero<=12)
 			this.colore="NERO";
 		else if(numero>=13&&numero<=25)
@@ -22,7 +27,7 @@ public class CartaPolitica {
 		else
 			this.colore="JOLLY";
 	}
-	private final String colore;
+
 	/**
 	 * @return the colore
 	 */

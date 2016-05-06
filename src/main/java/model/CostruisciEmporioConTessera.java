@@ -52,7 +52,7 @@ public class CostruisciEmporioConTessera implements Azione {
 				cittàConBonusDaOttenere.add(città);
 				città.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
 				for(Città citt: cittàConBonusDaOttenere)
-					citt.eseguiAzioneBonus(giocatore);
+					citt.eseguiBonus(giocatore);
 				giocatore.setAzionePrincipale(true);
 			
 			}

@@ -22,7 +22,14 @@ import org.jdom2.input.SAXBuilder;
 public class Percorso 
 {
 	private List<Casella> caselle;
-	private Casella casellacorrente;
+	
+	/**
+	 * @return the caselle
+	 */
+	public List<Casella> getCaselle() {
+		return this.caselle;
+	}
+	
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
 		SAXBuilder builderPercorso = new SAXBuilder();
@@ -84,6 +91,7 @@ public class Percorso
 	}
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
 	{
+		Casella casellacorrente = null;
 		ListIterator<Casella> itcasella=this.caselle.listIterator();
 		while(itcasella.hasNext())//mentre scorro le caselle controllo di non essere in fondo al percorso
 		{
@@ -112,6 +120,7 @@ public class Percorso
 	}
 	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
 	{
+
 		ListIterator<Casella> itcasella=this.caselle.listIterator(caselle.size());
 		while(itcasella.hasPrevious())
 		{
@@ -155,10 +164,4 @@ public class Percorso
 				throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 			return posizione;
 		}
-	/**
-	 * @return the caselle
-	 */
-	public List<Casella> getCaselle() {
-		return this.caselle;
-	}
 }

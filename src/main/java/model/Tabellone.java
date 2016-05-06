@@ -28,6 +28,62 @@ public class Tabellone {
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	
+
+	/**
+	 * @return the regioni
+	 */
+	public Set<Regione> getRegioni() {
+		return regioni;
+	}
+
+
+	/**
+	 * @return the tessereBonus
+	 */
+	public Set<OggettoConBonus> getTessereBonus() {
+		return tessereBonus;
+	}
+
+
+	/**
+	 * @return the consiglieriDisponibili
+	 */
+	public List<Consigliere> getConsiglieriDisponibili() {
+		return consiglieriDisponibili;
+	}
+
+
+	/**
+	 * @return the consigli
+	 */
+	public Set<Consiglio> getConsigli() {
+		return consigli;
+	}
+
+
+	/**
+	 * @return the percorsoNobiltà
+	 */
+	public Percorso getPercorsoNobiltà() {
+		return percorsoNobiltà;
+	}
+
+
+	/**
+	 * @return the percorsoRicchezza
+	 */
+	public Percorso getPercorsoRicchezza() {
+		return percorsoRicchezza;
+	}
+
+
+	/**
+	 * @return the percorsoVittoria
+	 */
+	public Percorso getPercorsoVittoria() {
+		return percorsoVittoria;
+	}
+	
 	/**
 	 * constructor called by gioco.setup()
 	 * @throws IOException 
@@ -203,64 +259,5 @@ public class Tabellone {
 		catch(UnsupportedOperationException e3){
 			System.out.println("l'operazione di rimozione non è supportata dalla lista");
 		}
-	}
-
-
-	/**
-	 * @return the regioni
-	 */
-	public Set<Regione> getRegioni() {
-		return regioni;
-	}
-
-
-	/**
-	 * @return the tessereBonus
-	 */
-	public Set<OggettoConBonus> getTessereBonus() {
-		return tessereBonus;
-	}
-
-
-	/**
-	 * @return the consiglieriDisponibili
-	 */
-	public List<Consigliere> getConsiglieriDisponibili() {
-		return consiglieriDisponibili;
-	}
-
-
-	/**
-	 * @return the consigli
-	 */
-	public Set<Consiglio> getConsigli() {
-		return consigli;
-	}
-
-
-	/**
-	 * @return the percorsoNobiltà
-	 */
-	public Percorso getPercorsoNobiltà() {
-		return percorsoNobiltà;
-	}
-
-
-	/**
-	 * @return the percorsoRicchezza
-	 */
-	public Percorso getPercorsoRicchezza() {
-		return percorsoRicchezza;
-	}
-
-
-	/**
-	 * @return the percorsoVittoria
-	 */
-	public Percorso getPercorsoVittoria() {
-		return percorsoVittoria;
-	}
-	
-	
-	
+	}	
 }

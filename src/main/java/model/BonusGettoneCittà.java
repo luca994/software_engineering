@@ -15,6 +15,7 @@ public class BonusGettoneCittà implements Bonus {
 	
 	private int numeroCittà;
 	private Set<Città> città;
+	
 	public BonusGettoneCittà(int numeroCittà)
 	{
 		this.numeroCittà=numeroCittà;
@@ -45,7 +46,7 @@ public class BonusGettoneCittà implements Bonus {
 		for(Città  cit:this.città)
 		{
 			if(cit.presenzaEmporio(giocatore))
-				cit.eseguiAzioneBonus(giocatore);
+				cit.eseguiBonus(giocatore);
 		}
 	}
 

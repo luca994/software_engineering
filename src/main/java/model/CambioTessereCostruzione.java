@@ -7,6 +7,7 @@ package model;
 public class CambioTessereCostruzione implements Azione {
 
 	private Regione regione;
+	
 	/**
 	 * Get two new Tessere Costruzione in the visble list of obtaiable Tessere Costruzione
 	 * @throws IllegalStateException if giocatore hasn't enough Aiutanti 

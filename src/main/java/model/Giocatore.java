@@ -17,7 +17,6 @@ public class Giocatore {
 		private String colore;
 		private List<OggettoConBonus> tessereUsate;
 		private List<OggettoConBonus> tessereValide;
-		private Azione azione;
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
@@ -127,9 +126,7 @@ public class Giocatore {
 		public List<OggettoConBonus> getTessereValide() {
 			return tessereValide;
 		}
-		public Azione getAzione() {
-			return azione;
-		}
+		
 		public Gioco getGioco() {
 			return gioco;
 		}

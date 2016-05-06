@@ -5,16 +5,19 @@ package model;
  *
  */
 public class BonusMoneta implements Bonus {
-	private final int step;
-	private final Percorso percorsoVittoria;
-	public BonusMoneta(Percorso percorsoVittoria, int step)
+	
+	private final int steps;
+	private final Percorso percorsoRicchezza;
+	
+	public BonusMoneta(Percorso percorsoRicchezza, int steps)
 	{
-		this.step=step;
-		this.percorsoVittoria=percorsoVittoria;
+		this.steps=steps;
+		this.percorsoRicchezza=percorsoRicchezza;
 	}
+	
 	@Override
 	public void azioneBonus(Giocatore giocatore) 
 	{
-		percorsoVittoria.muoviGiocatore(giocatore, step);
+		percorsoRicchezza.muoviGiocatore(giocatore, steps);
 	}
 }
