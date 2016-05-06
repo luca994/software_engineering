@@ -55,17 +55,15 @@ public class AcquistaPermesso implements Azione {
 			throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 		//Creazione copie liste dei colori del consiglio
 		List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-		List<String> cpycolori= new ArrayList<>();
-		Collections.copy(cpycolori, colori);
 	//		if(giocatore.containsAllCarte(cartePolitica)){
 			for(CartaPolitica car : cartePolitica){
 				if(car.getColore().equals("JOLLY"))
 					jollyUsati++;//conto i jolly usati
-				for(String col : cpycolori){
+				for(String col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
-						cpycolori.remove(col);
+						colori.remove(col);
 						break;
 					}
 				}			
