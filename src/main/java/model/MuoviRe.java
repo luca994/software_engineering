@@ -17,7 +17,7 @@ public class MuoviRe implements Azione {
 	@Override
 	public void eseguiAzione(Giocatore giocatore) {
 		boolean azioneFinita=false;
-		Città cittàSuccessiva= new Città("Ciao");//ovviamente è solo per non far dare errore da jenkins
+		Città cittàSuccessiva= new Città("Ciao",null);//ovviamente è solo per non far dare errore da jenkins
 		//metodo che chiede al giocatore la città di destinazione
 		while(!azioneFinita)
 		{
