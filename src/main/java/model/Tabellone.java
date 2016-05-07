@@ -216,10 +216,12 @@ public class Tabellone {
 	 *         there is another error about the file
 	 */
 	public void creaTessereBonus() throws JDOMException, IOException{
+		//inizializzo i set di tessere
 		this.tessereBonusCittà=new HashSet<TesseraBonus>();
 		this.tessereBonusRegione=new HashSet<TesseraBonus>();
 		this.tesserePremioRe=new ArrayList<TesseraBonus>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
+		//leggo il documento xml per le tessere
 		Document documentTessereBonus = builderTessereBonus.build(new File("TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
@@ -343,7 +345,8 @@ public class Tabellone {
 	
 	/**
 	 * check if the player who has built the emporium can take the bonus for 
-	 * having built an emporium in every city of a color or in every city of a region
+	 * having built an emporium in every city of a color or in every city of a region.
+	 * Then assigns the tile/tiles.
 	 * @author riccardo
 	 * @param giocatore the player who has built the emporium
 	 * @param città the city where the player has built the emporium

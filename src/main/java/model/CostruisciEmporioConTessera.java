@@ -56,7 +56,8 @@ public class CostruisciEmporioConTessera implements Azione {
 				for(Città citt: cittàConBonusDaOttenere)
 					citt.eseguiBonus(giocatore);
 				giocatore.setAzionePrincipale(true);
-				//controllo se ho gli empori in tutte le città di un colore o d una regione
+				//controllo se ho gli empori in tutte le città di un colore o di una regione e prendo la
+				//tessera bonus se mi spetta
 				tabellone.prendiTesseraBonus(giocatore, città);
 			}
 			else 
