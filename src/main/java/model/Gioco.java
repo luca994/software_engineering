@@ -60,8 +60,8 @@ public class Gioco {
 		}
 	}//mettere i catch delle eccezioni della lettura xml
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
-		boolean giocoFinito=false;
-		while(!giocoFinito){
+		vittoria=false;
+		while(!vittoria){
 		//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
@@ -133,7 +133,7 @@ public class Gioco {
 				}
 				for(Giocatore gioca: this.giocatori)
 					if (gioca.getEmporiRimasti()==0)
-						giocoFinito=true;
+						vittoria=true;
 			}
 			//Fase Mercato
 		
