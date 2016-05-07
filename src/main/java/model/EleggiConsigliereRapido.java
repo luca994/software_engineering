@@ -9,6 +9,15 @@ public class EleggiConsigliereRapido implements Azione {
 	private Consigliere consigliere;
 	private Consiglio consiglio;
 	/**
+	 * @param consigliere
+	 * @param consiglio
+	 */
+	public EleggiConsigliereRapido(Consigliere consigliere, Consiglio consiglio) {
+		super();
+		this.consigliere = consigliere;
+		this.consiglio = consiglio;
+	}
+	/**
 	 *Elects a specified Consigliere, 
 	 *@throws IllegalStateException if giocatore hasn't enough Aiutanti 
 	 *@param giocatore

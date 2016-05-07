@@ -25,7 +25,10 @@ public class Inizializzazione {
 			//può iniziare il gioco settando a true avviaGioco
 			nuoviGiocatori.add(new Giocatore(nome, colore));
 		}
-		new Gioco(nuoviGiocatori);
+			
+		//Creo e avvio gioco
+		new Gioco(nuoviGiocatori).gioco();
+		
 		}
 		catch (JDOMException e){
 			System.err.println("Errore nel parsing di un xml");

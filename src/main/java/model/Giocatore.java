@@ -26,6 +26,12 @@ public class Giocatore {
 			this.colore=colore;
 			this.nome=nome;
 		}
+		public boolean getAzionePrincipale(){
+			return this.azionePrincipale;
+		}
+		public boolean getAzioneOpzionale(){
+			return this.azioneOpzionale;
+		}
 		/**
 		 * @param emporiRimasti the emporiRimasti to set
 		 */

@@ -6,6 +6,14 @@ package model;
  */
 public class IngaggioAiutante implements Azione {
 
+	/**
+	 * @param percorsoRicchezza
+	 */
+	public IngaggioAiutante(Percorso percorsoRicchezza) {
+		super();
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
+
 	private final static int COSTO_AIUTANTE=3;
 	private Percorso percorsoRicchezza;
 	

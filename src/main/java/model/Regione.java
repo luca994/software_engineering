@@ -35,6 +35,7 @@ public class Regione {
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
 		this.consiglio=new Consiglio(tabellone);
+		this.consiglio.setRegione(this);
 		//Creo il nome del file a partire dal nome della regione
 		String nomefile = new String("TessereCostruzione"+nomeRegione);
 		//Leggo file e creo le TesserePermessoDiCostruzione

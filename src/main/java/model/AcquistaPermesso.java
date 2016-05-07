@@ -16,6 +16,21 @@ public class AcquistaPermesso implements Azione {
 	
 	
 	/**
+	 * @param tessera
+	 * @param cartePolitica
+	 * @param consiglioDaSoddisfare
+	 * @param percorsoRicchezza
+	 */
+	public AcquistaPermesso(TesseraCostruzione tessera, List<CartaPolitica> cartePolitica,
+			Consiglio consiglioDaSoddisfare, Percorso percorsoRicchezza) {
+		super();
+		this.tessera = tessera;
+		this.cartePolitica = cartePolitica;
+		this.consiglioDaSoddisfare = consiglioDaSoddisfare;
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
+
+	/**
 	 * @param tessera the tessera to set
 	 */
 	public void setTessera(TesseraCostruzione tessera) {

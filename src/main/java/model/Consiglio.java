@@ -78,6 +78,14 @@ public class Consiglio {
 	}
 	
 	/**
+	 * @param regione the regione to set
+	 */
+	public void setRegione(Regione regione) {
+		this.regione = regione;
+	}
+
+
+	/**
 	 * @return the regione
 	 */
 	public Regione getRegione() {

@@ -29,7 +29,22 @@ public class Tabellone {
 	private Percorso percorsoNobiltà;
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
+	private Re re;
 	
+
+	/**
+	 * @return the re
+	 */
+	public Re getRe() {
+		return re;
+	}
+
+	/**
+	 * @param re the re to set
+	 */
+	public void setRe(Re re) {
+		this.re = re;
+	}
 
 	/**
 	 * @return the regioni
@@ -171,7 +186,11 @@ public class Tabellone {
 					{
 						cit.setColore(cittàMappa.getAttributeValue("colore"));
 						if(cit.getColore().equals("Viola"))
-							cit.setRe(new Re("Blallo", cit, new Consiglio(this)));//Quale dovrebbe essere il colore del re??
+						{
+							Re re=new Re("Blallo", cit, new Consiglio(this));//Quale dovrebbe essere il colore del re??
+							cit.setRe(re);
+							this.setRe(re);
+						}
 						else
 						{
 							cit.getBonus().addAll(gettoniCittà.get(0));
@@ -343,7 +362,7 @@ public class Tabellone {
 	}
 	
 	/**
-	 * This method removes the first occurrence of the specified 
+	 * Removes the first occurrence of the specified 
 	 * element from this list, if it is present
 	 * @author Luca
 	 * @param consigliereDaRimuovere
@@ -353,13 +372,13 @@ public class Tabellone {
 			consiglieriDisponibili.remove(consigliereDaRimuovere);
 		}
 		catch(ClassCastException e1){
-			System.out.println("Il tipo specificato non è compatibile con la lista");
+			System.err.println("Il tipo specificato non è compatibile con la lista");
 		}
 		catch(NullPointerException e2){
-			System.out.println("Il tipo specificato è Null ");
+			System.err.println("Il tipo specificato è Null ");
 		}
 		catch(UnsupportedOperationException e3){
-			System.out.println("l'operazione di rimozione non è supportata dalla lista");
+			System.err.println("l'operazione di rimozione non è supportata dalla lista");
 		}
 	}	
 }
