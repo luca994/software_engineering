@@ -23,7 +23,7 @@ public class Tabellone {
 	private Set<Regione> regioni;
 	private Set<TesseraBonus> tessereBonusRegione;
 	private Set<TesseraBonus> tessereBonusCittà;
-	private Set<TesseraBonus> tesserePremioRe;
+	private List<TesseraBonus> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
 	private Set<Consiglio> consigli;
 	private Percorso percorsoNobiltà;
@@ -218,7 +218,7 @@ public class Tabellone {
 	public void creaTessereBonus() throws JDOMException, IOException{
 		this.tessereBonusCittà=new HashSet<TesseraBonus>();
 		this.tessereBonusRegione=new HashSet<TesseraBonus>();
-		this.tesserePremioRe=new HashSet<TesseraBonus>();
+		this.tesserePremioRe=new ArrayList<TesseraBonus>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
 		Document documentTessereBonus = builderTessereBonus.build(new File("TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
@@ -307,11 +307,11 @@ public class Tabellone {
 		}}
 	
 	/**
-	 * check if a player has an emporium in all the city of a color
+	 * check if a player has an emporium every the city of a color
 	 * @param giocatore the player who has to check the bonus
 	 * @param città the city in which the method take the color
 	 * @author riccardo
-	 * @return return true if the player has an emporium in all the city of a color
+	 * @return return true if the player has an emporium in every city of a color
 	 */
 	public boolean verificaEmporioColoreBonus(Giocatore giocatore,Città città){
 		for(Regione r:regioni){
@@ -330,7 +330,7 @@ public class Tabellone {
 	 * 
 	 * @param giocatore the player who builds the emporium
 	 * @param città the city in which the player build the emporium
-	 * @return return true if the player has an emporium in all the city of a region
+	 * @return return true if the player has an emporium in every city of a region
 	 */
 	public boolean verificaEmporioRegioneBonus(Giocatore giocatore,Città città){
 		for(Città c:città.getRegione().getCittà()){
@@ -341,6 +341,13 @@ public class Tabellone {
 		return true;
 	}
 	
+	/**
+	 * check if the player who has built the emporium can take the bonus for 
+	 * having built an emporium in every city of a color or in every city of a region
+	 * @author riccardo
+	 * @param giocatore the player who has built the emporium
+	 * @param città the city where the player has built the emporium
+	 */
 	public void prendiTesseraBonus(Giocatore giocatore,Città città){
 		if(verificaEmporioColoreBonus(giocatore, città)){
 			for(TesseraBonus t:tessereBonusCittà){
@@ -358,7 +365,10 @@ public class Tabellone {
 				}
 			}
 		}
-		//manca da aggiungere la tessera premio del re, se ce ne sono ancora
+		if(!tesserePremioRe.isEmpty()){
+			tesserePremioRe.get(0).eseguiBonus(giocatore);
+			tesserePremioRe.remove(0);
+		}
 	}
 	
 	/**

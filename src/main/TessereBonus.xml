@@ -24,6 +24,7 @@
 		<Bonus id="BonusPuntoVittoria" passi="20"></Bonus>
 	</Tessera>
 	
+	<!--devono essere inserite in ordine dall prima all'ultima-->
 	<Tessera id="premioRe">
 		<Bonus id="BonusPuntoVittoria" passi="25"></Bonus>
 	</Tessera>
