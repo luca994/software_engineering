@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class Mercato {
 
-	List<OggettoVendibile> oggettiInVendita;
-	
+	private List<OggettoVendibile> oggettiInVendita;
+	private Percorso percorsoRicchezza;
 	/**
 	 * build the object
 	 */
@@ -34,15 +34,25 @@ public class Mercato {
 	 * @param giocatore the player who wants to buy the object
 	 */
 	public void transazione(OggettoVendibile oggetto,Giocatore giocatore){
-		if(oggetto.getOggetto() instanceof Assistente){
-			giocatore.getAssistenti().add((Assistente) oggetto.getOggetto());
+		try{
+			percorsoRicchezza.muoviGiocatore(giocatore, -oggetto.getPrezzo());
+			if(oggetto.getOggetto() instanceof Assistente){
+				giocatore.getAssistenti().add((Assistente) oggetto.getOggetto());
+				oggetto.getGiocatore().getAssistenti().remove(oggetto);
+			}
+			if(oggetto.getOggetto() instanceof TesseraCostruzione){
+				giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
+				oggetto.getGiocatore().getTessereValide().remove(oggetto);
+			}
+			if(oggetto.getOggetto() instanceof CartaPolitica){
+				giocatore.getCartePolitica().add((CartaPolitica) oggetto.getOggetto());
+				oggetto.getGiocatore().getCartePolitica().remove(oggetto);
+			}
+			percorsoRicchezza.muoviGiocatore(oggetto.getGiocatore(), oggetto.getPrezzo());
+			oggettiInVendita.remove(oggetto.getOggetto());
 		}
-		if(oggetto.getOggetto() instanceof TesseraCostruzione){
-			giocatore.getTessereValide().add((OggettoConBonus) oggetto.getOggetto());
+		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getMessage());
 		}
-		if(oggetto.getOggetto() instanceof CartaPolitica){
-			giocatore.getCartePolitica().add((CartaPolitica) oggetto.getOggetto());
-		}
-		oggettiInVendita.remove(oggetto.getOggetto());
 	}
 }
