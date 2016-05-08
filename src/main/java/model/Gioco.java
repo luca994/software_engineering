@@ -70,78 +70,21 @@ public class Gioco {
 		//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
-				//Giocatore sul percorso che userò più avanti per calcolare i punteggi
-				
-				//il giocatore persca una carta
-				gio.getCartePolitica().add(new CartaPolitica());
-				while((!gio.getAzioneOpzionale())&&(!gio.getAzionePrincipale())){
-					//Metodo controller che dice al giocatore quale mosse gli mancano da fare (se lenta e/o veloce)
-					//Richiesta al controller di input per azione al giocatore gio
-					int azione = 11;
-					//Il controller comunica quale azione vuole compiere il giocatore
-					if(azione==1&&!gio.getAzionePrincipale())//"Eleggi Consigliere"
-					{
-						//Richiesta al controller di input per scelta consiglio e consigliere da eleggere
-						Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
-						Consigliere consigliereScelto=new Consigliere(null);
-						new EleggiConsigliere(consigliereScelto, consiglioScelto, tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-					}
-					else if(azione==2&&!gio.getAzionePrincipale())//Acquistare una tessera permesso costruzione
-					{
-						//Richiesta al controller di input per la tessera da acquistare
-						List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-						TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
-						new AcquistaPermesso(tesseraScelta, carteSelezionate, tesseraScelta.getRegioneDiAppartenenza().getConsiglio(), this.tabellone.getPercorsoRicchezza()).eseguiAzione(gio);;
-					}
-					else if(azione==3&&!gio.getAzionePrincipale())//Costruire un emporio usando una tessera permesso
-					{
-						//Richiesta al controller di input per la tessera da acquistare
-						Città cittàScelta=new Città(null, null);
-						TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
-						new CostruisciEmporioConTessera(cittàScelta, tesseraScelta, this.tabellone).eseguiAzione(gio);
-					}
-					else if(azione==4&&!gio.getAzionePrincipale())//Costruire un emporio con l'aiuto del re
-					{
-						//Richiesta al controller di input per scegliere carte politica
-						//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-						List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-						new CostruisciEmporioConRe(tabellone, gio, tabellone.getRe(), carteSelezionate).eseguiAzione(gio);
-					}
-					else if(azione==5&&!gio.getAzioneOpzionale())//Ingaggia Aiutante
-					{
-						new IngaggioAiutante(tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-					}
-					else if(azione==6&&!gio.getAzioneOpzionale())//Cambiare le tessere permesso di costruzione
-					{
-						//Richiesta al controller di input per scegliere la regione per cui rimischiare le carte
-						Regione regioneScelta=new Regione(null, null, null, null, null, null);
-						new CambioTessereCostruzione(regioneScelta).eseguiAzione(gio);
-					}
-					else if(azione==7&&!gio.getAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere
-					{
-						Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
-						Consigliere consigliereScelto=new Consigliere(null);
-						new EleggiConsigliereRapido(consigliereScelto, consiglioScelto).eseguiAzione(gio);
-					}
-					else if(azione==8&&!gio.getAzioneOpzionale())//Compiere un'azione principale aggiuntiva
-					{
-						new AzionePrincipaleAggiuntiva().eseguiAzione(gio);
-					}
-					else if(azione==9&&!gio.getAzioneOpzionale())//Saltare azione Veloce
-					{
-						new AzioneOpzionaleNulla().eseguiAzione(gio);
-					}
-					else if(azione==10&&!gio.getAzionePrincipale())//Saltare azione Principale
-					{
-						new AzionePrincipaleNulla().eseguiAzione(gio);
-					}
-					else
-						System.err.println("Input azione non valido, riprova!");
-				}
+				turno(gio);
 				//Controllo se gli empori sono finiti
 				for(Giocatore gioca: this.giocatori)
 					if (gioca.getEmporiRimasti()==0)
+					{
 						vittoria=true;
+						Set<Giocatore> giocatoriRimasti=this.giocatori;
+						giocatori.remove(gioca);
+						//Inizio ultimo turno
+						for (Giocatore ply:giocatoriRimasti)
+						{
+							turno(ply);
+						}
+					}
+				
 			}
 			//Fase Mercato
 		
@@ -150,6 +93,76 @@ public class Gioco {
 		Set<Giocatore> vincitore=calcoloVincitore();
 		//Comunico al controller chi è il vincitore
 	}
+	
+	public void turno(Giocatore gio) throws JDOMException, IOException{
+		//il giocatore persca una carta
+		gio.getCartePolitica().add(new CartaPolitica());
+		while((!gio.getAzioneOpzionale())&&(!gio.getAzionePrincipale())){
+			//Metodo controller che dice al giocatore quale mosse gli mancano da fare (se lenta e/o veloce)
+			//Richiesta al controller di input per azione al giocatore gio
+			int azione = 11;
+			//Il controller comunica quale azione vuole compiere il giocatore
+			if(azione==1&&!gio.getAzionePrincipale())//"Eleggi Consigliere"
+			{
+				//Richiesta al controller di input per scelta consiglio e consigliere da eleggere
+				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
+				Consigliere consigliereScelto=new Consigliere(null);
+				new EleggiConsigliere(consigliereScelto, consiglioScelto, tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
+			}
+			else if(azione==2&&!gio.getAzionePrincipale())//Acquistare una tessera permesso costruzione
+			{
+				//Richiesta al controller di input per la tessera da acquistare
+				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
+				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
+				new AcquistaPermesso(tesseraScelta, carteSelezionate, tesseraScelta.getRegioneDiAppartenenza().getConsiglio(), this.tabellone.getPercorsoRicchezza()).eseguiAzione(gio);;
+			}
+			else if(azione==3&&!gio.getAzionePrincipale())//Costruire un emporio usando una tessera permesso
+			{
+				//Richiesta al controller di input per la tessera da acquistare
+				Città cittàScelta=new Città(null, null);
+				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
+				new CostruisciEmporioConTessera(cittàScelta, tesseraScelta, this.tabellone).eseguiAzione(gio);
+			}
+			else if(azione==4&&!gio.getAzionePrincipale())//Costruire un emporio con l'aiuto del re
+			{
+				//Richiesta al controller di input per scegliere carte politica
+				//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
+				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
+				new CostruisciEmporioConRe(tabellone, gio, tabellone.getRe(), carteSelezionate).eseguiAzione(gio);
+			}
+			else if(azione==5&&!gio.getAzioneOpzionale())//Ingaggia Aiutante
+			{
+				new IngaggioAiutante(tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
+			}
+			else if(azione==6&&!gio.getAzioneOpzionale())//Cambiare le tessere permesso di costruzione
+			{
+				//Richiesta al controller di input per scegliere la regione per cui rimischiare le carte
+				Regione regioneScelta=new Regione(null, null, null, null, null, null);
+				new CambioTessereCostruzione(regioneScelta).eseguiAzione(gio);
+			}
+			else if(azione==7&&!gio.getAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere
+			{
+				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
+				Consigliere consigliereScelto=new Consigliere(null);
+				new EleggiConsigliereRapido(consigliereScelto, consiglioScelto).eseguiAzione(gio);
+			}
+			else if(azione==8&&!gio.getAzioneOpzionale())//Compiere un'azione principale aggiuntiva
+			{
+				new AzionePrincipaleAggiuntiva().eseguiAzione(gio);
+			}
+			else if(azione==9&&!gio.getAzioneOpzionale())//Saltare azione Veloce
+			{
+				new AzioneOpzionaleNulla().eseguiAzione(gio);
+			}
+			else if(azione==10&&!gio.getAzionePrincipale())//Saltare azione Principale
+			{
+				new AzionePrincipaleNulla().eseguiAzione(gio);
+			}
+			else
+				System.err.println("Input azione non valido, riprova!");
+		}
+	}
+	
 	/**
 	 * @return the tabellone
 	 */
