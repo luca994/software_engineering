@@ -83,6 +83,7 @@ public class Gioco {
 						{
 							turno(ply);
 						}
+						break;
 					}
 				
 			}
