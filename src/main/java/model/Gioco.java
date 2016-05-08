@@ -3,7 +3,10 @@ package model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
@@ -48,6 +51,7 @@ public class Gioco {
 			numGiocatore++;
 		}			
 		this.giocatori=giocatori;
+		//Setup aggiuntivo per 2 giocatori
 		if(numGiocatore==2)
 		{
 			Giocatore dummy=new Giocatore(null, "colore");
@@ -58,6 +62,7 @@ public class Gioco {
 			}
 			
 		}
+		
 	}//mettere i catch delle eccezioni della lettura xml
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
@@ -65,6 +70,8 @@ public class Gioco {
 		//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
+				//Giocatore sul percorso che userò più avanti per calcolare i punteggi
+				
 				//il giocatore persca una carta
 				gio.getCartePolitica().add(new CartaPolitica());
 				while((!gio.getAzioneOpzionale())&&(!gio.getAzionePrincipale())){
@@ -95,10 +102,10 @@ public class Gioco {
 					}
 					else if(azione==4&&!gio.getAzionePrincipale())//Costruire un emporio con l'aiuto del re
 					{
-						//Richiesta posizione re
-						new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
+						//Richiesta al controller di input per scegliere carte politica
+						//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 						List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-						new CostruisciEmporioConRe(tabellone.getRe(), carteSelezionate).eseguiAzione(gio);
+						new CostruisciEmporioConRe(tabellone, gio, tabellone.getRe(), carteSelezionate).eseguiAzione(gio);
 					}
 					else if(azione==5&&!gio.getAzioneOpzionale())//Ingaggia Aiutante
 					{
@@ -131,6 +138,7 @@ public class Gioco {
 					else
 						System.err.println("Input azione non valido, riprova!");
 				}
+				//Controllo se gli empori sono finiti
 				for(Giocatore gioca: this.giocatori)
 					if (gioca.getEmporiRimasti()==0)
 						vittoria=true;
@@ -139,11 +147,88 @@ public class Gioco {
 		
 		}
 		//Conteggio punti
-	
+		Set<Giocatore> vincitore=calcoloVincitore();
+		//Comunico al controller chi è il vincitore
 	}
 	/**
 	 * @return the tabellone
 	 */
+	public Set<Giocatore> calcoloVincitore(){
+		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
+		ListIterator<Casella> itcasella=tabellone.getPercorsoNobiltà().getCaselle().listIterator(tabellone.getPercorsoNobiltà().getCaselle().size());
+		while(itcasella.hasPrevious())
+		{
+			Set<Giocatore> giocatoriPiùAvanti=itcasella.previous().getGiocatori();
+			if(!itcasella.hasPrevious())
+			{
+				//System.out.println("Sei all'inizio del percorso, nella prima casella\n"); 
+				break;
+			}
+			if (!giocatoriPiùAvanti.isEmpty())
+			{
+				//ho trovato i giocatori più avanzati, gli assegno il punteggio
+				for(Giocatore gio: giocatoriPiùAvanti)
+					tabellone.getPercorsoVittoria().muoviGiocatore(gio, 5);
+				int numGiocatoriPiùAvanti=giocatoriPiùAvanti.size();
+				if(numGiocatoriPiùAvanti>1){
+					break;
+				}
+				else
+				{
+					while(itcasella.hasPrevious()){
+						Set<Giocatore> giocatoriSecondi=itcasella.previous().getGiocatori();
+							if (!giocatoriSecondi.isEmpty()){
+								//Assegno punti ai secondi
+								for(Giocatore gio: giocatoriSecondi)
+									tabellone.getPercorsoVittoria().muoviGiocatore(gio, 2);
+								break;
+							}
+					}
+					break;
+				}
+			}
+			
+		}
+		//Conto tessere permesso e assegno punti
+		int numTesserePermesso=-1;
+		Giocatore giocatorePiùPermessi=new Giocatore(null,null);
+		for(Giocatore gio: giocatori)
+		{
+			if((gio.getTessereUsate().size()+gio.getTessereValide().size())>numTesserePermesso)
+			{
+				numTesserePermesso=(gio.getTessereUsate().size()+gio.getTessereValide().size());
+				giocatorePiùPermessi=gio;
+			}
+		}
+		tabellone.getPercorsoVittoria().muoviGiocatore(giocatorePiùPermessi, 3);
+		//Calcolo vincitore
+		
+		itcasella=tabellone.getPercorsoVittoria().getCaselle().listIterator(tabellone.getPercorsoVittoria().getCaselle().size());
+		while(itcasella.hasPrevious()){
+			Casella casellaVincitori=itcasella.previous();
+			Set<Giocatore> vincitore=casellaVincitori.getGiocatori();
+			if(vincitore.isEmpty()){
+				if(vincitore.size()<1)
+					return vincitore;
+				else
+				{
+					int paramVittoria=-1;//Somma tessere e aiutanti
+					for(Giocatore gio: vincitore)
+					{
+						if((gio.getAssistenti().size()+gio.getTessereValide().size()+gio.getTessereValide().size())>paramVittoria)
+							paramVittoria=gio.getAssistenti().size()+gio.getTessereValide().size()+gio.getTessereValide().size();
+					}
+					for(Giocatore gio: vincitore)
+					{
+						if((gio.getAssistenti().size()+gio.getTessereValide().size()+gio.getTessereValide().size())<paramVittoria)
+							vincitore.remove(gio);
+					}
+					return vincitore;
+				}
+			}
+		}
+		throw new IllegalStateException("Errore nel calcolo del percorso");
+	}
 	public Tabellone getTabellone() {
 		return tabellone;
 	}

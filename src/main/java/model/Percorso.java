@@ -143,7 +143,7 @@ public class Percorso
 	}
 	/**
 	 * @returns the position number  of giocatore in the current route, 
-	 * @Throws IllegalArgumentExeption 
+	 * @throws IllegalArgumentExeption 
 	 * when can't find giocatore in the route
 	 * @param giocatore
 	 * 

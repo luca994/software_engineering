@@ -49,6 +49,9 @@ public class CostruisciEmporioConTessera implements Azione {
 				giocatore.moveTesseraValidaToTesseraUsata(tessera);
 				città.aggiungiEmporio(giocatore);
 				giocatore.decrementaEmporiRimasti();
+				//Se il giocatore ha finito gli empori guadagna 3 punti vittoria	
+				if(giocatore.getEmporiRimasti()==0)
+					tabellone.getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 				//Mi piglio i bonus di questa e delle città collegate
 				List<Città> cittàConBonusDaOttenere=new ArrayList<Città>();
 				cittàConBonusDaOttenere.add(città);

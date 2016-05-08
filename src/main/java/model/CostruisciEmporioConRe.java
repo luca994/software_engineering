@@ -13,7 +13,7 @@ public class CostruisciEmporioConRe implements Azione {
 	private Re re;
 	private Città città;
 	private List<CartaPolitica> cartePolitica;
-	private Percorso percorsoRicchezza;
+	//private Percorso percorsoRicchezza;
 	private Tabellone tabellone;
 	
 	/**
@@ -52,11 +52,11 @@ public class CostruisciEmporioConRe implements Azione {
 			}
 			
 			switch(counter){
-				case 1: percorsoRicchezza.muoviGiocatore(giocatore, 0-10-jollyUsati);
+				case 1: tabellone.getPercorsoRicchezza().muoviGiocatore(giocatore, 0-10-jollyUsati);
 					break;
-				case 2: percorsoRicchezza.muoviGiocatore(giocatore, 0-7-jollyUsati);
+				case 2: tabellone.getPercorsoRicchezza().muoviGiocatore(giocatore, 0-7-jollyUsati);
 					break;
-				case 3: percorsoRicchezza.muoviGiocatore(giocatore, 0-4-jollyUsati);
+				case 3: tabellone.getPercorsoRicchezza().muoviGiocatore(giocatore, 0-4-jollyUsati);
 					break;
 				case 4: 
 					break;
@@ -68,6 +68,9 @@ public class CostruisciEmporioConRe implements Azione {
 			
 			città.aggiungiEmporio(giocatore);
 			giocatore.decrementaEmporiRimasti();
+		//Se il giocatore ha finito gli empori guadagna 3 punti vittoria	
+			if(giocatore.getEmporiRimasti()==0)
+				tabellone.getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 		//Mi piglio i bonus di questa e delle città collegate
 			List<Città> cittàConBonusDaOttenere=new ArrayList<Città>();
 			cittàConBonusDaOttenere.add(città);
@@ -98,9 +101,11 @@ public class CostruisciEmporioConRe implements Azione {
 	 * @param re
 	 *
 	 */
-	public CostruisciEmporioConRe(Re re, List<CartaPolitica> cartePolitica) {
+	public CostruisciEmporioConRe(Tabellone tabellone, Giocatore giocatore,Re re, List<CartaPolitica> cartePolitica) {
 		this.re = re;
 		this.città=re.getCittà();
 		this.cartePolitica=cartePolitica;
+		this.tabellone=tabellone;
+		new MuoviRe(re, tabellone.getPercorsoRicchezza()).eseguiAzione(giocatore);;
 	}
 }
