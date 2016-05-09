@@ -25,19 +25,19 @@ public class Regione {
 	private List<TesseraCostruzione> tessereCostruzione;
 	private List<TesseraCostruzione> tessereCoperte;
 	
-	public Regione(Percorso percorsoRicchezza,Percorso percorsoNobiltà, Percorso percorsoVittoria, String nomeRegione, List<String> nomiCittà, Tabellone tabellone) throws JDOMException, IOException{
+	public Regione(String nomeRegione, List<String> nomiCittà, Tabellone tabellone) throws JDOMException, IOException{
 		this.nome=nomeRegione;
-		this.città=new HashSet<Città>();
-		for(String nome: nomiCittà)//Creo città, ricordati di collegarle
-		{
-			this.città.add(new Città(nome,this));
-		}		
+		creaCittà(nomiCittà);		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
 		this.consiglio=new Consiglio(tabellone);
 		this.consiglio.setRegione(this);
+		//Crea tessere permesso
+		creaTesserePermesso(tabellone);
+	}
+	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
 		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("TessereCostruzione"+nomeRegione);
+		String nomefile = new String("TessereCostruzione"+this.nome);
 		//Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
@@ -64,15 +64,15 @@ public class Regione {
 					for(Element bon:elencoBonus)
 					{
 						if(bon.getAttributeValue("id").equals("BonusMoneta"))
-							bonusTessera.add(new BonusMoneta(percorsoRicchezza, Integer.parseInt(bon.getAttributeValue("step"))));
+							bonusTessera.add(new BonusMoneta(tabellone.getPercorsoRicchezza(), Integer.parseInt(bon.getAttributeValue("step"))));
 						else if(bon.getAttributeValue("id").equals("BonusPuntoVittoria"))
-							bonusTessera.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(bon.getAttributeValue("passi"))));
+							bonusTessera.add(new BonusPuntoVittoria(tabellone.getPercorsoVittoria(), Integer.parseInt(bon.getAttributeValue("passi"))));
 						else if(bon.getAttributeValue("id").equals("BonusCartaPolitica"))
 							bonusTessera.add(new BonusCartaPolitica(Integer.parseInt(bon.getAttributeValue("numeroCarte"))));
 						else if(bon.getAttributeValue("id").equals("BonusAssistenti"))
 							bonusTessera.add(new BonusAssistenti(Integer.parseInt(bon.getAttributeValue("numeroAssistenti"))));
 						else if(bon.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-							bonusTessera.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(bon.getAttributeValue("steps"))));
+							bonusTessera.add(new BonusPercorsoNobiltà(tabellone.getPercorsoNobiltà(), Integer.parseInt(bon.getAttributeValue("steps"))));
 						else if(bon.getAttributeValue("id").equals("AzionePrincipale"))
 							bonusTessera.add(new BonusAzionePrincipale());
 					}
@@ -82,7 +82,13 @@ public class Regione {
 		}
 		setTessereCoperte(elencoRiferimentiTessere);
 	}
-	
+	public void creaCittà(List<String> nomiCittà){
+		this.città=new HashSet<Città>();
+		for(String nome: nomiCittà)//Creo città
+		{
+			this.città.add(new Città(nome,this));
+		}	
+	}
 	public void setTessereCoperte(List<TesseraCostruzione> elencoRiferimentiTessere){
 		this.tessereCoperte=elencoRiferimentiTessere;
 		Collections.shuffle(this.tessereCoperte);
