@@ -19,7 +19,7 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	/**
 	 * @return the tessera
 	 */
-	public OggettoConBonus getTessera() {
+	public TesseraCostruzione getTessera() {
 		return tessera;
 	}
 	

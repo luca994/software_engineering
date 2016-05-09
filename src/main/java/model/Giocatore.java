@@ -15,8 +15,8 @@ public class Giocatore {
 		private boolean azionePrincipale;
 		private boolean azioneOpzionale;
 		private String colore;
-		private List<OggettoConBonus> tessereUsate;
-		private List<OggettoConBonus> tessereValide;
+		private List<TesseraCostruzione> tessereUsate;
+		private List<TesseraCostruzione> tessereValide;
 		private Gioco gioco;
 		private Tabellone tabellone;
 		private boolean connesso;
@@ -54,7 +54,7 @@ public class Giocatore {
 			return emporiRimasti;
 		}
 
-		public void moveTesseraValidaToTesseraUsata (OggettoConBonus tesseraToMove){
+		public void moveTesseraValidaToTesseraUsata (TesseraCostruzione tesseraToMove){
 			/*si potrebbe inserire l'eccezione che viene lanciata
 			 * se la tessera selezionata non è nella lista di tessere valide
 			 */
@@ -66,7 +66,7 @@ public class Giocatore {
 		 * this method add tessereV to the list tessereValide
 		 * @param tessereV
 		 */
-		public void addTessereValide(OggettoConBonus tessereV){
+		public void addTessereValide(TesseraCostruzione tessereV){
 			tessereValide.add(tessereV);
 		}
 		
@@ -74,7 +74,7 @@ public class Giocatore {
 		 * this method add tessereU to the list tessereUsate
 		 * @param tessereU
 		 */
-		public void addTessereUsate(OggettoConBonus tessereU){
+		public void addTessereUsate(TesseraCostruzione tessereU){
 			tessereUsate.add(tessereU);
 		}
 		/**
@@ -91,7 +91,7 @@ public class Giocatore {
 		 * @param tesseraUsataDaVerificare
 		 * @return
 		 */
-		public boolean containsTesseraUsata(OggettoConBonus tesseraUsataDaVerificare){
+		public boolean containsTesseraUsata(TesseraCostruzione tesseraUsataDaVerificare){
 			return tessereUsate.contains(tesseraUsataDaVerificare);
 		}
 		/**
@@ -99,7 +99,7 @@ public class Giocatore {
 		 * @param tesseraValidaDaVerificare
 		 * @return
 		 */
-		public boolean containsTesseraValide(OggettoConBonus tesseraValidaDaVerificare){
+		public boolean containsTesseraValide(TesseraCostruzione tesseraValidaDaVerificare){
 			return tessereValide.contains(tesseraValidaDaVerificare);
 		}
 		
@@ -136,10 +136,10 @@ public class Giocatore {
 		public String getColore() {
 			return colore;
 		}
-		public List<OggettoConBonus> getTessereUsate() {
+		public List<TesseraCostruzione> getTessereUsate() {
 			return tessereUsate;
 		}
-		public List<OggettoConBonus> getTessereValide() {
+		public List<TesseraCostruzione> getTessereValide() {
 			return tessereValide;
 		}
 		

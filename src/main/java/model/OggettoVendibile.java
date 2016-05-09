@@ -3,33 +3,28 @@ package model;
 /**
  * @author Riccardo
  *
- * @param <T> the type of the object you want to sell
  */
-public class OggettoVendibile <T> {
+public abstract class OggettoVendibile {
 
-	private final T oggetto;
-	private final int prezzo;
-	private final Giocatore giocatore;
+	private int prezzo;
+	private Giocatore giocatore;
+	private Mercato mercato;
+
+	/**
+	 * add an object to the list of oggettiInVendita of the market
+	 * @param mercato the market in which there is the list
+	 */
+	public void aggiungiOggetto(Mercato mercato){
+		mercato.getOggettiInVendita().add(this);
+	}
+
+	/**
+	 * does the transaction between two players.It will be implemented
+	 * in the subclasses
+	 * @param giocatore
+	 */
+	public abstract void transazione(Giocatore giocatore);
 	
-	/**
-	 * @param oggetto the object you want to sell
-	 * @param prezzo the price of the object
-	 * @param giocatore the player who sells
-	 * 
-	 * build the object
-	 */
-	public OggettoVendibile(T oggetto, int prezzo, Giocatore giocatore){
-		this.oggetto=oggetto;
-		this.prezzo=prezzo;
-		this.giocatore=giocatore;
-	}
-	/**
-	 * return the object
-	 * @return
-	 */
-	public T getOggetto() {
-		return oggetto;
-	}
 	/**
 	 * return the price
 	 * @return 
@@ -44,6 +39,44 @@ public class OggettoVendibile <T> {
 	public Giocatore getGiocatore() {
 		return giocatore;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return the money route of the game
+	 */
+	public Percorso getPercorsoRicchezza() {
+		return getMercato().getPercorsoRicchezza();
+	}
+
+	/**
+	 * 
+	 * @return the market of the game
+	 */
+	public Mercato getMercato() {
+		return mercato;
+	}
+
+	/**
+	 * 
+	 * @param prezzo the price of the object you want to sell to set
+	 */
+	public void setPrezzo(int prezzo) {
+		this.prezzo = prezzo;
+	}
+
+	/**
+	 * 
+	 * @param giocatore the player who wants to sell the object
+	 */
+	public void setGiocatore(Giocatore giocatore) {
+		this.giocatore = giocatore;
+	}
+
+	/**
+	 * 
+	 * @param mercato the market of the game
+	 */
+	public void setMercato(Mercato mercato) {
+		this.mercato = mercato;
+	}
 }

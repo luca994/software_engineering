@@ -14,7 +14,7 @@ public class BonusTesseraPermesso implements Bonus {
 	/**
 	 * @return the tessera
 	 */
-	public OggettoConBonus getTessera() {
+	public TesseraCostruzione getTessera() {
 		return tessera;
 	}
 	

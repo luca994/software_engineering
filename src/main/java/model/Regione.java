@@ -88,7 +88,7 @@ public class Regione {
 		Collections.shuffle(this.tessereCoperte);
 		this.tessereCostruzione.add(this.tessereCoperte.get(0));
 		this.tessereCostruzione.add(this.tessereCoperte.get(1));
-		for(OggettoConBonus tessera: this.tessereCostruzione)
+		for(TesseraCostruzione tessera: this.tessereCostruzione)
 		{
 			this.tessereCoperte.remove(tessera);
 		}
@@ -99,7 +99,7 @@ public class Regione {
 	 *element of the covered Tessere Permesso Costruzione in to the list of obtainable Tessere
 	 * @param tessera
 	 */
-	public void nuovaTessera(OggettoConBonus tessera)
+	public void nuovaTessera(TesseraCostruzione tessera)
 	{
 		this.tessereCostruzione.remove(tessera);
 		this.tessereCostruzione.add(this.tessereCoperte.get(0));
