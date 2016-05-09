@@ -102,10 +102,37 @@ public class Tabellone {
 		
 		
 		//Creo percorsi passando al costruttore del percorso il nome del file che dovrà usare per creare il percorso
+		creaPercorsi();
+		//Creazione consiglieriDisponibili
+		creaConsiglieriDisponibili();
+		
+		
+		//Creo regioni (da file ovviamente):passo al costruttore della regione una lista di nomi di città
+		//Sarà il costruttore delle Regioni a collegarle
+		creaRegioni();
+		//Creo bonus per le città(praticamente una lista di bonus corrispondente ai Gettoni Città)
+		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
+		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);
+		gettoniCittà=creaGettoniCittà();
+		//Collego, coloro le città(devo passare attraverso le regioni), creo e assegno bonus, piazzo il re
+		collegaCittà(nomeFileMappa, gettoniCittà);
+		//Crea le tessere bonus
+		creaTessereBonus();
+	}
+	
+	/**
+	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
+	 * reading them from a file
+	 * @throws JDOMException
+	 * @throws IOException throw an exception if the method doesn't found the file or
+	 *         there is another error about the file
+	 */
+	public void creaPercorsi() throws JDOMException, IOException{
 		this.percorsoVittoria=new Percorso("PercorsoVittoria", this);	
 		this.percorsoRicchezza=new Percorso("percorsoRicchezza", this);
 		this.percorsoNobiltà= new Percorso("percorsoNobiltà", this);
-		//Creazione consiglieriDisponibili
+	}
+	public void creaConsiglieriDisponibili() throws JDOMException, IOException{
 		this.consiglieriDisponibili= new ArrayList<Consigliere>(24);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
 		Document documentConsiglieri = builderConsiglieri.build(new File("Consiglieri.xml"));
@@ -119,10 +146,8 @@ public class Tabellone {
 		   this.consiglieriDisponibili.add(new Consigliere(consi.getAttributeValue("colore")));
 		} 
 		Collections.shuffle(consiglieriDisponibili);
-		
-		
-		//Creo regioni (da file ovviamente):passo al costruttore della regione una lista di nomi di città
-		//Sarà il costruttore delle Regioni a collegarle
+	}
+	public void creaRegioni () throws JDOMException, IOException{
 		this.regioni=new HashSet<Regione>();
 		SAXBuilder builderRegioni = new SAXBuilder();
 		Document documentRegioni = builderRegioni.build(new File("Regioni.xml"));
@@ -142,35 +167,39 @@ public class Tabellone {
 			//Costruisco la regione
 			this.regioni.add(new Regione(percorsoRicchezza,percorsoNobiltà,percorsoVittoria,regione.getAttributeValue("id"),nomiCittà,this));
 		}
+	}
+	public List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
 		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
 		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);
-		//Leggo i set di bonus
-		SAXBuilder builderGettoni = new SAXBuilder();
-		Document documentGettoni = builderGettoni.build(new File("BonusCittà.xml"));
-		Element bonusCittàRootElement=documentGettoni.getRootElement();
-		List<Element> elencoSetBonus =bonusCittàRootElement.getChildren();
-		for(Element set:elencoSetBonus){
-			List<Element> elencoBonus =set.getChildren();
-			Set<Bonus> bonus=new HashSet<Bonus>();
-			for(Element bon:elencoBonus){ //Leggo i set di bonus, li inizializzo e li copio nella lista di bonus
-				if(bon.getAttributeValue("id").equals("BonusMoneta"))
-					bonus.add(new BonusMoneta(percorsoRicchezza, Integer.parseInt(bon.getAttributeValue("step"))));
-				else if(bon.getAttributeValue("id").equals("BonusPuntoVittoria"))
-					bonus.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(bon.getAttributeValue("passi"))));
-				else if(bon.getAttributeValue("id").equals("BonusCartaPolitica"))
-					bonus.add(new BonusCartaPolitica(Integer.parseInt(bon.getAttributeValue("numeroCarte"))));
-				else if(bon.getAttributeValue("id").equals("BonusAssistenti"))
-					bonus.add(new BonusAssistenti(Integer.parseInt(bon.getAttributeValue("numeroAssistenti"))));
-				else if(bon.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-					bonus.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(bon.getAttributeValue("steps"))));
-				else if(bon.getAttributeValue("id").equals("AzionePrincipale"))
-					bonus.add(new BonusAzionePrincipale());
-			}
-			gettoniCittà.add(bonus);//Aggiungo i set di bonus alla lista di bonus
-		}
-		Collections.shuffle(gettoniCittà);
-		
-		//Collego, coloro le città(devo passare attraverso le regioni), creo e assegno bonus, piazzo il re
+				//Leggo i set di bonus
+				SAXBuilder builderGettoni = new SAXBuilder();
+				Document documentGettoni = builderGettoni.build(new File("BonusCittà.xml"));
+				Element bonusCittàRootElement=documentGettoni.getRootElement();
+				List<Element> elencoSetBonus =bonusCittàRootElement.getChildren();
+				for(Element set:elencoSetBonus){
+					List<Element> elencoBonus =set.getChildren();
+					Set<Bonus> bonus=new HashSet<Bonus>();
+					for(Element bon:elencoBonus){ //Leggo i set di bonus, li inizializzo e li copio nella lista di bonus
+						if(bon.getAttributeValue("id").equals("BonusMoneta"))
+							bonus.add(new BonusMoneta(percorsoRicchezza, Integer.parseInt(bon.getAttributeValue("step"))));
+						else if(bon.getAttributeValue("id").equals("BonusPuntoVittoria"))
+							bonus.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(bon.getAttributeValue("passi"))));
+						else if(bon.getAttributeValue("id").equals("BonusCartaPolitica"))
+							bonus.add(new BonusCartaPolitica(Integer.parseInt(bon.getAttributeValue("numeroCarte"))));
+						else if(bon.getAttributeValue("id").equals("BonusAssistenti"))
+							bonus.add(new BonusAssistenti(Integer.parseInt(bon.getAttributeValue("numeroAssistenti"))));
+						else if(bon.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
+							bonus.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(bon.getAttributeValue("steps"))));
+						else if(bon.getAttributeValue("id").equals("AzionePrincipale"))
+							bonus.add(new BonusAzionePrincipale());
+					}
+					gettoniCittà.add(bonus);//Aggiungo i set di bonus alla lista di bonus
+				}
+				Collections.shuffle(gettoniCittà);
+				return gettoniCittà;
+				
+	}
+	public void collegaCittà(String nomeFileMappa,List<Set<Bonus>> gettoniCittà) throws JDOMException, IOException {
 		SAXBuilder builderCollegamenti = new SAXBuilder();
 		Document documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
 		Element collegamentiRootElement=documentCollegamenti.getRootElement();
@@ -205,16 +234,7 @@ public class Tabellone {
 				}
 			}
 		}
-		creaTessereBonus();
 	}
-	
-	/**
-	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
-	 * reading them from a file
-	 * @throws JDOMException
-	 * @throws IOException throw an exception if the method doesn't found the file or
-	 *         there is another error about the file
-	 */
 	public void creaTessereBonus() throws JDOMException, IOException{
 		//inizializzo i set di tessere
 		this.tessereBonusCittà=new HashSet<TesseraBonus>();

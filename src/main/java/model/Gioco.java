@@ -70,7 +70,6 @@ public class Gioco {
 		//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
-				turno(gio);
 				//Controllo se gli empori sono finiti
 				for(Giocatore gioca: this.giocatori)
 					if (gioca.getEmporiRimasti()==0)
@@ -85,7 +84,7 @@ public class Gioco {
 						}
 						break;
 					}
-				
+				turno(gio);
 			}
 			//Fase Mercato
 		
