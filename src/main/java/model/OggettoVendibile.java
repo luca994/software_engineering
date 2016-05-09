@@ -19,9 +19,9 @@ public abstract class OggettoVendibile {
 	}
 
 	/**
-	 * does the transaction between two players.It will be implemented
+	 * does the transaction between two players. It will be implemented
 	 * in the subclasses
-	 * @param giocatore
+	 * @param giocatore the player who wants to buy the object
 	 */
 	public abstract void transazione(Giocatore giocatore);
 	

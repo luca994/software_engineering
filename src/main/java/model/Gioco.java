@@ -60,6 +60,8 @@ public class Gioco {
 			}
 			
 		}
+		//Setup mercato
+		mercato=new Mercato(tabellone.getPercorsoRicchezza());
 		
 	}//mettere i catch delle eccezioni della lettura xml
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
@@ -84,7 +86,33 @@ public class Gioco {
 					}
 				turno(gio);
 			}
-			//Fase Mercato
+			//Fase Mercato per la vendita
+			boolean fineMercato;
+			OggettoVendibile oggetto;
+			for(Giocatore gio:giocatori){
+				fineMercato=false;
+				while(!fineMercato){
+					//metodo controller per chiedere se vuole vendere altri oggetti
+					//setto fineMercato
+					oggetto=null;
+					//metodo del controller che prende l' oggetto in ingresso
+					faseMercatoVendita(gio, oggetto);
+				}
+			}
+			fineMercato=false;
+			//fase mercato per l'acquisto
+			for(Giocatore gio:giocatori){
+				while(!fineMercato){
+					//metodo controller per chiedere se vuole vendere altri oggetti
+					//setto fineMercato
+					//fineMercato=...
+					//mostro la lista degli oggetti in vendita e prendo in ingresso
+					//l'oggetto
+					oggetto=null;
+					faseMercatoAcquisto(gio, oggetto);
+				}
+			}
+			
 		
 		}
 		//Conteggio punti
@@ -95,7 +123,7 @@ public class Gioco {
 	public void turno(Giocatore gio) throws JDOMException, IOException{
 		//il giocatore persca una carta
 		gio.getCartePolitica().add(new CartaPolitica());
-		while((!gio.getAzioneOpzionale())&&(!gio.getAzionePrincipale())){
+		while((!gio.getAzioneOpzionale())||(!gio.getAzionePrincipale())){
 			//Metodo controller che dice al giocatore quale mosse gli mancano da fare (se lenta e/o veloce)
 			//Richiesta al controller di input per azione al giocatore gio
 			int azione = 11;
@@ -162,8 +190,25 @@ public class Gioco {
 	}
 	
 	/**
-	 * @return the tabellone
+	 * the player can add an object in the list oggettiInVendita
 	 */
+	public void faseMercatoVendita(Giocatore giocatore, OggettoVendibile oggetto){
+		int prezzo=0;
+		oggetto.aggiungiOggetto(mercato);
+		//bisogna chiamare il metodo per chiedere il prezzo (controller)
+		oggetto.setPrezzo(prezzo);
+		oggetto.setGiocatore(giocatore);
+	}
+	
+	/**
+	 * a player can buy object in the list of oggettiInVendita
+	 * @param giocatore the player who wants to buy the objects
+	 * @param oggetto the object the player wants to buy
+	 */
+	public void faseMercatoAcquisto(Giocatore giocatore, OggettoVendibile oggetto){
+		oggetto.transazione(giocatore);
+	}
+	
 	public Set<Giocatore> calcoloVincitore(){
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
 		ListIterator<Casella> itcasella=tabellone.getPercorsoNobiltà().getCaselle().listIterator(tabellone.getPercorsoNobiltà().getCaselle().size());
@@ -240,6 +285,10 @@ public class Gioco {
 		}
 		throw new IllegalStateException("Errore nel calcolo del percorso");
 	}
+	
+	/**
+	 * @return the tabellone
+	 */
 	public Tabellone getTabellone() {
 		return tabellone;
 	}
