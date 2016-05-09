@@ -120,18 +120,12 @@ public class Tabellone {
 		creaTessereBonus();
 	}
 	
-	/**
-	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
-	 * reading them from a file
-	 * @throws JDOMException
-	 * @throws IOException throw an exception if the method doesn't found the file or
-	 *         there is another error about the file
-	 */
 	public void creaPercorsi() throws JDOMException, IOException{
 		this.percorsoVittoria=new Percorso("PercorsoVittoria", this);	
 		this.percorsoRicchezza=new Percorso("percorsoRicchezza", this);
 		this.percorsoNobiltà= new Percorso("percorsoNobiltà", this);
 	}
+	
 	public void creaConsiglieriDisponibili() throws JDOMException, IOException{
 		this.consiglieriDisponibili= new ArrayList<Consigliere>(24);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
@@ -147,6 +141,7 @@ public class Tabellone {
 		} 
 		Collections.shuffle(consiglieriDisponibili);
 	}
+	
 	public void creaRegioni () throws JDOMException, IOException{
 		this.regioni=new HashSet<Regione>();
 		SAXBuilder builderRegioni = new SAXBuilder();
@@ -168,6 +163,7 @@ public class Tabellone {
 			this.regioni.add(new Regione(regione.getAttributeValue("id"),nomiCittà,this));
 		}
 	}
+	
 	public List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
 		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
 		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);
@@ -199,6 +195,7 @@ public class Tabellone {
 				return gettoniCittà;
 				
 	}
+	
 	public void collegaCittà(String nomeFileMappa,List<Set<Bonus>> gettoniCittà) throws JDOMException, IOException {
 		SAXBuilder builderCollegamenti = new SAXBuilder();
 		Document documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
@@ -235,6 +232,14 @@ public class Tabellone {
 			}
 		}
 	}
+	
+	/**
+	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
+	 * reading them from a file
+	 * @throws JDOMException
+	 * @throws IOException throw an exception if the method doesn't found the file or
+	 *         there is another error about the file
+	 */
 	public void creaTessereBonus() throws JDOMException, IOException{
 		//inizializzo i set di tessere
 		this.tessereBonusCittà=new HashSet<TesseraBonus>();
