@@ -3,8 +3,6 @@ package model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -137,7 +135,7 @@ public class Gioco {
 			else if(azione==6&&!gio.getAzioneOpzionale())//Cambiare le tessere permesso di costruzione
 			{
 				//Richiesta al controller di input per scegliere la regione per cui rimischiare le carte
-				Regione regioneScelta=new Regione(null, null, null, null, null, null);
+				Regione regioneScelta=new Regione(null, null, null);
 				new CambioTessereCostruzione(regioneScelta).eseguiAzione(gio);
 			}
 			else if(azione==7&&!gio.getAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere

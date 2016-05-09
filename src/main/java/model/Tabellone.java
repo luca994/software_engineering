@@ -165,7 +165,7 @@ public class Tabellone {
 				nomiCittà.add(città.getAttributeValue("id"));
 			}
 			//Costruisco la regione
-			this.regioni.add(new Regione(percorsoRicchezza,percorsoNobiltà,percorsoVittoria,regione.getAttributeValue("id"),nomiCittà,this));
+			this.regioni.add(new Regione(regione.getAttributeValue("id"),nomiCittà,this));
 		}
 	}
 	public List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
