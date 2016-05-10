@@ -99,7 +99,7 @@ public class Gioco {
 						faseMercatoAcquisto(gio, oggetto);
 					}
 				}
-				numeroTurno=1;
+				numeroTurno=0;
 			}
 			Giocatore giocatoreAttuale=codaGiocatori.poll();
 			turno(giocatoreAttuale);
