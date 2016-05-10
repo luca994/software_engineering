@@ -3,8 +3,10 @@ package model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
@@ -66,7 +68,57 @@ public class Gioco {
 	}//mettere i catch delle eccezioni della lettura xml
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
+		Queue<Giocatore> codaGiocatori= new LinkedList<Giocatore>(giocatori);
+		int numeroGiocatori=giocatori.size();
+		int numeroTurno=0;
 		while(!vittoria){
+			if(numeroTurno==numeroGiocatori)//Fase mercato
+			{
+				boolean fineMercato;
+				OggettoVendibile oggetto;
+				for(Giocatore gio:giocatori){
+					fineMercato=false;
+					while(!fineMercato){
+						//metodo controller per chiedere se vuole vendere altri oggetti
+						//setto fineMercato
+						oggetto=null;
+						//metodo del controller che prende l' oggetto in ingresso
+						faseMercatoVendita(gio, oggetto);
+					}
+				}
+				fineMercato=false;
+				//fase mercato per l'acquisto
+				for(Giocatore gio:giocatori){
+					while(!fineMercato){
+						//metodo controller per chiedere se vuole vendere altri oggetti
+						//setto fineMercato
+						//fineMercato=...
+						//mostro la lista degli oggetti in vendita e prendo in ingresso
+						//l'oggetto
+						oggetto=null;
+						faseMercatoAcquisto(gio, oggetto);
+					}
+				}
+				numeroTurno=1;
+			}
+			Giocatore giocatoreAttuale=codaGiocatori.poll();
+			turno(giocatoreAttuale);
+			numeroTurno++;
+			if(giocatoreAttuale.getEmporiRimasti()==0)
+			{
+				vittoria=true;
+			}
+			else
+			{
+				codaGiocatori.add(giocatoreAttuale);
+			}
+		}
+		//ultimo turno
+		while(!codaGiocatori.isEmpty()){
+			Giocatore giocatoreAttuale=codaGiocatori.poll();
+			turno(giocatoreAttuale);
+		}
+		/*while(!vittoria){
 		//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
@@ -114,7 +166,7 @@ public class Gioco {
 			}
 			
 		
-		}
+		}*/
 		//Conteggio punti
 		Set<Giocatore> vincitore=calcoloVincitore();
 		//Comunico al controller chi è il vincitore
