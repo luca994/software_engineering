@@ -25,7 +25,7 @@ public class Gioco {
 	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
-		String nomeMappaScelta="mappacollegamenti0.xml";// Ottenuta dal controller
+		String nomeMappaScelta="/source/main/mappacollegamenti0.xml";// Ottenuta dal controller
 		this.tabellone=new Tabellone(nomeMappaScelta);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
@@ -244,6 +244,8 @@ public class Gioco {
 	
 	/**
 	 * the player can add an object in the list oggettiInVendita
+	 * @param giocatore the player who wants to add an object in the market
+	 * @param oggetto the object you want to sell
 	 */
 	public void faseMercatoVendita(Giocatore giocatore, OggettoVendibile oggetto){
 		int prezzo=0;
