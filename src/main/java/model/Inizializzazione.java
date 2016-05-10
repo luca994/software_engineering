@@ -4,8 +4,8 @@
 package model;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom2.JDOMException;
 
@@ -16,7 +16,7 @@ import org.jdom2.JDOMException;
 public class Inizializzazione {
 	public void inizializza() throws JDOMException, IOException{
 		try{
-			Set<Giocatore> nuoviGiocatori=new HashSet<Giocatore>();
+			List<Giocatore> nuoviGiocatori=new ArrayList<Giocatore>();
 			boolean avviaGioco=false;
 			while(!avviaGioco){
 			String nome= new String();
