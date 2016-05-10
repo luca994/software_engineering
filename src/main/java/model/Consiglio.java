@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -15,6 +16,16 @@ public class Consiglio {
 	private int id;
 	private Regione regione;
 	
+	public Consiglio(Tabellone tabellone)
+	{
+		this.consiglio=new LinkedList<Consigliere>();
+		for(int i=0;i<4;i++)//Prendo quattro consiglieri da quelli disponibili e li metto nel consiglio
+		{
+			consiglio.add(tabellone.getConsiglieriDisponibili().get(0));
+			tabellone.getConsiglieriDisponibili().remove(0);
+		}
+	}
+	
 	
 	public List<String> acquisisciColoriConsiglio(){
 		List<String> colori= new ArrayList<String>(); 
@@ -22,11 +33,11 @@ public class Consiglio {
 			colori.add(c.getColore());
 		return colori;
 	}
+	
 	/**
-	 * retrieves and remove the head of this queue,
-	 * it throws an exception if this queue is empty.
+	 * Retrieves and remove the head of this queue,
+	 * Throws NoSuchElementException if this queue is empty.
 	 * @author Luca
-	 *
 	 */
 	//Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
 	public void removeConsigliere(){
@@ -43,11 +54,7 @@ public class Consiglio {
 	 * this method Inserts the specified element into this queue if it is possible
 	 * to do so immediately without violating capacity restrictions, returning true upon 
 	 * success and throwing an IllegalStateException if no space is currently available.
-	 * 
 	 * @author Luca
-	 * 
-	 * Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
-	 * 
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try
@@ -65,11 +72,19 @@ public class Consiglio {
 		}
 		catch (IllegalStateException e)
 		{
-			System.out.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
+			System.err.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
 		}
 		return true;
 	}
 	
+	/**
+	 * @param regione the regione to set
+	 */
+	public void setRegione(Regione regione) {
+		this.regione = regione;
+	}
+
+
 	/**
 	 * @return the regione
 	 */

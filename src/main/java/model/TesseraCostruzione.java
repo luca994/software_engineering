@@ -2,41 +2,85 @@ package model;
 
 import java.util.Set;
 
-public class TesseraCostruzione extends OggettoConBonus {
+public class TesseraCostruzione extends OggettoVendibile{
 
-	private Set<String> nomeCittà;
-	private Set<Bonus> elencoBonus;
+	private Set<Città> città;
+	private Regione regioneDiAppartenenza;
+	private Set<Bonus> bonus;
+	
 	/**
-	 * @return the nomeCittà
+	 * @param bonus
+	 * @param città
+	 * @param regioneDiAppartenenza
 	 */
-	public Set<String> getNomeCittà() {
-		return nomeCittà;
-	}
-	/**
-	 * @param nomeCittà the nomeCittà to set
-	 */
-	public void setNomeCittà(Set<String> nomeCittà) {
-		this.nomeCittà = nomeCittà;
-	}
-	/**
-	 * @return the elencoBonus
-	 */
-	public Set<Bonus> getElencoBonus() {
-		return this.elencoBonus;
-	}
-	/**
-	 * @param elencoBonus the elencoBonus to set
-	 */
-	public void setElencoBonus(Set<Bonus> elencoBonus) {
-		this.elencoBonus = elencoBonus;
+	public TesseraCostruzione(Set<Bonus> bonus, Set<Città> città, Regione regioneDiAppartenenza) {
+		this.bonus=bonus;
+		this.città = città;
+		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 	
+	public boolean verifyCittà(Città cittàDaVerificare){
+		return this.città.contains(cittàDaVerificare);
+		}
+	
+	/**
+	 * assigns all the bonuses in the set of bonus
+	 * @param giocatore
+	 */
 	public void eseguiBonus (Giocatore giocatore){
-		for(Bonus b : elencoBonus){
+		for(Bonus b : bonus){
 			b.azioneBonus(giocatore);
 		}
+	}
+	
+	/**
+	 * @return the bonus
+	 */
+	public Set<Bonus> getBonus() {
+		return bonus;
+	}
+	
+	/**
+	 * @return the città
+	 */
+	public Set<Città> getCittà() {
+		return città;
+	}
+	
+	/**
+	 * @return the regioneDiAppartenenza
+	 */
+	public Regione getRegioneDiAppartenenza() {
+		return regioneDiAppartenenza;
+	}
+
+
+	/**
+	 * @param città the città to set
+	 */
+	public void setCittà(Set<Città> città) {
+		this.città = città;
+	}
+
+
+	/**
+	 * @param regioneDiAppartenenza the regioneDiAppartenenza to set
+	 */
+	public void setRegioneDiAppartenenza(Regione regioneDiAppartenenza) {
+		this.regioneDiAppartenenza = regioneDiAppartenenza;
+	}
+
+	@Override
+	public void transazione(Giocatore giocatore) {
+		try{
+			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
+			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
+			giocatore.getTessereValide().add(this);
+			getGiocatore().getTessereValide().remove(this);
+			getMercato().getOggettiInVendita().remove(this);
 		}
-	public boolean verifyCittà(Città cittàDaVerificare){
-		return nomeCittà.contains(cittàDaVerificare);
+		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getMessage());
+		}
 	}
 }

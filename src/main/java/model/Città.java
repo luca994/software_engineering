@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,12 +12,21 @@ import java.util.Set;
 public class Città extends OggettoConBonus {
 
 	private final String nome;
-	private final String colore;
+	private String colore;
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
-	private Set<Bonus> bonus;
+	private final Regione regione;
+
 	
+	/**
+	 * 
+	 * @return return the set of emporiums built in the city
+	 */
+	public Set<Giocatore> getEmpori() {
+		return empori;
+	}
+
 	/**
 	 * 
 	 * @return return the name of the city
@@ -27,7 +34,7 @@ public class Città extends OggettoConBonus {
 	public String getNome() {
 		return nome;
 	}
-
+	
 	/**
 	 * 
 	 * @return return the color of the city
@@ -46,6 +53,14 @@ public class Città extends OggettoConBonus {
 
 	/**
 	 * 
+	 * @return return the region of the city
+	 */
+	public Regione getRegione() {
+		return regione;
+	}
+
+	/**
+	 * 
 	 * @return return the set of near cities
 	 */
 	public Set<Città> getCittàVicina() {
@@ -54,10 +69,10 @@ public class Città extends OggettoConBonus {
 
 	/**
 	 * 
-	 * @return return the set of bonus of the city
+	 * @return the set of bonus of the city
 	 */
 	public Set<Bonus> getBonus() {
-		return bonus;
+		return this.getBonus();
 	}
 	
 	/**
@@ -67,17 +82,25 @@ public class Città extends OggettoConBonus {
 	public void setRe(Re re) {
 		this.re = re;
 	}
-
+	
 	/**
-	 * build a city
-	 * @param nome the name of the city
-	 * @param colore the color of the city
+	 * @param colore the colore to set
 	 */
-	public Città(String nome,String colore){
-		this.nome=nome;
-		this.colore=colore;
+	public void setColore(String colore) {
+		this.colore = colore;
 	}
 	
+	
+	/**
+	 * @param nome
+	 * @param regione
+	 */
+	public Città(String nome, Regione regione) {
+		super(null);
+		this.nome = nome;
+		this.regione = regione;
+	}
+
 	/**
 	 * 
 	 * @param giocatore the owner of the emporium
@@ -95,11 +118,12 @@ public class Città extends OggettoConBonus {
 	 * @param giocatore the owner of the emporium
 	 * @return return a list of near cities which have the player' s emporium
 	 */
-	public List<Città> cittàVicinaConEmporio(Giocatore giocatore){
-		List<Città> cittàVicineConEmpori=new ArrayList<Città>();
+	//cittàVicineConEmpori inizialmente vuota
+	public List<Città> cittàVicinaConEmporio(Giocatore giocatore,List<Città> cittàVicineConEmpori){
 		for(Città c:cittàVicina){
-			if (c.presenzaEmporio(giocatore)){
+			if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
 				cittàVicineConEmpori.add(c);
+				c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
 			}
 		}
 		return cittàVicineConEmpori;
@@ -112,22 +136,11 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is a player's emporium
 	 */
 	public boolean aggiungiEmporio(Giocatore giocatore){
-		if(presenzaEmporio(giocatore)==false){
+		if(!presenzaEmporio(giocatore)){
 			empori.add(giocatore);
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * it does the action of the bonuses in the city
-	 * @param giocatore the player who wants to add the emporium
-	 */
-	public void eseguiAzioneBonus(Giocatore giocatore){
-		Iterator<Bonus> itrBonus= bonus.iterator();
-		while(itrBonus.hasNext()){
-			itrBonus.next().azioneBonus(giocatore);
-		}
 	}
 	
 }

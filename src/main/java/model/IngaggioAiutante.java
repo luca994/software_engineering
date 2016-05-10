@@ -6,6 +6,14 @@ package model;
  */
 public class IngaggioAiutante implements Azione {
 
+	/**
+	 * @param percorsoRicchezza
+	 */
+	public IngaggioAiutante(Percorso percorsoRicchezza) {
+		super();
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
+
 	private final static int COSTO_AIUTANTE=3;
 	private Percorso percorsoRicchezza;
 	
@@ -22,6 +30,7 @@ public class IngaggioAiutante implements Azione {
 			giocatore.setAzioneOpzionale(true);
 		}
 		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getLocalizedMessage());
 			//se viene catturata l' eccezione vuol dire che il giocatore
 			//non ha abbastanza soldi, quindi il metodo termina senza 
 			//apportare nessuna modifica.

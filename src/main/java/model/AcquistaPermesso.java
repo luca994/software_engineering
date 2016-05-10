@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +15,21 @@ public class AcquistaPermesso implements Azione {
 	private Percorso percorsoRicchezza;
 	
 	
+	/**
+	 * @param tessera
+	 * @param cartePolitica
+	 * @param consiglioDaSoddisfare
+	 * @param percorsoRicchezza
+	 */
+	public AcquistaPermesso(TesseraCostruzione tessera, List<CartaPolitica> cartePolitica,
+			Consiglio consiglioDaSoddisfare, Percorso percorsoRicchezza) {
+		super();
+		this.tessera = tessera;
+		this.cartePolitica = cartePolitica;
+		this.consiglioDaSoddisfare = consiglioDaSoddisfare;
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
+
 	/**
 	 * @param tessera the tessera to set
 	 */
@@ -41,31 +54,29 @@ public class AcquistaPermesso implements Azione {
 	
 	/**
 	 * Executes the action of buying a Tessera Permesso di Costruzione; 
-	 * Throws IllegalStateException if the number of Carta Politica is less than one or more than four,
-	 * Throws IndexOutOfBoundsException if an error occurs during the count of the cards
-	 * Throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
+	 * @throws IllegalStateException if the number of Carta Politica is less than one or more than four,
+	 * @throws IndexOutOfBoundsException if an error occurs during the count of the cards
+	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
 	 */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
-		int numeroCartePolitica=cartePolitica.size();
+		try{int numeroCartePolitica=cartePolitica.size();
 		int jollyUsati=0;
 		int counter=0;
 		if(numeroCartePolitica<1||numeroCartePolitica>4)
 			throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 		//Creazione copie liste dei colori del consiglio
 		List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-		List<String> cpycolori= new ArrayList<>();
-		Collections.copy(cpycolori, colori);
 	//		if(giocatore.containsAllCarte(cartePolitica)){
 			for(CartaPolitica car : cartePolitica){
 				if(car.getColore().equals("JOLLY"))
 					jollyUsati++;//conto i jolly usati
-				for(String col : cpycolori){
+				for(String col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
-						cpycolori.remove(col);
+						colori.remove(col);
 						break;
 					}
 				}			
@@ -87,7 +98,7 @@ public class AcquistaPermesso implements Azione {
 		//Rimozione tessere selezionate dalla mano del giocatore
 			giocatore.getCartePolitica().removeAll(cartePolitica);
 		
-		List<OggettoConBonus> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
+		List<TesseraCostruzione> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
 		//Aggiunta tessera acquistata al set di tessere valide del giocatore
 			giocatore.addTessereValide(tessera);
@@ -95,6 +106,12 @@ public class AcquistaPermesso implements Azione {
 			//Scopri dal mazzetto una nuova tessera costruzione
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tessera);
 			giocatore.setAzionePrincipale(true);
+		}}
+		catch(IllegalStateException e){
+			System.err.println(e.getLocalizedMessage());
+		}
+		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getLocalizedMessage());
 		}
 	}
 }

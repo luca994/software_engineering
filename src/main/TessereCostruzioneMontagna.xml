@@ -9,8 +9,9 @@
 	<Tessera>
 		<SetCittà>
 			<Città id="Merkatim"></Città>
-			<Città id="Naris"></Città></SetCittà><SetBonus>
-			<Bonus>BonusAzionePrincipale</Bonus></SetBonus>
+			<Città id="Naris"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusAzionePrincipale"></Bonus></SetBonus>
 		</Tessera>
 	<Tessera>
 		<SetCittà>

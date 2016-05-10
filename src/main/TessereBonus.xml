@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TessereBonus QuantitàTessere="12">
+	
+	<Tessera id="regione" regione="Mare">
+		<Bonus id="BonusPuntoVittoria" passi="5"></Bonus>
+	</Tessera>
+	<Tessera id="regione" regione="Pianura">
+		<Bonus id="BonusPuntoVittoria" passi="5"></Bonus>
+	</Tessera>
+	<Tessera id="regione" regione="Montagna">
+		<Bonus id="BonusPuntoVittoria" passi="5"></Bonus>
+	</Tessera>
+	
+	<Tessera id="città" colore="Blu">
+		<Bonus id="BonusPuntoVittoria" passi="5"></Bonus>
+	</Tessera>
+	<Tessera id="città" colore="Rosso">
+		<Bonus id="BonusPuntoVittoria" passi="8"></Bonus>
+	</Tessera>
+	<Tessera id="città" colore="Grigio">
+		<Bonus id="BonusPuntoVittoria" passi="12"></Bonus>
+	</Tessera>
+	<Tessera id="città" colore="Giallo">
+		<Bonus id="BonusPuntoVittoria" passi="20"></Bonus>
+	</Tessera>
+	
+	<!--devono essere inserite in ordine dall prima all'ultima-->
+	<Tessera id="premioRe">
+		<Bonus id="BonusPuntoVittoria" passi="25"></Bonus>
+	</Tessera>
+	<Tessera id="premioRe">
+		<Bonus id="BonusPuntoVittoria" passi="18"></Bonus>
+	</Tessera>
+	<Tessera id="premioRe">
+		<Bonus id="BonusPuntoVittoria" passi="12"></Bonus>
+	</Tessera>
+	<Tessera id="premioRe">
+		<Bonus id="BonusPuntoVittoria" passi="7"></Bonus>
+	</Tessera>
+	<Tessera id="premioRe">
+		<Bonus id="BonusPuntoVittoria" passi="3"></Bonus>
+	</Tessera>
+</TessereBonus>

@@ -4,9 +4,14 @@ package model;
  * @author Luca
  *
  */
-public class CartaPolitica {
+public class CartaPolitica extends OggettoVendibile {
+	
+	private final String colore;
+	
 	public CartaPolitica(){
+		
 		int numero = (int)(Math.random()*89);
+		
 		if(numero>=0&&numero<=12)
 			this.colore="NERO";
 		else if(numero>=13&&numero<=25)
@@ -22,12 +27,26 @@ public class CartaPolitica {
 		else
 			this.colore="JOLLY";
 	}
-	private final String colore;
+
 	/**
 	 * @return the colore
 	 */
 	public String getColore() {
 		return colore;
+	}
+
+	@Override
+	public void transazione(Giocatore giocatore) {
+		try{
+			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
+			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
+			giocatore.getCartePolitica().add(this);
+			getGiocatore().getCartePolitica().remove(this);
+			getMercato().getOggettiInVendita().remove(this);
+		}
+		catch(IndexOutOfBoundsException e){
+			System.err.println(e.getMessage());
+		}
 	}
 	
 }

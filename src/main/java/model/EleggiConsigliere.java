@@ -40,13 +40,20 @@ public class EleggiConsigliere implements Azione {
 	}
 
 /**
- * This method performs the move and if all went well , set the boolean AzionePrincipale to true
+ * Elects a new Consigliere from ConsiglieriDisponibili and if all went well , set the boolean AzionePrincipale to true
  */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
+	try{	
 		if(this.consiglio.addConsigliere(this.consigliere)){
-		this.consiglio.removeConsigliere();
-		percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
-		giocatore.setAzionePrincipale(true);}
+			this.consiglio.removeConsigliere();
+			percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+			giocatore.setAzionePrincipale(true);
+			}
+		}
+	catch(IndexOutOfBoundsException e)
+	{
+		System.err.println("Errore nell'assegnamento delle monete");
+	}
 	}
 }

@@ -14,11 +14,20 @@ public class MuoviRe implements Azione {
 	 */
 	private Re re;
 	private Percorso percorsoRicchezza;
+	/**
+	 * @param re
+	 * @param percorsoRicchezza
+	 */
+	public MuoviRe(Re re, Percorso percorsoRicchezza) {
+		super();
+		this.re = re;
+		this.percorsoRicchezza = percorsoRicchezza;
+	}
 	@Override
 	public void eseguiAzione(Giocatore giocatore) {
 		boolean azioneFinita=false;
-		Città cittàSuccessiva= new Città("Ciao", "Darwin!");//ovviamente è solo per non far dare errore da jenkins
-		//metodo che chiede al giocatore la città di destinazione
+		//Richiesta dal controller di input per la città successiva, se non vuole muovere mette azione finita a true
+		Città cittàSuccessiva= new Città(null,null);
 		while(!azioneFinita)
 		{
 			re.mossa(cittàSuccessiva);
