@@ -1,7 +1,12 @@
 /**
  * 
  */
-package model;
+package azione;
+
+import model.Città;
+import model.Giocatore;
+import model.Re;
+import percorso.Percorso;
 
 /**
  * @author Massimiliano Ventura

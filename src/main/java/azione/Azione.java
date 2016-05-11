@@ -1,4 +1,6 @@
-package model;
+package azione;
+
+import model.Giocatore;
 
 /**
  * @author Luca

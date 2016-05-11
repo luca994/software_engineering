@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -18,7 +19,7 @@ public class Consiglio {
 	
 	public Consiglio(Tabellone tabellone)
 	{
-		this.consiglio=new LinkedList<Consigliere>();
+		this.consiglio=new LinkedList<>();
 		for(int i=0;i<4;i++)//Prendo quattro consiglieri da quelli disponibili e li metto nel consiglio
 		{
 			consiglio.add(tabellone.getConsiglieriDisponibili().get(0));
@@ -28,7 +29,7 @@ public class Consiglio {
 	
 	
 	public List<String> acquisisciColoriConsiglio(){
-		List<String> colori= new ArrayList<String>(); 
+		List<String> colori= new ArrayList<>(); 
 		for(Consigliere c : consiglio)
 			colori.add(c.getColore());
 		return colori;
@@ -45,7 +46,7 @@ public class Consiglio {
 		tabellone.addConsigliereDisponibile(consiglio.element());
 		consiglio.remove();
 		}
-		catch (Exception NoSuchElementException){
+		catch (NoSuchElementException e){
 			System.err.println("Errore:il consiglio"+ id +" è vuoto!");
 		}
 	}
@@ -66,7 +67,7 @@ public class Consiglio {
 			}
 			else
 			{
-					System.out.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
+					System.err.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
 					return false;
 			}
 		}
