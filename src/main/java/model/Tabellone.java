@@ -121,15 +121,15 @@ public class Tabellone {
 	}
 	
 	public void creaPercorsi() throws JDOMException, IOException{
-		this.percorsoVittoria=new Percorso("PercorsoVittoria", this);	
-		this.percorsoRicchezza=new Percorso("percorsoRicchezza", this);
-		this.percorsoNobiltà= new Percorso("percorsoNobiltà", this);
+		this.percorsoVittoria=new Percorso("/source/main/PercorsoVittoria", this);	
+		this.percorsoRicchezza=new Percorso("/source/main/percorsoRicchezza", this);
+		this.percorsoNobiltà= new Percorso("source/main/percorsoNobiltà", this);
 	}
 	
 	public void creaConsiglieriDisponibili() throws JDOMException, IOException{
 		this.consiglieriDisponibili= new ArrayList<Consigliere>(24);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
-		Document documentConsiglieri = builderConsiglieri.build(new File("Consiglieri.xml"));
+		Document documentConsiglieri = builderConsiglieri.build(new File("/source/main/Consiglieri.xml"));
 		Element consiglieriRootElement = documentConsiglieri.getRootElement();
 		//acquisizione del numero dei consiglieri nel file
 		//Creo direttamente la lista di Consiglieri
@@ -145,7 +145,7 @@ public class Tabellone {
 	public void creaRegioni () throws JDOMException, IOException{
 		this.regioni=new HashSet<Regione>();
 		SAXBuilder builderRegioni = new SAXBuilder();
-		Document documentRegioni = builderRegioni.build(new File("Regioni.xml"));
+		Document documentRegioni = builderRegioni.build(new File("/source/main/Regioni.xml"));
 		Element regioniRootElement=documentRegioni.getRootElement();
 		List<Element> elencoRegioni =regioniRootElement.getChildren();
 		for(Element regione:elencoRegioni)
@@ -169,7 +169,7 @@ public class Tabellone {
 		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);
 				//Leggo i set di bonus
 				SAXBuilder builderGettoni = new SAXBuilder();
-				Document documentGettoni = builderGettoni.build(new File("BonusCittà.xml"));
+				Document documentGettoni = builderGettoni.build(new File("/source/main/BonusCittà.xml"));
 				Element bonusCittàRootElement=documentGettoni.getRootElement();
 				List<Element> elencoSetBonus =bonusCittàRootElement.getChildren();
 				for(Element set:elencoSetBonus){
@@ -247,7 +247,7 @@ public class Tabellone {
 		this.tesserePremioRe=new ArrayList<TesseraBonus>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
 		//leggo il documento xml per le tessere
-		Document documentTessereBonus = builderTessereBonus.build(new File("TessereBonus.xml"));
+		Document documentTessereBonus = builderTessereBonus.build(new File("/source/main/TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
 		for(Element e:tessere){

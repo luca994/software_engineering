@@ -16,16 +16,16 @@ import org.jdom2.JDOMException;
  */
 public class Gioco {
 
-	private Set<Giocatore> giocatori;
+	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
 	private boolean vittoria;
 	private int id;
 	private Mercato mercato;
 	
-	public Gioco (Set<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
+	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
-		String nomeMappaScelta="mappacollegamenti0.xml";// Ottenuta dal controller
+		String nomeMappaScelta="/source/main/mappacollegamenti0.xml";// Ottenuta dal controller
 		this.tabellone=new Tabellone(nomeMappaScelta);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
@@ -88,6 +88,7 @@ public class Gioco {
 				}
 				fineMercato=false;
 				//fase mercato per l'acquisto
+				Collections.shuffle(giocatori);
 				for(Giocatore gio:giocatori){
 					while(!fineMercato){
 						//metodo controller per chiedere se vuole vendere altri oggetti
@@ -99,7 +100,7 @@ public class Gioco {
 						faseMercatoAcquisto(gio, oggetto);
 					}
 				}
-				numeroTurno=1;
+				numeroTurno=0;
 			}
 			Giocatore giocatoreAttuale=codaGiocatori.poll();
 			turno(giocatoreAttuale);
@@ -243,6 +244,8 @@ public class Gioco {
 	
 	/**
 	 * the player can add an object in the list oggettiInVendita
+	 * @param giocatore the player who wants to add an object in the market
+	 * @param oggetto the object you want to sell
 	 */
 	public void faseMercatoVendita(Giocatore giocatore, OggettoVendibile oggetto){
 		int prezzo=0;
