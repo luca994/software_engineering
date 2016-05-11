@@ -109,6 +109,7 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is an emporium of the player
 	 */
 	public boolean presenzaEmporio(Giocatore giocatore){
+		
 		if(empori.contains(giocatore)){
 			return true;
 		}
