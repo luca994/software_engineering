@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bonus.Bonus;
 
@@ -13,6 +15,7 @@ import bonus.Bonus;
 
 public class Città extends OggettoConBonus {
 
+	private static final Logger log= Logger.getLogger( Città.class.getName() );
 	private final String nome;
 	private String colore;
 	private Set<Giocatore> empori;
@@ -109,9 +112,16 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is an emporium of the player
 	 */
 	public boolean presenzaEmporio(Giocatore giocatore){
-		
-		if(empori.contains(giocatore)){
-			return true;
+		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			if(empori.contains(giocatore)){
+				return true;
+			}
+		return false;
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 		return false;
 	}
