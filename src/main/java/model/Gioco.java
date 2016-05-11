@@ -10,17 +10,17 @@ import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
-import azione.AcquistaPermesso;
-import azione.AzioneOpzionaleNulla;
-import azione.AzionePrincipaleAggiuntiva;
-import azione.AzionePrincipaleNulla;
-import azione.CambioTessereCostruzione;
-import azione.CostruisciEmporioConRe;
-import azione.CostruisciEmporioConTessera;
-import azione.EleggiConsigliere;
-import azione.EleggiConsigliereRapido;
-import azione.IngaggioAiutante;
-import percorso.Casella;
+import model.azione.AcquistaPermesso;
+import model.azione.AzioneOpzionaleNulla;
+import model.azione.AzionePrincipaleAggiuntiva;
+import model.azione.AzionePrincipaleNulla;
+import model.azione.CambioTessereCostruzione;
+import model.azione.CostruisciEmporioConRe;
+import model.azione.CostruisciEmporioConTessera;
+import model.azione.EleggiConsigliere;
+import model.azione.EleggiConsigliereRapido;
+import model.azione.IngaggioAiutante;
+import model.percorso.Casella;
 
 /**
  * @author Luca

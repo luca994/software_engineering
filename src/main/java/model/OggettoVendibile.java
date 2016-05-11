@@ -1,6 +1,6 @@
 package model;
 
-import percorso.Percorso;
+import model.percorso.Percorso;
 
 /**
  * @author Riccardo

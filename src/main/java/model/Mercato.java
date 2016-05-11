@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import percorso.Percorso;
+import model.percorso.Percorso;
 
 /**
  * @author Riccardo

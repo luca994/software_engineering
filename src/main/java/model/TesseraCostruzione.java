@@ -2,7 +2,7 @@ package model;
 
 import java.util.Set;
 
-import bonus.Bonus;
+import model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile{
 
