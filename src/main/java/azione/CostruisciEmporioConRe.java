@@ -1,8 +1,15 @@
-package model;
+package azione;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import model.CartaPolitica;
+import model.Città;
+import model.Consiglio;
+import model.Giocatore;
+import model.Re;
+import model.Tabellone;
 
 /**
  * @author Luca

@@ -1,10 +1,12 @@
 /**
  * 
  */
-package model;
+package bonus;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.Giocatore;
 
 /**
  * @author Massimiliano Ventura

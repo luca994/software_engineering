@@ -1,6 +1,9 @@
-package model;
+package bonus;
 
 import java.util.Set;
+
+import model.Città;
+import model.Giocatore;
 
 /**
  * This class asks the player which city bonuses wants to obtain with this particular bonus.

@@ -1,9 +1,11 @@
 /**
  * 
  */
-package model;
+package percorso;
 
 import java.util.Set;
+
+import bonus.Bonus;
 
 /**
  * @author Massimiliano Ventura

@@ -10,6 +10,18 @@ import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
+import azione.AcquistaPermesso;
+import azione.AzioneOpzionaleNulla;
+import azione.AzionePrincipaleAggiuntiva;
+import azione.AzionePrincipaleNulla;
+import azione.CambioTessereCostruzione;
+import azione.CostruisciEmporioConRe;
+import azione.CostruisciEmporioConTessera;
+import azione.EleggiConsigliere;
+import azione.EleggiConsigliereRapido;
+import azione.IngaggioAiutante;
+import percorso.Casella;
+
 /**
  * @author Luca
  *

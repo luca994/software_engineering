@@ -1,8 +1,14 @@
-package model;
+package azione;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.CartaPolitica;
+import model.Consiglio;
+import model.Giocatore;
+import model.TesseraCostruzione;
+import percorso.Percorso;
 
 /**
  *

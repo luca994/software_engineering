@@ -1,9 +1,12 @@
 /**
  * 
  */
-package model;
+package bonus;
 
 import java.util.Iterator;
+
+import model.Giocatore;
+import model.TesseraCostruzione;
 
 /**
  *To make the method azioneBonus work the class need a method(tesseraDalGiocatore)that returns

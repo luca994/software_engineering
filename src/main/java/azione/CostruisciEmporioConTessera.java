@@ -1,7 +1,12 @@
-package model;
+package azione;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Città;
+import model.Giocatore;
+import model.Tabellone;
+import model.TesseraCostruzione;
 
 /**
  * @author Luca

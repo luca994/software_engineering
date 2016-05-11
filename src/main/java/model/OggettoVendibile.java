@@ -1,5 +1,7 @@
 package model;
 
+import percorso.Percorso;
+
 /**
  * @author Riccardo
  *

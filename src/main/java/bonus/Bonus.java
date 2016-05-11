@@ -1,7 +1,9 @@
 /**
  * 
  */
-package model;
+package bonus;
+
+import model.Giocatore;
 
 /**
  * @author Massimiliano Ventura

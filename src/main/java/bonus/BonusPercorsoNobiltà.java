@@ -1,4 +1,7 @@
-package model;
+package bonus;
+
+import model.Giocatore;
+import percorso.Percorso;
 
 /**
  *This specific bonus moves the player-token a

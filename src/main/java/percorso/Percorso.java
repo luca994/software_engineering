@@ -1,4 +1,4 @@
-package model;
+package percorso;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+import bonus.Bonus;
+import bonus.BonusAssistenti;
+import bonus.BonusAzionePrincipale;
+import bonus.BonusCartaPolitica;
+import bonus.BonusPercorsoNobiltà;
+import bonus.BonusPuntoVittoria;
+import model.Giocatore;
+import model.Tabellone;
 /**
  * This class is used to implement all the routes; the generic type "Casella"
  *allow the program to use only this class to implement every kind of route.

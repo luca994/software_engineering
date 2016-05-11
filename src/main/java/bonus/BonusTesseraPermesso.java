@@ -1,7 +1,10 @@
 /**
  * 
  */
-package model;
+package bonus;
+
+import model.Giocatore;
+import model.TesseraCostruzione;
 
 /**
  * @author Massimiliano Ventura
