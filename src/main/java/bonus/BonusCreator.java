@@ -1,4 +1,6 @@
-package model;
+package bonus;
+
+import percorso.Percorso;
 
 public class BonusCreator {
 
