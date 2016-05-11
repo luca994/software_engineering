@@ -14,14 +14,15 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import bonus.Bonus;
-import bonus.BonusAssistenti;
-import bonus.BonusAzionePrincipale;
-import bonus.BonusCartaPolitica;
-import bonus.BonusMoneta;
-import bonus.BonusPercorsoNobiltà;
-import bonus.BonusPuntoVittoria;
-import percorso.Percorso;
+import model.bonus.Bonus;
+import model.bonus.BonusAssistenti;
+import model.bonus.BonusAzionePrincipale;
+import model.bonus.BonusCartaPolitica;
+import model.bonus.BonusMoneta;
+import model.bonus.BonusPercorsoNobiltà;
+import model.bonus.BonusPuntoVittoria;
+import model.percorso.Percorso;
+import model.tesserebonus.TesseraBonus;
 
 /**
  * @author Riccardo
