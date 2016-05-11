@@ -1,6 +1,8 @@
 package model;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -9,6 +11,7 @@ import java.util.List;
  */
 public class AcquistaPermesso implements Azione {
 
+	private static final Logger log= Logger.getLogger( AcquistaPermesso.class.getName() );
 	private TesseraCostruzione tessera;
 	private List<CartaPolitica> cartePolitica;
 	private Consiglio consiglioDaSoddisfare;
@@ -61,14 +64,16 @@ public class AcquistaPermesso implements Azione {
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
-		try{int numeroCartePolitica=cartePolitica.size();
-		int jollyUsati=0;
-		int counter=0;
-		if(numeroCartePolitica<1||numeroCartePolitica>4)
-			throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
-		//Creazione copie liste dei colori del consiglio
-		List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-	//		if(giocatore.containsAllCarte(cartePolitica)){
+		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			int numeroCartePolitica=cartePolitica.size();
+			int jollyUsati=0;
+			int counter=0;
+			if(numeroCartePolitica<1||numeroCartePolitica>4)
+				throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
+			//Creazione copie liste dei colori del consiglio
+			List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
 			for(CartaPolitica car : cartePolitica){
 				if(car.getColore().equals("JOLLY"))
 					jollyUsati++;//conto i jolly usati
@@ -94,7 +99,7 @@ public class AcquistaPermesso implements Azione {
 					break;
 			default: throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
 		}
-		//}
+		
 		//Rimozione tessere selezionate dalla mano del giocatore
 			giocatore.getCartePolitica().removeAll(cartePolitica);
 		
@@ -107,11 +112,8 @@ public class AcquistaPermesso implements Azione {
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tessera);
 			giocatore.setAzionePrincipale(true);
 		}}
-		catch(IllegalStateException e){
-			System.err.println(e.getLocalizedMessage());
-		}
-		catch(IndexOutOfBoundsException e){
-			System.err.println(e.getLocalizedMessage());
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 }

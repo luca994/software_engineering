@@ -3,12 +3,15 @@
  */
 package model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Massimiliano Ventura
  *
  */
 public class BonusAssistenti implements Bonus {
-
+	private static final Logger log= Logger.getLogger( BonusAssistenti.class.getName() );
 	private int numeroAssistenti;
 	
 	
@@ -21,8 +24,16 @@ public class BonusAssistenti implements Bonus {
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
+		try{
+			if(giocatore==null)
+		
+			throw new NullPointerException("Il giocatore non può essere nullo");
 		for(int i=0;i<numeroAssistenti;i++)
 		giocatore.getAssistenti().add(new Assistente());
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
 	}
 	
 }

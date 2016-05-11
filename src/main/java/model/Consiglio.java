@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -45,7 +46,7 @@ public class Consiglio {
 		tabellone.addConsigliereDisponibile(consiglio.element());
 		consiglio.remove();
 		}
-		catch (Exception NoSuchElementException){
+		catch (NoSuchElementException e){
 			System.err.println("Errore:il consiglio"+ id +" è vuoto!");
 		}
 	}
