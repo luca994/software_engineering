@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -18,11 +20,16 @@ import model.bonus.Bonus;
 import model.bonus.BonusAssistenti;
 import model.bonus.BonusAzionePrincipale;
 import model.bonus.BonusCartaPolitica;
+import model.bonus.BonusCreator;
 import model.bonus.BonusMoneta;
 import model.bonus.BonusPercorsoNobiltà;
 import model.bonus.BonusPuntoVittoria;
 import model.percorso.Percorso;
 import model.tesserebonus.TesseraBonus;
+import model.tesserebonus.TesseraBonusCittà;
+import model.tesserebonus.TesseraBonusCreator;
+import model.tesserebonus.TesseraBonusRegione;
+import model.tesserebonus.TesseraPremioRe;
 
 /**
  * @author Riccardo
@@ -30,10 +37,12 @@ import model.tesserebonus.TesseraBonus;
  */
 public class Tabellone {
 
+	private static final Logger log = Logger.getLogger(Tabellone.class.getName());
+	
 	private Set<Regione> regioni;
-	private Set<TesseraBonus> tessereBonusRegione;
-	private Set<TesseraBonus> tessereBonusCittà;
-	private List<TesseraBonus> tesserePremioRe;
+	private Set<TesseraBonusRegione> tessereBonusRegione;
+	private Set<TesseraBonusCittà> tessereBonusCittà;
+	private List<TesseraPremioRe> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
 	private Set<Consiglio> consigli;
 	private Percorso percorsoNobiltà;
@@ -177,6 +186,7 @@ public class Tabellone {
 	public List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
 		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
 		List<Set<Bonus>> gettoniCittà=new ArrayList<Set<Bonus>>(14);
+		BonusCreator bonusCreator = new BonusCreator(this);
 				//Leggo i set di bonus
 				SAXBuilder builderGettoni = new SAXBuilder();
 				Document documentGettoni = builderGettoni.build(new File("/source/main/BonusCittà.xml"));
@@ -186,18 +196,12 @@ public class Tabellone {
 					List<Element> elencoBonus =set.getChildren();
 					Set<Bonus> bonus=new HashSet<Bonus>();
 					for(Element bon:elencoBonus){ //Leggo i set di bonus, li inizializzo e li copio nella lista di bonus
-						if(bon.getAttributeValue("id").equals("BonusMoneta"))
-							bonus.add(new BonusMoneta(percorsoRicchezza, Integer.parseInt(bon.getAttributeValue("step"))));
-						else if(bon.getAttributeValue("id").equals("BonusPuntoVittoria"))
-							bonus.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(bon.getAttributeValue("passi"))));
-						else if(bon.getAttributeValue("id").equals("BonusCartaPolitica"))
-							bonus.add(new BonusCartaPolitica(Integer.parseInt(bon.getAttributeValue("numeroCarte"))));
-						else if(bon.getAttributeValue("id").equals("BonusAssistenti"))
-							bonus.add(new BonusAssistenti(Integer.parseInt(bon.getAttributeValue("numeroAssistenti"))));
-						else if(bon.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-							bonus.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(bon.getAttributeValue("steps"))));
-						else if(bon.getAttributeValue("id").equals("AzionePrincipale"))
-							bonus.add(new BonusAzionePrincipale());
+						try{
+							bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo"))));
+						}
+						catch(Exception e){
+							log.log(Level.WARNING,e.getMessage(), e);
+						}
 					}
 					gettoniCittà.add(bonus);//Aggiungo i set di bonus alla lista di bonus
 				}
@@ -251,48 +255,39 @@ public class Tabellone {
 	 *         there is another error about the file
 	 */
 	public void creaTessereBonus() throws JDOMException, IOException{
+		BonusCreator bonusCreator = new BonusCreator(this);
+		TesseraBonusCreator tesseraBonusCreator = new TesseraBonusCreator(this);
 		//inizializzo i set di tessere
-		this.tessereBonusCittà=new HashSet<TesseraBonus>();
-		this.tessereBonusRegione=new HashSet<TesseraBonus>();
-		this.tesserePremioRe=new ArrayList<TesseraBonus>();
+		this.tessereBonusCittà=new HashSet<TesseraBonusCittà>();
+		this.tessereBonusRegione=new HashSet<TesseraBonusRegione>();
+		this.tesserePremioRe=new ArrayList<TesseraPremioRe>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
 		//leggo il documento xml per le tessere
 		Document documentTessereBonus = builderTessereBonus.build(new File("/source/main/TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
-		for(Element e:tessere){
+		for(Element t:tessere){
 			
 			//leggo il tipo di bonus e l' attributo da assegnare alla tessera
-			Element tipoBonus = e.getChild("Bonus");
+			Element tipoBonus = t.getChild("Bonus");
 			Set<Bonus> bonus= new HashSet<Bonus>();
-			if(tipoBonus.getAttributeValue("id").equals("BonusMoneta"))
-				bonus.add(new BonusMoneta(percorsoVittoria,Integer.parseInt(tipoBonus.getAttributeValue("step"))));
-			else if(tipoBonus.getAttributeValue("id").equals("BonusPuntoVittoria"))
-				bonus.add(new BonusPuntoVittoria(percorsoVittoria, Integer.parseInt(tipoBonus.getAttributeValue("passi"))));
-			else if(tipoBonus.getAttributeValue("id").equals("BonusCartaPolitica"))
-				bonus.add(new BonusCartaPolitica(Integer.parseInt(tipoBonus.getAttributeValue("numeroCarte"))));
-			else if(tipoBonus.getAttributeValue("id").equals("BonusAssistenti"))
-				bonus.add(new BonusAssistenti(Integer.parseInt(tipoBonus.getAttributeValue("numeroAssistenti"))));
-			else if(tipoBonus.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-				bonus.add(new BonusPercorsoNobiltà(percorsoNobiltà, Integer.parseInt(tipoBonus.getAttributeValue("steps"))));
-			else if(tipoBonus.getAttributeValue("id").equals("AzionePrincipale"))
-				bonus.add(new BonusAzionePrincipale());
-			
-			//creo le tessere bonus per la regione
-			if(e.getAttributeValue("id").equals("regione")){
-				for(Regione r:regioni){
-					if(r.getNome().equals(e.getAttributeValue("regione"))){
-						tessereBonusRegione.add(new TesseraBonus(r,null,bonus));
-					}
+			try{
+				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"), Integer.parseInt(tipoBonus.getAttributeValue("attributo"))));
+				//creo le tessere bonus per la regione
+				if(t.getAttributeValue("id").equals("regione")){
+					tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+				}
+				//costruisco le tessere bonus per le città
+				else if(t.getAttributeValue("id").equals("città")){
+					tessereBonusCittà.add((TesseraBonusCittà) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+				}
+				//costruisco le tessere premio del re
+				else if(t.getAttributeValue("id").equals("premioRe")){
+					tesserePremioRe.add((TesseraPremioRe) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
 				}
 			}
-			//costruisco le tessere bonus per le città
-			if(e.getAttributeValue("id").equals("città")){
-				tessereBonusCittà.add(new TesseraBonus(null,e.getAttributeValue("colore"),bonus));
-			}
-			//costruisco le tessere premio del re
-			if(e.getAttributeValue("id").equals("premioRe")){
-				tesserePremioRe.add(new TesseraBonus(null, null, bonus));
+			catch(Exception e){
+				log.log(Level.WARNING, e.getMessage(), e);
 			}
 		}
 	}
@@ -388,7 +383,7 @@ public class Tabellone {
 	 */
 	public void prendiTesseraBonus(Giocatore giocatore,Città città){
 		if(verificaEmporioColoreBonus(giocatore, città)){
-			for(TesseraBonus t:tessereBonusCittà){
+			for(TesseraBonusCittà t:tessereBonusCittà){
 				if(città.getColore().equals(t.getColore())){
 					t.eseguiBonus(giocatore);
 					tessereBonusCittà.remove(t);
@@ -396,7 +391,7 @@ public class Tabellone {
 			}
 		}
 		if(verificaEmporioRegioneBonus(giocatore, città)){
-			for(TesseraBonus t:tessereBonusRegione){
+			for(TesseraBonusRegione t:tessereBonusRegione){
 				if(t.getRegione().equals(città.getRegione())){
 					t.eseguiBonus(giocatore);
 					tessereBonusRegione.remove(t);
@@ -428,5 +423,24 @@ public class Tabellone {
 		catch(UnsupportedOperationException e3){
 			System.err.println("l'operazione di rimozione non è supportata dalla lista");
 		}
-	}	
+	}
+	
+	/**
+	 * 
+	 * @param nomeRegione the name of the region you wnat to find
+	 * @return return the region with nomeRegione as name
+	 * @throws NullPointerException if nomeRegione is null
+	 * @throws IllegalArgumentException if nomeRegioe isn't correct
+	 */
+	public Regione getRegioneDaNome(String nomeRegione){
+		if(nomeRegione==null){
+			throw new NullPointerException("nomeRegione non può essere nullo");
+		}
+		for(Regione r:regioni){
+			if(r.getNome().equals(nomeRegione)){
+				return r;
+			}
+		}
+		throw new IllegalArgumentException("il nome della regione inserito non esiste");
+	}
 }

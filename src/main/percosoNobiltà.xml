@@ -7,14 +7,14 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="2">
-		<Bonus id="BonusPuntoVittoria" passi="2"/>
-		<Bonus id="BonusMoneta" step="3"/>
+		<Bonus id="BonusPuntoVittoria" attributo="2"/>
+		<Bonus id="BonusMoneta" attributo="3"/>
 	</Casella>
 	<Casella numero="3">
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="4">
-		<Bonus id="BonusGettoneCittà" numeroCittà="1"/>
+		<Bonus id="BonusGettoneCittà" attributo="1"/>
 	</Casella>
 	<Casella numero="5">
 		<Bonus id="NessunBonus"/>
@@ -26,8 +26,8 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="8">
-		<Bonus id="BonusPuntoVittoria" passi="3"/>
-		<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
+		<Bonus id="BonusPuntoVittoria" attributo="3"/>
+		<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
 	</Casella>	
 	<Casella numero="9">
 		<Bonus id="NessunBonus"/>
@@ -39,8 +39,8 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="12">
-		<Bonus id="BonusPuntoVittoria" passi="5"/>
-		<Bonus id="Assistenti" numeroAssistenti="1"/>
+		<Bonus id="BonusPuntoVittoria" attributo="5"/>
+		<Bonus id="Assistenti" attributo="1"/>
 	</Casella>
 	<Casella numero="13">
 		<Bonus id="NessunBonus"/>
@@ -52,18 +52,18 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="16">
-		<Bonus id="BonusGettoneCittà" numeroCittà="2"/>
+		<Bonus id="BonusGettoneCittà" attributo="2"/>
 	</Casella>
 	<Casella numero="17">
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="18">
-		<Bonus id="BonusPuntoVittoria" passi="8"/>
+		<Bonus id="BonusPuntoVittoria" attributo="8"/>
 	</Casella>
 	<Casella numero="19">
-		<Bonus id="BonusPuntoVittoria" passi="2"/>
+		<Bonus id="BonusPuntoVittoria" attributo="2"/>
 	</Casella>
 	<Casella numero="20">
-		<Bonus id="BonusPuntoVittoria" passi="3"/>
+		<Bonus id="BonusPuntoVittoria" attributo="3"/>
 	</Casella>
 </percorsoNobiltà>

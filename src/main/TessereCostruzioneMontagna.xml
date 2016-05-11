@@ -4,8 +4,8 @@
 		<SetCittà>
 			<Città id="Merkatim"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPuntoVittoria" passi="5"></Bonus>
-			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
+			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Merkatim"></Città>
@@ -19,20 +19,20 @@
 			<Città id="Naris"></Città>
 			<Città id="Osium"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
-			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Merkatim"></Città>
 			<Città id="Lyram"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="3"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="3"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Lyram"></Città>
 			<Città id="Merkatim"></Città>
 			<Città id="Naris"></Città></SetCittà><SetBonus>
-	<Bonus id="BonusPercorsoVittoria" passi="3"></Bonus></SetBonus>
+	<Bonus id="BonusPercorsoVittoria" attributo="3"></Bonus></SetBonus>
 		</Tessera>
 	<Tessera>
 		<SetCittà>
@@ -40,65 +40,65 @@
 			<Città id="Naris"></Città>
 			<Città id="Osium"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus>
-			<Bonus id="BonusPuntoVittoria" passi="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Kultos"></Città>
 			<Città id="Lyram"></Città>
 			<Città id="Osium"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
-			<Bonus id="BonusMoneta" step="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
+			<Bonus id="BonusMoneta" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Kultos"></Città>
 			<Città id="Lyram"></Città>
 			<Città id="Merkatim"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusAssistenti" numeroAssistenti="1"></Bonus>
-			<Bonus id="BonusMoneta" step="1"></Bonus>
+			<Bonus id="BonusAssistenti" attributo="1"></Bonus>
+			<Bonus id="BonusMoneta" attributo="1"></Bonus>
 		</SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Osium"></Città>
 			<Città id="Kultos"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus>
-			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus>
+			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Kultos"></Città>
 			<Città id="Lyram"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="1"></Bonus>
-			<Bonus id="BonusAssistenti" numeroAssistenti="2"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
+			<Bonus id="BonusAssistenti" attributo="2"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Naris"></Città>
 			<Città id="Osium"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPuntoVittoria" passi="2"></Bonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="2"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusPuntoVittoria" attributo="2"></Bonus>
+			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Kultos"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="4"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="4"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Osium"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusCartaPolitica" numeroCarte="3"></Bonus>
-			<Bonus id="BonusPercorsoNobiltà" steps="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusCartaPolitica" attributo="3"></Bonus>
+			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Naris"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusMoneta" step="7"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusMoneta" attributo="7"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Lyram"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusMoneta" step="1"></Bonus>
-			<Bonus id="BonusAssistenti" numeroAssistenti="3"></Bonus></SetBonus></Tessera></TessereMontagna>
+			<Bonus id="BonusMoneta" attributo="1"></Bonus>
+			<Bonus id="BonusAssistenti" attributo="3"></Bonus></SetBonus></Tessera></TessereMontagna>
