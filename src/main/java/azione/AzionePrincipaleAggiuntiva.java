@@ -1,7 +1,9 @@
-package model;
+package azione;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.Giocatore;
 
 /**
  * @author Luca

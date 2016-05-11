@@ -19,7 +19,7 @@ public class Consiglio {
 	
 	public Consiglio(Tabellone tabellone)
 	{
-		this.consiglio=new LinkedList<Consigliere>();
+		this.consiglio=new LinkedList<>();
 		for(int i=0;i<4;i++)//Prendo quattro consiglieri da quelli disponibili e li metto nel consiglio
 		{
 			consiglio.add(tabellone.getConsiglieriDisponibili().get(0));
@@ -29,7 +29,7 @@ public class Consiglio {
 	
 	
 	public List<String> acquisisciColoriConsiglio(){
-		List<String> colori= new ArrayList<String>(); 
+		List<String> colori= new ArrayList<>(); 
 		for(Consigliere c : consiglio)
 			colori.add(c.getColore());
 		return colori;
@@ -67,7 +67,7 @@ public class Consiglio {
 			}
 			else
 			{
-					System.out.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
+					System.err.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
 					return false;
 			}
 		}

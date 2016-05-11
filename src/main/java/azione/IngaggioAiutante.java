@@ -1,4 +1,8 @@
-package model;
+package azione;
+
+import model.Assistente;
+import model.Giocatore;
+import percorso.Percorso;
 
 /**
  * @author Luca

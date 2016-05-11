@@ -2,6 +2,8 @@ package model;
 
 import java.util.Set;
 
+import bonus.Bonus;
+
 /**
  * 
  * @author Riccardo

@@ -1,8 +1,10 @@
-package model;
+package percorso;
 
 
 import java.util.HashSet;
 import java.util.Set;
+
+import model.Giocatore;
 
 /**
  *This class represent the generic box
