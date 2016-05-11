@@ -1,5 +1,8 @@
 package bonus;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Giocatore;
 import percorso.Percorso;
 
@@ -8,7 +11,8 @@ import percorso.Percorso;
  *
  */
 public class BonusPuntoVittoria implements Bonus {
-	
+
+	private static final Logger log= Logger.getLogger( BonusPuntoVittoria.class.getName() );
 	private final Percorso percorsoVittoria;
 	private final int steps;
 	
@@ -37,7 +41,13 @@ public class BonusPuntoVittoria implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) 
 	{
-		percorsoVittoria.muoviGiocatoreAvanti(giocatore, steps);
-
+		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere null");
+			percorsoVittoria.muoviGiocatoreAvanti(giocatore, steps);
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
 	}
 }

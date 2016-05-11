@@ -4,6 +4,8 @@
 package bonus;
 
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Giocatore;
 import model.TesseraCostruzione;
@@ -16,7 +18,7 @@ import model.TesseraCostruzione;
  *
  */
 public class BonusRiutilizzoCostruzione implements Bonus {
-
+	private static final Logger log= Logger.getLogger( BonusRiutilizzoCostruzione.class.getName() );
 	private TesseraCostruzione tessera;
 	
 	/**
@@ -35,13 +37,19 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
-		Iterator<Bonus> itbonus=tessera.getBonus().iterator();
-		while(itbonus.hasNext())
-		{
-			itbonus.next().azioneBonus(giocatore);
+		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");		
+			//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
+			Iterator<Bonus> itbonus=tessera.getBonus().iterator();
+			while(itbonus.hasNext())
+			{
+				itbonus.next().azioneBonus(giocatore);
+			}
 		}
-		
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
 	}
 
 }

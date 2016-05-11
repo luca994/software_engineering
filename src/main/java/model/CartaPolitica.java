@@ -1,11 +1,15 @@
 package model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Luca
  *
  */
 public class CartaPolitica extends OggettoVendibile {
-	
+
+	private static final Logger log= Logger.getLogger( CartaPolitica.class.getName() );
 	private final String colore;
 	
 	public CartaPolitica(){
@@ -38,14 +42,16 @@ public class CartaPolitica extends OggettoVendibile {
 	@Override
 	public void transazione(Giocatore giocatore) {
 		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
 			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
 			giocatore.getCartePolitica().add(this);
 			getGiocatore().getCartePolitica().remove(this);
 			getMercato().getOggettiInVendita().remove(this);
 		}
-		catch(IndexOutOfBoundsException e){
-			System.err.println(e.getMessage());
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 	

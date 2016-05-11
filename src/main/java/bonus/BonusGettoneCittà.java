@@ -1,9 +1,13 @@
 package bonus;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Città;
 import model.Giocatore;
+
+
 
 /**
  * This class asks the player which city bonuses wants to obtain with this particular bonus.
@@ -11,7 +15,7 @@ import model.Giocatore;
  *
  */
 public class BonusGettoneCittà implements Bonus {
-
+	private static final Logger log= Logger.getLogger( BonusGettoneCittà.class.getName() );
 	/* (non-Javadoc)
 	 * @see model.Bonus#azioneBonus(model.Giocatore)
 	 */
@@ -40,17 +44,24 @@ public class BonusGettoneCittà implements Bonus {
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		//this.città=bonusCittàDalGiocatore(giocatore, numeroCittà);
 		//metodo del controller che prende i bonus della città dal giocatore 
 		//le città devono essere diverse  
-		/*Iterator<Città> itcittà=this.città.iterator();
-		while(itcittà.hasNext())
-			itcittà.next().eseguiAzioneBonus(giocatore);*/
-		for(Città  cit:this.città)
-		{
-			if(cit.presenzaEmporio(giocatore))
-				cit.eseguiBonus(giocatore);
+		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			for(Città  cit:this.città)
+			{
+				if(cit.presenzaEmporio(giocatore))
+					cit.eseguiBonus(giocatore);
+			}
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see bonus.Bonus#azioneBonus(model.Giocatore)
+	 */
 
 }
