@@ -1,6 +1,8 @@
 package model;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Luca
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public class Giocatore {
 
+		private static final Logger log= Logger.getLogger( Giocatore.class.getName() );
 		private int id;
 		private String nome;
 		private List<Assistente> assistenti;
@@ -58,8 +61,13 @@ public class Giocatore {
 			/*si potrebbe inserire l'eccezione che viene lanciata
 			 * se la tessera selezionata non è nella lista di tessere valide
 			 */
-			tessereValide.remove(tesseraToMove);  //gestire le eccezioni lanciate
-			tessereUsate.add(tesseraToMove);  //anche qua gestire eccezioni
+			try{
+				tessereValide.remove(tesseraToMove);  //gestire le eccezioni lanciate
+				tessereUsate.add(tesseraToMove);  //anche qua gestire eccezioni
+			}
+			catch(Exception e){
+				log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			}
 		}
 		
 		/**

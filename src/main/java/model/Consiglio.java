@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Riccardo
@@ -12,6 +14,8 @@ import java.util.Queue;
  */
 public class Consiglio {
 	
+
+	private static final Logger log= Logger.getLogger( Consiglio.class.getName() );
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglio;
 	private int id;
@@ -46,8 +50,8 @@ public class Consiglio {
 		tabellone.addConsigliereDisponibile(consiglio.element());
 		consiglio.remove();
 		}
-		catch (NoSuchElementException e){
-			System.err.println("Errore:il consiglio"+ id +" è vuoto!");
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 	
@@ -60,6 +64,8 @@ public class Consiglio {
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try
 		{
+			if(consigliereDaAggiungere==null)
+				throw new NullPointerException("Il consigliere non può essere nullo");
 			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere))
 			{
 				tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
@@ -67,13 +73,11 @@ public class Consiglio {
 			}
 			else
 			{
-					System.err.println("Il consigliere selezionato non è disponibile"+", sceglierne un altro.");
-					return false;
+				return false;
 			}
 		}
-		catch (IllegalStateException e)
-		{
-			System.err.println("Errore:il consiglio"+ id +" è pieno!/nConsigliere non eletto!");
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 		return true;
 	}

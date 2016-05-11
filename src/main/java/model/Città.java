@@ -133,13 +133,21 @@ public class Città extends OggettoConBonus {
 	 */
 	//cittàVicineConEmpori inizialmente vuota
 	public List<Città> cittàVicinaConEmporio(Giocatore giocatore,List<Città> cittàVicineConEmpori){
-		for(Città c:cittàVicina){
-			if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
-				cittàVicineConEmpori.add(c);
-				c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
+		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			for(Città c:cittàVicina){
+				if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
+					cittàVicineConEmpori.add(c);
+					c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
+				}
 			}
-		}
 		return cittàVicineConEmpori;
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
+		return null;
 	}
 	
 	/**
@@ -149,11 +157,18 @@ public class Città extends OggettoConBonus {
 	 * @return return true if there is a player's emporium
 	 */
 	public boolean aggiungiEmporio(Giocatore giocatore){
-		if(!presenzaEmporio(giocatore)){
-			empori.add(giocatore);
-			return true;
+		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			if(!presenzaEmporio(giocatore)){
+				empori.add(giocatore);
+				return true;
+			}
+			return false;
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 		return false;
 	}
-	
 }
