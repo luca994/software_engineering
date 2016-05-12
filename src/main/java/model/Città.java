@@ -80,7 +80,7 @@ public class Città extends OggettoConBonus {
 	 * @param giocatore the owner of the emporium
 	 * @return return a list of near cities which have the player' s emporium
 	 */
-	//cittàVicineConEmpori inizialmente vuota
+	//cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione
 	public List<Città> cittàVicinaConEmporio(Giocatore giocatore,List<Città> cittàVicineConEmpori){
 		try{
 			if (giocatore==null)

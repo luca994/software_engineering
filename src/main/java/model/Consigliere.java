@@ -6,15 +6,7 @@ package model;
  */
 public class Consigliere {
 
-	private String colore;
-
-	/**
-	 * @return the colore
-	 */
-
-	public String getColore() {
-		return colore;
-	}
+	private final String colore;
 
 	/**
 	 * @param colore
@@ -22,4 +14,13 @@ public class Consigliere {
 	public Consigliere(String colore) {
 		this.colore = colore;
 	}
+
+	/**
+	 * @return the colore
+	 */
+	public String getColore() {
+		return colore;
+	}
+
+	
 }
