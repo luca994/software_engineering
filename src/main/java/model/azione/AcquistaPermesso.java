@@ -81,7 +81,7 @@ public class AcquistaPermesso implements Azione {
 			//Creazione copie liste dei colori del consiglio
 			List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
 			for(CartaPolitica car : cartePolitica){
-				if(car.getColore().equals("JOLLY"))
+				if("JOLLY".equals(car.getColore()))
 					jollyUsati++;//conto i jolly usati
 				for(String col : colori){
 				if(car.getColore().equals(col))
@@ -112,7 +112,7 @@ public class AcquistaPermesso implements Azione {
 		List<TesseraCostruzione> tessereDaScegliere=consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if(tessereDaScegliere.contains(tessera)){
 		//Aggiunta tessera acquistata al set di tessere valide del giocatore
-			giocatore.addTessereValide(tessera);
+			giocatore.getTessereValide().add(tessera);
 			tessera.eseguiBonus(giocatore);
 			//Scopri dal mazzetto una nuova tessera costruzione
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tessera);

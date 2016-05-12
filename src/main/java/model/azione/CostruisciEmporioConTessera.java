@@ -54,7 +54,7 @@ public class CostruisciEmporioConTessera implements Azione {
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(giocatore.containsTesseraValide(tessera) && tessera.verifyCittà(città)&&città.presenzaEmporio(giocatore)){
+			if(giocatore.getTessereValide().contains(tessera) && tessera.getCittà().contains(città)&&città.getEmpori().contains(giocatore)){
 				//azione da definire, chiedere a richi come funzionano i metodi di città
 				giocatore.moveTesseraValidaToTesseraUsata(tessera);
 				città.aggiungiEmporio(giocatore);

@@ -20,8 +20,6 @@ public class Giocatore {
 		private String colore;
 		private List<TesseraCostruzione> tessereUsate;
 		private List<TesseraCostruzione> tessereValide;
-		private Gioco gioco;
-		private Tabellone tabellone;
 		private boolean connesso;
 		private int emporiRimasti;
 		
@@ -29,31 +27,13 @@ public class Giocatore {
 			this.colore=colore;
 			this.nome=nome;
 		}
-		public boolean getAzionePrincipale(){
-			return this.azionePrincipale;
-		}
-		public boolean getAzioneOpzionale(){
-			return this.azioneOpzionale;
-		}
-		/**
-		 * @param emporiRimasti the emporiRimasti to set
-		 */
-		public void setEmporiRimasti(int emporiRimasti) {
-			this.emporiRimasti = emporiRimasti;
-		}
-
-		/**
-		 * @return the emporiRimasti
-		 */
-		public int getEmporiRimasti() {
-			return emporiRimasti;
-		}
-
+	
+	
 		/**
 		 * @param emporiRimasti the emporiRimasti to set
 		 */
 		public int decrementaEmporiRimasti() {
-			emporiRimasti = emporiRimasti-1;
+			emporiRimasti --;
 			return emporiRimasti;
 		}
 
@@ -69,113 +49,188 @@ public class Giocatore {
 				log.log( Level.WARNING,e.getLocalizedMessage(),e );
 			}
 		}
-		
+
+
 		/**
-		 * this method add tessereV to the list tessereValide
-		 * @param tessereV
+		 * @return the id
 		 */
-		public void addTessereValide(TesseraCostruzione tessereV){
-			tessereValide.add(tessereV);
+		public int getId() {
+			return id;
 		}
-		
+
+
 		/**
-		 * this method add tessereU to the list tessereUsate
-		 * @param tessereU
+		 * @param id the id to set
 		 */
-		public void addTessereUsate(TesseraCostruzione tessereU){
-			tessereUsate.add(tessereU);
+		public void setId(int id) {
+			this.id = id;
 		}
+
+
 		/**
-		 * this method verify if the list in imput is contained by the list of giocatore's card
-		 * @param carteDaVerificare
-		 * @return
+		 * @return the nome
 		 */
-		public boolean containsAllCarte(List<CartaPolitica> carteDaVerificare){
-			return cartePolitica.containsAll(carteDaVerificare);
+		public String getNome() {
+			return nome;
 		}
-		
+
+
 		/**
-		 * this method verify if the object in imput is contained by the list of giocatore's tessereUsate
-		 * @param tesseraUsataDaVerificare
-		 * @return
+		 * @param nome the nome to set
 		 */
-		public boolean containsTesseraUsata(TesseraCostruzione tesseraUsataDaVerificare){
-			return tessereUsate.contains(tesseraUsataDaVerificare);
+		public void setNome(String nome) {
+			this.nome = nome;
 		}
+
+
 		/**
-		 * this method verify if the object in imput is contained by the list of giocatore's tessereValide
-		 * @param tesseraValidaDaVerificare
-		 * @return
+		 * @return the assistenti
 		 */
-		public boolean containsTesseraValide(TesseraCostruzione tesseraValidaDaVerificare){
-			return tessereValide.contains(tesseraValidaDaVerificare);
+		public List<Assistente> getAssistenti() {
+			return assistenti;
 		}
-		
+
+
+		/**
+		 * @param assistenti the assistenti to set
+		 */
+		public void setAssistenti(List<Assistente> assistenti) {
+			this.assistenti = assistenti;
+		}
+
+
+		/**
+		 * @return the cartePolitica
+		 */
+		public List<CartaPolitica> getCartePolitica() {
+			return cartePolitica;
+		}
+
+
+		/**
+		 * @param cartePolitica the cartePolitica to set
+		 */
+		public void setCartePolitica(List<CartaPolitica> cartePolitica) {
+			this.cartePolitica = cartePolitica;
+		}
+
+
+		/**
+		 * @return the azionePrincipale
+		 */
+		public boolean isAzionePrincipale() {
+			return azionePrincipale;
+		}
+
+
 		/**
 		 * @param azionePrincipale the azionePrincipale to set
 		 */
 		public void setAzionePrincipale(boolean azionePrincipale) {
 			this.azionePrincipale = azionePrincipale;
 		}
+
+
+		/**
+		 * @return the azioneOpzionale
+		 */
+		public boolean isAzioneOpzionale() {
+			return azioneOpzionale;
+		}
+
+
 		/**
 		 * @param azioneOpzionale the azioneOpzionale to set
 		 */
 		public void setAzioneOpzionale(boolean azioneOpzionale) {
 			this.azioneOpzionale = azioneOpzionale;
 		}
-		public int getId() {
-			return id;
-		}
-		public String getNome() {
-			return nome;
-		}
-		public List<Assistente> getAssistenti() {
-			return assistenti;
-		}
-		public List<CartaPolitica> getCartePolitica() {
-			return cartePolitica;
-		}
-		public boolean isAzionePrincipale() {
-			return azionePrincipale;
-		}
-		public boolean isAzioneOpzionale() {
-			return azioneOpzionale;
-		}
+
+
+		/**
+		 * @return the colore
+		 */
 		public String getColore() {
 			return colore;
 		}
+
+
+		/**
+		 * @param colore the colore to set
+		 */
+		public void setColore(String colore) {
+			this.colore = colore;
+		}
+
+
+		/**
+		 * @return the tessereUsate
+		 */
 		public List<TesseraCostruzione> getTessereUsate() {
 			return tessereUsate;
 		}
+
+
+		/**
+		 * @param tessereUsate the tessereUsate to set
+		 */
+		public void setTessereUsate(List<TesseraCostruzione> tessereUsate) {
+			this.tessereUsate = tessereUsate;
+		}
+
+
+		/**
+		 * @return the tessereValide
+		 */
 		public List<TesseraCostruzione> getTessereValide() {
 			return tessereValide;
 		}
-		
-		public Gioco getGioco() {
-			return gioco;
-		}
+
+
 		/**
-		 * @param gioco the gioco to set
+		 * @param tessereValide the tessereValide to set
 		 */
-		public void setGioco(Gioco gioco) {
-			this.gioco = gioco;
+		public void setTessereValide(List<TesseraCostruzione> tessereValide) {
+			this.tessereValide = tessereValide;
 		}
 
-		public Tabellone getTabellone() {
-			return tabellone;
-		}
+
+		/**
+		 * @return the connesso
+		 */
 		public boolean isConnesso() {
 			return connesso;
 		}
 
+
 		/**
-		 * @param i
+		 * @param connesso the connesso to set
 		 */
-		public void setId(int id) {
-			this.id=id;			
+		public void setConnesso(boolean connesso) {
+			this.connesso = connesso;
 		}
 
-		
-		
-		
+
+		/**
+		 * @return the emporiRimasti
+		 */
+		public int getEmporiRimasti() {
+			return emporiRimasti;
+		}
+
+
+		/**
+		 * @param emporiRimasti the emporiRimasti to set
+		 */
+		public void setEmporiRimasti(int emporiRimasti) {
+			this.emporiRimasti = emporiRimasti;
+		}
+
+
+		/**
+		 * @return the log
+		 */
+		public static Logger getLog() {
+			return log;
+		}
 }

@@ -35,7 +35,7 @@ public class BonusTesseraPermesso implements Bonus {
 	public void azioneBonus(Giocatore giocatore) {
 		try{
 		//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view	
-		giocatore.addTessereValide(tessera);
+		giocatore.getTessereValide().add(tessera);
 		tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
 		}
 		catch(Exception e){
