@@ -1,5 +1,8 @@
 package model.azione;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Giocatore;
 import model.Regione;
 
@@ -8,7 +11,8 @@ import model.Regione;
  *
  */
 public class CambioTessereCostruzione implements Azione {
-
+	
+	private static final Logger log= Logger.getLogger( CambioTessereCostruzione.class.getName() );
 	private Regione regione;
 	
 	/**
@@ -19,6 +23,8 @@ public class CambioTessereCostruzione implements Azione {
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(giocatore.getAssistenti().isEmpty())
 				throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
 			regione.getTessereCoperte().addAll(regione.getTessereCostruzione());
@@ -30,10 +36,8 @@ public class CambioTessereCostruzione implements Azione {
 			giocatore.getAssistenti().remove(0);
 			giocatore.setAzioneOpzionale(true);
 		}
-		catch(IllegalStateException e)
-		{
-			System.err.println(e.getLocalizedMessage());
-			
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 

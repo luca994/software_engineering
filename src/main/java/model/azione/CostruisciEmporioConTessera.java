@@ -2,6 +2,8 @@ package model.azione;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Città;
 import model.Giocatore;
@@ -14,6 +16,7 @@ import model.TesseraCostruzione;
  */
 public class CostruisciEmporioConTessera implements Azione {
 
+	private static final Logger log= Logger.getLogger( CostruisciEmporioConTessera.class.getName() );
 	private Città città;
 	private TesseraCostruzione tessera;
 	private Tabellone tabellone;
@@ -49,6 +52,8 @@ public class CostruisciEmporioConTessera implements Azione {
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(giocatore.containsTesseraValide(tessera) && tessera.verifyCittà(città)&&città.presenzaEmporio(giocatore)){
 				//azione da definire, chiedere a richi come funzionano i metodi di città
 				giocatore.moveTesseraValidaToTesseraUsata(tessera);
@@ -71,9 +76,8 @@ public class CostruisciEmporioConTessera implements Azione {
 			else 
 				throw new IllegalStateException("L'emporio è già presente oppure la tessera non è appropriata");
 		}
-		catch(IllegalStateException e){
-			System.err.println(e.getLocalizedMessage());
-			//Non viene eseguito nulla, il turno del giocatore continua
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 

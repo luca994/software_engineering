@@ -1,5 +1,8 @@
 package model.azione;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Consigliere;
 import model.Consiglio;
 import model.Giocatore;
@@ -11,6 +14,7 @@ import model.percorso.Percorso;
  */
 public class EleggiConsigliere implements Azione {
 
+	private static final Logger log= Logger.getLogger( EleggiConsigliere.class.getName() );
 	private static final int MONETE_ELEZIONE_CONSIGLIERE = 4;
 	private Consigliere consigliere;
 	private Consiglio consiglio;
@@ -49,16 +53,17 @@ public class EleggiConsigliere implements Azione {
  */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
-	try{	
-		if(this.consiglio.addConsigliere(this.consigliere)){
-			this.consiglio.removeConsigliere();
-			percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
-			giocatore.setAzionePrincipale(true);
+		try{	
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			if(this.consiglio.addConsigliere(this.consigliere)){
+				this.consiglio.removeConsigliere();
+				percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+				giocatore.setAzionePrincipale(true);
+				}
 			}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
-	catch(IndexOutOfBoundsException e)
-	{
-		System.err.println("Errore nell'assegnamento delle monete");
-	}
 	}
 }

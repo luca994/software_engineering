@@ -1,5 +1,8 @@
 package model.azione;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Assistente;
 import model.Giocatore;
 import model.percorso.Percorso;
@@ -10,6 +13,7 @@ import model.percorso.Percorso;
  */
 public class IngaggioAiutante implements Azione {
 
+	private static final Logger log= Logger.getLogger( IngaggioAiutante.class.getName() );
 	/**
 	 * @param percorsoRicchezza
 	 */
@@ -29,15 +33,14 @@ public class IngaggioAiutante implements Azione {
 	 */
 	public void eseguiAzione (Giocatore giocatore){
 		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			percorsoRicchezza.muoviGiocatore(giocatore, -COSTO_AIUTANTE);
 			giocatore.getAssistenti().add(new Assistente());
 			giocatore.setAzioneOpzionale(true);
 		}
-		catch(IndexOutOfBoundsException e){
-			System.err.println(e.getLocalizedMessage());
-			//se viene catturata l' eccezione vuol dire che il giocatore
-			//non ha abbastanza soldi, quindi il metodo termina senza 
-			//apportare nessuna modifica.
-		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}	
 	}
 }

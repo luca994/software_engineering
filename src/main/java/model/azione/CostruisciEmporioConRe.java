@@ -3,6 +3,8 @@ package model.azione;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.CartaPolitica;
 import model.Città;
@@ -15,8 +17,9 @@ import model.Tabellone;
  * @author Luca
  *
  */
-public class CostruisciEmporioConRe implements Azione {
+public class CostruisciEmporioConRe implements Azione {	
 
+	private static final Logger log= Logger.getLogger( CostruisciEmporioConRe.class.getName() );
 	private Re re;
 	private Città città;
 	private List<CartaPolitica> cartePolitica;
@@ -32,6 +35,8 @@ public class CostruisciEmporioConRe implements Azione {
 	 */
 	public void eseguiAzione (Giocatore giocatore){
 		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(città.presenzaEmporio(giocatore))
 				throw new IllegalStateException("L'emporio del giocatore è già presente in questa città");
 			Consiglio consiglioDaSoddisfare=re.getConsiglio();
@@ -90,18 +95,9 @@ public class CostruisciEmporioConRe implements Azione {
 			tabellone.prendiTesseraBonus(giocatore, città);
 	
 		}
-		catch(IndexOutOfBoundsException e){
-			System.err.println(e.getLocalizedMessage());
-			//se viene catturata l' eccezione vuol dire che il giocatore
-			//non ha abbastanza soldi, quindi il metodo termina senza 
-			//apportare nessuna modifica.
-		}
-		catch(IllegalStateException e){
-			System.err.println(e.getLocalizedMessage());
-			//se viene catturata l' eccezione vuol dire che il giocatore ha scelto male le carte oppure
-			//possiede già un emporio sulla città, quindi il metodo termina senza 
-			//apportare nessuna modifica.
-		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}	
 	}
 
 	/**

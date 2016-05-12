@@ -1,5 +1,8 @@
 package model.azione;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.Consigliere;
 import model.Consiglio;
 import model.Giocatore;
@@ -10,6 +13,7 @@ import model.Giocatore;
  */
 public class EleggiConsigliereRapido implements Azione {
 
+	private static final Logger log= Logger.getLogger( EleggiConsigliereRapido.class.getName() );
 	private Consigliere consigliere;
 	private Consiglio consiglio;
 	/**
@@ -30,6 +34,8 @@ public class EleggiConsigliereRapido implements Azione {
 	public void eseguiAzione (Giocatore giocatore)
 	{
 		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(!giocatore.getAssistenti().isEmpty()){
 				if(this.consiglio.addConsigliere(this.consigliere))
 				{
@@ -41,8 +47,8 @@ public class EleggiConsigliereRapido implements Azione {
 		else
 			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
 		}
-		catch(IllegalStateException e){
-			System.err.println(e.getLocalizedMessage());
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}	
 	}
 	/**
