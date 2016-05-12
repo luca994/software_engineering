@@ -1,9 +1,12 @@
 package model;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Luca
+ *
+ */
 /**
  * @author Luca
  *
@@ -23,31 +26,34 @@ public class Giocatore {
 		private boolean connesso;
 		private int emporiRimasti;
 		
-		public Giocatore(String nome, String colore){
-			this.colore=colore;
-			this.nome=nome;
+		/**Constructor for the class Giocatore
+		 * @param nome
+		 * @param colore
+		 */
+		public Giocatore(String nome, String colore) {
+			this.nome = nome;
+			this.colore = colore;
 		}
+
 	
 	
 		/**
-		 * @param emporiRimasti the emporiRimasti to set
+		 * @return decrement of one unit integer EmporiRimasti
 		 */
-		public int decrementaEmporiRimasti() {
+		public void decrementaEmporiRimasti() {
 			emporiRimasti --;
-			return emporiRimasti;
 		}
 
+
+		/**this method move TesseraCostruzione from list tessereValide to list tessereUsate
+		 * @param tesseraToMove is the Tessera to move from tessereValide to tessereUsate
+		 */
 		public void moveTesseraValidaToTesseraUsata (TesseraCostruzione tesseraToMove){
-			/*si potrebbe inserire l'eccezione che viene lanciata
-			 * se la tessera selezionata non è nella lista di tessere valide
-			 */
-			try{
-				tessereValide.remove(tesseraToMove);  //gestire le eccezioni lanciate
-				tessereUsate.add(tesseraToMove);  //anche qua gestire eccezioni
+			if(!tessereValide.contains(tesseraToMove)){
+				throw new IllegalArgumentException("La tessera da spostare non è nelle tessereValide del giocatore");
 			}
-			catch(Exception e){
-				log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			}
+				tessereValide.remove(tesseraToMove);
+				tessereUsate.add(tesseraToMove);
 		}
 
 

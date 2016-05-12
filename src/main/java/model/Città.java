@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import model.bonus.Bonus;
 
 /**
  * 
@@ -17,83 +16,11 @@ public class Città extends OggettoConBonus {
 
 	private static final Logger log= Logger.getLogger( Città.class.getName() );
 	private final String nome;
+	private final Regione regione;
 	private String colore;
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
-	private final Regione regione;
-
-	
-	/**
-	 * 
-	 * @return return the set of emporiums built in the city
-	 */
-	public Set<Giocatore> getEmpori() {
-		return empori;
-	}
-
-	/**
-	 * 
-	 * @return return the name of the city
-	 */
-	public String getNome() {
-		return nome;
-	}
-	
-	/**
-	 * 
-	 * @return return the color of the city
-	 */
-	public String getColore() {
-		return colore;
-	}
-
-	/**
-	 * 
-	 * @return return the reference to the king, if it is in the city
-	 */
-	public Re getRe() {
-		return re;
-	}
-
-	/**
-	 * 
-	 * @return return the region of the city
-	 */
-	public Regione getRegione() {
-		return regione;
-	}
-
-	/**
-	 * 
-	 * @return return the set of near cities
-	 */
-	public Set<Città> getCittàVicina() {
-		return cittàVicina;
-	}
-
-	/**
-	 * 
-	 * @return the set of bonus of the city
-	 */
-	public Set<Bonus> getBonus() {
-		return this.getBonus();
-	}
-	
-	/**
-	 * set the reference to the king
-	 * @param re the reference to the king
-	 */
-	public void setRe(Re re) {
-		this.re = re;
-	}
-	
-	/**
-	 * @param colore the colore to set
-	 */
-	public void setColore(String colore) {
-		this.colore = colore;
-	}
 	
 	
 	/**
@@ -105,7 +32,29 @@ public class Città extends OggettoConBonus {
 		this.nome = nome;
 		this.regione = regione;
 	}
-
+	
+	/**
+	 * checks if there is already a player's emporium.
+	 * If there is not, add a player's emporium.
+	 * @param giocatore the player who wants to add the emporium  
+	 * @return return true if there is a player's emporium
+	 */
+	public boolean aggiungiEmporio(Giocatore giocatore){
+		try{
+			if (giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
+			if(!presenzaEmporio(giocatore)){
+				empori.add(giocatore);
+				return true;
+			}
+			return false;
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
+		return false;
+	}
+	
 	/**
 	 * 
 	 * @param giocatore the owner of the emporium
@@ -149,26 +98,83 @@ public class Città extends OggettoConBonus {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * checks if there is already a player's emporium.
-	 * If there is not, add a player's emporium.
-	 * @param giocatore the player who wants to add the emporium  
-	 * @return return true if there is a player's emporium
+	 * @return the empori
 	 */
-	public boolean aggiungiEmporio(Giocatore giocatore){
-		try{
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(!presenzaEmporio(giocatore)){
-				empori.add(giocatore);
-				return true;
-			}
-			return false;
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-		}
-		return false;
+	public Set<Giocatore> getEmpori() {
+		return empori;
 	}
+
+	/**
+	 * @param empori the empori to set
+	 */
+	public void setEmpori(Set<Giocatore> empori) {
+		this.empori = empori;
+	}
+
+	/**
+	 * @return the re
+	 */
+	public Re getRe() {
+		return re;
+	}
+
+	/**
+	 * @param re the re to set
+	 */
+	public void setRe(Re re) {
+		this.re = re;
+	}
+
+	/**
+	 * @return the cittàVicina
+	 */
+	public Set<Città> getCittàVicina() {
+		return cittàVicina;
+	}
+
+	/**
+	 * @param cittàVicina the cittàVicina to set
+	 */
+	public void setCittàVicina(Set<Città> cittàVicina) {
+		this.cittàVicina = cittàVicina;
+	}
+
+	/**
+	 * @return the log
+	 */
+	public static Logger getLog() {
+		return log;
+	}
+
+	/**
+	 * @return the nome
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	/**
+	 * @return the regione
+	 */
+	public Regione getRegione() {
+		return regione;
+	}
+
+	/**
+	 * @return the colore
+	 */
+	public String getColore() {
+		return colore;
+	}
+
+	/**
+	 * @param colore the colore to set
+	 */
+	public void setColore(String colore) {
+		this.colore = colore;
+	}
+	
+	
 }
