@@ -10,7 +10,10 @@ import model.Giocatore;
  *
  */
 public class AzionePrincipaleAggiuntiva implements Azione {
+	
 	private static final Logger log= Logger.getLogger( AzionePrincipaleAggiuntiva.class.getName() );
+	
+	
 	@Override
 	/**
 	 * The player can execute a new Azione Principale paying 3 Aiutanti

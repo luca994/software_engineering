@@ -34,6 +34,8 @@ public class Re {
 	public Città getCittà() {
 		return città;
 	}
+	
+	
 
 	public void mossa(Città città){
 		if(!this.città.getCittàVicina().contains(città)){

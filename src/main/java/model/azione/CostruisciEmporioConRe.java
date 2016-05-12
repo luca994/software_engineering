@@ -20,11 +20,21 @@ import model.Tabellone;
 public class CostruisciEmporioConRe implements Azione {	
 
 	private static final Logger log= Logger.getLogger( CostruisciEmporioConRe.class.getName() );
-	private Re re;
 	private Città città;
 	private List<CartaPolitica> cartePolitica;
-	//private Percorso percorsoRicchezza;
 	private Tabellone tabellone;
+	
+	/**
+	 * @param re
+	 *
+	 */
+	public CostruisciEmporioConRe(Tabellone tabellone, Giocatore giocatore, List<CartaPolitica> cartePolitica) {
+		this.città=tabellone.getRe().getCittà();
+		this.cartePolitica=cartePolitica;
+		this.tabellone=tabellone;
+		new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(giocatore);
+	}
+	
 	
 	/**
 	 * Builds an emporio in the same city where the king is situated. 
@@ -39,7 +49,7 @@ public class CostruisciEmporioConRe implements Azione {
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(città.presenzaEmporio(giocatore))
 				throw new IllegalStateException("L'emporio del giocatore è già presente in questa città");
-			Consiglio consiglioDaSoddisfare=re.getConsiglio();
+			Consiglio consiglioDaSoddisfare=tabellone.getRe().getConsiglio();
 			int numeroCartePolitica=cartePolitica.size();
 			int jollyUsati=0;
 			int counter=0;
@@ -98,17 +108,5 @@ public class CostruisciEmporioConRe implements Azione {
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}	
-	}
-
-	/**
-	 * @param re
-	 *
-	 */
-	public CostruisciEmporioConRe(Tabellone tabellone, Giocatore giocatore,Re re, List<CartaPolitica> cartePolitica) {
-		this.re = re;
-		this.città=re.getCittà();
-		this.cartePolitica=cartePolitica;
-		this.tabellone=tabellone;
-		new MuoviRe(re, tabellone.getPercorsoRicchezza()).eseguiAzione(giocatore);;
 	}
 }
