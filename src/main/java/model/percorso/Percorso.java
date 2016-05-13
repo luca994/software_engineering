@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -30,6 +32,8 @@ import model.bonus.BonusPuntoVittoria;
  */
 public class Percorso 
 {
+
+	private static final Logger log = Logger.getLogger(Percorso.class.getName());
 	private List<Casella> caselle;
 	
 	/**
@@ -82,20 +86,25 @@ public class Percorso
 	 */
 	public void muoviGiocatore (Giocatore giocatore, int passi)
 	{
-		if (passi>0)
-			muoviGiocatoreAvanti(giocatore, passi);
-		else if(passi<0)
-		{
-			int posizione=posizioneAttualeGiocatore(giocatore);
-			if(posizione>=passi)
+		try{
+			if (passi>0)
+				muoviGiocatoreAvanti(giocatore, passi);
+			else if(passi<0)
 			{
-				passi=0-passi;
-				muoviGiocatoreIndietro(giocatore, passi);
+				int posizione=posizioneAttualeGiocatore(giocatore);
+				if(posizione>=passi)
+				{
+					passi=0-passi;
+					muoviGiocatoreIndietro(giocatore, passi);
+				}
+				else
+				{
+					throw new IndexOutOfBoundsException("Soldi insufficienti per eseguire la mossa");
+				}
 			}
-			else
-			{
-				throw new IndexOutOfBoundsException("Soldi insufficienti per eseguire la mossa");
-			}
+		}
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)

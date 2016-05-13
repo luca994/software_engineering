@@ -1,5 +1,8 @@
 package model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * 
  * @author Riccardo
@@ -7,6 +10,7 @@ package model;
  */
 public class Re {
 
+	private static final Logger log= Logger.getLogger( Re.class.getName() );
 	private final String colore;
 	private Consiglio consiglio;
 	private Città città;
@@ -36,11 +40,19 @@ public class Re {
 	}
 
 	public void mossa(Città città){
-		if(!this.città.getCittàVicina().contains(città)){
-			System.out.println("La città inserita non è collegata a questa città");
-			return;
+		try{
+			if(città==null)
+				throw new NullPointerException("La città non può essere nulla");
+			if(!this.città.getCittàVicina().contains(città)){
+				System.out.println("La città inserita non è collegata a questa città");
+				return;
+			}
+			città.setRe(this.città.getRe());
+			this.città.setRe(null);
 		}
-		città.setRe(this.città.getRe());
-		this.città.setRe(null);
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+		}
 	}
+	
 }
