@@ -31,11 +31,9 @@ public class Inizializzazione {
 		
 		}
 		catch (JDOMException e){
-			System.err.println("Errore nel parsing di un xml");
 			throw e;
 		}
 		catch (IOException e){
-			System.err.println("Errore nella lettura del file");
 			throw e;
 		}
 	}	

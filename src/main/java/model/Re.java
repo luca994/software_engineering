@@ -1,7 +1,10 @@
 package model;
 
+
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -10,6 +13,7 @@ import org.jgrapht.graph.DefaultEdge;
  */
 public class Re {
 
+	private static final Logger log= Logger.getLogger( Re.class.getName() );
 	private final String colore;
 	private Consiglio consiglio;
 	private Città città;
@@ -40,6 +44,7 @@ public class Re {
 	}
 	
 	
+
 	/**
 	 * counts the number of steps that the king must do to reach the destination city
 	 * @param destinazione is the end vertex

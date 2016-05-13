@@ -1,11 +1,14 @@
 package model;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile{
 
+	private static final Logger log= Logger.getLogger( TesseraCostruzione.class.getName() );
 	private Set<Città> città;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;
@@ -75,14 +78,16 @@ public class TesseraCostruzione extends OggettoVendibile{
 	@Override
 	public void transazione(Giocatore giocatore) {
 		try{
+			if(giocatore==null)
+				throw new NullPointerException("Il giocatore non può essere nullo");
 			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
 			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
 			giocatore.getTessereValide().add(this);
 			getGiocatore().getTessereValide().remove(this);
 			getMercato().getOggettiInVendita().remove(this);
 		}
-		catch(IndexOutOfBoundsException e){
-			System.err.println(e.getMessage());
+		catch(Exception e){
+			log.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 }
