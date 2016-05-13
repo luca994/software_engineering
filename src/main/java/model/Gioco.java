@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +64,7 @@ public class Gioco {
 		//Setup aggiuntivo per 2 giocatori
 		if(numGiocatore==2)
 		{
-			Giocatore dummy=new Giocatore(null, "colore");
+			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY); //come colore a caso ho messo grigio scuro che non è utilizzato
 			for(Regione regi: tabellone.getRegioni() ){
 				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
 				cit.aggiungiEmporio(dummy);

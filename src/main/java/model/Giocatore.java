@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ public class Giocatore {
 		private List<CartaPolitica> cartePolitica;
 		private boolean azionePrincipale;
 		private boolean azioneOpzionale;
-		private String colore;
+		private Color colore;
 		private List<TesseraCostruzione> tessereUsate;
 		private List<TesseraCostruzione> tessereValide;
 		private boolean connesso;
@@ -30,7 +31,7 @@ public class Giocatore {
 		 * @param nome
 		 * @param colore
 		 */
-		public Giocatore(String nome, String colore) {
+		public Giocatore(String nome, Color colore) {
 			this.nome = nome;
 			this.colore = colore;
 		}
@@ -156,7 +157,7 @@ public class Giocatore {
 		/**
 		 * @return the colore
 		 */
-		public String getColore() {
+		public Color getColore() {
 			return colore;
 		}
 
@@ -164,7 +165,7 @@ public class Giocatore {
 		/**
 		 * @param colore the colore to set
 		 */
-		public void setColore(String colore) {
+		public void setColore(Color colore) {
 			this.colore = colore;
 		}
 
