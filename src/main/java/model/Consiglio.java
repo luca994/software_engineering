@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,9 +37,9 @@ public class Consiglio {
  * this method create a list of <String>colori that contain the color of the councillors
  * @return a list with the color of the councillors
  */
-	public List<String> acquisisciColoriConsiglio(){
-		List<String> colori= new ArrayList<>(); 
-		for(Consigliere c : consiglieri)
+	public List<Color> acquisisciColoriConsiglio(){
+		List<Color> colori= new ArrayList<>(); 
+		for (Consigliere c : consiglieri)
 			colori.add(c.getColore());
 		return colori;
 	}

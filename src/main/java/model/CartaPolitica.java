@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,7 +11,8 @@ import java.util.logging.Logger;
 public class CartaPolitica extends OggettoVendibile {
 
 	private static final Logger log= Logger.getLogger( CartaPolitica.class.getName() );
-	private final String colore;
+	
+	private final Color colore;
 
 	/**
 	 * Constructor for cartaPolitica, that generate cartaPolitica of a random color	
@@ -20,19 +22,19 @@ public class CartaPolitica extends OggettoVendibile {
 			int numero = (int)(Math.random()*89);
 			
 			if(numero>=0&&numero<=12)
-				this.colore="NERO";
+				this.colore=Color.BLACK;
 			else if(numero>=13&&numero<=25)
-				this.colore="BIANCO";
+				this.colore=Color.WHITE;
 			else if(numero>=26&&numero<=38)
-				this.colore="ARANCIONE";
+				this.colore= Color.ORANGE;
 			else if(numero>=39&&numero<=51)
-				this.colore="ROSA";
+				this.colore=Color.PINK;
 			else if(numero>=52&&numero<=64)
-				this.colore="BLU";
+				this.colore=Color.CYAN; //sarebbe blu
 			else if(numero>=65&&numero<=77)
-				this.colore="VIOLA";
+				this.colore=Color.MAGENTA; // sarebbe viola
 			else
-				this.colore="JOLLY";
+				this.colore=Color.RED; //colore del JOLLY
 		}
 	
 	@Override
@@ -54,7 +56,7 @@ public class CartaPolitica extends OggettoVendibile {
 	/**
 	 * @return the colore
 	 */
-	public String getColore() {
+	public Color getColore() {
 		return colore;
 	}
 

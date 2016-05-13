@@ -1,5 +1,6 @@
 package model.azione;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,18 +57,15 @@ public class CostruisciEmporioConRe implements Azione {
 			if(numeroCartePolitica<1||numeroCartePolitica>4)
 				throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 			//Creazione copie liste dei colori del consiglio
-			List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-			List<String> cpycolori= new ArrayList<>();
-			Collections.copy(cpycolori, colori);
-	//		if(giocatore.containsAllCarte(cartePolitica)){
+			List<Color> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
 			for(CartaPolitica car : cartePolitica){
-				if(car.getColore().equals("JOLLY"))
+				if(car.getColore().equals(Color.red))
 					jollyUsati++;//conto i jolly usati
-				for(String col : cpycolori){
+				for(Color col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
-						cpycolori.remove(col);
+						colori.remove(col);
 						break;
 					}
 				}			

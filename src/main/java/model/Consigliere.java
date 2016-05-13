@@ -1,4 +1,7 @@
 package model;
+
+import java.awt.Color;
+
 /**
  * 
  * @author Riccardo
@@ -6,19 +9,19 @@ package model;
  */
 public class Consigliere {
 
-	private final String colore;
+	private final Color colore;
 
 	/**
 	 * @param colore
 	 */
-	public Consigliere(String colore) {
+	public Consigliere(Color colore) {
 		this.colore = colore;
 	}
 
 	/**
 	 * @return the colore
 	 */
-	public String getColore() {
+	public Color getColore() {
 		return colore;
 	}
 
