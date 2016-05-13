@@ -329,22 +329,12 @@ public class Tabellone {
 		try{
 			consiglieriDisponibili.add(consigliereDaAggiungere);
 		}
-		catch(UnsupportedOperationException e1){
-			System.err.println("L'operazione aggiungi non è supportata dalla lista"
-					+ "consiglieriDisponibili del Tabellone");
+
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}
-		catch(ClassCastException e2){
-			System.err.println("La classe del tipo specificato non è adatta al tipo della lista"
-					+ "consiglieriDisponibili del Tabellone");
-		}
-		catch(NullPointerException e3){
-			System.err.println("L'elemento specificato è null, non si può aggiungere alla"
-					+ "lista consiglieriDisponibili del Tabellone" );
-		}
-		catch(IllegalArgumentException e4){
-			System.err.println("Alcune proprietà dell'elemento impediscono di aggiungerlo"
-					+ "correttamente alla lista consiglierDisponibili del Tabellone");
-		}}
+	}
 	
 	/**
 	 * check if a player has an emporium every the city of a color
@@ -422,14 +412,9 @@ public class Tabellone {
 		try{
 			consiglieriDisponibili.remove(consigliereDaRimuovere);
 		}
-		catch(ClassCastException e1){
-			System.err.println("Il tipo specificato non è compatibile con la lista");
-		}
-		catch(NullPointerException e2){
-			System.err.println("Il tipo specificato è Null ");
-		}
-		catch(UnsupportedOperationException e3){
-			System.err.println("l'operazione di rimozione non è supportata dalla lista");
+		catch(Exception e){
+			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}
 	}
 	

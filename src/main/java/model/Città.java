@@ -51,8 +51,8 @@ public class Città extends OggettoConBonus {
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}
-		return false;
 	}
 	
 	/**
@@ -71,8 +71,8 @@ public class Città extends OggettoConBonus {
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}
-		return false;
 	}
 	
 	/**
@@ -95,8 +95,8 @@ public class Città extends OggettoConBonus {
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}
-		return null;
 	}
 
 	/**
