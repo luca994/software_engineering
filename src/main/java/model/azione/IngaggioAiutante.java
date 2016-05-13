@@ -14,6 +14,10 @@ import model.percorso.Percorso;
 public class IngaggioAiutante implements Azione {
 
 	private static final Logger log= Logger.getLogger( IngaggioAiutante.class.getName() );
+	
+	private final static int COSTO_AIUTANTE=3;
+	private Percorso percorsoRicchezza;
+	
 	/**
 	 * @param percorsoRicchezza
 	 */
@@ -22,8 +26,6 @@ public class IngaggioAiutante implements Azione {
 		this.percorsoRicchezza = percorsoRicchezza;
 	}
 
-	private final static int COSTO_AIUTANTE=3;
-	private Percorso percorsoRicchezza;
 	
 	/**
 	 * @author Riccardo

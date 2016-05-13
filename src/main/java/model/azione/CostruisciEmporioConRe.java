@@ -20,6 +20,7 @@ import model.Tabellone;
 public class CostruisciEmporioConRe implements Azione {	
 
 	private static final Logger log= Logger.getLogger( CostruisciEmporioConRe.class.getName() );
+	
 	private Città destinazione;
 	private List<CartaPolitica> cartePolitica;
 	private Tabellone tabellone;

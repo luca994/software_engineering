@@ -18,6 +18,7 @@ import model.percorso.Percorso;
 public class AcquistaPermesso implements Azione {
 
 	private static final Logger log= Logger.getLogger( AcquistaPermesso.class.getName() );
+	
 	private TesseraCostruzione tessera;
 	private List<CartaPolitica> cartePolitica;
 	private Consiglio consiglioDaSoddisfare;

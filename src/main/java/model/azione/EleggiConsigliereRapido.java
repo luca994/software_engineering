@@ -14,8 +14,10 @@ import model.Giocatore;
 public class EleggiConsigliereRapido implements Azione {
 
 	private static final Logger log= Logger.getLogger( EleggiConsigliereRapido.class.getName() );
+	
 	private Consigliere consigliere;
 	private Consiglio consiglio;
+	
 	/**
 	 * @param consigliere
 	 * @param consiglio

@@ -33,7 +33,7 @@ public class AzioneFactory {
 	private Tabellone tabellone;
 	
 	
-	public Azione getAzione(String tipoAzione){
+	public Azione createAzione(String tipoAzione){
 		if (tipoAzione == null){
 			return null;
 			}

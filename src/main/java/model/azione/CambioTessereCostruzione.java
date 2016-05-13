@@ -13,8 +13,8 @@ import model.Regione;
 public class CambioTessereCostruzione implements Azione {
 	
 	private static final Logger log= Logger.getLogger( CambioTessereCostruzione.class.getName() );
-	private Regione regione;
 	
+	private Regione regione;
 	
 	
 	/**
@@ -35,7 +35,7 @@ public class CambioTessereCostruzione implements Azione {
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(giocatore.getAssistenti().isEmpty())
-				throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
+				throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
 			regione.getTessereCoperte().addAll(regione.getTessereCostruzione());
 			regione.getTessereCostruzione().clear();
 			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
