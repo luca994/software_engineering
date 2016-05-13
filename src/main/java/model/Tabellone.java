@@ -453,9 +453,10 @@ public class Tabellone {
 	}
 	
 	// IN TEORIA CREA UN GRAFO E CI INSERISCE PRIMA TUTTE LE CITTà, POI COLLEGA TRA LORO LE CITTà CHE SONO VICINE
-	public Graph<Città, DefaultEdge> generaGrafo (){
+	public UndirectedGraph<Città, DefaultEdge> generaGrafo (){
 		
 		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<Città,DefaultEdge>(DefaultEdge.class);
+		
 		for(Regione reg : regioni ){
 			for(Città cit : reg.getCittà()){
 				mappa.addVertex(cit);

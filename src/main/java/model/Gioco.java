@@ -217,7 +217,7 @@ public class Gioco {
 				//Richiesta al controller di input per scegliere carte politica
 				//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-				new CostruisciEmporioConRe(tabellone, gio,carteSelezionate).eseguiAzione(gio);
+				//new CostruisciEmporioConRe(tabellone, gio,carteSelezionate,).eseguiAzione(gio);
 			}
 			else if(azione==5&&!gio.isAzioneOpzionale())//Ingaggia Aiutante
 			{
