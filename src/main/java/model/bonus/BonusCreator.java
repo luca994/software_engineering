@@ -1,7 +1,6 @@
 package model.bonus;
 
 import model.Tabellone;
-import model.percorso.Percorso;
 
 public class BonusCreator {
 
@@ -24,15 +23,24 @@ public class BonusCreator {
 		if(tipoBonus==null){
 			throw new NullPointerException("il tipo di bonus non può essere nullo");
 		}
-		if(tipoBonus.equals("BonusMoneta")) return new BonusMoneta(tabellone.getPercorsoRicchezza(),attributo);
-		else if(tipoBonus.equals("BonusPuntoVittoria")) return new BonusPuntoVittoria(tabellone.getPercorsoVittoria(), attributo);
-		else if(tipoBonus.equals("BonusCartaPolitica")) return new BonusCartaPolitica(attributo);
-		else if(tipoBonus.equals("BonusAssistenti")) return new BonusAssistenti(attributo);
-		else if(tipoBonus.equals("BonusPercorsoNobiltà")) return new BonusPercorsoNobiltà(tabellone.getPercorsoNobiltà(), attributo);
-		else if(tipoBonus.equals("BonusGettoneCittà")) return new BonusGettoneCittà(attributo);
-		else if(tipoBonus.equals("BonusAzionePrincipale")) return new BonusAzionePrincipale();
-		else if(tipoBonus.equals("BonusRiutilizzoCostruzione")) return new BonusRiutilizzoCostruzione();
-		else if(tipoBonus.equals("BonusTesseraPermesso")) return new BonusTesseraPermesso();
+		if("BonusMoneta".equals(tipoBonus)) 
+			return new BonusMoneta(tabellone.getPercorsoRicchezza(),attributo);
+		else if("BonusPuntoVittoria".equals(tipoBonus)) 
+			return new BonusPuntoVittoria(tabellone.getPercorsoVittoria(), attributo);
+		else if("BonusCartaPolitica".equals(tipoBonus)) 
+			return new BonusCartaPolitica(attributo);
+		else if("BonusAssistenti".equals(tipoBonus)) 
+			return new BonusAssistenti(attributo);
+		else if("BonusPercorsoNobiltà".equals(tipoBonus)) 
+			return new BonusPercorsoNobiltà(tabellone.getPercorsoNobiltà(), attributo);
+		else if("BonusGettoneCittà".equals(tipoBonus)) 
+			return new BonusGettoneCittà(attributo);
+		else if("BonusAzionePrincipale".equals(tipoBonus))
+			return new BonusAzionePrincipale();
+		else if("BonusRiutilizzoCostruzione".equals(tipoBonus)) 
+			return new BonusRiutilizzoCostruzione();
+		else if("BonusTesseraPermesso".equals(tipoBonus))
+			return new BonusTesseraPermesso();
 		throw new IllegalArgumentException("il tipo di bonus non è corretto o non esiste");
 	}
 }
