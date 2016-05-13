@@ -451,6 +451,7 @@ public class Tabellone {
 		}
 		throw new IllegalArgumentException("il nome della regione inserito non esiste");
 	}
+	
 	// IN TEORIA CREA UN GRAFO E CI INSERISCE PRIMA TUTTE LE CITTà, POI COLLEGA TRA LORO LE CITTà CHE SONO VICINE
 	public Graph<Città, DefaultEdge> generaGrafo (){
 		
@@ -462,9 +463,9 @@ public class Tabellone {
 		
 		for(Regione reg : regioni ){
 			for(Città cit : reg.getCittà()){
-				for (Città cit1: cit.getCittàVicina())
-				mappa.addEdge(cit, cit1);
-			}}
+				for(Città cit1 : cit.getCittàVicina()){
+					mappa.addEdge(cit, cit1);
+			}}}
 		return mappa;
 	}
 	
