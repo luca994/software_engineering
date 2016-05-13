@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  */
 public class Assistente extends OggettoVendibile {
 	
-	private static final Logger log= Logger.getLogger( Assistente.class.getName() );
+	private static final Logger log = Logger.getLogger( Assistente.class.getName() );
 	
 	@Override
 	public void transazione(Giocatore giocatore) {

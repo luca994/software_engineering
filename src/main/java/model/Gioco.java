@@ -53,8 +53,6 @@ public class Gioco {
 			this.tabellone.getPercorsoNobiltà().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoVittoria().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoRicchezza().getCaselle().get(10+numGiocatore).getGiocatori().add(gio);
-			//setto il gioco
-			gio.setGioco(this);
 			//setto carte politica iniziali
 			for(int i=0;i<6;i++)
 			{
@@ -132,7 +130,7 @@ public class Gioco {
 			turno(giocatoreAttuale);
 		}
 		/*while(!vittoria){
-		//Fase turni
+			//Fase turni
 			for(Giocatore gio:this.giocatori)
 			{
 				//Controllo se gli empori sono finiti
@@ -188,64 +186,64 @@ public class Gioco {
 	public void turno(Giocatore gio) throws JDOMException, IOException{
 		//il giocatore persca una carta
 		gio.getCartePolitica().add(new CartaPolitica());
-		while((!gio.getAzioneOpzionale())||(!gio.getAzionePrincipale())){
+		while((!gio.isAzioneOpzionale())||(!gio.isAzionePrincipale())){
 			//Metodo controller che dice al giocatore quale mosse gli mancano da fare (se lenta e/o veloce)
 			//Richiesta al controller di input per azione al giocatore gio
 			int azione = 11;
 			//Il controller comunica quale azione vuole compiere il giocatore
-			if(azione==1&&!gio.getAzionePrincipale())//"Eleggi Consigliere"
+			if(azione==1&&!gio.isAzionePrincipale())//"Eleggi Consigliere"
 			{
 				//Richiesta al controller di input per scelta consiglio e consigliere da eleggere
 				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
 				Consigliere consigliereScelto=new Consigliere(null);
 				new EleggiConsigliere(consigliereScelto, consiglioScelto, tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 			}
-			else if(azione==2&&!gio.getAzionePrincipale())//Acquistare una tessera permesso costruzione
+			else if(azione==2&&!gio.isAzionePrincipale())//Acquistare una tessera permesso costruzione
 			{
 				//Richiesta al controller di input per la tessera da acquistare
 				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
 				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
 				new AcquistaPermesso(tesseraScelta, carteSelezionate, tesseraScelta.getRegioneDiAppartenenza().getConsiglio(), this.tabellone.getPercorsoRicchezza()).eseguiAzione(gio);;
 			}
-			else if(azione==3&&!gio.getAzionePrincipale())//Costruire un emporio usando una tessera permesso
+			else if(azione==3&&!gio.isAzionePrincipale())//Costruire un emporio usando una tessera permesso
 			{
 				//Richiesta al controller di input per la tessera da acquistare
 				Città cittàScelta=new Città(null, null);
 				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
 				new CostruisciEmporioConTessera(cittàScelta, tesseraScelta, this.tabellone).eseguiAzione(gio);
 			}
-			else if(azione==4&&!gio.getAzionePrincipale())//Costruire un emporio con l'aiuto del re
+			else if(azione==4&&!gio.isAzionePrincipale())//Costruire un emporio con l'aiuto del re
 			{
 				//Richiesta al controller di input per scegliere carte politica
 				//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-				new CostruisciEmporioConRe(tabellone, gio, tabellone.getRe(), carteSelezionate).eseguiAzione(gio);
+				new CostruisciEmporioConRe(tabellone, gio,carteSelezionate).eseguiAzione(gio);
 			}
-			else if(azione==5&&!gio.getAzioneOpzionale())//Ingaggia Aiutante
+			else if(azione==5&&!gio.isAzioneOpzionale())//Ingaggia Aiutante
 			{
 				new IngaggioAiutante(tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 			}
-			else if(azione==6&&!gio.getAzioneOpzionale())//Cambiare le tessere permesso di costruzione
+			else if(azione==6&&!gio.isAzioneOpzionale())//Cambiare le tessere permesso di costruzione
 			{
 				//Richiesta al controller di input per scegliere la regione per cui rimischiare le carte
 				Regione regioneScelta=new Regione(null, null, null);
 				new CambioTessereCostruzione(regioneScelta).eseguiAzione(gio);
 			}
-			else if(azione==7&&!gio.getAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere
+			else if(azione==7&&!gio.isAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere
 			{
 				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
 				Consigliere consigliereScelto=new Consigliere(null);
 				new EleggiConsigliereRapido(consigliereScelto, consiglioScelto).eseguiAzione(gio);
 			}
-			else if(azione==8&&!gio.getAzioneOpzionale())//Compiere un'azione principale aggiuntiva
+			else if(azione==8&&!gio.isAzioneOpzionale())//Compiere un'azione principale aggiuntiva
 			{
 				new AzionePrincipaleAggiuntiva().eseguiAzione(gio);
 			}
-			else if(azione==9&&!gio.getAzioneOpzionale())//Saltare azione Veloce
+			else if(azione==9&&!gio.isAzioneOpzionale())//Saltare azione Veloce
 			{
 				new AzioneOpzionaleNulla().eseguiAzione(gio);
 			}
-			else if(azione==10&&!gio.getAzionePrincipale())//Saltare azione Principale
+			else if(azione==10&&!gio.isAzionePrincipale())//Saltare azione Principale
 			{
 				new AzionePrincipaleNulla().eseguiAzione(gio);
 			}

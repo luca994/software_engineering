@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,38 +16,42 @@ public class Consiglio {
 
 	private static final Logger log= Logger.getLogger( Consiglio.class.getName() );
 	private Tabellone tabellone;
-	private Queue<Consigliere> consiglio;
-	private int id;
+	private Queue<Consigliere> consiglieri;
 	private Regione regione;
 	
-	public Consiglio(Tabellone tabellone)
-	{
-		this.consiglio=new LinkedList<>();
+	/**
+	 * @param tabellone
+	 */
+	public Consiglio(Tabellone tabellone) {
+	
+		this.consiglieri=new LinkedList<>();	
 		for(int i=0;i<4;i++)//Prendo quattro consiglieri da quelli disponibili e li metto nel consiglio
 		{
-			consiglio.add(tabellone.getConsiglieriDisponibili().get(0));
-			tabellone.getConsiglieriDisponibili().remove(0);
+			consiglieri.add(tabellone.getConsiglieriDisponibili().get(0));
+			tabellone.getConsiglieriDisponibili().remove(0);			
 		}
 	}
 	
-	
+/**
+ * this method create a list of <String>colori that contain the color of the councillors
+ * @return a list with the color of the councillors
+ */
 	public List<String> acquisisciColoriConsiglio(){
 		List<String> colori= new ArrayList<>(); 
-		for(Consigliere c : consiglio)
+		for(Consigliere c : consiglieri)
 			colori.add(c.getColore());
 		return colori;
 	}
 	
 	/**
-	 * Retrieves and remove the head of this queue,
+	 * this metod Retrieves and remove the head of this queue,
 	 * Throws NoSuchElementException if this queue is empty.
-	 * @author Luca
 	 */
-	//Questo metodo devo chiamarlo dall'azione eleggiConsigliere ed eleggiConsigliereRapido 
+	
 	public void removeConsigliere(){
 		try{
-		tabellone.addConsigliereDisponibile(consiglio.element());
-		consiglio.remove();
+		tabellone.addConsigliereDisponibile(consiglieri.element());
+		consiglieri.remove();
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
@@ -59,7 +62,6 @@ public class Consiglio {
 	 * this method Inserts the specified element into this queue if it is possible
 	 * to do so immediately without violating capacity restrictions, returning true upon 
 	 * success and throwing an IllegalStateException if no space is currently available.
-	 * @author Luca
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere){
 		try
@@ -69,7 +71,7 @@ public class Consiglio {
 			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere))
 			{
 				tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
-				consiglio.add(consigliereDaAggiungere);
+				consiglieri.add(consigliereDaAggiungere);
 			}
 			else
 			{
@@ -81,14 +83,41 @@ public class Consiglio {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * @param regione the regione to set
+	 * @return the tabellone
 	 */
-	public void setRegione(Regione regione) {
-		this.regione = regione;
+	public Tabellone getTabellone() {
+		return tabellone;
 	}
 
+	/**
+	 * @param tabellone the tabellone to set
+	 */
+	public void setTabellone(Tabellone tabellone) {
+		this.tabellone = tabellone;
+	}
+
+	/**
+	 * @return the consiglieri
+	 */
+	public Queue<Consigliere> getConsiglieri() {
+		return consiglieri;
+	}
+
+	/**
+	 * @param consiglieri the consiglieri to set
+	 */
+	public void setConsiglieri(Queue<Consigliere> consiglieri) {
+		this.consiglieri = consiglieri;
+	}
+
+	/**
+	 * @return the log
+	 */	
+	public static Logger getLog() {
+		return log;
+	}
 
 	/**
 	 * @return the regione
@@ -96,4 +125,12 @@ public class Consiglio {
 	public Regione getRegione() {
 		return regione;
 	}
+
+	/**
+	 * @param regione the regione to set
+	 */
+	public void setRegione(Regione regione) {
+		this.regione = regione;
+	}
+
 }

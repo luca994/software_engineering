@@ -19,19 +19,14 @@ import org.jdom2.input.SAXBuilder;
 import model.Giocatore;
 import model.Tabellone;
 import model.bonus.Bonus;
-import model.bonus.BonusAssistenti;
-import model.bonus.BonusAzionePrincipale;
-import model.bonus.BonusCartaPolitica;
-import model.bonus.BonusPercorsoNobiltà;
-import model.bonus.BonusPuntoVittoria;
+import model.bonus.BonusCreator;
 /**
  * This class is used to implement all the routes; the generic type "Casella"
  *allow the program to use only this class to implement every kind of route.
  * @author Massimiliano Ventura
  *
  */
-public class Percorso 
-{
+public class Percorso {
 
 	private static final Logger log = Logger.getLogger(Percorso.class.getName());
 	private List<Casella> caselle;
@@ -43,8 +38,16 @@ public class Percorso
 		return this.caselle;
 	}
 	
+	/**
+	 * build a route from a file
+	 * @param nomefile the file path
+	 * @param tabellone the game board
+	 * @throws JDOMException
+	 * @throws IOException if the file doesn't exist or there is an error in the file reading
+	 */
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
+		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
 		Document documentPercorso = builderPercorso.build(new File(nomefile));
 		Element percorsoRootElement = documentPercorso.getRootElement();
@@ -62,27 +65,19 @@ public class Percorso
 					senzaB=true;
 					break;
 				}
-				else if(bon.getAttributeValue("id").equals("BonusPuntoVittoria"))
-					totBonus.add(new BonusPuntoVittoria(tabellone.getPercorsoVittoria(), Integer.parseInt(bon.getAttributeValue("passi"))));
-				else if(bon.getAttributeValue("id").equals("BonusCartaPolitica"))
-					totBonus.add(new BonusCartaPolitica(Integer.parseInt(bon.getAttributeValue("numeroCarte"))));
-				else if(bon.getAttributeValue("id").equals("BonusAssistenti"))
-					totBonus.add(new BonusAssistenti(Integer.parseInt(bon.getAttributeValue("numeroAssistenti"))));
-				else if(bon.getAttributeValue("id").equals("BonusPercorsoNobiltà"))
-					totBonus.add(new BonusPercorsoNobiltà(this, Integer.parseInt(bon.getAttributeValue("steps"))));
-				else if(bon.getAttributeValue("id").equals("AzionePrincipale"))
-					totBonus.add(new BonusAzionePrincipale());
+				totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo"))));
 			}
 			if(senzaB) this.caselle.add(new CasellaSenzaBonus());
 			else this.caselle.add(new CasellaConBonus(totBonus));
 		}
 			
 	}
+	
 	/**
 	 * Moves the player along the route(Percorso) if the number of steps(passi) is negative the player will move backwards.
 	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money
-	 * @param giocatore
-	 * @param passi
+	 * @param giocatore the player who wants to move
+	 * @param passi the number of steps
 	 */
 	public void muoviGiocatore (Giocatore giocatore, int passi)
 	{
@@ -107,6 +102,12 @@ public class Percorso
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
 	}
+	
+	/**
+	 * it is called by muoviGiocatore to move the player forward
+	 * @param giocatore the player who wants to move
+	 * @param passi the number of steps
+	 */
 	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
 	{
 		Casella casellacorrente = null;
@@ -136,6 +137,12 @@ public class Percorso
 			}
 		}				
 	}
+	
+	/**
+	 * it is called by muoviGiocatore to move the player back
+	 * @param giocatore
+	 * @param passi
+	 */
 	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
 	{
 
@@ -159,11 +166,11 @@ public class Percorso
 		}
 				
 	}
+	
 	/**
-	 * @returns the position number  of giocatore in the current route, 
-	 * @throws IllegalArgumentExeption 
-	 * when can't find giocatore in the route
-	 * @param giocatore
+	 * @returns the position number of giocatore in the current route, 
+	 * @throws IllegalArgumentExeption when can't find giocatore in the route
+	 * @param giocatore the player of which you want to know the position
 	 * 
 	 */
 	public int posizioneAttualeGiocatore(Giocatore giocatore)

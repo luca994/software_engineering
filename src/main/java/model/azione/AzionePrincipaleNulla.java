@@ -13,7 +13,10 @@ import model.Giocatore;
  *
  */
 public class AzionePrincipaleNulla implements Azione {
+	
 	private static final Logger log= Logger.getLogger( AzionePrincipaleNulla.class.getName() );
+	
+	
 	/* (non-Javadoc)
 	 * @see model.Azione#eseguiAzione(model.Giocatore)
 	 */

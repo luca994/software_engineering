@@ -15,11 +15,20 @@ public class CambioTessereCostruzione implements Azione {
 	private static final Logger log= Logger.getLogger( CambioTessereCostruzione.class.getName() );
 	private Regione regione;
 	
+	
+	
+	/**
+	 * @param regione
+	 */
+	public CambioTessereCostruzione(Regione regione) {
+		this.regione = regione;
+	}
+
+
 	/**
 	 * Get two new Tessere Costruzione in the visble list of obtaiable Tessere Costruzione
 	 * @throws IllegalStateException if giocatore hasn't enough Aiutanti 
 	 */
-	
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
 		try{
@@ -39,13 +48,5 @@ public class CambioTessereCostruzione implements Azione {
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 		}
-	}
-
-	/**
-	 * @param regione
-	 */
-	public CambioTessereCostruzione(Regione regione) {
-		super();
-		this.regione = regione;
 	}
 }

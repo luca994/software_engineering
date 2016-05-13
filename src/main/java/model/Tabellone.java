@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,13 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.Graph;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.EdgeReversedGraph;
+import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.builder.UndirectedGraphBuilder;
 
 import model.bonus.Bonus;
 import model.bonus.BonusAssistenti;
@@ -443,4 +451,26 @@ public class Tabellone {
 		}
 		throw new IllegalArgumentException("il nome della regione inserito non esiste");
 	}
+	
+	// IN TEORIA CREA UN GRAFO E CI INSERISCE PRIMA TUTTE LE CITTà, POI COLLEGA TRA LORO LE CITTà CHE SONO VICINE
+	public Graph<Città, DefaultEdge> generaGrafo (){
+		
+		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<Città,DefaultEdge>(DefaultEdge.class);
+		for(Regione reg : regioni ){
+			for(Città cit : reg.getCittà()){
+				mappa.addVertex(cit);
+			}}
+		
+		for(Regione reg : regioni ){
+			for(Città cit : reg.getCittà()){
+				for(Città cit1 : cit.getCittàVicina()){
+					mappa.addEdge(cit, cit1);
+			}}}
+		return mappa;
+	}
+	
+	
+	
+	
+	
 }

@@ -1,9 +1,12 @@
 package model;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Luca
+ *
+ */
 /**
  * @author Luca
  *
@@ -20,27 +23,199 @@ public class Giocatore {
 		private String colore;
 		private List<TesseraCostruzione> tessereUsate;
 		private List<TesseraCostruzione> tessereValide;
-		private Gioco gioco;
-		private Tabellone tabellone;
 		private boolean connesso;
 		private int emporiRimasti;
 		
-		public Giocatore(String nome, String colore){
-			this.colore=colore;
-			this.nome=nome;
-		}
-		public boolean getAzionePrincipale(){
-			return this.azionePrincipale;
-		}
-		public boolean getAzioneOpzionale(){
-			return this.azioneOpzionale;
-		}
-		/**
-		 * @param emporiRimasti the emporiRimasti to set
+		/**Constructor for the class Giocatore
+		 * @param nome
+		 * @param colore
 		 */
-		public void setEmporiRimasti(int emporiRimasti) {
-			this.emporiRimasti = emporiRimasti;
+		public Giocatore(String nome, String colore) {
+			this.nome = nome;
+			this.colore = colore;
 		}
+
+	
+	
+		/**
+		 * @return decrement of one unit integer EmporiRimasti
+		 */
+		public void decrementaEmporiRimasti() {
+			emporiRimasti --;
+		}
+
+
+		/**this method move TesseraCostruzione from list tessereValide to list tessereUsate
+		 * @param tesseraToMove is the Tessera to move from tessereValide to tessereUsate
+		 */
+		public void moveTesseraValidaToTesseraUsata (TesseraCostruzione tesseraToMove){
+			if(!tessereValide.contains(tesseraToMove)){
+				throw new IllegalArgumentException("La tessera da spostare non è nelle tessereValide del giocatore");
+			}
+				tessereValide.remove(tesseraToMove);
+				tessereUsate.add(tesseraToMove);
+		}
+
+
+		/**
+		 * @return the id
+		 */
+		public int getId() {
+			return id;
+		}
+
+
+		/**
+		 * @param id the id to set
+		 */
+		public void setId(int id) {
+			this.id = id;
+		}
+
+
+		/**
+		 * @return the nome
+		 */
+		public String getNome() {
+			return nome;
+		}
+
+
+		/**
+		 * @param nome the nome to set
+		 */
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+
+
+		/**
+		 * @return the assistenti
+		 */
+		public List<Assistente> getAssistenti() {
+			return assistenti;
+		}
+
+
+		/**
+		 * @param assistenti the assistenti to set
+		 */
+		public void setAssistenti(List<Assistente> assistenti) {
+			this.assistenti = assistenti;
+		}
+
+
+		/**
+		 * @return the cartePolitica
+		 */
+		public List<CartaPolitica> getCartePolitica() {
+			return cartePolitica;
+		}
+
+
+		/**
+		 * @param cartePolitica the cartePolitica to set
+		 */
+		public void setCartePolitica(List<CartaPolitica> cartePolitica) {
+			this.cartePolitica = cartePolitica;
+		}
+
+
+		/**
+		 * @return the azionePrincipale
+		 */
+		public boolean isAzionePrincipale() {
+			return azionePrincipale;
+		}
+
+
+		/**
+		 * @param azionePrincipale the azionePrincipale to set
+		 */
+		public void setAzionePrincipale(boolean azionePrincipale) {
+			this.azionePrincipale = azionePrincipale;
+		}
+
+
+		/**
+		 * @return the azioneOpzionale
+		 */
+		public boolean isAzioneOpzionale() {
+			return azioneOpzionale;
+		}
+
+
+		/**
+		 * @param azioneOpzionale the azioneOpzionale to set
+		 */
+		public void setAzioneOpzionale(boolean azioneOpzionale) {
+			this.azioneOpzionale = azioneOpzionale;
+		}
+
+
+		/**
+		 * @return the colore
+		 */
+		public String getColore() {
+			return colore;
+		}
+
+
+		/**
+		 * @param colore the colore to set
+		 */
+		public void setColore(String colore) {
+			this.colore = colore;
+		}
+
+
+		/**
+		 * @return the tessereUsate
+		 */
+		public List<TesseraCostruzione> getTessereUsate() {
+			return tessereUsate;
+		}
+
+
+		/**
+		 * @param tessereUsate the tessereUsate to set
+		 */
+		public void setTessereUsate(List<TesseraCostruzione> tessereUsate) {
+			this.tessereUsate = tessereUsate;
+		}
+
+
+		/**
+		 * @return the tessereValide
+		 */
+		public List<TesseraCostruzione> getTessereValide() {
+			return tessereValide;
+		}
+
+
+		/**
+		 * @param tessereValide the tessereValide to set
+		 */
+		public void setTessereValide(List<TesseraCostruzione> tessereValide) {
+			this.tessereValide = tessereValide;
+		}
+
+
+		/**
+		 * @return the connesso
+		 */
+		public boolean isConnesso() {
+			return connesso;
+		}
+
+
+		/**
+		 * @param connesso the connesso to set
+		 */
+		public void setConnesso(boolean connesso) {
+			this.connesso = connesso;
+		}
+
 
 		/**
 		 * @return the emporiRimasti
@@ -49,133 +224,19 @@ public class Giocatore {
 			return emporiRimasti;
 		}
 
+
 		/**
 		 * @param emporiRimasti the emporiRimasti to set
 		 */
-		public int decrementaEmporiRimasti() {
-			emporiRimasti = emporiRimasti-1;
-			return emporiRimasti;
+		public void setEmporiRimasti(int emporiRimasti) {
+			this.emporiRimasti = emporiRimasti;
 		}
 
-		public void moveTesseraValidaToTesseraUsata (TesseraCostruzione tesseraToMove){
-			/*si potrebbe inserire l'eccezione che viene lanciata
-			 * se la tessera selezionata non è nella lista di tessere valide
-			 */
-			try{
-				tessereValide.remove(tesseraToMove);  //gestire le eccezioni lanciate
-				tessereUsate.add(tesseraToMove);  //anche qua gestire eccezioni
-			}
-			catch(Exception e){
-				log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			}
-		}
-		
-		/**
-		 * this method add tessereV to the list tessereValide
-		 * @param tessereV
-		 */
-		public void addTessereValide(TesseraCostruzione tessereV){
-			tessereValide.add(tessereV);
-		}
-		
-		/**
-		 * this method add tessereU to the list tessereUsate
-		 * @param tessereU
-		 */
-		public void addTessereUsate(TesseraCostruzione tessereU){
-			tessereUsate.add(tessereU);
-		}
-		/**
-		 * this method verify if the list in imput is contained by the list of giocatore's card
-		 * @param carteDaVerificare
-		 * @return
-		 */
-		public boolean containsAllCarte(List<CartaPolitica> carteDaVerificare){
-			return cartePolitica.containsAll(carteDaVerificare);
-		}
-		
-		/**
-		 * this method verify if the object in imput is contained by the list of giocatore's tessereUsate
-		 * @param tesseraUsataDaVerificare
-		 * @return
-		 */
-		public boolean containsTesseraUsata(TesseraCostruzione tesseraUsataDaVerificare){
-			return tessereUsate.contains(tesseraUsataDaVerificare);
-		}
-		/**
-		 * this method verify if the object in imput is contained by the list of giocatore's tessereValide
-		 * @param tesseraValidaDaVerificare
-		 * @return
-		 */
-		public boolean containsTesseraValide(TesseraCostruzione tesseraValidaDaVerificare){
-			return tessereValide.contains(tesseraValidaDaVerificare);
-		}
-		
-		/**
-		 * @param azionePrincipale the azionePrincipale to set
-		 */
-		public void setAzionePrincipale(boolean azionePrincipale) {
-			this.azionePrincipale = azionePrincipale;
-		}
-		/**
-		 * @param azioneOpzionale the azioneOpzionale to set
-		 */
-		public void setAzioneOpzionale(boolean azioneOpzionale) {
-			this.azioneOpzionale = azioneOpzionale;
-		}
-		public int getId() {
-			return id;
-		}
-		public String getNome() {
-			return nome;
-		}
-		public List<Assistente> getAssistenti() {
-			return assistenti;
-		}
-		public List<CartaPolitica> getCartePolitica() {
-			return cartePolitica;
-		}
-		public boolean isAzionePrincipale() {
-			return azionePrincipale;
-		}
-		public boolean isAzioneOpzionale() {
-			return azioneOpzionale;
-		}
-		public String getColore() {
-			return colore;
-		}
-		public List<TesseraCostruzione> getTessereUsate() {
-			return tessereUsate;
-		}
-		public List<TesseraCostruzione> getTessereValide() {
-			return tessereValide;
-		}
-		
-		public Gioco getGioco() {
-			return gioco;
-		}
-		/**
-		 * @param gioco the gioco to set
-		 */
-		public void setGioco(Gioco gioco) {
-			this.gioco = gioco;
-		}
-
-		public Tabellone getTabellone() {
-			return tabellone;
-		}
-		public boolean isConnesso() {
-			return connesso;
-		}
 
 		/**
-		 * @param i
+		 * @return the log
 		 */
-		public void setId(int id) {
-			this.id=id;			
+		public static Logger getLog() {
+			return log;
 		}
-
-		
-		
-		
 }
