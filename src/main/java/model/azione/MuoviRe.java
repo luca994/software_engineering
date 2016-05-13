@@ -35,13 +35,11 @@ public class MuoviRe implements Azione {
 	public void eseguiAzione(Giocatore giocatore) {
 		try{
 			if(giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			
-			
-		
+				throw new NullPointerException("Il giocatore non può essere nullo");		
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}	
 	}
 

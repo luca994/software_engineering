@@ -107,6 +107,7 @@ public class CostruisciEmporioConRe implements Azione {
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+			throw e;
 		}	
 	}
 }
