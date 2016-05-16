@@ -4,8 +4,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.Controller;
 import model.Città;
 import model.Giocatore;
+import view.View;
 
 
 
@@ -45,6 +47,12 @@ public class BonusGettoneCittà implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		//metodo del controller che prende i bonus della città dal giocatore 
+		//Non ho il riferimento al controller come creo le città??
+		for(int i=0; i<numeroCittà; i++)
+		{
+		//	Città temp= new Controller().ottieniCittàBonus(giocatore);
+		//		città.add(temp);
+		}
 		//le città devono essere diverse  
 		try{
 			if(giocatore==null)
