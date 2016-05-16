@@ -15,13 +15,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import model.bonus.Bonus;
-import model.bonus.BonusAssistenti;
-import model.bonus.BonusAzionePrincipale;
-import model.bonus.BonusCartaPolitica;
 import model.bonus.BonusCreator;
-import model.bonus.BonusMoneta;
-import model.bonus.BonusPercorsoNobiltà;
-import model.bonus.BonusPuntoVittoria;
 
 /**
  * @author Riccardo

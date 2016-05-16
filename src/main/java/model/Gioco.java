@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
+import controller.Controller;
 import model.azione.AcquistaPermesso;
 import model.azione.AzioneOpzionaleNulla;
 import model.azione.AzionePrincipaleAggiuntiva;
@@ -37,7 +38,9 @@ public class Gioco {
 	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
+		
 		String nomeMappaScelta="/source/main/mappacollegamenti0.xml";// Ottenuta dal controller
+		nomeMappaScelta=new Controller(this).ottieniNomeMappa();
 		this.tabellone=new Tabellone(nomeMappaScelta);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
