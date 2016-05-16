@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,6 @@ import model.azione.AzioneOpzionaleNulla;
 import model.azione.AzionePrincipaleAggiuntiva;
 import model.azione.AzionePrincipaleNulla;
 import model.azione.CambioTessereCostruzione;
-import model.azione.CostruisciEmporioConRe;
 import model.azione.CostruisciEmporioConTessera;
 import model.azione.EleggiConsigliere;
 import model.azione.EleggiConsigliereRapido;
@@ -67,7 +67,7 @@ public class Gioco {
 		//Setup aggiuntivo per 2 giocatori
 		if(numGiocatore==2)
 		{
-			Giocatore dummy=new Giocatore(null, "colore");
+			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY); //come colore a caso ho messo grigio scuro che non è utilizzato
 			for(Regione regi: tabellone.getRegioni() ){
 				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
 				cit.aggiungiEmporio(dummy);
@@ -220,7 +220,7 @@ public class Gioco {
 				//Richiesta al controller di input per scegliere carte politica
 				//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
 				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-				new CostruisciEmporioConRe(tabellone, gio,carteSelezionate).eseguiAzione(gio);
+				//new CostruisciEmporioConRe(tabellone, gio,carteSelezionate,).eseguiAzione(gio);
 			}
 			else if(azione==5&&!gio.isAzioneOpzionale())//Ingaggia Aiutante
 			{

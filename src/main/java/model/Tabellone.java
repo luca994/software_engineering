@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -164,7 +165,7 @@ public class Tabellone {
 		for(Element consi:elencoConsiglieri){
 		   //Aggiungo un nuovo consigliere alla lista creandolo direttamente col costruttore 
 		   //passandogli come parametro il valore dell'attributo colore letto dagli elementi del file xml
-		   this.consiglieriDisponibili.add(new Consigliere(consi.getAttributeValue("colore")));
+		   this.consiglieriDisponibili.add(new Consigliere(Color.getColor(consi.getAttributeValue("colore"))));
 		} 
 		Collections.shuffle(consiglieriDisponibili);
 	}
@@ -438,9 +439,10 @@ public class Tabellone {
 	}
 	
 	// IN TEORIA CREA UN GRAFO E CI INSERISCE PRIMA TUTTE LE CITTà, POI COLLEGA TRA LORO LE CITTà CHE SONO VICINE
-	public Graph<Città, DefaultEdge> generaGrafo (){
+	public UndirectedGraph<Città, DefaultEdge> generaGrafo (){
 		
 		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<Città,DefaultEdge>(DefaultEdge.class);
+		
 		for(Regione reg : regioni ){
 			for(Città cit : reg.getCittà()){
 				mappa.addVertex(cit);

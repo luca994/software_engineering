@@ -17,6 +17,7 @@ import model.TesseraCostruzione;
 public class CostruisciEmporioConTessera implements Azione {
 
 	private static final Logger log= Logger.getLogger( CostruisciEmporioConTessera.class.getName() );
+	
 	private Città città;
 	private TesseraCostruzione tessera;
 	private Tabellone tabellone;

@@ -1,5 +1,6 @@
 package model.azione;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,19 +21,19 @@ import model.Tabellone;
 public class CostruisciEmporioConRe implements Azione {	
 
 	private static final Logger log= Logger.getLogger( CostruisciEmporioConRe.class.getName() );
-	private Città città;
+	
+	private Città destinazione;
 	private List<CartaPolitica> cartePolitica;
 	private Tabellone tabellone;
-	
+
 	/**
 	 * @param re
 	 *
 	 */
-	public CostruisciEmporioConRe(Tabellone tabellone, Giocatore giocatore, List<CartaPolitica> cartePolitica) {
-		this.città=tabellone.getRe().getCittà();
+	public CostruisciEmporioConRe(Tabellone tabellone, Giocatore giocatore, List<CartaPolitica> cartePolitica,Città destinazione) {
+		this.destinazione=destinazione;
 		this.cartePolitica=cartePolitica;
 		this.tabellone=tabellone;
-		new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(giocatore);
 	}
 	
 	
@@ -47,7 +48,7 @@ public class CostruisciEmporioConRe implements Azione {
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(città.presenzaEmporio(giocatore))
+			if(destinazione.presenzaEmporio(giocatore))
 				throw new IllegalStateException("L'emporio del giocatore è già presente in questa città");
 			Consiglio consiglioDaSoddisfare=tabellone.getRe().getConsiglio();
 			int numeroCartePolitica=cartePolitica.size();
@@ -56,18 +57,15 @@ public class CostruisciEmporioConRe implements Azione {
 			if(numeroCartePolitica<1||numeroCartePolitica>4)
 				throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
 			//Creazione copie liste dei colori del consiglio
-			List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-			List<String> cpycolori= new ArrayList<>();
-			Collections.copy(cpycolori, colori);
-	//		if(giocatore.containsAllCarte(cartePolitica)){
+			List<Color> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
 			for(CartaPolitica car : cartePolitica){
-				if(car.getColore().equals("JOLLY"))
+				if(car.getColore().equals(Color.red))
 					jollyUsati++;//conto i jolly usati
-				for(String col : cpycolori){
+				for(Color col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
-						cpycolori.remove(col);
+						colori.remove(col);
 						break;
 					}
 				}			
@@ -87,22 +85,27 @@ public class CostruisciEmporioConRe implements Azione {
 		//}
 		//Rimozione tessere selezionate dalla mano del giocatore, se il giocatore è stupido e seleziona tessere in più o del colore sbagliato sono affari suoi.
 			giocatore.getCartePolitica().removeAll(cartePolitica);
-			
-			città.aggiungiEmporio(giocatore);
+			try{
+			tabellone.getPercorsoRicchezza().muoviGiocatore(giocatore, 0-2*tabellone.getRe().contaPassi(destinazione));
+			}
+			catch(IndexOutOfBoundsException e){
+				throw e;
+			}
+			destinazione.aggiungiEmporio(giocatore);
 			giocatore.decrementaEmporiRimasti();
 		//Se il giocatore ha finito gli empori guadagna 3 punti vittoria	
 			if(giocatore.getEmporiRimasti()==0)
 				tabellone.getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 		//Mi piglio i bonus di questa e delle città collegate
 			List<Città> cittàConBonusDaOttenere=new ArrayList<Città>();
-			cittàConBonusDaOttenere.add(città);
-			città.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
+			cittàConBonusDaOttenere.add(destinazione);
+			destinazione.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
 			for(Città citt: cittàConBonusDaOttenere)
 				citt.eseguiBonus(giocatore);
 			giocatore.setAzionePrincipale(true);
 			//controllo se ho gli empori in tutte le città di un colore o di una regione e prendo la
 			//tessera bonus se mi spetta
-			tabellone.prendiTesseraBonus(giocatore, città);
+			tabellone.prendiTesseraBonus(giocatore, destinazione);
 	
 		}
 		catch(Exception e){

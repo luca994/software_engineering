@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,11 @@ public class Inizializzazione {
 			List<Giocatore> nuoviGiocatori=new ArrayList<Giocatore>();
 			boolean avviaGioco=false;
 			while(!avviaGioco){
-			String nome= new String();
-			String colore= new String();
+			String nome = new String();
+			Color colore;
 			//prendo in input nome e colore giocatore dal controller con il metodo del controller, mi viene anche comunicato se
 			//può iniziare il gioco settando a true avviaGioco
-			nuoviGiocatori.add(new Giocatore(nome, colore));
+			//nuoviGiocatori.add(new Giocatore(nome, colore));
 		}
 			
 		//Creo e avvio gioco

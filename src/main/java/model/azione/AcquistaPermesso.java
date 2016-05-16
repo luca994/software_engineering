@@ -1,5 +1,6 @@
 package model.azione;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import model.percorso.Percorso;
 public class AcquistaPermesso implements Azione {
 
 	private static final Logger log= Logger.getLogger( AcquistaPermesso.class.getName() );
+	
 	private TesseraCostruzione tessera;
 	private List<CartaPolitica> cartePolitica;
 	private Consiglio consiglioDaSoddisfare;
@@ -69,7 +71,9 @@ public class AcquistaPermesso implements Azione {
 	 */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
+		
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
+		
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
@@ -78,20 +82,23 @@ public class AcquistaPermesso implements Azione {
 			int counter=0;
 			if(numeroCartePolitica<1||numeroCartePolitica>4)
 				throw new IllegalStateException("Il numero di carte selezionato non è appropriato");
+			
 			//Creazione copie liste dei colori del consiglio
-			List<String> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
+			
+			List<Color> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
 			for(CartaPolitica car : cartePolitica){
-				if("JOLLY".equals(car.getColore()))
-					jollyUsati++;//conto i jolly usati
-				for(String col : colori){
+				//conto i jolly usati
+				if(car.getColore().equals(Color.red))
+					jollyUsati++;
+			
+				for(Color col : colori){
 				if(car.getColore().equals(col))
 					{
 						counter++;
 						colori.remove(col);
 						break;
 					}
-				}			
-			}
+				}}
 			
 		switch(counter)
 		{

@@ -13,12 +13,10 @@ import model.Giocatore;
  *
  */
 public class AzioneOpzionaleNulla implements Azione {
+	
 	private static final Logger log= Logger.getLogger( AzioneOpzionaleNulla.class.getName() );
 	
 	
-	/* (non-Javadoc)
-	 * @see model.Azione#eseguiAzione(model.Giocatore)
-	 */
 	@Override
 	public void eseguiAzione(Giocatore giocatore) {
 		try{

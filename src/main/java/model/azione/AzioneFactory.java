@@ -33,7 +33,7 @@ public class AzioneFactory {
 	private Tabellone tabellone;
 	
 	
-	public Azione getAzione(String tipoAzione){
+	public Azione createAzione(String tipoAzione){
 		if (tipoAzione == null){
 			return null;
 			}
@@ -62,7 +62,7 @@ public class AzioneFactory {
 			return cambioTessere;
 		}
 		if (tipoAzione.equalsIgnoreCase("COSTRUISCI EMPORIO CON RE")){
-			CostruisciEmporioConRe costrEmpRe = new CostruisciEmporioConRe(tabellone, giocatore, cartePolitica);
+			CostruisciEmporioConRe costrEmpRe = new CostruisciEmporioConRe(tabellone, giocatore, cartePolitica,citta);
 			return costrEmpRe;
 		}
 		if (tipoAzione.equalsIgnoreCase("COSTRUISCI EMPORIO CON TESSERA")){
@@ -76,10 +76,6 @@ public class AzioneFactory {
 		if (tipoAzione.equalsIgnoreCase("INGAGGIO AIUTANTE")){
 			IngaggioAiutante ingaggiaAiutante = new IngaggioAiutante(percorsoRicchezza);
 			return ingaggiaAiutante;
-		}
-		if (tipoAzione.equalsIgnoreCase("MUOVI RE")){
-			MuoviRe muoviRe = new MuoviRe(tabellone.getRe(), percorsoRicchezza);
-			return muoviRe;
 		}
 		return null;
 	}
