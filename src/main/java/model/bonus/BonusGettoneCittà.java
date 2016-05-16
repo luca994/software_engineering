@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import controller.Controller;
-import model.Cambiamento;
+//import model.Cambiamento;
 import model.Città;
 import model.Giocatore;
 import model.Gioco;
@@ -22,14 +22,14 @@ import view.View;
 public class BonusGettoneCittà implements Bonus {
 	private static final Logger log= Logger.getLogger( BonusGettoneCittà.class.getName() );
 	
-	private Cambiamento cambiamento;
+	//private Cambiamento cambiamento;
 	private int numeroCittà;
 	private Set<Città> città;
 	private Gioco gioco;
 	
 	public BonusGettoneCittà(int numeroCittà, Gioco gioco)
 	{
-		cambiamento = new Cambiamento();
+		//cambiamento = new Cambiamento();
 		this.gioco=gioco;
 		this.numeroCittà=numeroCittà;
 	}
