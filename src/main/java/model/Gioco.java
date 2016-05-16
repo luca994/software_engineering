@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
+import client.Observable;
 import controller.Controller;
 import model.azione.AcquistaPermesso;
 import model.azione.AzioneOpzionaleNulla;
@@ -27,7 +28,7 @@ import model.percorso.Casella;
  * @author Luca
  *
  */
-public class Gioco {
+public class Gioco extends Observable{
 
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
@@ -40,8 +41,7 @@ public class Gioco {
 		//Inizializzazione Ambiente di gioco
 		
 		String nomeMappaScelta="/source/main/mappacollegamenti0.xml";// Ottenuta dal controller
-		nomeMappaScelta=new Controller(this).ottieniNomeMappa();
-		this.tabellone=new Tabellone(nomeMappaScelta);
+		this.tabellone=new Tabellone(nomeMappaScelta, this);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
 		for(Giocatore gio:giocatori)
@@ -79,6 +79,7 @@ public class Gioco {
 		mercato=new Mercato(tabellone.getPercorsoRicchezza());
 		
 	}//mettere i catch delle eccezioni della lettura xml
+	
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
 		Queue<Giocatore> codaGiocatori= new LinkedList<Giocatore>(giocatori);
@@ -132,55 +133,6 @@ public class Gioco {
 			Giocatore giocatoreAttuale=codaGiocatori.poll();
 			turno(giocatoreAttuale);
 		}
-		/*while(!vittoria){
-			//Fase turni
-			for(Giocatore gio:this.giocatori)
-			{
-				//Controllo se gli empori sono finiti
-				for(Giocatore gioca: this.giocatori)
-					if (gioca.getEmporiRimasti()==0)
-					{
-						vittoria=true;
-						Set<Giocatore> giocatoriRimasti=this.giocatori;
-						giocatori.remove(gioca);
-						//Inizio ultimo turno
-						for (Giocatore ply:giocatoriRimasti)
-						{
-							turno(ply);
-						}
-						break;
-					}
-				turno(gio);
-			}
-			//Fase Mercato per la vendita
-			boolean fineMercato;
-			OggettoVendibile oggetto;
-			for(Giocatore gio:giocatori){
-				fineMercato=false;
-				while(!fineMercato){
-					//metodo controller per chiedere se vuole vendere altri oggetti
-					//setto fineMercato
-					oggetto=null;
-					//metodo del controller che prende l' oggetto in ingresso
-					faseMercatoVendita(gio, oggetto);
-				}
-			}
-			fineMercato=false;
-			//fase mercato per l'acquisto
-			for(Giocatore gio:giocatori){
-				while(!fineMercato){
-					//metodo controller per chiedere se vuole vendere altri oggetti
-					//setto fineMercato
-					//fineMercato=...
-					//mostro la lista degli oggetti in vendita e prendo in ingresso
-					//l'oggetto
-					oggetto=null;
-					faseMercatoAcquisto(gio, oggetto);
-				}
-			}
-			
-		
-		}*/
 		//Conteggio punti
 		Set<Giocatore> vincitore=calcoloVincitore();
 		//Comunico al controller chi è il vincitore

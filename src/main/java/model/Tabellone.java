@@ -58,7 +58,14 @@ public class Tabellone {
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	private Re re;
+	private Gioco gioco;
 	
+
+	
+	
+	public Gioco getGioco() {
+		return gioco;
+	}
 
 	/**
 	 * @return the re
@@ -126,8 +133,9 @@ public class Tabellone {
 	 * @throws JDOMException 
 	 * @throws NoSuchElementException if there's an error during the reading of the number of Consiglieri
 	 */
-	public Tabellone(String nomeFileMappa) throws JDOMException, IOException{
+	public Tabellone(String nomeFileMappa, Gioco gioco) throws JDOMException, IOException{
 		
+		this.gioco=gioco;
 		
 		//Creo percorsi passando al costruttore del percorso il nome del file che dovrà usare per creare il percorso
 		creaPercorsi();
@@ -206,7 +214,7 @@ public class Tabellone {
 					Set<Bonus> bonus=new HashSet<Bonus>();
 					for(Element bon:elencoBonus){ //Leggo i set di bonus, li inizializzo e li copio nella lista di bonus
 						try{
-							bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo"))));
+							bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),gioco));
 						}
 						catch(Exception e){
 							log.log(Level.WARNING,e.getMessage(), e);
@@ -281,7 +289,7 @@ public class Tabellone {
 			Element tipoBonus = t.getChild("Bonus");
 			Set<Bonus> bonus= new HashSet<Bonus>();
 			try{
-				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"), Integer.parseInt(tipoBonus.getAttributeValue("attributo"))));
+				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"), Integer.parseInt(tipoBonus.getAttributeValue("attributo")),gioco));
 				//creo le tessere bonus per la regione
 				if(t.getAttributeValue("id").equals("regione")){
 					tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
