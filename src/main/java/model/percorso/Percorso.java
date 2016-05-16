@@ -30,6 +30,7 @@ public class Percorso {
 
 	private static final Logger log = Logger.getLogger(Percorso.class.getName());
 	private List<Casella> caselle;
+	private Tabellone tabellone;
 	
 	/**
 	 * @return the caselle
@@ -65,7 +66,7 @@ public class Percorso {
 					senzaB=true;
 					break;
 				}
-				totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo"))));
+				totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
 			}
 			if(senzaB) this.caselle.add(new CasellaSenzaBonus());
 			else this.caselle.add(new CasellaConBonus(totBonus));

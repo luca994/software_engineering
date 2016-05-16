@@ -30,6 +30,7 @@ public class Regione {
 	private String nome;
 	private List<TesseraCostruzione> tessereCostruzione;
 	private List<TesseraCostruzione> tessereCoperte;
+	private Tabellone tabellone;
 	
 	/**
 	 * build the region
@@ -40,6 +41,7 @@ public class Regione {
 	 * @throws IOException if the file doesn't exist or there is an error in the file reading
 	 */
 	public Regione(String nomeRegione, List<String> nomiCittà, Tabellone tabellone) throws JDOMException, IOException{
+		this.tabellone=tabellone;
 		this.nome=nomeRegione;
 		creaCittà(nomiCittà);		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
@@ -85,7 +87,7 @@ public class Regione {
 					List<Element> elencoBonus=set.getChildren();
 					for(Element bon:elencoBonus)
 					{
-						bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo"))));
+						bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
 					}
 				}
 			}

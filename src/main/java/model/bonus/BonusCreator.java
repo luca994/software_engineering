@@ -1,5 +1,6 @@
 package model.bonus;
 
+import model.Gioco;
 import model.Tabellone;
 import model.percorso.Percorso;
 
@@ -20,7 +21,7 @@ public class BonusCreator {
 	 * @throws NullPointerException if tipoBonus is null
 	 * @throws IllegalArgumentException if tipoBonus isn't correct
 	 */
-	public Bonus creaBonus(String tipoBonus, int attributo){
+	public Bonus creaBonus(String tipoBonus, int attributo, Gioco gioco){
 		if(tipoBonus==null){
 			throw new NullPointerException("il tipo di bonus non può essere nullo");
 		}
@@ -29,9 +30,9 @@ public class BonusCreator {
 		else if(tipoBonus.equals("BonusCartaPolitica")) return new BonusCartaPolitica(attributo);
 		else if(tipoBonus.equals("BonusAssistenti")) return new BonusAssistenti(attributo);
 		else if(tipoBonus.equals("BonusPercorsoNobiltà")) return new BonusPercorsoNobiltà(tabellone.getPercorsoNobiltà(), attributo);
-		else if(tipoBonus.equals("BonusGettoneCittà")) return new BonusGettoneCittà(attributo);
+		else if(tipoBonus.equals("BonusGettoneCittà")) return new BonusGettoneCittà(attributo,gioco);
 		else if(tipoBonus.equals("BonusAzionePrincipale")) return new BonusAzionePrincipale();
-		else if(tipoBonus.equals("BonusRiutilizzoCostruzione")) return new BonusRiutilizzoCostruzione();
+		else if(tipoBonus.equals("BonusRiutilizzoCostruzione")) return new BonusRiutilizzoCostruzione(gioco);
 		else if(tipoBonus.equals("BonusTesseraPermesso")) return new BonusTesseraPermesso();
 		throw new IllegalArgumentException("il tipo di bonus non è corretto o non esiste");
 	}

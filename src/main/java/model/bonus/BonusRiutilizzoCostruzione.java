@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.Giocatore;
+import model.Gioco;
 import model.TesseraCostruzione;
 
 /**
@@ -20,6 +21,11 @@ import model.TesseraCostruzione;
 public class BonusRiutilizzoCostruzione implements Bonus {
 	private static final Logger log= Logger.getLogger( BonusRiutilizzoCostruzione.class.getName() );
 	private TesseraCostruzione tessera;
+	private Gioco gioco;
+	
+	public BonusRiutilizzoCostruzione(Gioco gioco){
+		this.gioco=gioco;
+	}
 	
 	/**
 	 * @return the tessera

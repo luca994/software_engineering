@@ -1,12 +1,15 @@
 package model.bonus;
 
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import controller.Controller;
+import model.Cambiamento;
 import model.Città;
 import model.Giocatore;
+import model.Gioco;
 import view.View;
 
 
@@ -18,15 +21,16 @@ import view.View;
  */
 public class BonusGettoneCittà implements Bonus {
 	private static final Logger log= Logger.getLogger( BonusGettoneCittà.class.getName() );
-	/* (non-Javadoc)
-	 * @see model.Bonus#azioneBonus(model.Giocatore)
-	 */
 	
+	private Cambiamento cambiamento;
 	private int numeroCittà;
 	private Set<Città> città;
+	private Gioco gioco;
 	
-	public BonusGettoneCittà(int numeroCittà)
+	public BonusGettoneCittà(int numeroCittà, Gioco gioco)
 	{
+		cambiamento = new Cambiamento();
+		this.gioco=gioco;
 		this.numeroCittà=numeroCittà;
 	}
 	
@@ -46,21 +50,29 @@ public class BonusGettoneCittà implements Bonus {
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		//metodo del controller che prende i bonus della città dal giocatore 
-		//Non ho il riferimento al controller come creo le città??
-		for(int i=0; i<numeroCittà; i++)
-		{
-		//	Città temp= new Controller().ottieniCittàBonus(giocatore);
-		//		città.add(temp);
-		}
-		//le città devono essere diverse  
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			for(Città  cit:this.città)
+			Iterator<Città> itrcittà = città.iterator();
+			Città temp = itrcittà.next(); 
+			for(int i=0; i<numeroCittà;)
 			{
-				if(cit.presenzaEmporio(giocatore))
-					cit.eseguiBonus(giocatore);
+				try{
+					gioco.notificaObservers(this,null);
+					if(temp.presenzaEmporio(giocatore)){
+						temp=itrcittà.next();
+						i++;
+					}
+					else{
+						throw new IllegalStateException("Non hai empori in questa città");
+					}
+				}
+				catch(IllegalStateException e){
+				}
+			}
+
+			for(Città  cit:this.città){
+				cit.eseguiBonus(giocatore);
 			}
 		}
 		catch(Exception e){
@@ -68,6 +80,8 @@ public class BonusGettoneCittà implements Bonus {
 			throw e;
 		}
 	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see bonus.Bonus#azioneBonus(model.Giocatore)
