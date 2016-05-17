@@ -61,7 +61,7 @@ public class Regione {
 	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("/source/main/TessereCostruzione"+this.nome);
+		String nomefile = new String("src/main/TessereCostruzione"+this.nome);
 		//Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
