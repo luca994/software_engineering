@@ -58,7 +58,7 @@
 			<Città id="Dortid"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
-			<Bonus id="BonusPercorsoNobilta" attributo="1"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Arkon"></Città>
@@ -86,7 +86,7 @@
 			<Città id="Esti"></Città>
 			<Città id="Arkon"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPercorsoNobilta" attributo="2"></Bonus></SetBonus></Tessera>
+			<Bonus id="BonusPercorsoNobiltà" attributo="2"></Bonus></SetBonus></Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Esti"></Città>

@@ -40,7 +40,7 @@
 	</Casella>
 	<Casella numero="12">
 		<Bonus id="BonusPuntoVittoria" attributo="5"/>
-		<Bonus id="Assistenti" attributo="1"/>
+		<Bonus id="BonusAssistenti" attributo="1"/>
 	</Casella>
 	<Casella numero="13">
 		<Bonus id="NessunBonus"/>

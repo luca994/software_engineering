@@ -42,6 +42,7 @@ public class BonusCreator {
 			return new BonusRiutilizzoCostruzione(gioco);
 		else if("BonusTesseraPermesso".equals(tipoBonus))
 			return new BonusTesseraPermesso();
-		throw new IllegalArgumentException("il tipo di bonus non è corretto o non esiste");
+		else
+			throw new IllegalArgumentException("il tipo di bonus non è corretto o non esiste");
 	}
 }

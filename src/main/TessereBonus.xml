@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TessereBonus QuantitàTessere="12">
 	
-	<Tessera id="regione" regione="Mare">
+	<Tessera id="regione" attributo="Mare">
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
-	<Tessera id="regione" regione="Pianura">
+	<Tessera id="regione" attributo="Pianura">
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
-	<Tessera id="regione" regione="Montagna">
+	<Tessera id="regione" attributo="Montagna">
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
 	
-	<Tessera id="città" colore="Blu">
+	<Tessera id="città" attributo="Blu">
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
-	<Tessera id="città" colore="Rosso">
+	<Tessera id="città" attributo="Rosso">
 		<Bonus id="BonusPuntoVittoria" attributo="8"></Bonus>
 	</Tessera>
-	<Tessera id="città" colore="Grigio">
+	<Tessera id="città" attributo="Grigio">
 		<Bonus id="BonusPuntoVittoria" attributo="12"></Bonus>
 	</Tessera>
 	<Tessera id="città" colore="Giallo">

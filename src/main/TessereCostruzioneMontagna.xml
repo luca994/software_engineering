@@ -31,9 +31,10 @@
 		<SetCittà>
 			<Città id="Lyram"></Città>
 			<Città id="Merkatim"></Città>
-			<Città id="Naris"></Città></SetCittà><SetBonus>
-	<Bonus id="BonusPercorsoVittoria" attributo="3"></Bonus></SetBonus>
-		</Tessera>
+			<Città id="Naris"></Città></SetCittà>
+		<SetBonus>
+			<Bonus id="BonusPuntoVittoria" attributo="3"></Bonus></SetBonus>
+	</Tessera>
 	<Tessera>
 		<SetCittà>
 			<Città id="Merkatim"></Città>

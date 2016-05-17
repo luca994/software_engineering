@@ -43,6 +43,8 @@ public class Regione {
 	public Regione(String nomeRegione, List<String> nomiCittà, Tabellone tabellone) throws JDOMException, IOException{
 		this.tabellone=tabellone;
 		this.nome=nomeRegione;
+		this.tessereCostruzione=new ArrayList<TesseraCostruzione>();
+		this.tessereCoperte=new ArrayList<TesseraCostruzione>();
 		creaCittà(nomiCittà);		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
@@ -61,7 +63,7 @@ public class Regione {
 	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("src/main/TessereCostruzione"+this.nome);
+		String nomefile = new String("src/main/TessereCostruzione"+this.nome+".xml");
 		//Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
@@ -87,7 +89,11 @@ public class Regione {
 					List<Element> elencoBonus=set.getChildren();
 					for(Element bon:elencoBonus)
 					{
-						bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
+						if(bon.getAttributeValue("attributo")!=null)
+							bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
+						else{
+							bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), 0,tabellone.getGioco()));
+						}
 					}
 				}
 			}
@@ -109,18 +115,18 @@ public class Regione {
 	}
 	
 	/**
-	 * sets the blanket permit tiles of a region.
+	 * sets the covered permit tiles of a region.
 	 * @param elencoRiferimentiTessere the list of permit tiles to set in the region
 	 */
 	public void setTessereCoperte(List<TesseraCostruzione> elencoRiferimentiTessere){
 		this.tessereCoperte=elencoRiferimentiTessere;
 		Collections.shuffle(this.tessereCoperte);
-		this.tessereCostruzione.add(this.tessereCoperte.get(0));
-		this.tessereCostruzione.add(this.tessereCoperte.get(1));
-		for(TesseraCostruzione tessera: this.tessereCostruzione)
+		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
+		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
+		/*for(TesseraCostruzione tessera: this.tessereCostruzione)
 		{
 			this.tessereCoperte.remove(tessera);
-		}
+		}*/
 			
 	}
 	

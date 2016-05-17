@@ -50,8 +50,9 @@ public class Gioco extends Observable{
 			//setto empori rimasti a 10
 			gio.setEmporiRimasti(10);
 			//setto assistenti
-			for(int i=0;i<numGiocatore;i++)
+			for(int j=0;j<numGiocatore;j++){
 				gio.getAssistenti().add(new Assistente());
+			}
 			//setto posizione iniziale percorso nobiltà e vittoria e Ricchezza
 			this.tabellone.getPercorsoNobiltà().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoVittoria().getCaselle().get(0).getGiocatori().add(gio);

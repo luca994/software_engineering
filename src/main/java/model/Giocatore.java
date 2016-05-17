@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,6 +35,10 @@ public class Giocatore {
 		public Giocatore(String nome, Color colore) {
 			this.nome = nome;
 			this.colore = colore;
+			this.assistenti=new ArrayList<Assistente>();
+			this.cartePolitica=new ArrayList<CartaPolitica>();
+			this.tessereUsate=new ArrayList<TesseraCostruzione>();
+			this.tessereValide=new ArrayList<TesseraCostruzione>();
 		}
 
 	

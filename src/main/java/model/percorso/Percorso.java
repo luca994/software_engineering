@@ -66,7 +66,12 @@ public class Percorso {
 					senzaB=true;
 					break;
 				}
-				totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
+				if(bon.getAttributeValue("attributo")!=null){
+					totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
+				}
+				else{
+					totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), 0,tabellone.getGioco()));
+				}
 			}
 			if(senzaB) this.caselle.add(new CasellaSenzaBonus());
 			else this.caselle.add(new CasellaConBonus(totBonus));
