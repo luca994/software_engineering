@@ -12,7 +12,9 @@ import junit.framework.TestCase;
 import model.Città;
 import model.Giocatore;
 import model.Gioco;
+import model.OggettoConBonus;
 import model.Regione;
+import model.percorso.CasellaConBonus;
 
 public class GiocoTest extends TestCase {
 
@@ -49,7 +51,20 @@ public class GiocoTest extends TestCase {
 		assertNotNull(gioco.getTabellone().getPercorsoRicchezza());
 		
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g1, -15);
+		assertEquals(0, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		
+
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 2);
+		assertEquals(2, ((CasellaConBonus) gioco.getTabellone().getPercorsoNobiltà().getCaselle().get(gioco.getTabellone().getPercorsoNobiltà().posizioneAttualeGiocatore(g1))).getBonus().size());
+		
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 16);
+		assertEquals(1, ((CasellaConBonus) gioco.getTabellone().getPercorsoNobiltà().getCaselle().get(gioco.getTabellone().getPercorsoNobiltà().posizioneAttualeGiocatore(g1))).getBonus().size());
+		
+		
 		assertEquals(11, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g2, -2);
+		assertEquals(9, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
 		
 		assertEquals(6, g1.getCartePolitica().size());
 		assertEquals(6, g2.getCartePolitica().size());
