@@ -54,9 +54,9 @@ public class Percorso {
 		Element percorsoRootElement = documentPercorso.getRootElement();
 		List<Element> elencoCaselle =percorsoRootElement.getChildren();
 		this.caselle=new ArrayList<Casella>();
-		boolean senzaB=false;
 		for(Element cas:elencoCaselle)
 		{
+			boolean senzaB=false;
 			List<Element> elencoBonus =cas.getChildren();
 			Set<Bonus> totBonus = new HashSet<Bonus>();
 			for(Element bon:elencoBonus)
@@ -73,8 +73,10 @@ public class Percorso {
 					totBonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), 0,tabellone.getGioco()));
 				}
 			}
-			if(senzaB) this.caselle.add(new CasellaSenzaBonus());
-			else this.caselle.add(new CasellaConBonus(totBonus));
+			if(senzaB) 
+				this.caselle.add(new CasellaSenzaBonus());
+			else 
+				this.caselle.add(new CasellaConBonus(totBonus));
 		}
 			
 	}
