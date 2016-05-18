@@ -56,7 +56,7 @@ public class Gioco extends Observable{
 			//setto posizione iniziale percorso nobiltà e vittoria e Ricchezza
 			this.tabellone.getPercorsoNobiltà().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoVittoria().getCaselle().get(0).getGiocatori().add(gio);
-			this.tabellone.getPercorsoRicchezza().getCaselle().get(10+numGiocatore).getGiocatori().add(gio);
+			this.tabellone.getPercorsoRicchezza().getCaselle().get(9+numGiocatore).getGiocatori().add(gio);
 			//setto carte politica iniziali
 			for(int i=0;i<6;i++)
 			{
