@@ -51,7 +51,7 @@ public class GiocoTest extends TestCase {
 		assertNotNull(gioco.getTabellone().getPercorsoRicchezza());
 		
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g1, -15);
+		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g1, -10);
 		assertEquals(0, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		
 
@@ -65,6 +65,9 @@ public class GiocoTest extends TestCase {
 		assertEquals(11, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
 		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g2, -2);
 		assertEquals(9, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		System.out.println(gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g2));
+		System.out.println("prova");
+		assertEquals(10, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
 		
 		assertEquals(6, g1.getCartePolitica().size());
 		assertEquals(6, g2.getCartePolitica().size());

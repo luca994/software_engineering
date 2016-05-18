@@ -95,7 +95,7 @@ public class Percorso {
 			else if(passi<0)
 			{
 				int posizione=posizioneAttualeGiocatore(giocatore);
-				if(posizione>=passi)
+				if(posizione>=(0-passi))
 				{
 					passi=0-passi;
 					muoviGiocatoreIndietro(giocatore, passi);
