@@ -9,8 +9,10 @@ import java.util.List;
 import org.jdom2.JDOMException;
 
 import junit.framework.TestCase;
+import model.Città;
 import model.Giocatore;
 import model.Gioco;
+import model.Regione;
 
 public class GiocoTest extends TestCase {
 
@@ -41,6 +43,25 @@ public class GiocoTest extends TestCase {
 		
 		assertEquals(1, g1.getAssistenti().size());
 		assertEquals(2, g2.getAssistenti().size());
+		
+		assertNotNull(gioco.getTabellone().getPercorsoNobiltà());
+		assertNotNull(gioco.getTabellone().getPercorsoVittoria());
+		assertNotNull(gioco.getTabellone().getPercorsoRicchezza());
+		
+		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		assertEquals(11, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		
+		assertEquals(6, g1.getCartePolitica().size());
+		assertEquals(6, g2.getCartePolitica().size());
+		
+		for(Regione r:gioco.getTabellone().getRegioni()){
+			for(Città c:r.getCittà()){
+				for(Giocatore g:c.getEmpori()){
+					System.out.println(g.getColore().toString());
+				}
+			}
+		}
+		
 	}
 
 }

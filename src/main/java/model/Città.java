@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -31,6 +32,8 @@ public class Città extends OggettoConBonus {
 		super(null);
 		this.nome = nome;
 		this.regione = regione;
+		this.empori=new HashSet<Giocatore>();
+		this.cittàVicina= new HashSet<Città>();
 	}
 	
 	/**
@@ -38,16 +41,19 @@ public class Città extends OggettoConBonus {
 	 * If there is not, add a player's emporium.
 	 * @param giocatore the player who wants to add the emporium  
 	 * @return return true if there is a player's emporium
+	 * @throws NullPointerException if giocatore is null
+	 * @throws IllegalStateException if there is already a player's emporium
 	 */
-	public boolean aggiungiEmporio(Giocatore giocatore){
+	public void aggiungiEmporio(Giocatore giocatore){
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(!presenzaEmporio(giocatore)){
 				empori.add(giocatore);
-				return true;
 			}
-			return false;
+			else{
+				throw new IllegalStateException("Hai già un'emporio in questa città");
+			}
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
@@ -67,7 +73,9 @@ public class Città extends OggettoConBonus {
 			if(empori.contains(giocatore)){
 				return true;
 			}
-		return false;
+			else{
+				return false;
+			}
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

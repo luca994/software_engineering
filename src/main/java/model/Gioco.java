@@ -12,7 +12,6 @@ import java.util.Set;
 import org.jdom2.JDOMException;
 
 import client.Observable;
-import controller.Controller;
 import model.azione.AcquistaPermesso;
 import model.azione.AzioneOpzionaleNulla;
 import model.azione.AzionePrincipaleAggiuntiva;
@@ -28,7 +27,7 @@ import model.percorso.Casella;
  * @author Luca
  *
  */
-public class Gioco extends Observable{
+public class Gioco extends Observable<Object>{
 
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
@@ -66,13 +65,14 @@ public class Gioco extends Observable{
 		}			
 		this.giocatori=giocatori;
 		//Setup aggiuntivo per 2 giocatori
-		if(numGiocatore==2)
+		if(numGiocatore-1==2)
 		{
 			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY); //come colore a caso ho messo grigio scuro che non è utilizzato
 			for(Regione regi: tabellone.getRegioni() ){
-				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
-				cit.aggiungiEmporio(dummy);
-					Collections.shuffle(regi.getTessereCoperte());
+				for(Città cit:regi.getTessereCoperte().get(0).getCittà()){
+					cit.aggiungiEmporio(dummy);
+				}
+				Collections.shuffle(regi.getTessereCoperte());
 			}
 			
 		}
