@@ -311,11 +311,28 @@ public class Tabellone {
 	
 	public Città cercaCittà(String nome)
 	{
-		for(Regione regione:this.regioni)
-			for(Città cit: regione.getCittà())
-				if(cit.getNome().equals(nome))
+		if(nome==null)
+			throw new NullPointerException("il nome della città non può essere nullo");
+		for(Regione regione:this.regioni){
+			for(Città cit: regione.getCittà()){
+				if(cit.getNome().equals(nome)){
 					return cit;
-		return null;
+				}
+			}
+		}
+		throw new IllegalArgumentException("la città inserita non è corretta");
+	}
+	
+	public Città cercaCittà(String nome,Regione regione)
+	{
+		if(nome==null)
+			throw new NullPointerException("il nome della città non può essere nullo");
+		for(Città cit: regione.getCittà()){
+			if(cit.getNome().equals(nome)){
+				return cit;
+			}
+		}
+		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
 	
 	/**

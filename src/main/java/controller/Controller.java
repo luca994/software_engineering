@@ -27,7 +27,7 @@ public class Controller implements Observer{
 	public String ottieniNomeMappa(){
 		return new View(gioco).acquisisciNomeMappa();
 	}
-	
+	/*
 	public Città ottieniCittàBonus(Giocatore giocatore){
 		
 		String nomeCittà= new View(gioco).acquisisciCittàBonus();
@@ -39,7 +39,7 @@ public class Controller implements Observer{
 			new View(gioco).messaggioErrore("Non ci sono empori di "+giocatore.getNome()+" nella città, scegline un'altra");
 			return ottieniCittàBonus(giocatore);
 		}
-	}
+	}*/
 
 	public void update(BonusGettoneCittà cambiamento,String input){
 		Città città = this.gioco.getTabellone().cercaCittà(input);
