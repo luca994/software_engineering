@@ -6,13 +6,13 @@
 		<Città id="Castrum"></Città>
 		<Città id="Dortid"></Città>
 		<Città id="Esti"></Città></Regione>
-	<Regione id="Montagna">
+	<Regione id="Pianura">
 		<Città id="Framek"></Città>
 		<Città id="Graden"></Città>
 		<Città id="Hellar"></Città>
 		<Città id="Indur"></Città>
 		<Città id="Juvelar"></Città></Regione>
-	<Regione id="Pianura">
+	<Regione id="Montagna">
 		<Città id="Kultos"></Città>
 		<Città id="Lyram"></Città>
 		<Città id="Merkatim"></Città>
