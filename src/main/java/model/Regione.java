@@ -125,9 +125,9 @@ public class Regione {
 			this.città.add(new Città(nome,this));
 		}
 		//da cancellare
-		for(Città c:this.città){
+		/*for(Città c:this.città){
 			System.out.println(c.getNome()+"    "+c);
-		}
+		}*/
 	}
 	
 	/**

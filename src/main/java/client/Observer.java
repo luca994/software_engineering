@@ -2,10 +2,8 @@ package client;
 
 public interface Observer<T> {
 
-	//public void update();
+	public void update(T cambiamento);
 	
-	public default void update(T cambiamento,String input){
-		System.out.println("");
-	}
+	public void update(T cambiamento,String input);
 	
 }

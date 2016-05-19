@@ -32,7 +32,6 @@ public class Gioco extends Observable<Object>{
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
 	private boolean vittoria;
-	private int id;
 	private Mercato mercato;
 	
 	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
