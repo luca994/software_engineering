@@ -1,7 +1,6 @@
 package modelTest;
 
 import java.awt.Color;
-import java.awt.image.ColorConvertOp;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +8,10 @@ import java.util.List;
 import org.jdom2.JDOMException;
 
 import junit.framework.TestCase;
+import model.CartaPolitica;
 import model.Città;
 import model.Giocatore;
 import model.Gioco;
-import model.OggettoConBonus;
 import model.Regione;
 import model.percorso.CasellaConBonus;
 
@@ -20,13 +19,12 @@ public class GiocoTest extends TestCase {
 
 	private Gioco gioco;
 	private List<Giocatore> giocatori;
-	private Color c;
 	
 	public void testGioco() {
 		
 		giocatori= new ArrayList<Giocatore>();
-		Giocatore g1 = new Giocatore("pippo", c.blue);
-		Giocatore g2 = new Giocatore("sandro", c.green);
+		Giocatore g1 = new Giocatore("pippo", Color.blue);
+		Giocatore g2 = new Giocatore("sandro", Color.green);
 		giocatori.add(g1);
 		giocatori.add(g2);
 		
@@ -72,11 +70,10 @@ public class GiocoTest extends TestCase {
 		assertEquals(6, g1.getCartePolitica().size());
 		assertEquals(6, g2.getCartePolitica().size());
 		
-		for(Regione r:gioco.getTabellone().getRegioni()){
-			for(Città c:r.getCittà()){
-				for(Giocatore g:c.getEmpori()){
-					System.out.println(g.getColore().toString());
-				}
+		//stampa il colore di ogni carta politica di ogni giocatore che sono quindi per ogni partita casuali
+		for(Giocatore g: gioco.getGiocatori()){
+			for(CartaPolitica c:g.getCartePolitica()){
+				System.out.println(c.getColore().toString());
 			}
 		}
 	}

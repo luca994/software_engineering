@@ -48,20 +48,22 @@ public class Percorso {
 	 */
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
+		this.tabellone=tabellone;
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
 		Document documentPercorso = builderPercorso.build(new File(nomefile));
 		Element percorsoRootElement = documentPercorso.getRootElement();
 		List<Element> elencoCaselle =percorsoRootElement.getChildren();
-		this.caselle=new ArrayList<Casella>();
+		this.caselle=new ArrayList<>();
+		boolean senzaB;
 		for(Element cas:elencoCaselle)
 		{
-			boolean senzaB=false;
+			senzaB=false;
 			List<Element> elencoBonus =cas.getChildren();
-			Set<Bonus> totBonus = new HashSet<Bonus>();
+			Set<Bonus> totBonus = new HashSet<>();
 			for(Element bon:elencoBonus)
 			{
-				if(bon.getAttributeValue("id").equals("NessunBonus"))
+				if("NessunBonus".equals(bon.getAttributeValue("id")))
 				{
 					senzaB=true;
 					break;
@@ -78,7 +80,6 @@ public class Percorso {
 			else 
 				this.caselle.add(new CasellaConBonus(totBonus));
 		}
-			
 	}
 	
 	/**

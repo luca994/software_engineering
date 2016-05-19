@@ -83,7 +83,7 @@ public class Gioco extends Observable<Object>{
 	
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
-		Queue<Giocatore> codaGiocatori= new LinkedList<Giocatore>(giocatori);
+		Queue<Giocatore> codaGiocatori= new LinkedList<>(giocatori);
 		int numeroGiocatori=giocatori.size();
 		int numeroTurno=0;
 		while(!vittoria){
@@ -313,5 +313,13 @@ public class Gioco extends Observable<Object>{
 	public Tabellone getTabellone() {
 		return tabellone;
 	}
+
+	/**
+	 * @return the giocatori
+	 */
+	public List<Giocatore> getGiocatori() {
+		return giocatori;
+	}
+	
 	
 }
