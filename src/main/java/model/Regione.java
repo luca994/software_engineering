@@ -64,7 +64,7 @@ public class Regione {
 	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("src/main/TessereCostruzione"+this.nome+".xml");
+		String nomefile = new String("src/main/resources/TessereCostruzione"+this.nome+".xml");
 		//Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
@@ -125,9 +125,9 @@ public class Regione {
 			this.città.add(new Città(nome,this));
 		}
 		//da cancellare
-		for(Città c:this.città){
+		/*for(Città c:this.città){
 			System.out.println(c.getNome()+"    "+c);
-		}
+		}*/
 	}
 	
 	/**

@@ -3,10 +3,8 @@
  */
 package controller;
 
-import client.Observable;
 import client.Observer;
 import model.Città;
-import model.Giocatore;
 import model.Gioco;
 import model.bonus.BonusGettoneCittà;
 import view.View;
@@ -15,7 +13,7 @@ import view.View;
  * @author Massimiliano Ventura
  *
  */
-public class Controller implements Observer{
+public class Controller implements Observer<Object>{
 	
 	private Gioco gioco;
 	public Controller(Gioco gioco, View view)
@@ -41,13 +39,32 @@ public class Controller implements Observer{
 		}
 	}*/
 
-	public void update(BonusGettoneCittà cambiamento,String input){
+	/*public void update(BonusGettoneCittà cambiamento,String input){
 		Città città = this.gioco.getTabellone().cercaCittà(input);
 		if(!cambiamento.getCittà().contains(città)){
 			cambiamento.getCittà().add(città);
 		}
 		else{
 			throw new IllegalStateException("Hai già scelto questa città");
+		}
+	}*/
+
+	@Override
+	public void update(Object cambiamento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Object cambiamento, String input) {
+		if(cambiamento instanceof BonusGettoneCittà){
+			Città città = this.gioco.getTabellone().cercaCittà(input);
+			if(!((BonusGettoneCittà) cambiamento).getCittà().contains(città)){
+				((BonusGettoneCittà) cambiamento).getCittà().add(città);
+			}
+			else{
+				throw new IllegalStateException("Hai già scelto questa città");
+			}
 		}
 	}
 }

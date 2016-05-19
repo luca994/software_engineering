@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 import client.Observable;
 import client.Observer;
-import model.Città;
-import model.Giocatore;
 import model.Gioco;
 import model.bonus.BonusGettoneCittà;
 
@@ -16,7 +14,7 @@ import model.bonus.BonusGettoneCittà;
  * @author Massimiliano Ventura
  *
  */
-public class View extends Observable implements Observer {
+public class View extends Observable<Object> implements Observer<Object> {
 	
 	public View(Gioco gioco){
 		gioco.registerObserver(this);
@@ -35,8 +33,10 @@ public class View extends Observable implements Observer {
 	
 	public String ottieniStringa(String messaggioInformativo){
 		System.out.println(messaggioInformativo);
-		Scanner input = new Scanner(System.in); 
-		return input.nextLine();
+		Scanner input = new Scanner(System.in);
+		String messaggioInput=input.nextLine();
+		input.close();
+		return messaggioInput;
 
 		
 	}
@@ -45,9 +45,24 @@ public class View extends Observable implements Observer {
 		return new String("mappacollegamenti"+numero+".xml");
 	}
 	
-	public void update(BonusGettoneCittà cambiamento){
+	/*public void update(BonusGettoneCittà cambiamento){
 		String nomeCittà = ottieniStringa("Inserisci il nome di una città dove hai un emporio"
 				+ "e di cui vuoi ottenere il bonus");
 		this.notificaObservers(cambiamento, nomeCittà);
+	}*/
+
+	@Override
+	public void update(Object cambiamento) {
+		if(cambiamento instanceof BonusGettoneCittà){
+			String nomeCittà = ottieniStringa("Inserisci il nome di una città dove hai un emporio"
+					+ "e di cui vuoi ottenere il bonus");
+			this.notificaObservers(cambiamento, nomeCittà);
+		}
+	}
+
+	@Override
+	public void update(Object cambiamento, String input) {
+		// TODO Auto-generated method stub
+		
 	}
 }
