@@ -38,7 +38,7 @@ public class Gioco extends Observable<Object>{
 	{
 		//Inizializzazione Ambiente di gioco
 		
-		String nomeMappaScelta="src/main/mappacollegamenti0.xml";// Ottenuta dal controller
+		String nomeMappaScelta="src/main/resources/mappacollegamenti0.xml";// Ottenuta dal controller
 		this.tabellone=new Tabellone(nomeMappaScelta, this);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
