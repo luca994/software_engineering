@@ -13,7 +13,7 @@ import view.View;
  * @author Massimiliano Ventura
  *
  */
-public class Controller implements Observer<Object>{
+public class Controller implements Observer{
 	
 	private Gioco gioco;
 	public Controller(Gioco gioco, View view)
@@ -59,11 +59,8 @@ public class Controller implements Observer<Object>{
 	public void update(Object cambiamento, String input) {
 		if(cambiamento instanceof BonusGettoneCittà){
 			Città città = this.gioco.getTabellone().cercaCittà(input);
-			if(!((BonusGettoneCittà) cambiamento).getCittà().contains(città)){
-				((BonusGettoneCittà) cambiamento).getCittà().add(città);
-			}
-			else{
-				throw new IllegalStateException("Hai già scelto questa città");
+			if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
+				((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
 			}
 		}
 	}

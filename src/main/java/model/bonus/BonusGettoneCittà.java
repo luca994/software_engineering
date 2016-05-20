@@ -1,7 +1,6 @@
 package model.bonus;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +23,7 @@ public class BonusGettoneCittà implements Bonus {
 	private int numeroCittà;
 	private Set<Città> città;
 	private Gioco gioco;
+	boolean cittàGiusta;
 	
 	public BonusGettoneCittà(int numeroCittà, Gioco gioco)
 	{
@@ -41,6 +41,14 @@ public class BonusGettoneCittà implements Bonus {
 	}
 
 	/**
+	 * set the boolean
+	 * @param cittàGiusta the parameter to set
+	 */
+	public void setCittàGiusta(boolean cittàGiusta) {
+		this.cittàGiusta = cittàGiusta;
+	}
+
+	/**
 	 * @return the città
 	 */
 	public Set<Città> getCittà() {
@@ -52,23 +60,26 @@ public class BonusGettoneCittà implements Bonus {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			gioco.notificaObservers(this);//da correggere
-			Iterator<Città> itrcittà = città.iterator();
-			Città temp = itrcittà.next(); 
-			for(int i=0; i<numeroCittà;)
+			for(int i=0; i<numeroCittà; i++)
 			{
-				try{
+				do{
+					cittàGiusta = true;
 					gioco.notificaObservers(this);
-					if(temp.presenzaEmporio(giocatore)){
-						temp=itrcittà.next();
-						i++;
+					for(Città c:città){
+						for(Bonus b:c.getBonus()){
+							if(b instanceof BonusPercorsoNobiltà){
+								cittàGiusta=false;
+								città.remove(c);
+								gioco.notificaObservers("C'è un bonus percorso nobiltà");
+							}
+						}
+						if(!c.getEmpori().contains(giocatore)&&città.contains(c)){
+							cittàGiusta=false;
+							città.remove(c);
+							gioco.notificaObservers("Non hai un'emporio nella città");
+						}
 					}
-					else{
-						throw new IllegalStateException("Non hai empori in questa città");
-					}
-				}
-				catch(IllegalStateException e){
-				}
+				}while(!cittàGiusta);
 			}
 
 			for(Città  cit:this.città){

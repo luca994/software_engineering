@@ -14,7 +14,7 @@ import model.bonus.BonusGettoneCittà;
  * @author Massimiliano Ventura
  *
  */
-public class View extends Observable<Object> implements Observer<Object> {
+public class View extends Observable implements Observer {
 	
 	public View(Gioco gioco){
 		gioco.registerObserver(this);
@@ -35,7 +35,6 @@ public class View extends Observable<Object> implements Observer<Object> {
 		System.out.println(messaggioInformativo);
 		Scanner input = new Scanner(System.in);
 		String messaggioInput=input.nextLine();
-		input.close();
 		return messaggioInput;
 
 		
@@ -55,8 +54,11 @@ public class View extends Observable<Object> implements Observer<Object> {
 	public void update(Object cambiamento) {
 		if(cambiamento instanceof BonusGettoneCittà){
 			String nomeCittà = ottieniStringa("Inserisci il nome di una città dove hai un emporio"
-					+ "e di cui vuoi ottenere il bonus");
+					+ " e di cui vuoi ottenere il bonus");
 			this.notificaObservers(cambiamento, nomeCittà);
+		}
+		if(cambiamento instanceof String){
+			System.out.println(cambiamento);
 		}
 	}
 

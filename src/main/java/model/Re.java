@@ -3,6 +3,8 @@ package model;
 
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
+
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +16,7 @@ import java.util.logging.Logger;
 public class Re {
 
 	private static final Logger log= Logger.getLogger( Re.class.getName() );
-	private final String colore;
+	private final Color colore;
 	private Consiglio consiglio;
 	private Città città;
 	private Tabellone tabellone;
@@ -23,7 +25,7 @@ public class Re {
 	 * build the king
 	 * @param colore the color of the king
 	 */
-	public Re(String colore, Città città, Consiglio consiglio){
+	public Re(Color colore, Città città, Consiglio consiglio){
 		this.colore=colore;
 		this.città=città;
 		this.consiglio=consiglio;

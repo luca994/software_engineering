@@ -39,7 +39,6 @@ public class AcquistaPermessoTest extends TestCase {
 	 * @throws IOException 
 	 * @throws JDOMException 
 	 */
-	@Test
 	public void testAcquistaPermesso() throws JDOMException, IOException {
 		giocatori= new ArrayList<Giocatore>();
 		Giocatore g1 = new Giocatore("pippo", Color.blue);

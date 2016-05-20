@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappa1 QuantitàCittà="15">
-	<Città nome="Arkon" colore="Blu" regione="Mare">
+	<Città nome="Arkon" colore="blue" regione="Mare">
 		<Collegamento>Burgen</Collegamento>
 		<Collegamento>Castrum</Collegamento>
 	</Città>
-	<Città nome="Burgen" colore="Giallo" regione="Mare">
+	<Città nome="Burgen" colore="yellow" regione="Mare">
 		<Collegamento>Arkon</Collegamento>
 		<Collegamento>Dortid</Collegamento>
 		<Collegamento>Esti</Collegamento>
 	</Città>
-	<Città nome="Castrum" colore="Grigio" regione="Mare">
+	<Città nome="Castrum" colore="gray" regione="Mare">
 		<Collegamento>Arkon</Collegamento>
 		<Collegamento>Framek</Collegamento>
 	</Città>
-	<Città nome="Dortid" colore="Grigio" regione="Mare">
+	<Città nome="Dortid" colore="gray" regione="Mare">
 		<Collegamento>Burgen</Collegamento>
 		<Collegamento>Graden</Collegamento>
 	</Città>
-	<Città nome="Esti" colore="Rosso" regione="Mare">
+	<Città nome="Esti" colore="red" regione="Mare">
 		<Collegamento>Burgen</Collegamento>
 		<Collegamento>Hellar</Collegamento>
 	</Città>
-	<Città nome="Framek" colore="Giallo" regione="Pianura">
+	<Città nome="Framek" colore="yellow" regione="Pianura">
 		<Collegamento>Castrum</Collegamento>
 		<Collegamento>Indur</Collegamento>
 	</Città>
-	<Città nome="Graden" colore="Grigio" regione="Pianura">
+	<Città nome="Graden" colore="gray" regione="Pianura">
 		<Collegamento>Juvelar</Collegamento>
 		<Collegamento>Dortid</Collegamento>
 	</Città>
-	<Città nome="Hellar" colore="Giallo" regione="Pianura">
+	<Città nome="Hellar" colore="yellow" regione="Pianura">
 		<Collegamento>Merkatim</Collegamento>
 		<Collegamento>Esti</Collegamento>
 		<Collegamento>Juvelar</Collegamento>
 	</Città>
-	<Città nome="Indur" colore="Rosso" regione="Pianura">
+	<Città nome="Indur" colore="red" regione="Pianura">
 		<Collegamento>Framek</Collegamento>
 		<Collegamento>Juvelar</Collegamento>
 		<Collegamento>Kultos</Collegamento>
 	</Città>
-	<Città nome="Juvelar" colore="Viola" regione="Pianura">
+	<Città nome="Juvelar" colore="magenta" regione="Pianura">
 		<Collegamento>Graden</Collegamento>
 		<Collegamento>Hellar</Collegamento>
 		<Collegamento>Lyram</Collegamento>
 		<Collegamento>Indur</Collegamento>
 	</Città>
-	<Città nome="Kultos" colore="Giallo" regione="Montagna">
+	<Città nome="Kultos" colore="yellow" regione="Montagna">
 		<Collegamento>Indur</Collegamento>
 		<Collegamento>Lyram</Collegamento>
 	</Città>
-	<Città nome="Lyram" colore="Blu" regione="Montagna">
+	<Città nome="Lyram" colore="blue" regione="Montagna">
 		<Collegamento>Juvelar</Collegamento>
 		<Collegamento>Naris</Collegamento>
 		<Collegamento>Kultos</Collegamento>
 	</Città>
-	<Città nome="Merkatim" colore="Grigio" regione="Montagna">
+	<Città nome="Merkatim" colore="gray" regione="Montagna">
 		<Collegamento>Hellar</Collegamento>
 		<Collegamento>Osium</Collegamento>
 	</Città>
-	<Città nome="Naris" colore="Rosso" regione="Montagna">
+	<Città nome="Naris" colore="red" regione="Montagna">
 		<Collegamento>Lyram</Collegamento>
 	</Città>
-	<Città nome="Osium" colore="Giallo" regione="Montagna">
+	<Città nome="Osium" colore="yellow" regione="Montagna">
 		<Collegamento>Merkatim</Collegamento>
 	</Città>
 </mappa1>

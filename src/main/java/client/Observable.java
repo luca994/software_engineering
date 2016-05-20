@@ -3,31 +3,31 @@ package client;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Observable<T> {
+public abstract class Observable {
 
-	private List<Observer<T>> observers;
+	private List<Observer> observers;
 	
 	public Observable(){
-		observers=new ArrayList<Observer<T>>();
+		observers=new ArrayList<Observer>();
 	}
 	
-	public void notificaObservers(T cambiamento,String input){
-		for(Observer<T> o:observers){
+	public <T> void notificaObservers(T cambiamento,String input){
+		for(Observer o:observers){
 			o.update(cambiamento,input);
 		}
 	}
 	
-	public void notificaObservers(T cambiamento){
-		for(Observer<T> o:observers){
+	public <T> void notificaObservers(T cambiamento){
+		for(Observer o:observers){
 			o.update(cambiamento);
 		}
 	}
 	
-	public void registerObserver(Observer<T> osservatore){
+	public void registerObserver(Observer osservatore){
 		observers.add(osservatore);
 	}
 	
-	public void removeObserver(Observer<T> osservatore){
+	public void removeObserver(Observer osservatore){
 		observers.remove(osservatore);
 	}	
 }

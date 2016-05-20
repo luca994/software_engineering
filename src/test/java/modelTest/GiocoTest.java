@@ -42,6 +42,8 @@ public class GiocoTest extends TestCase {
 		view = new View(gioco);
 		controller = new Controller(gioco, view);
 		
+		
+		
 		assertNotNull(gioco.getTabellone());
 		
 		assertEquals(10, g1.getEmporiRimasti());
@@ -54,14 +56,25 @@ public class GiocoTest extends TestCase {
 		assertNotNull(gioco.getTabellone().getPercorsoVittoria());
 		assertNotNull(gioco.getTabellone().getPercorsoRicchezza());
 		
-		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 4);
+		for(Regione r:gioco.getTabellone().getRegioni()){
+			for(Città c:r.getCittà()){
+				if(!c.getEmpori().isEmpty()){
+					for(Giocatore g:c.getEmpori()){
+						assertEquals(Color.darkGray, g.getColore());
+					}
+				}
+			}
+		}
+		
+		gioco.getTabellone().cercaCittà("Indur").aggiungiEmporio(g1);
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 4); //bonus gettone città
 		
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g1, -10);
 		assertEquals(0, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		
 
-		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 2);
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, -2);
 		assertEquals(2, ((CasellaConBonus) gioco.getTabellone().getPercorsoNobiltà().getCaselle().get(gioco.getTabellone().getPercorsoNobiltà().posizioneAttualeGiocatore(g1))).getBonus().size());
 		
 		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 16);
@@ -73,25 +86,10 @@ public class GiocoTest extends TestCase {
 		assertEquals(9, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
 		//System.out.println(gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g2));
 		//System.out.println("prova");
-		assertEquals(10, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
+		assertEquals(8, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
 		
 		assertEquals(6, g1.getCartePolitica().size());
 		assertEquals(6, g2.getCartePolitica().size());
-		
-
-		for(Regione r:gioco.getTabellone().getRegioni()){
-			for(Città c:r.getCittà()){
-				if(!c.getEmpori().isEmpty()){
-					for(Giocatore g:c.getEmpori()){
-						assertEquals(Color.darkGray, g.getColore());
-					}
-				}
-
-			}
-		}
-		
-		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 52);
-		System.out.println(gioco.getTabellone().getPercorsoNobiltà().posizioneAttualeGiocatore(g1));
 	}
 
 }

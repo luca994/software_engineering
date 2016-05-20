@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class Città extends OggettoConBonus {
 	private static final Logger log= Logger.getLogger( Città.class.getName() );
 	private final String nome;
 	private final Regione regione;
-	private String colore;
+	private Color colore;
 	private Set<Giocatore> empori;
 	private Re re;
 	private Set<Città> cittàVicina;
@@ -173,14 +174,14 @@ public class Città extends OggettoConBonus {
 	/**
 	 * @return the colore
 	 */
-	public String getColore() {
+	public Color getColore() {
 		return colore;
 	}
 
 	/**
 	 * @param colore the colore to set
 	 */
-	public void setColore(String colore) {
+	public void setColore(Color colore) {
 		this.colore = colore;
 	}
 	

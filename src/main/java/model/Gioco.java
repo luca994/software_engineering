@@ -27,7 +27,7 @@ import model.percorso.Casella;
  * @author Luca
  *
  */
-public class Gioco extends Observable<Object>{
+public class Gioco extends Observable{
 
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;

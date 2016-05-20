@@ -201,10 +201,10 @@ public class Tabellone {
 				{
 					if(cittàMappa.getAttributeValue("nome")==cit.getNome())
 					{
-						cit.setColore(cittàMappa.getAttributeValue("colore"));
-						if(cit.getColore().equals("Viola"))
+						cit.setColore(ParseColor.colorStringToColor(cittàMappa.getAttributeValue("colore")));
+						if(cit.getColore().equals(ParseColor.colorStringToColor("magenta")))
 						{
-							Re re=new Re("Blallo", cit, new Consiglio(this));//Quale dovrebbe essere il colore del re??
+							Re re=new Re(ParseColor.colorStringToColor("black"), cit, new Consiglio(this));//Quale dovrebbe essere il colore del re??
 							cit.setRe(re);
 							this.setRe(re);
 						}
@@ -217,7 +217,12 @@ public class Tabellone {
 						for(Element coll:elencoCollegamenti)
 						{
 							cit.getCittàVicina().add(cercaCittà(coll.getText()));
-						}}}}}}
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	/**
 	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe

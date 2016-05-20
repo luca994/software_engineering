@@ -1,9 +1,9 @@
 package client;
 
-public interface Observer<T> {
+public interface Observer {
 
-	public void update(T cambiamento);
+	public <T> void update(T cambiamento);
 	
-	public void update(T cambiamento,String input);
+	public <T> void update(T cambiamento,String input);
 	
 }
