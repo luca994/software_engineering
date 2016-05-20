@@ -14,9 +14,12 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 import model.CartaPolitica;
+import model.Consigliere;
 import model.Consiglio;
 import model.Giocatore;
 import model.Gioco;
+import model.Regione;
+import model.Tabellone;
 import model.TesseraCostruzione;
 import model.azione.AcquistaPermesso;
 import model.percorso.Percorso;
@@ -53,6 +56,7 @@ public class AcquistaPermessoTest extends TestCase {
 		List<CartaPolitica> cartePoliticaTest = g1.getCartePolitica() ;
 		AcquistaPermesso azione1 = new AcquistaPermesso(tesseraTest,cartePoliticaTest,consiglioTest,percorsoRicchezzaTest);
 		azione1.eseguiAzione(g1);
+	
 	}
 
 
