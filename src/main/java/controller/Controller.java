@@ -50,7 +50,7 @@ public class Controller implements Observer{
 	}*/
 
 	@Override
-	public void update(Object cambiamento) {
+	public void update(Object cambiamento) { 
 		// TODO Auto-generated method stub
 		
 	}
@@ -58,9 +58,16 @@ public class Controller implements Observer{
 	@Override
 	public void update(Object cambiamento, String input) {
 		if(cambiamento instanceof BonusGettoneCittà){
-			Città città = this.gioco.getTabellone().cercaCittà(input);
-			if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
+			try{	
+				Città città = this.gioco.getTabellone().cercaCittà(input);
+				if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
+					((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
+					gioco.notificaObservers("la città inserita è già stata scelta");
+				}
+			}
+			catch(IllegalArgumentException e){
 				((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
+				gioco.notificaObservers(e.getMessage());
 			}
 		}
 	}

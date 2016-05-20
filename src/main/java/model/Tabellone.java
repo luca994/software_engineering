@@ -269,6 +269,13 @@ public class Tabellone {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param nome the name of the city
+	 * @return return the city which has nome as name
+	 * @throws NullPointerException if nome is null
+	 * @throws IllegalArgumentException if the name of the city isn't correct
+	 */
 	public Città cercaCittà(String nome)
 	{
 		if(nome==null)
@@ -283,6 +290,14 @@ public class Tabellone {
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
 	
+	/**
+	 * 
+	 * @param nome the name of the city
+	 * @param regione the region of the city
+	 * @return the city which has nome as name
+	 * @throws NullPointerException if nome is null
+	 * @throws IllegalArgumentException if the name of the city isn't correct
+	 */
 	public Città cercaCittà(String nome,Regione regione)
 	{
 		if(nome==null)

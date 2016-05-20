@@ -66,8 +66,9 @@ public class GiocoTest extends TestCase {
 			}
 		}
 		
+		gioco.getTabellone().cercaCittà("Arkon").aggiungiEmporio(g1);
 		gioco.getTabellone().cercaCittà("Indur").aggiungiEmporio(g1);
-		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 4); //bonus gettone città
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 16); //bonus gettone città
 		
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(g1, -10);
