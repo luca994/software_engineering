@@ -12,7 +12,6 @@ import java.util.Set;
 import org.jdom2.JDOMException;
 
 import client.Observable;
-import controller.Controller;
 import model.azione.AcquistaPermesso;
 import model.azione.AzioneOpzionaleNulla;
 import model.azione.AzionePrincipaleAggiuntiva;
@@ -28,19 +27,18 @@ import model.percorso.Casella;
  * @author Luca
  *
  */
-public class Gioco extends Observable{
+public class Gioco extends Observable<Object>{
 
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
 	private boolean vittoria;
-	private int id;
 	private Mercato mercato;
 	
 	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
 		
-		String nomeMappaScelta="src/main/mappacollegamenti0.xml";// Ottenuta dal controller
+		String nomeMappaScelta="src/main/resources/mappacollegamenti0.xml";// Ottenuta dal controller
 		this.tabellone=new Tabellone(nomeMappaScelta, this);
 		//ottengo elenco nome giocatori
 		int numGiocatore=1;
@@ -66,13 +64,14 @@ public class Gioco extends Observable{
 		}			
 		this.giocatori=giocatori;
 		//Setup aggiuntivo per 2 giocatori
-		if(numGiocatore==2)
+		if(numGiocatore-1==2)
 		{
 			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY); //come colore a caso ho messo grigio scuro che non è utilizzato
 			for(Regione regi: tabellone.getRegioni() ){
-				for(Città cit:regi.getTessereCoperte().get(0).getCittà())
-				cit.aggiungiEmporio(dummy);
-					Collections.shuffle(regi.getTessereCoperte());
+				for(Città cit:regi.getTessereCoperte().get(0).getCittà()){
+					cit.aggiungiEmporio(dummy);
+				}
+				Collections.shuffle(regi.getTessereCoperte());
 			}
 			
 		}
@@ -83,7 +82,7 @@ public class Gioco extends Observable{
 	
 	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
-		Queue<Giocatore> codaGiocatori= new LinkedList<Giocatore>(giocatori);
+		Queue<Giocatore> codaGiocatori= new LinkedList<>(giocatori);
 		int numeroGiocatori=giocatori.size();
 		int numeroTurno=0;
 		while(!vittoria){
@@ -313,5 +312,13 @@ public class Gioco extends Observable{
 	public Tabellone getTabellone() {
 		return tabellone;
 	}
+
+	/**
+	 * @return the giocatori
+	 */
+	public List<Giocatore> getGiocatori() {
+		return giocatori;
+	}
+	
 	
 }

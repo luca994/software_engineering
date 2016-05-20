@@ -12,16 +12,22 @@ public abstract class Observable<T> {
 	}
 	
 	public void notificaObservers(T cambiamento,String input){
-		for(Observer o:observers){
+		for(Observer<T> o:observers){
 			o.update(cambiamento,input);
 		}
 	}
 	
-	public void registerObserver(Observer osservatore){
+	public void notificaObservers(T cambiamento){
+		for(Observer<T> o:observers){
+			o.update(cambiamento);
+		}
+	}
+	
+	public void registerObserver(Observer<T> osservatore){
 		observers.add(osservatore);
 	}
 	
-	public void removeObserver(Observer osservatore){
+	public void removeObserver(Observer<T> osservatore){
 		observers.remove(osservatore);
 	}	
 }

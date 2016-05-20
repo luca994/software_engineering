@@ -45,6 +45,7 @@ public class Regione {
 		this.nome=nomeRegione;
 		this.tessereCostruzione=new ArrayList<TesseraCostruzione>();
 		this.tessereCoperte=new ArrayList<TesseraCostruzione>();
+		this.città= new HashSet<Città>();
 		creaCittà(nomiCittà);		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
@@ -63,7 +64,7 @@ public class Regione {
 	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("src/main/TessereCostruzione"+this.nome+".xml");
+		String nomefile = new String("src/main/resources/TessereCostruzione"+this.nome+".xml");
 		//Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
@@ -81,8 +82,10 @@ public class Regione {
 				{
 					
 					List<Element> elencoCittà=set.getChildren();
-					for(Element cit:elencoCittà)
-						elencoRiferimentiCittà.add(tabellone.cercaCittà(cit.getAttributeValue("id")));
+					for(Element cit:elencoCittà){
+						//System.out.println(cit.getAttributeValue("id")+"  "+this.nome); //da cancellare
+						elencoRiferimentiCittà.add(tabellone.cercaCittà(cit.getAttributeValue("id"),this));
+					}
 				}
 				else if(set.getName().equals("SetBonus"))
 				{
@@ -100,6 +103,16 @@ public class Regione {
 			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera,elencoRiferimentiCittà,this));
 		}
 		setTessereCoperte(elencoRiferimentiTessere);
+		
+		//da cancellare
+		/*
+		for(TesseraCostruzione t:elencoRiferimentiTessere){
+			System.out.println(t.getRegioneDiAppartenenza().getNome()+"     "+t);
+			System.out.println("    ");
+			for(Città c:t.getCittà()){
+				System.out.println(c);
+			}
+		}*/
 	}
 	
 	/**
@@ -107,11 +120,14 @@ public class Regione {
 	 * @param nomiCittà the list of names of the cities
 	 */
 	public void creaCittà(List<String> nomiCittà){
-		this.città=new HashSet<Città>();
 		for(String nome: nomiCittà)//Creo città
 		{
 			this.città.add(new Città(nome,this));
-		}	
+		}
+		//da cancellare
+		/*for(Città c:this.città){
+			System.out.println(c.getNome()+"    "+c);
+		}*/
 	}
 	
 	/**
@@ -123,11 +139,6 @@ public class Regione {
 		Collections.shuffle(this.tessereCoperte);
 		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
 		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
-		/*for(TesseraCostruzione tessera: this.tessereCostruzione)
-		{
-			this.tessereCoperte.remove(tessera);
-		}*/
-			
 	}
 	
 	/**

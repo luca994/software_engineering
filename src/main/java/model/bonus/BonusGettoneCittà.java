@@ -1,16 +1,14 @@
 package model.bonus;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.Controller;
-//import model.Cambiamento;
 import model.Città;
 import model.Giocatore;
 import model.Gioco;
-import view.View;
 
 
 
@@ -32,6 +30,7 @@ public class BonusGettoneCittà implements Bonus {
 		//cambiamento = new Cambiamento();
 		this.gioco=gioco;
 		this.numeroCittà=numeroCittà;
+		this.città=new HashSet<Città>();
 	}
 	
 	/**
@@ -53,12 +52,13 @@ public class BonusGettoneCittà implements Bonus {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
+			gioco.notificaObservers(this);//da correggere
 			Iterator<Città> itrcittà = città.iterator();
 			Città temp = itrcittà.next(); 
 			for(int i=0; i<numeroCittà;)
 			{
 				try{
-					gioco.notificaObservers(this,null);
+					gioco.notificaObservers(this);
 					if(temp.presenzaEmporio(giocatore)){
 						temp=itrcittà.next();
 						i++;
