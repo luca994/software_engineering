@@ -16,13 +16,12 @@ public class GiocoTest extends TestCase {
 
 	private Gioco gioco;
 	private List<Giocatore> giocatori;
-	private Color c;
 	
 	public void testGioco() {
 		
 		giocatori= new ArrayList<Giocatore>();
-		Giocatore g1 = new Giocatore("pippo", c.blue);
-		Giocatore g2 = new Giocatore("sandro", c.green);
+		Giocatore g1 = new Giocatore("pippo", Color.blue);
+		Giocatore g2 = new Giocatore("sandro", Color.green);
 		giocatori.add(g1);
 		giocatori.add(g2);
 		

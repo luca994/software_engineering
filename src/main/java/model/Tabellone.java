@@ -173,7 +173,7 @@ public class Tabellone {
 		for(Element consi:elencoConsiglieri){
 		   //Aggiungo un nuovo consigliere alla lista creandolo direttamente col costruttore 
 		   //passandogli come parametro il valore dell'attributo colore letto dagli elementi del file xml
-		   this.consiglieriDisponibili.add(new Consigliere(Color.getColor(consi.getAttributeValue("colore"))));
+		   this.consiglieriDisponibili.add(new Consigliere(ParseColor.colorStringToColor(((consi.getAttributeValue("colore"))))));
 		} 
 		Collections.shuffle(consiglieriDisponibili);
 	}
