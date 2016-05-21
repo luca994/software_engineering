@@ -10,7 +10,6 @@ import org.jdom2.JDOMException;
 
 import controller.Controller;
 import junit.framework.TestCase;
-import model.CartaPolitica;
 import model.Città;
 import model.Giocatore;
 import model.Gioco;

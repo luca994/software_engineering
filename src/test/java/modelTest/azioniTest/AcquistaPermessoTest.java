@@ -7,23 +7,15 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import org.jdom2.JDOMException;
-import org.junit.Test;
-
 import junit.framework.TestCase;
 import model.CartaPolitica;
-import model.Consigliere;
 import model.Consiglio;
 import model.Giocatore;
 import model.Gioco;
-import model.Regione;
-import model.Tabellone;
 import model.TesseraCostruzione;
 import model.azione.AcquistaPermesso;
 import model.percorso.Percorso;
-import modelTest.GiocoTest;
 
 /**
  * @author Luca
