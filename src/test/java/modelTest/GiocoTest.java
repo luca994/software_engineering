@@ -75,7 +75,7 @@ public class GiocoTest extends TestCase {
 		assertEquals(0, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		
 
-		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, -2);
+		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, -14);
 		assertEquals(2, ((CasellaConBonus) gioco.getTabellone().getPercorsoNobiltà().getCaselle().get(gioco.getTabellone().getPercorsoNobiltà().posizioneAttualeGiocatore(g1))).getBonus().size());
 		
 		gioco.getTabellone().getPercorsoNobiltà().muoviGiocatore(g1, 16);

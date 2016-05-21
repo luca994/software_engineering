@@ -90,4 +90,12 @@ public class TesseraCostruzione extends OggettoVendibile{
 			log.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "TesseraCostruzione [città=" + città + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
+				+ bonus + "]";
+	}
+	
+	
 }

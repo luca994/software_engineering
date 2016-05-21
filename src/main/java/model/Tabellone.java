@@ -51,7 +51,7 @@ public class Tabellone {
 	private static final int NUMERO_TOTALE_CONSIGLIERI = 24;
 	private static final int NUMERO_TOTALE_GETTONI = 14;
 	
-	private Set<Regione> regioni;
+	private List<Regione> regioni;
 	private Set<TesseraBonusRegione> tessereBonusRegione;
 	private Set<TesseraBonusCittà> tessereBonusCittà;
 	private List<TesseraPremioRe> tesserePremioRe;
@@ -139,7 +139,7 @@ public class Tabellone {
 	 * @throws IOException
 	 */
 	public void creaRegioni () throws JDOMException, IOException{
-		this.regioni=new HashSet<>();
+		this.regioni=new ArrayList<Regione>();
 		SAXBuilder builderRegioni = new SAXBuilder();
 		Document documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
 		Element regioniRootElement=documentRegioni.getRootElement();
@@ -199,7 +199,7 @@ public class Tabellone {
 				//ora devo leggere il file delle città e trovare il match, con il nome, coloro e collego
 				for(Element cittàMappa: elencoCittà)
 				{
-					if(cittàMappa.getAttributeValue("nome")==cit.getNome())
+					if(cittàMappa.getAttributeValue("nome").equals(cit.getNome()))
 					{
 						cit.setColore(ParseColor.colorStringToColor(cittàMappa.getAttributeValue("colore")));
 						if(cit.getColore().equals(ParseColor.colorStringToColor("magenta")))
@@ -210,7 +210,8 @@ public class Tabellone {
 						}
 						else
 						{
-							cit.getBonus().addAll(gettoniCittà.get(0));
+							//cit.getBonus().addAll(gettoniCittà.get(0));
+							cit.setBonus(gettoniCittà.get(0));
 							gettoniCittà.remove(0);
 						}
 						List<Element> elencoCollegamenti =cittàMappa.getChildren();
@@ -456,7 +457,7 @@ public class Tabellone {
 	/**
 	 * @return the regioni
 	 */
-	public Set<Regione> getRegioni() {
+	public List<Regione> getRegioni() {
 		return regioni;
 	}
 

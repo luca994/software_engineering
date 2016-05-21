@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.Giocatore;
+import model.Gioco;
 import model.TesseraCostruzione;
 
 /**
@@ -16,7 +17,11 @@ import model.TesseraCostruzione;
 public class BonusTesseraPermesso implements Bonus {
 	private static final Logger log= Logger.getLogger( BonusTesseraPermesso.class.getName() );
 	private TesseraCostruzione tessera;
+	private Gioco gioco;
 	
+	public BonusTesseraPermesso(Gioco gioco){
+		this.gioco=gioco;
+	}
 	/**
 	 * @return the tessera
 	 */
@@ -34,9 +39,12 @@ public class BonusTesseraPermesso implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		try{
-		//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view	
-		giocatore.getTessereValide().add(tessera);
-		tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
+			gioco.notificaObservers(this);
+			giocatore.getTessereValide().add(tessera);
+			tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
+			for(Bonus b:tessera.getBonus()){
+				b.azioneBonus(giocatore);
+			}
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

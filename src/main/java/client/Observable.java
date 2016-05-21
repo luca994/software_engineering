@@ -11,7 +11,7 @@ public abstract class Observable {
 		observers=new ArrayList<Observer>();
 	}
 	
-	public <T> void notificaObservers(T cambiamento,String input){
+	public <T> void notificaObservers(T cambiamento,String[] input){
 		for(Observer o:observers){
 			o.update(cambiamento,input);
 		}

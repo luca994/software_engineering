@@ -184,6 +184,9 @@ public class Città extends OggettoConBonus {
 	public void setColore(Color colore) {
 		this.colore = colore;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Città [nome=" + nome + "]";
+	}
 }

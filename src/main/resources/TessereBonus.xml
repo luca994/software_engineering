@@ -11,16 +11,16 @@
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
 	
-	<Tessera id="città" attributo="Blu">
+	<Tessera id="città" attributo="blue">
 		<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus>
 	</Tessera>
-	<Tessera id="città" attributo="Rosso">
+	<Tessera id="città" attributo="red">
 		<Bonus id="BonusPuntoVittoria" attributo="8"></Bonus>
 	</Tessera>
-	<Tessera id="città" attributo="Grigio">
+	<Tessera id="città" attributo="gray">
 		<Bonus id="BonusPuntoVittoria" attributo="12"></Bonus>
 	</Tessera>
-	<Tessera id="città" colore="Giallo">
+	<Tessera id="città" attributo="yellow">
 		<Bonus id="BonusPuntoVittoria" attributo="20"></Bonus>
 	</Tessera>
 	

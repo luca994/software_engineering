@@ -148,9 +148,10 @@ public class Regione {
 	 */
 	public void nuovaTessera(TesseraCostruzione tessera)
 	{
-		this.tessereCostruzione.remove(tessera);
-		this.tessereCostruzione.add(this.tessereCoperte.get(0));
-		this.tessereCoperte.remove(0);
+		if(this.tessereCostruzione.remove(tessera)){
+			this.tessereCostruzione.add(this.tessereCoperte.get(0));
+			this.tessereCoperte.remove(0);
+		}
 	}
 	
 	/**

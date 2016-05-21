@@ -3,10 +3,18 @@
  */
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.Observer;
 import model.Città;
+import model.Giocatore;
 import model.Gioco;
+import model.Regione;
+import model.TesseraCostruzione;
 import model.bonus.BonusGettoneCittà;
+import model.bonus.BonusRiutilizzoCostruzione;
+import model.bonus.BonusTesseraPermesso;
 import view.View;
 
 /**
@@ -56,19 +64,62 @@ public class Controller implements Observer{
 	}
 
 	@Override
-	public void update(Object cambiamento, String input) {
+	public void update(Object cambiamento, String[] input) {
 		if(cambiamento instanceof BonusGettoneCittà){
 			try{	
-				Città città = this.gioco.getTabellone().cercaCittà(input);
-				if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
-					((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
-					gioco.notificaObservers("la città inserita è già stata scelta");
-				}
+				if(!input.equals("passa")){
+					Città città = this.gioco.getTabellone().cercaCittà(input[0]);
+					if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
+						((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
+						gioco.notificaObservers("la città inserita è già stata scelta");
+					}
+					else return;
+					}
 			}
 			catch(IllegalArgumentException e){
 				((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
 				gioco.notificaObservers(e.getMessage());
 			}
+		}
+		if(cambiamento instanceof BonusTesseraPermesso){
+			if(Integer.parseInt(input[0])<6 && Integer.parseInt(input[0])>=0){
+				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
+				for(Regione r:gioco.getTabellone().getRegioni()){
+					listaTessere.addAll(r.getTessereCostruzione());
+				}
+				((BonusTesseraPermesso) cambiamento).setTessera(listaTessere.get(Integer.parseInt(input[0])));
+				for(Regione r:gioco.getTabellone().getRegioni()){
+					r.nuovaTessera(listaTessere.get(Integer.parseInt(input[0])));
+				}
+			}
+			else{
+				throw new IllegalArgumentException("il numero inserito non è corretto");
+			}
+		}
+		if(cambiamento instanceof BonusRiutilizzoCostruzione){
+			Giocatore gio=((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
+			if(input[0].equals("passa"))
+				return;
+			if(Integer.parseInt(input[0])==0){//sto usando la lista di tessere valide
+				if(Integer.parseInt(input[0])<gio.getTessereValide().size() && Integer.parseInt(input[0])>=0){
+					TesseraCostruzione tessera= gio.getTessereValide().get(Integer.parseInt(input[0]));
+					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
+				}
+				else{
+					throw new IllegalArgumentException("input incoerente");
+				}
+			}
+			else if(Integer.parseInt(input[0])==1){
+				if(Integer.parseInt(input[0])<gio.getTessereUsate().size() && Integer.parseInt(input[0])>=0){
+					TesseraCostruzione tessera= gio.getTessereUsate().get(Integer.parseInt(input[0]));
+					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
+				}
+				else{
+					throw new IllegalArgumentException("input incoerente");
+				}
+			}
+			else
+				throw new IllegalArgumentException("lista sbagliata");
 		}
 	}
 }

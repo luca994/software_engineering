@@ -22,6 +22,7 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	private static final Logger log= Logger.getLogger( BonusRiutilizzoCostruzione.class.getName() );
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
+	private Giocatore giocatore;
 	
 	public BonusRiutilizzoCostruzione(Gioco gioco){
 		this.gioco=gioco;
@@ -41,16 +42,25 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		this.tessera = tessera;
 	}
 	
+	/**
+	 * 
+	 * @return the player
+	 */
+	public Giocatore getGiocatore() {
+		return giocatore;
+	}
+
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		try{
+			this.giocatore=giocatore;
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");		
-			//this.tessera=tesseraDalGiocatore(giocatore);//metodo del controller che chiama la view
-			Iterator<Bonus> itbonus=tessera.getBonus().iterator();
-			while(itbonus.hasNext())
-			{
-				itbonus.next().azioneBonus(giocatore);
+			gioco.notificaObservers(this);
+			if(tessera!=null){
+				for(Bonus b: tessera.getBonus()){
+					b.azioneBonus(giocatore);
+				}
 			}
 		}
 		catch(Exception e){

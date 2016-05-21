@@ -38,4 +38,14 @@ public abstract class OggettoConBonus {
 	public Set<Bonus> getBonus() {
 		return bonus;
 	}
+
+	/**
+	 * set the set of bonus
+	 * @param bonus the set bonus to set
+	 */
+	public void setBonus(Set<Bonus> bonus) {
+		this.bonus = bonus;
+	}
+	
+	
 }
