@@ -12,6 +12,7 @@ import model.Giocatore;
 import model.Gioco;
 import model.Regione;
 import model.TesseraCostruzione;
+import model.bonus.Bonus;
 import model.bonus.BonusGettoneCittà;
 import model.bonus.BonusRiutilizzoCostruzione;
 import model.bonus.BonusTesseraPermesso;
@@ -64,7 +65,7 @@ public class Controller implements Observer{
 	}
 
 	@Override
-	public void update(Object cambiamento, String[] input) {
+	public <Bonus> void update(Bonus cambiamento, String[] input) {
 		if(cambiamento instanceof BonusGettoneCittà){
 			try{	
 				if(!input[0].equals("passa")){

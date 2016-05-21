@@ -55,7 +55,7 @@ public class View extends Observable implements Observer {
 	}*/
 
 	@Override
-	public void update(Object cambiamento) {
+	public <Bonus> void update(Bonus cambiamento) {
 		if(cambiamento instanceof BonusGettoneCittà){
 			String[] nomeCittà = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
 					+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
