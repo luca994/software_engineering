@@ -3,6 +3,10 @@
  */
 package server.view;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.Scanner;
 
 import client.Observable;
@@ -18,10 +22,16 @@ import server.model.bonus.BonusTesseraPermesso;
  * @author Massimiliano Ventura
  *
  */
-public class View extends Observable implements Observer {
+public class ServerSocketView extends Observable implements Observer {
+	private Socket socket;
+	private ObjectInputStream socketIn;
+	private ObjectOutputStream socketOut;
 	
-	public View(Gioco gioco){
+	public ServerSocketView(Gioco gioco,Socket socket) throws IOException{
 		gioco.registerObserver(this);
+		this.socket=socket;
+		this.socketIn=new ObjectInputStream(socket.getInputStream());
+		this.socketOut=new ObjectOutputStream(socket.getOutputStream());
 	}
 	
 	public String acquisisciCittàBonus(){
@@ -61,9 +71,6 @@ public class View extends Observable implements Observer {
 					+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
 			this.notificaObservers(cambiamento, nomeCittà);
 		}
-		if(cambiamento instanceof String){
-			System.out.println(cambiamento);
-		}
 		if(cambiamento instanceof BonusTesseraPermesso){
 			String[] tessera = {ottieniStringa("Inserisci il numero della tessera permesso che vuoi ottenere")};
 			try{
@@ -92,6 +99,10 @@ public class View extends Observable implements Observer {
 		}
 	}
 
+	public void update(String messaggio,Socket socket) throws IOException{
+		socketOut.writeObject(messaggio);
+		socketOut.flush();
+	}
 	@Override
 	public void update(Object cambiamento, String[] input) {
 		// TODO Auto-generated method stub

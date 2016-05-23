@@ -22,6 +22,9 @@ import server.model.azione.EleggiConsigliere;
 import server.model.azione.EleggiConsigliereRapido;
 import server.model.azione.IngaggioAiutante;
 import server.model.percorso.Casella;
+import server.model.stato.AttesaGioco;
+import server.model.stato.Esecuzione;
+import server.model.stato.StatoGioco;
 
 /**
  * @author Luca
@@ -33,8 +36,13 @@ public class Gioco extends Observable{
 	private Tabellone tabellone;
 	private boolean vittoria;
 	private Mercato mercato;
+	private StatoGioco stato;
 	
-	public Gioco (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
+	public Gioco (){
+		this.stato=new AttesaGioco();
+	} 
+	
+	public void inizializzaPartita (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
 	{
 		//Inizializzazione Ambiente di gioco
 		
@@ -77,6 +85,8 @@ public class Gioco extends Observable{
 		}
 		//Setup mercato
 		mercato=new Mercato(tabellone.getPercorsoRicchezza());
+		
+		setStato(new Esecuzione());
 		
 	}//mettere i catch delle eccezioni della lettura xml
 	
@@ -136,6 +146,7 @@ public class Gioco extends Observable{
 		//Conteggio punti
 		Set<Giocatore> vincitore=calcoloVincitore();
 		//Comunico al controller chi è il vincitore
+	
 	}
 	
 	public void turno(Giocatore gio) throws JDOMException, IOException{
@@ -319,6 +330,19 @@ public class Gioco extends Observable{
 	public List<Giocatore> getGiocatori() {
 		return giocatori;
 	}
-	
+
+	/**
+	 * @return the stato
+	 */
+	public StatoGioco getStato() {
+		return stato;
+	}
+
+	/**
+	 * @param stato the stato to set
+	 */
+	public void setStato(StatoGioco stato) {
+		this.stato = stato;
+	}
 	
 }

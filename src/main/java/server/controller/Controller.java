@@ -16,7 +16,7 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCittà;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
-import server.view.View;
+import server.view.ServerSocketView;
 
 /**
  * @author Massimiliano Ventura
@@ -25,15 +25,12 @@ import server.view.View;
 public class Controller implements Observer{
 	
 	private Gioco gioco;
-	public Controller(Gioco gioco, View view)
+	public Controller(Gioco gioco, ServerSocketView serverSocketView)
 	{
-		view.registerObserver(this);
+		serverSocketView.registerObserver(this);
 		this.gioco=gioco;
 	}
 	
-	public String ottieniNomeMappa(){
-		return new View(gioco).acquisisciNomeMappa();
-	}
 	/*
 	public Città ottieniCittàBonus(Giocatore giocatore){
 		
