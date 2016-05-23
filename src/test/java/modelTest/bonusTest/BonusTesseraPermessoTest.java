@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.JDOMException;
-import controller.Controller;
+
 import junit.framework.TestCase;
-import model.Giocatore;
-import model.Gioco;
-import model.TesseraCostruzione;
-import model.bonus.BonusTesseraPermesso;
-import view.View;
+import server.controller.Controller;
+import server.model.Giocatore;
+import server.model.Gioco;
+import server.model.TesseraCostruzione;
+import server.model.bonus.BonusTesseraPermesso;
+import server.view.View;
 
 public class BonusTesseraPermessoTest extends TestCase {
 

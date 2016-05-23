@@ -4,17 +4,17 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import view.View;
 
 import org.jdom2.JDOMException;
 
-import controller.Controller;
 import junit.framework.TestCase;
-import model.Città;
-import model.Giocatore;
-import model.Gioco;
-import model.Regione;
-import model.percorso.CasellaConBonus;
+import server.controller.Controller;
+import server.model.Città;
+import server.model.Giocatore;
+import server.model.Gioco;
+import server.model.Regione;
+import server.model.percorso.CasellaConBonus;
+import server.view.View;
 
 public class GiocoTest extends TestCase {
 

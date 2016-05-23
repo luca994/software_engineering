@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.jdom2.JDOMException;
 
-import controller.Controller;
 import junit.framework.TestCase;
-import model.Giocatore;
-import model.Gioco;
-import model.bonus.Bonus;
-import model.bonus.BonusRiutilizzoCostruzione;
-import view.View;
+import server.controller.Controller;
+import server.model.Giocatore;
+import server.model.Gioco;
+import server.model.bonus.Bonus;
+import server.model.bonus.BonusRiutilizzoCostruzione;
+import server.view.View;
 
 public class BonusRiutilizzoCostruzioneTest extends TestCase {
 

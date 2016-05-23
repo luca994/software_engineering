@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdom2.JDOMException;
 import junit.framework.TestCase;
-import model.CartaPolitica;
-import model.Consiglio;
-import model.Giocatore;
-import model.Gioco;
-import model.TesseraCostruzione;
-import model.azione.AcquistaPermesso;
-import model.percorso.Percorso;
+import server.model.CartaPolitica;
+import server.model.Consiglio;
+import server.model.Giocatore;
+import server.model.Gioco;
+import server.model.TesseraCostruzione;
+import server.model.azione.AcquistaPermesso;
+import server.model.percorso.Percorso;
 
 /**
  * @author Luca
@@ -27,7 +27,7 @@ public class AcquistaPermessoTest extends TestCase {
 	private List<Giocatore> giocatori;
 	
 	/**
-	 * Test method for {@link model.azione.AcquistaPermesso#AcquistaPermesso(model.TesseraCostruzione, java.util.List, model.Consiglio, model.percorso.Percorso)}.
+	 * Test method for {@link server.model.azione.AcquistaPermesso#AcquistaPermesso(server.model.TesseraCostruzione, java.util.List, server.model.Consiglio, server.model.percorso.Percorso)}.
 	 * @throws IOException 
 	 * @throws JDOMException 
 	 */
