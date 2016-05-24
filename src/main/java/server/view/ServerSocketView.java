@@ -9,14 +9,14 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-import client.Observable;
-import client.Observer;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.TesseraCostruzione;
 import server.model.bonus.BonusGettoneCittà;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.observer.Observable;
+import server.observer.Observer;
 
 /**
  * @author Massimiliano Ventura

@@ -11,7 +11,6 @@ import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
-import client.Observable;
 import server.model.azione.AcquistaPermesso;
 import server.model.azione.AzioneOpzionaleNulla;
 import server.model.azione.AzionePrincipaleAggiuntiva;
@@ -25,6 +24,7 @@ import server.model.percorso.Casella;
 import server.model.stato.AttesaGioco;
 import server.model.stato.Esecuzione;
 import server.model.stato.StatoGioco;
+import server.observer.Observable;
 
 /**
  * @author Luca

@@ -6,7 +6,6 @@ package server.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.Observer;
 import server.model.Città;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -16,6 +15,7 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCittà;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.observer.Observer;
 import server.view.ServerSocketView;
 
 /**
