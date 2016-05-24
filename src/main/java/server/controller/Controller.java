@@ -25,9 +25,8 @@ import server.view.ServerSocketView;
 public class Controller implements Observer{
 	
 	private Gioco gioco;
-	public Controller(Gioco gioco, ServerSocketView serverSocketView)
+	public Controller(Gioco gioco)
 	{
-		serverSocketView.registerObserver(this);
 		this.gioco=gioco;
 	}
 	
@@ -76,7 +75,15 @@ public class Controller implements Observer{
 			}
 			catch(IllegalArgumentException e){
 				((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
-				gioco.notificaObservers(e.getMessage());
+				try {
+					gioco.notificaObservers(e.getMessage());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if(cambiamento instanceof BonusTesseraPermesso){
