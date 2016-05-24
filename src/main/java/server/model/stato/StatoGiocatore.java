@@ -1,9 +1,10 @@
 package server.model.stato;
 
+import server.model.Giocatore;
+
 public class StatoGiocatore implements Stato {
 	
-	@Override
-	public void cambiaStato() {
+	public void prossimoStato(Giocatore giocatore) {
 		
 	}
 

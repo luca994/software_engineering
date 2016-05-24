@@ -1,5 +1,11 @@
 package server.model.stato;
 
-public class AttesaGioco extends StatoGioco {
+import server.model.Gioco;
 
+public class AttesaGioco extends StatoGioco {
+	
+	@Override
+	public void prossimoStato(Gioco gioco){
+		gioco.setStato(new Esecuzione());
+	}
 }

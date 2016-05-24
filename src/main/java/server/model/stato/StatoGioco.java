@@ -1,11 +1,8 @@
 package server.model.stato;
 
-public class StatoGioco implements Stato {
+import server.model.Gioco;
 
-	@Override
-	public void cambiaStato() {
-		// TODO Auto-generated method stub
-		
-	}
+public abstract class StatoGioco implements Stato {
 
+	public abstract void prossimoStato(Gioco gioco);
 }
