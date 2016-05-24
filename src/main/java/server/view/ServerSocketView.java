@@ -12,6 +12,7 @@ import java.util.Scanner;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.TesseraCostruzione;
+import server.model.azione.Azione;
 import server.model.bonus.BonusGettoneCittà;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
@@ -22,7 +23,7 @@ import server.observer.Observer;
  * @author Massimiliano Ventura
  *
  */
-public class ServerSocketView extends Observable implements Observer {
+public class ServerSocketView extends Observable implements Observer, Runnable{
 	private Socket socket;
 	private ObjectInputStream socketIn;
 	private ObjectOutputStream socketOut;
@@ -34,28 +35,19 @@ public class ServerSocketView extends Observable implements Observer {
 		this.socketOut=new ObjectOutputStream(socket.getOutputStream());
 	}
 	
-	public String acquisisciCittàBonus(){
-		return ottieniStringa("Inserisci il nome della città in cui hai l'emporio di cui vuoi ottenere il bonus");		
-	}
-	/**
-	 * @author Massimiliano Ventura
-	 *
-	 */
-	public void messaggioErrore(String errore){
-		System.out.println(errore);
-	}
-	
 	public String ottieniStringa(String messaggioInformativo){
-		System.out.println(messaggioInformativo);
-		Scanner input = new Scanner(System.in);
-		String messaggioInput=input.nextLine();
-		return messaggioInput;
-
+		try {
+			socketOut.writeObject(messaggioInformativo);
+			socketOut.flush();
+			String messaggioInput=(String) 
+			socketIn.readObject();
+			return messaggioInput;
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
-	}
-	public String acquisisciNomeMappa (){
-		String numero=ottieniStringa("Inserisci un numero da 0 a 7 per caricare la corrispettiva mappa e premi Enter");
-		return new String("mappacollegamenti"+numero+".xml");
 	}
 	
 	/*public void update(BonusGettoneCittà cambiamento){
@@ -63,9 +55,24 @@ public class ServerSocketView extends Observable implements Observer {
 				+ "e di cui vuoi ottenere il bonus");
 		this.notificaObservers(cambiamento, nomeCittà);
 	}*/
-
+	public void run(){
+		while(true)
+		{
+			Object object;
+			try {
+				object = socketIn.readObject();
+				if(object instanceof Azione){
+					this.notificaObservers(object);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
 	@Override
-	public <Bonus> void update(Bonus cambiamento) {
+	public <Bonus> void update(Bonus cambiamento){
 		if(cambiamento instanceof BonusGettoneCittà){
 			String[] nomeCittà = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
 					+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
@@ -99,10 +106,17 @@ public class ServerSocketView extends Observable implements Observer {
 		}
 	}
 
-	public void update(String messaggio,Socket socket) throws IOException{
-		socketOut.writeObject(messaggio);
-		socketOut.flush();
+	public void update(String messaggio,Socket socket){
+		try {
+			socketOut.writeObject(messaggio);
+			socketOut.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
+	
 	@Override
 	public void update(Object cambiamento, String[] input) {
 		// TODO Auto-generated method stub

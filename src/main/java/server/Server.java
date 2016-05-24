@@ -4,13 +4,18 @@
 package server;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.jdom2.JDOMException;
+
+import client.Login;
 import server.view.ServerSocketView;
 import server.controller.Controller;
 import server.model.Giocatore;
@@ -25,42 +30,50 @@ public class Server {
 	private final static int PORT = 29999;
 	private final String NAME = "Consiglio dei quattro";
 	
-	private List<Gioco> giochi;
-	private List<Controller> controllers;
+	private Gioco gioco;
+	private Controller controller;
 	
 	public Server(){
-		this.giochi= new ArrayList<>();
-		this.controllers= new ArrayList<>();
+		this.gioco= new Gioco();
+		this.controller= new Controller(gioco);
 	}
 	
 	
-	private void startSocket() throws IOException {
+	private void startSocket() throws IOException, ClassNotFoundException, JDOMException  {
 		
 		List<Giocatore> giocatori= new ArrayList<>();
 		
 		ExecutorService executor = Executors.newCachedThreadPool();
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
-
-		System.out.println("SERVER SOCKET READY ON PORT" + PORT);
 		
-		while (true) {
-			int NumGiocatori=0;
-			Gioco gioco = new Gioco();
-			while(NumGiocatori<2){
+		System.out.println("SERVER SOCKET READY ON PORT: " + PORT);
+		int NumGiocatori=0;
+		try{
+			while(true){
+				if(NumGiocatori>2)
+					serverSocket.setSoTimeout(20000);
 				Socket socket = serverSocket.accept();
+				ObjectInputStream socketin=new ObjectInputStream(socket.getInputStream());
+				Login loginGiocatore=(Login) socketin.readObject();
+				Giocatore nuovoGiocatore = new Giocatore(loginGiocatore.getNome(), loginGiocatore.getColore());
+				giocatori.add(nuovoGiocatore);
 				ServerSocketView view = new ServerSocketView(gioco,socket);
-				
-				gioco.notificaObservers("inserisci nome e colore");
-				
-				Giocatore nuovoGiocatore = new Giocatore(null, null);
+				view.registerObserver(controller);
 				NumGiocatori++;
+				executor.submit(view);
 			}
+		}
+		catch(SocketTimeoutException e){
+			gioco.inizializzaPartita(giocatori);
+			throw e;
+		}
+		
 		/*	ServerSocketView view = new ServerSocketView(socket, this.gioco);
 			this.gioco.registerObserver(view);
 			view.registerObserver(this.controller);
-			executor.submit(view);*/
-		}
+			*/
+		
 	}
 	
 	/**
