@@ -129,9 +129,6 @@ public class Gioco extends Observable{
 			}
 	}}
 	
-	
-	
-	
 	/**
 	 * the player can add an object in the list oggettiInVendita
 	 * @param giocatore the player who wants to add an object in the market
@@ -156,7 +153,7 @@ public class Gioco extends Observable{
 	
 	
 	
-	public Set<Giocatore> calcoloVincitore(){
+	public Set<Giocatore> calcoloVincitore() throws Exception{
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
 		ListIterator<Casella> itcasella=tabellone.getPercorsoNobiltà().getCaselle().listIterator(tabellone.getPercorsoNobiltà().getCaselle().size());
 		while(itcasella.hasPrevious())

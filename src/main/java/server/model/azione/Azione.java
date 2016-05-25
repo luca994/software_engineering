@@ -9,5 +9,5 @@ import server.model.Giocatore;
 @FunctionalInterface
 public interface Azione {
 
-		public void eseguiAzione(Giocatore giocatore);
+		public void eseguiAzione(Giocatore giocatore) throws Exception;
 }

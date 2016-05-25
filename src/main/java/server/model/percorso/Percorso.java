@@ -87,8 +87,9 @@ public class Percorso {
 	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money
 	 * @param giocatore the player who wants to move
 	 * @param passi the number of steps
+	 * @throws Exception 
 	 */
-	public void muoviGiocatore (Giocatore giocatore, int passi)
+	public void muoviGiocatore (Giocatore giocatore, int passi) throws Exception
 	{
 		try{
 			if (passi>0)
@@ -117,8 +118,9 @@ public class Percorso {
 	 * it is called by muoviGiocatore to move the player forward
 	 * @param giocatore the player who wants to move
 	 * @param passi the number of steps
+	 * @throws Exception 
 	 */
-	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi)
+	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi) throws Exception
 	{
 		Casella casellacorrente = null;
 		ListIterator<Casella> itcasella=this.caselle.listIterator();
@@ -150,8 +152,8 @@ public class Percorso {
 	
 	/**
 	 * it is called by muoviGiocatore to move the player back
-	 * @param giocatore
-	 * @param passi
+	 * @param giocatore the player who wants to move
+	 * @param passi the number of steps
 	 */
 	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi)
 	{

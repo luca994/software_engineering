@@ -101,9 +101,10 @@ public class CostruisciEmporioConTessera implements Azione {
 	/**
 	 * Build a new emporio using a Tessera Costruzione owned by the player
 	 * Throws IllegalStateException if Tessera Costruzione is not appropriated for this city or the player alredy has an emporio
+	 * @throws Exception 
 	 */
 	@Override
-	public void eseguiAzione (Giocatore giocatore){
+	public void eseguiAzione (Giocatore giocatore) throws Exception{
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");

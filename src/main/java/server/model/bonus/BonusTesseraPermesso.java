@@ -37,7 +37,7 @@ public class BonusTesseraPermesso implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) {
+	public void azioneBonus(Giocatore giocatore) throws Exception {
 		try{
 			gioco.notificaObservers(this);
 			giocatore.getTessereValide().add(tessera);

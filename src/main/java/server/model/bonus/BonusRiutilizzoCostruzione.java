@@ -50,7 +50,7 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	}
 
 	@Override
-	public void azioneBonus(Giocatore giocatore) {
+	public void azioneBonus(Giocatore giocatore) throws Exception {
 		try{
 			this.giocatore=giocatore;
 			if(giocatore==null)
