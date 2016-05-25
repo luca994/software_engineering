@@ -30,16 +30,24 @@ public class Server {
 	private final static int PORT = 29999;
 	private final String NAME = "Consiglio dei quattro";
 	
-	private Gioco gioco;
-	private Controller controller;
+	//private Gioco gioco;
+	//private Controller controller;
 	
-	public Server(){
-		this.gioco= new Gioco();
-		this.controller= new Controller(gioco);
+	public void startServer() throws ClassNotFoundException, IOException, JDOMException{
+		Gioco localGioco= new Gioco();
+		Controller localController= new Controller(localGioco);
+		try{
+			startSocket(localGioco, localController);
+			//nuovo RMI server
+		}
+		catch(SocketTimeoutException e)
+		{
+			startServer();
+		}
 	}
 	
 	
-	private void startSocket() throws IOException, ClassNotFoundException, JDOMException  {
+	private void startSocket(Gioco gioco, Controller controller) throws IOException, ClassNotFoundException, JDOMException  {
 		
 		List<Giocatore> giocatori= new ArrayList<>();
 		
