@@ -2,10 +2,7 @@ package server.model.stato;
 
 import server.model.Giocatore;
 
-public class StatoGiocatore implements Stato {
+public abstract class StatoGiocatore implements Stato {
 	
-	public void prossimoStato(Giocatore giocatore) {
-		
-	}
-
+	public abstract void prossimoStato(Giocatore giocatore); 
 }

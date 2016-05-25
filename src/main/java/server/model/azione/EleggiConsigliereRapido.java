@@ -43,7 +43,7 @@ public class EleggiConsigliereRapido implements Azione {
 				{
 					this.consiglio.removeConsigliere();
 					giocatore.getAssistenti().remove(0);
-					giocatore.setAzioneOpzionale(true);
+				//	giocatore.setAzioneOpzionale(true);
 				}
 			}
 		else

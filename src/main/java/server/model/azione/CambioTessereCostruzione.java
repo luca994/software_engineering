@@ -43,7 +43,7 @@ public class CambioTessereCostruzione implements Azione {
 			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
 			regione.getTessereCoperte().remove(0);
 			giocatore.getAssistenti().remove(0);
-			giocatore.setAzioneOpzionale(true);
+		//	giocatore.setAzioneOpzionale(true);
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

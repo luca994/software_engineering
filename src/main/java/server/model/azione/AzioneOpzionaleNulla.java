@@ -22,7 +22,7 @@ public class AzioneOpzionaleNulla implements Azione {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			giocatore.setAzioneOpzionale(true);
+			//giocatore.setAzioneOpzionale(true);
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

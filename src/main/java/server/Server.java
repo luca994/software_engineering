@@ -30,50 +30,24 @@ public class Server {
 	private final static int PORT = 29999;
 	private final String NAME = "Consiglio dei quattro";
 	
-	private Gioco gioco;
-	private Controller controller;
+	private ControllerConnessioni controllerConnessioni;
 	
 	public Server(){
-		this.gioco= new Gioco();
-		this.controller= new Controller(gioco);
 	}
 	
 	
 	private void startSocket() throws IOException, ClassNotFoundException, JDOMException  {
 		
-		List<Giocatore> giocatori= new ArrayList<>();
-		
-		ExecutorService executor = Executors.newCachedThreadPool();
-
 		ServerSocket serverSocket = new ServerSocket(PORT);
-		
 		System.out.println("SERVER SOCKET READY ON PORT: " + PORT);
-		int NumGiocatori=0;
-		try{
-			while(true){
-				if(NumGiocatori>2)
-					serverSocket.setSoTimeout(20000);
-				Socket socket = serverSocket.accept();
-				ObjectInputStream socketin=new ObjectInputStream(socket.getInputStream());
-				Login loginGiocatore=(Login) socketin.readObject();
-				Giocatore nuovoGiocatore = new Giocatore(loginGiocatore.getNome(), loginGiocatore.getColore());
-				giocatori.add(nuovoGiocatore);
-				ServerSocketView view = new ServerSocketView(gioco,socket);
-				view.registerObserver(controller);
-				NumGiocatori++;
-				executor.submit(view);
-			}
-		}
-		catch(SocketTimeoutException e){
-			gioco.inizializzaPartita(giocatori);
-			throw e;
-		}
+	
+		controllerConnessioni = new ControllerConnessioni();
 		
-		/*	ServerSocketView view = new ServerSocketView(socket, this.gioco);
-			this.gioco.registerObserver(view);
-			view.registerObserver(this.controller);
-			*/
-		
+		while (true) {
+			
+			Socket socket = serverSocket.accept();
+			
+		}
 	}
 	
 	/**

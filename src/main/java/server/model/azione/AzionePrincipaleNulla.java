@@ -25,7 +25,7 @@ public class AzionePrincipaleNulla implements Azione {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nulla");
-			giocatore.setAzionePrincipale(true);
+		//	giocatore.setAzionePrincipale(true);
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

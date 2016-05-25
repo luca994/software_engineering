@@ -22,7 +22,7 @@ public class BonusAzionePrincipale implements Bonus {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");	
-			giocatore.setAzionePrincipale(false);
+		//	giocatore.setAzionePrincipale(false);
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

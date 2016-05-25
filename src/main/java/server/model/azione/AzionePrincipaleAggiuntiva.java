@@ -25,8 +25,9 @@ public class AzionePrincipaleAggiuntiva implements Azione {
 			if(giocatore.getAssistenti().size()>=3){
 			for(int i=0;i<3;i++)
 				giocatore.getAssistenti().remove(0);	
-			giocatore.setAzionePrincipale(false);
-			giocatore.setAzioneOpzionale(true);}
+		//	giocatore.setAzionePrincipale(false);
+		//	giocatore.setAzioneOpzionale(true);
+			}
 			else
 				throw new IllegalStateException("Non hai abbastanza aiutanti");
 		}

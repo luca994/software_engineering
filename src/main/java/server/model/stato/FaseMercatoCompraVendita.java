@@ -2,9 +2,9 @@ package server.model.stato;
 
 import server.model.Gioco;
 
-public class FaseNormale extends Esecuzione {
+public class FaseMercatoCompraVendita extends Esecuzione {
 
-	public FaseNormale(Gioco gioco) {
+	public FaseMercatoCompraVendita(Gioco gioco) {
 		super(gioco);
 		// TODO Auto-generated constructor stub
 	}

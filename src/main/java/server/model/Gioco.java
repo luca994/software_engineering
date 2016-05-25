@@ -4,22 +4,11 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Queue;
 import java.util.Set;
 import org.jdom2.JDOMException;
 
-import server.model.azione.AcquistaPermesso;
-import server.model.azione.AzioneOpzionaleNulla;
-import server.model.azione.AzionePrincipaleAggiuntiva;
-import server.model.azione.AzionePrincipaleNulla;
-import server.model.azione.CambioTessereCostruzione;
-import server.model.azione.CostruisciEmporioConTessera;
-import server.model.azione.EleggiConsigliere;
-import server.model.azione.EleggiConsigliereRapido;
-import server.model.azione.IngaggioAiutante;
 import server.model.percorso.Casella;
 import server.model.stato.AttesaGioco;
 import server.model.stato.Esecuzione;
@@ -32,191 +21,116 @@ import server.observer.Observable;
  */
 public class Gioco extends Observable{
 
+	
+	private static final int MIN_NUM_GIOCATORI = 2;
+	private static final int NUM_EMPORI_MASSIMO = 10;
+	
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
-	private boolean vittoria;
 	private Mercato mercato;
-	private StatoGioco stato;
+	private StatoGioco statoGioco;
 	
 	public Gioco (){
-		this.stato=new AttesaGioco();
+
+		giocatori=new ArrayList<>();
+		this.tabellone=null;
+		this.mercato=null;
+		this.statoGioco=new AttesaGioco();
 	} 
 	
-	public void inizializzaPartita (List<Giocatore> giocatori) throws JDOMException, IOException//Verrà una roba mooolto lunga
-	{
-		//Inizializzazione Ambiente di gioco
+	
+	
+	/**
+	 * adds a Giocatore to the list of giocatori for this Gioco
+	 * @param nome the name of the Giocatore
+	 * @param colore the color of the Giocatore
+	 */
+	public void aggiungiGiocatore(String nome, Color colore){
 		
-		String nomeMappaScelta="src/main/resources/mappacollegamenti0.xml";// Ottenuta dal controller
+		giocatori.add(new Giocatore(nome,colore));
+	}
+	
+	
+	
+	/**
+	 * initializes the game environment
+	 * @param giocatori the list of giocatori who plays the game
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void inizializzaPartita () throws JDOMException, IOException{
+		
+		if(giocatori.size() < MIN_NUM_GIOCATORI)
+			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
+		if (statoGioco instanceof Esecuzione)
+			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
+		
+		String nomeMappaScelta ="src/main/resources/mappacollegamenti0.xml"; /* Ottenuta dal controller */
+		
 		this.tabellone=new Tabellone(nomeMappaScelta, this);
-		//ottengo elenco nome giocatori
+		
+		inizializzaGiocatori();
+		
+		
+		/* Setup aggiuntivo per 2 giocatori */
+		if(giocatori.size()==2)
+			inizializzazioneGiocatoreDummy();
+		
+		/*Setup mercato */
+		mercato=new Mercato(tabellone.getPercorsoRicchezza());
+		
+		/*Setto lo stato ad Esecuzione*/
+		statoGioco.prossimoStato(this);
+		
+		
+		}
+	
+	
+	
+	
+	private void inizializzaGiocatori(){
+		
+		/* ottengo elenco nome giocatori */
 		int numGiocatore=1;
 		for(Giocatore gio:giocatori)
 		{
-			//id, nome, e colore sono già settati
-			//setto empori rimasti a 10
-			gio.setEmporiRimasti(10);
-			//setto assistenti
+			
+			gio.setEmporiRimasti(NUM_EMPORI_MASSIMO);
+			
 			for(int j=0;j<numGiocatore;j++){
 				gio.getAssistenti().add(new Assistente());
 			}
-			//setto posizione iniziale percorso nobiltà e vittoria e Ricchezza
+			
 			this.tabellone.getPercorsoNobiltà().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoVittoria().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoRicchezza().getCaselle().get(9+numGiocatore).getGiocatori().add(gio);
-			//setto carte politica iniziali
+			
+			
 			for(int i=0;i<6;i++)
 			{
 				gio.getCartePolitica().add(new CartaPolitica());
 			}
 			numGiocatore++;
-		}			
-		this.giocatori=giocatori;
-		//Setup aggiuntivo per 2 giocatori
-		if(numGiocatore-1==2)
-		{
-			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY); //come colore a caso ho messo grigio scuro che non è utilizzato
+		}}
+	
+	
+	private void inizializzazioneGiocatoreDummy(){
+	{
+		
+			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY);
+			
+			/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
+			
 			for(Regione regi: tabellone.getRegioni() ){
 				for(Città cit:regi.getTessereCoperte().get(0).getCittà()){
 					cit.aggiungiEmporio(dummy);
 				}
 				Collections.shuffle(regi.getTessereCoperte());
 			}
-			
-		}
-		//Setup mercato
-		mercato=new Mercato(tabellone.getPercorsoRicchezza());
-		
-		setStato(new Esecuzione());
-		
-	}//mettere i catch delle eccezioni della lettura xml
+	}}
 	
-/*	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
-		vittoria=false;
-		Queue<Giocatore> codaGiocatori= new LinkedList<>(giocatori);
-		int numeroGiocatori=giocatori.size();
-		int numeroTurno=0;
-		while(!vittoria){
-			if(numeroTurno==numeroGiocatori)//Fase mercato
-			{
-				boolean fineMercato;
-				OggettoVendibile oggetto;
-				for(Giocatore gio:giocatori){
-					fineMercato=false;
-					while(!fineMercato){
-						//metodo controller per chiedere se vuole vendere altri oggetti
-						//setto fineMercato
-						oggetto=null;
-						//metodo del controller che prende l' oggetto in ingresso
-						faseMercatoVendita(gio, oggetto);
-					}
-				}
-				fineMercato=false;
-				//fase mercato per l'acquisto
-				Collections.shuffle(giocatori);
-				for(Giocatore gio:giocatori){
-					while(!fineMercato){
-						//metodo controller per chiedere se vuole vendere altri oggetti
-						//setto fineMercato
-						//fineMercato=...
-						//mostro la lista degli oggetti in vendita e prendo in ingresso
-						//l'oggetto
-						oggetto=null;
-						faseMercatoAcquisto(gio, oggetto);
-					}
-				}
-				numeroTurno=0;
-			}
-			Giocatore giocatoreAttuale=codaGiocatori.poll();
-			turno(giocatoreAttuale);
-			numeroTurno++;
-			if(giocatoreAttuale.getEmporiRimasti()==0)
-			{
-				vittoria=true;
-			}
-			else
-			{
-				codaGiocatori.add(giocatoreAttuale);
-			}
-		}
-		//ultimo turno
-		while(!codaGiocatori.isEmpty()){
-			Giocatore giocatoreAttuale=codaGiocatori.poll();
-			turno(giocatoreAttuale);
-		}
-		//Conteggio punti
-		Set<Giocatore> vincitore=calcoloVincitore();
-		//Comunico al controller chi è il vincitore
 	
-	} */
 	
-/*public void turno(Giocatore gio) throws JDOMException, IOException{
-		//il giocatore persca una carta
-		gio.getCartePolitica().add(new CartaPolitica());
-		while((!gio.isAzioneOpzionale())||(!gio.isAzionePrincipale())){
-			//Metodo controller che dice al giocatore quale mosse gli mancano da fare (se lenta e/o veloce)
-			//Richiesta al controller di input per azione al giocatore gio
-			int azione = 11;
-			//Il controller comunica quale azione vuole compiere il giocatore
-			if(azione==1&&!gio.isAzionePrincipale())//"Eleggi Consigliere"
-			{
-				//Richiesta al controller di input per scelta consiglio e consigliere da eleggere
-				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
-				Consigliere consigliereScelto=new Consigliere(null);
-				new EleggiConsigliere(consigliereScelto, consiglioScelto, tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-			}
-			else if(azione==2&&!gio.isAzionePrincipale())//Acquistare una tessera permesso costruzione
-			{
-				//Richiesta al controller di input per la tessera da acquistare
-				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
-				new AcquistaPermesso(tesseraScelta, carteSelezionate, tesseraScelta.getRegioneDiAppartenenza().getConsiglio(), this.tabellone.getPercorsoRicchezza()).eseguiAzione(gio);;
-			}
-			else if(azione==3&&!gio.isAzionePrincipale())//Costruire un emporio usando una tessera permesso
-			{
-				//Richiesta al controller di input per la tessera da acquistare
-				Città cittàScelta=new Città(null, null);
-				TesseraCostruzione tesseraScelta=new TesseraCostruzione(null,null,null);
-				new CostruisciEmporioConTessera(cittàScelta, tesseraScelta, this.tabellone).eseguiAzione(gio);
-			}
-			else if(azione==4&&!gio.isAzionePrincipale())//Costruire un emporio con l'aiuto del re
-			{
-				//Richiesta al controller di input per scegliere carte politica
-				//new MuoviRe(tabellone.getRe(), tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-				List<CartaPolitica> carteSelezionate=new ArrayList<CartaPolitica>(4);
-				//new CostruisciEmporioConRe(tabellone, gio,carteSelezionate,).eseguiAzione(gio);
-			}
-			else if(azione==5&&!gio.isAzioneOpzionale())//Ingaggia Aiutante
-			{
-				new IngaggioAiutante(tabellone.getPercorsoRicchezza()).eseguiAzione(gio);
-			}
-			else if(azione==6&&!gio.isAzioneOpzionale())//Cambiare le tessere permesso di costruzione
-			{
-				//Richiesta al controller di input per scegliere la regione per cui rimischiare le carte
-				Regione regioneScelta=new Regione(null, null, null);
-				new CambioTessereCostruzione(regioneScelta).eseguiAzione(gio);
-			}
-			else if(azione==7&&!gio.isAzioneOpzionale())//Mandare un aiutante ad eleggere un consigliere
-			{
-				Consiglio consiglioScelto=new Consiglio(null);//inizializzazioni errarte, vanno ovviamente fatte dal controller
-				Consigliere consigliereScelto=new Consigliere(null);
-				new EleggiConsigliereRapido(consigliereScelto, consiglioScelto).eseguiAzione(gio);
-			}
-			else if(azione==8&&!gio.isAzioneOpzionale())//Compiere un'azione principale aggiuntiva
-			{
-				new AzionePrincipaleAggiuntiva().eseguiAzione(gio);
-			}
-			else if(azione==9&&!gio.isAzioneOpzionale())//Saltare azione Veloce
-			{
-				new AzioneOpzionaleNulla().eseguiAzione(gio);
-			}
-			else if(azione==10&&!gio.isAzionePrincipale())//Saltare azione Principale
-			{
-				new AzionePrincipaleNulla().eseguiAzione(gio);
-			}
-			else
-				System.err.println("Input azione non valido, riprova!");
-		}
-	}						*/
 	
 	/**
 	 * the player can add an object in the list oggettiInVendita
@@ -239,6 +153,8 @@ public class Gioco extends Observable{
 	public void faseMercatoAcquisto(Giocatore giocatore, OggettoVendibile oggetto){
 		oggetto.transazione(giocatore);
 	}
+	
+	
 	
 	public Set<Giocatore> calcoloVincitore(){
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
@@ -288,7 +204,8 @@ public class Gioco extends Observable{
 			}
 		}
 		tabellone.getPercorsoVittoria().muoviGiocatore(giocatorePiùPermessi, 3);
-		//Calcolo vincitore
+		
+		/* Calcolo vincitore */
 		
 		itcasella=tabellone.getPercorsoVittoria().getCaselle().listIterator(tabellone.getPercorsoVittoria().getCaselle().size());
 		while(itcasella.hasPrevious()){
@@ -335,14 +252,14 @@ public class Gioco extends Observable{
 	 * @return the stato
 	 */
 	public StatoGioco getStato() {
-		return stato;
+		return statoGioco;
 	}
 
 	/**
 	 * @param stato the stato to set
 	 */
 	public void setStato(StatoGioco stato) {
-		this.stato = stato;
+		this.statoGioco = stato;
 	}
 	
 }

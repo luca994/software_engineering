@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import server.model.stato.Attesa;
+import server.model.stato.StatoGiocatore;
+
 /**
  * @author Luca
  *
@@ -16,17 +19,16 @@ import java.util.logging.Logger;
 public class Giocatore {
 
 		private static final Logger log= Logger.getLogger( Giocatore.class.getName() );
+		
 		private int id;
 		private String nome;
 		private List<Assistente> assistenti;
 		private List<CartaPolitica> cartePolitica;
-		private boolean azionePrincipale;
-		private boolean azioneOpzionale;
 		private Color colore;
 		private List<TesseraCostruzione> tessereUsate;
 		private List<TesseraCostruzione> tessereValide;
-		private boolean connesso;
 		private int emporiRimasti;
+		private StatoGiocatore statoGiocatore;
 		
 		/**Constructor for the class Giocatore
 		 * @param nome
@@ -35,10 +37,11 @@ public class Giocatore {
 		public Giocatore(String nome, Color colore) {
 			this.nome = nome;
 			this.colore = colore;
-			this.assistenti=new ArrayList<Assistente>();
-			this.cartePolitica=new ArrayList<CartaPolitica>();
-			this.tessereUsate=new ArrayList<TesseraCostruzione>();
-			this.tessereValide=new ArrayList<TesseraCostruzione>();
+			this.assistenti=new ArrayList<>();
+			this.cartePolitica=new ArrayList<>();
+			this.tessereUsate=new ArrayList<>();
+			this.tessereValide=new ArrayList<>();
+			statoGiocatore=new Attesa();
 		}
 
 	
@@ -127,36 +130,6 @@ public class Giocatore {
 		}
 
 
-		/**
-		 * @return the azionePrincipale
-		 */
-		public boolean isAzionePrincipale() {
-			return azionePrincipale;
-		}
-
-
-		/**
-		 * @param azionePrincipale the azionePrincipale to set
-		 */
-		public void setAzionePrincipale(boolean azionePrincipale) {
-			this.azionePrincipale = azionePrincipale;
-		}
-
-
-		/**
-		 * @return the azioneOpzionale
-		 */
-		public boolean isAzioneOpzionale() {
-			return azioneOpzionale;
-		}
-
-
-		/**
-		 * @param azioneOpzionale the azioneOpzionale to set
-		 */
-		public void setAzioneOpzionale(boolean azioneOpzionale) {
-			this.azioneOpzionale = azioneOpzionale;
-		}
 
 
 		/**
@@ -207,21 +180,6 @@ public class Giocatore {
 		}
 
 
-		/**
-		 * @return the connesso
-		 */
-		public boolean isConnesso() {
-			return connesso;
-		}
-
-
-		/**
-		 * @param connesso the connesso to set
-		 */
-		public void setConnesso(boolean connesso) {
-			this.connesso = connesso;
-		}
-
 
 		/**
 		 * @return the emporiRimasti
@@ -239,10 +197,23 @@ public class Giocatore {
 		}
 
 
+
 		/**
-		 * @return the log
+		 * @return the statoGiocatore
 		 */
-		public static Logger getLog() {
-			return log;
+		public StatoGiocatore getStatoGiocatore() {
+			return statoGiocatore;
 		}
+
+
+
+		/**
+		 * @param statoGiocatore the statoGiocatore to set
+		 */
+		public void setStatoGiocatore(StatoGiocatore statoGiocatore) {
+			this.statoGiocatore = statoGiocatore;
+		}
+
+
+		
 }

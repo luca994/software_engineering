@@ -44,7 +44,7 @@ public class EleggiConsigliere implements Azione {
 			if(this.consiglio.addConsigliere(this.consigliere)){
 				this.consiglio.removeConsigliere();
 				percorsoRicchezza.muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
-				giocatore.setAzionePrincipale(true);
+			//	giocatore.setAzionePrincipale(true);
 				}
 			}
 		catch(Exception e){

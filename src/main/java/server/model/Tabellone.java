@@ -1,10 +1,8 @@
 package server.model;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,24 +15,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.EdgeReversedGraph;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.graph.builder.UndirectedGraphBuilder;
+
 
 import server.model.bonus.Bonus;
-import server.model.bonus.BonusAssistenti;
-import server.model.bonus.BonusAzionePrincipale;
-import server.model.bonus.BonusCartaPolitica;
+
 import server.model.bonus.BonusCreator;
-import server.model.bonus.BonusMoneta;
-import server.model.bonus.BonusPercorsoNobiltà;
-import server.model.bonus.BonusPuntoVittoria;
 import server.model.percorso.Percorso;
-import server.model.tesserebonus.TesseraBonus;
 import server.model.tesserebonus.TesseraBonusCittà;
 import server.model.tesserebonus.TesseraBonusCreator;
 import server.model.tesserebonus.TesseraBonusRegione;
@@ -56,7 +45,6 @@ public class Tabellone {
 	private Set<TesseraBonusCittà> tessereBonusCittà;
 	private List<TesseraPremioRe> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
-	private Set<Consiglio> consigli;
 	private Percorso percorsoNobiltà;
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
@@ -100,7 +88,7 @@ public class Tabellone {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void creaPercorsi() throws JDOMException, IOException{
+	private void creaPercorsi() throws JDOMException, IOException{
 		this.percorsoVittoria=new Percorso("src/main/resources/PercorsoVittoria.xml", this);	
 		this.percorsoRicchezza=new Percorso("src/main/resources/percorsoRicchezza.xml", this);
 		this.percorsoNobiltà= new Percorso("src/main/resources/percorsoNobiltà.xml", this);
@@ -113,7 +101,7 @@ public class Tabellone {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void creaConsiglieriDisponibili() throws JDOMException, IOException{
+	private void creaConsiglieriDisponibili() throws JDOMException, IOException{
 		this.consiglieriDisponibili= new ArrayList<>(NUMERO_TOTALE_CONSIGLIERI);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
 		Document documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
@@ -138,7 +126,7 @@ public class Tabellone {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void creaRegioni () throws JDOMException, IOException{
+	private void creaRegioni () throws JDOMException, IOException{
 		this.regioni=new ArrayList<Regione>();
 		SAXBuilder builderRegioni = new SAXBuilder();
 		Document documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
@@ -160,7 +148,7 @@ public class Tabellone {
 		}
 	}
 	
-	public List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
+	private List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
 		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
 		List<Set<Bonus>> gettoniCittà=new ArrayList<>(NUMERO_TOTALE_GETTONI);
 		BonusCreator bonusCreator = new BonusCreator(this);
@@ -187,7 +175,7 @@ public class Tabellone {
 				
 	}
 	
-	public void collegaCittà(String nomeFileMappa,List<Set<Bonus>> gettoniCittà) throws JDOMException, IOException {
+	private void collegaCittà(String nomeFileMappa,List<Set<Bonus>> gettoniCittà) throws JDOMException, IOException {
 		SAXBuilder builderCollegamenti = new SAXBuilder();
 		Document documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
 		Element collegamentiRootElement=documentCollegamenti.getRootElement();
@@ -232,7 +220,7 @@ public class Tabellone {
 	 * @throws IOException throw an exception if the method doesn't found the file or
 	 *         there is another error about the file
 	 */
-	public void creaTessereBonus() throws JDOMException, IOException{
+	private void creaTessereBonus() throws JDOMException, IOException{
 		BonusCreator bonusCreator = new BonusCreator(this);
 		TesseraBonusCreator tesseraBonusCreator = new TesseraBonusCreator(this);
 		//inizializzo i set di tessere
@@ -322,23 +310,6 @@ public class Tabellone {
 	
 	
 	/**
-	 * @author Luca
-	 * This method appends the specified element to the end of this list
-	 * @param consigliereDaAggiungere
-	 * 
-	 */
-	public void addConsigliereDisponibile(Consigliere consigliereDaAggiungere){
-		try{
-			consiglieriDisponibili.add(consigliereDaAggiungere);
-		}
-
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
-	}
-	
-	/**
 	 * check if a player has an emporium every the city of a color
 	 * @param giocatore the player who has to check the bonus
 	 * @param città the city in which the method take the color
@@ -401,22 +372,6 @@ public class Tabellone {
 	}
 	
 	/**
-	 * Removes the first occurrence of the specified 
-	 * element from this list, if it is present
-	 * @author Luca
-	 * @param consigliereDaRimuovere
-	 */
-	public void removeConsigliereDisponibile(Consigliere consigliereDaRimuovere){
-		try{
-			consiglieriDisponibili.remove(consigliereDaRimuovere);
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
-	}
-	
-	/**
 	 * 
 	 * @param nomeRegione the name of the region you wnat to find
 	 * @return return the region with nomeRegione as name
@@ -435,7 +390,11 @@ public class Tabellone {
 		throw new IllegalArgumentException("il nome della regione inserito non esiste");
 	}
 	
-	// IN TEORIA CREA UN GRAFO E CI INSERISCE PRIMA TUTTE LE CITTà, POI COLLEGA TRA LORO LE CITTà CHE SONO VICINE
+	/**
+	 * creating a graph , it puts the cities in each region as a vertex, 
+	 * then I created branches connecting each city with its neighbors
+	 * @return the map in the form of graph
+	 */
 	public UndirectedGraph<Città, DefaultEdge> generaGrafo (){
 		
 		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);

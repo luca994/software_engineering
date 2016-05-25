@@ -123,7 +123,7 @@ public class AcquistaPermesso implements Azione {
 			tessera.eseguiBonus(giocatore);
 			//Scopri dal mazzetto una nuova tessera costruzione
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tessera);
-			giocatore.setAzionePrincipale(true);
+			//giocatore.setAzionePrincipale(true);
 		}}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

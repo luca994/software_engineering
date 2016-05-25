@@ -39,7 +39,7 @@ public class IngaggioAiutante implements Azione {
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			percorsoRicchezza.muoviGiocatore(giocatore, -COSTO_AIUTANTE);
 			giocatore.getAssistenti().add(new Assistente());
-			giocatore.setAzioneOpzionale(true);
+	//		giocatore.setAzioneOpzionale(true);
 		}
 		catch(Exception e){
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );

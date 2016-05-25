@@ -51,7 +51,7 @@ public class Consiglio {
 	
 	public void removeConsigliere(){
 		try{
-		tabellone.addConsigliereDisponibile(consiglieri.element());
+		tabellone.getConsiglieriDisponibili().add(consiglieri.element());
 		consiglieri.remove();
 		}
 		catch(Exception e){
@@ -71,7 +71,7 @@ public class Consiglio {
 				throw new NullPointerException("Il consigliere non può essere nullo");
 			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere))
 			{
-				tabellone.removeConsigliereDisponibile(consigliereDaAggiungere);
+				tabellone.getConsiglieriDisponibili().remove(consigliereDaAggiungere);
 				consiglieri.add(consigliereDaAggiungere);
 			}
 			else
