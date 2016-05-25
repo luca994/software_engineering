@@ -6,9 +6,8 @@ public class AttesaGioco extends StatoGioco {
 	
 	@Override
 	public void prossimoStato(Gioco gioco){
-		Esecuzione prossimoStato=new Esecuzione(gioco);
+		FaseNormale prossimoStato=new FaseNormale(gioco);
 		gioco.setStato(prossimoStato);
-		prossimoStato.gioca();
-		
+		prossimoStato.avviaTurni();
 	}
 }

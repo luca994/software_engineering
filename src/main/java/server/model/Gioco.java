@@ -58,7 +58,7 @@ public class Gioco extends Observable{
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void inizializzaPartita () throws JDOMException, IOException{
+	public void inizializzaPartita () throws JDOMException, IOException, IllegalStateException, IllegalArgumentException{
 		
 		if(giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
@@ -81,7 +81,6 @@ public class Gioco extends Observable{
 		
 		/*Setto lo stato ad Esecuzione*/
 		statoGioco.prossimoStato(this);
-		
 		
 		}
 	
@@ -113,9 +112,11 @@ public class Gioco extends Observable{
 			numGiocatore++;
 		}}
 	
-	
+	/**
+	 * initializes the additional player who needs to be created 
+	 * once the game has only two players
+	 */
 	private void inizializzazioneGiocatoreDummy(){
-	{
 		
 			Giocatore dummy=new Giocatore(null, Color.DARK_GRAY);
 			
@@ -126,8 +127,9 @@ public class Gioco extends Observable{
 					cit.aggiungiEmporio(dummy);
 				}
 				Collections.shuffle(regi.getTessereCoperte());
-			}
-	}}
+			}}
+	
+	
 	
 	/**
 	 * the player can add an object in the list oggettiInVendita
