@@ -29,11 +29,16 @@ public class Server {
 
 	private final static int PORT = 29999;
 	private final String NAME = "Consiglio dei quattro";
+	private final ServerSocket serverSocket;
+	
+	public Server() throws IOException{
+		serverSocket = new ServerSocket(PORT);
+	}
 	
 	//private Gioco gioco;
 	//private Controller controller;
 	
-	public void startServer() throws ClassNotFoundException, IOException, JDOMException{
+	/*public void startServer() throws ClassNotFoundException, IOException, JDOMException{
 		Gioco localGioco= new Gioco();
 		Controller localController= new Controller(localGioco);
 		try{
@@ -44,19 +49,21 @@ public class Server {
 		{
 			startServer();
 		}
-	}
+	}*/
 	
 	
-	private void startSocket(Gioco gioco, Controller controller) throws IOException, ClassNotFoundException, JDOMException  {
+	public Socket startSocket(/*Gioco gioco, Controller controller*/) throws IOException, ClassNotFoundException, JDOMException  {
 		
-		List<Giocatore> giocatori= new ArrayList<>();
+		//List<Giocatore> giocatori= new ArrayList<>();
 		
-		ExecutorService executor = Executors.newCachedThreadPool();
+		//ExecutorService executor = Executors.newCachedThreadPool();
 
-		ServerSocket serverSocket = new ServerSocket(PORT);
+		//ServerSocket serverSocket = new ServerSocket(PORT);
 		
 		System.out.println("SERVER SOCKET READY ON PORT: " + PORT);
-		int NumGiocatori=0;
+		
+		return serverSocket.accept();
+		/*int NumGiocatori=0;
 		try{
 			while(true){
 				if(NumGiocatori>2)
@@ -75,7 +82,7 @@ public class Server {
 		catch(SocketTimeoutException e){
 			gioco.inizializzaPartita(giocatori);
 			throw e;
-		}
+		}*/
 		
 		/*	ServerSocketView view = new ServerSocketView(socket, this.gioco);
 			this.gioco.registerObserver(view);
