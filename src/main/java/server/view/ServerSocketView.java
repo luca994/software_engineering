@@ -25,9 +25,11 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	private Socket socket;
 	private ObjectInputStream socketIn;
 	private ObjectOutputStream socketOut;
+	private Giocatore giocatore;
 	
-	public ServerSocketView(Gioco gioco,Socket socket) throws IOException{
+	public ServerSocketView(Gioco gioco,Socket socket, Giocatore nuovoGiocatore) throws IOException{
 		gioco.registerObserver(this);
+		this.giocatore=nuovoGiocatore;
 		this.socket=socket;
 		this.socketIn=new ObjectInputStream(socket.getInputStream());
 		this.socketOut=new ObjectOutputStream(socket.getOutputStream());

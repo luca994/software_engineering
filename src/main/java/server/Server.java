@@ -66,7 +66,7 @@ public class Server {
 				Login loginGiocatore=(Login) socketin.readObject();
 				Giocatore nuovoGiocatore = new Giocatore(loginGiocatore.getNome(), loginGiocatore.getColore());
 				giocatori.add(nuovoGiocatore);
-				ServerSocketView view = new ServerSocketView(gioco,socket);
+				ServerSocketView view = new ServerSocketView(gioco,socket, nuovoGiocatore);
 				view.registerObserver(controller);
 				NumGiocatori++;
 				executor.submit(view);
