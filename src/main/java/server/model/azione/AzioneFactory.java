@@ -34,8 +34,8 @@ public class AzioneFactory {
 	
 	public Azione createAzione(String tipoAzione){
 		if (tipoAzione == null){
-			return null;
-			}
+			throw new IllegalStateException("l'azione non può essere nulla");
+		}
 		if (tipoAzione.equalsIgnoreCase("ELEGGI CONSIGLIERE")){
 			EleggiConsigliere eleggiConsigliere = new EleggiConsigliere(consigliere, consiglio, percorsoRicchezza);
 			return eleggiConsigliere;
@@ -76,7 +76,7 @@ public class AzioneFactory {
 			IngaggioAiutante ingaggiaAiutante = new IngaggioAiutante(percorsoRicchezza);
 			return ingaggiaAiutante;
 		}
-		return null;
+		throw new IllegalStateException("l'azione inserita non è corretta");
 	}
 	
 	

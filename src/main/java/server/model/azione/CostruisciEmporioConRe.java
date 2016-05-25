@@ -39,12 +39,13 @@ public class CostruisciEmporioConRe implements Azione {
 	
 	/**
 	 * Builds an emporio in the same city where the king is situated. 
+	 * @throws Exception 
 	 * @throws IllegalStateException when giocatore has already an emporio in the city. 
 	 * @throws IllegalStateException when the number of CartaPolitica is not correct.
 	 * @throws IndexOutOfBoundsException if an error occurs during the count of the cards
 	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
 	 */
-	public void eseguiAzione (Giocatore giocatore){
+	public void eseguiAzione (Giocatore giocatore) throws Exception{
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");

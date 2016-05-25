@@ -37,9 +37,10 @@ public class BonusPuntoVittoria implements Bonus {
 	
 	/**
 	 * @param steps the steps to set
+	 * @throws Exception 
 	 */
 	@Override
-	public void azioneBonus(Giocatore giocatore) 
+	public void azioneBonus(Giocatore giocatore) throws Exception 
 	{
 		try{
 			if(giocatore==null)

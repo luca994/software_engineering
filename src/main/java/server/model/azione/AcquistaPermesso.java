@@ -65,12 +65,13 @@ public class AcquistaPermesso implements Azione {
 	
 	/**
 	 * Executes the action of buying a Tessera Permesso di Costruzione; 
+	 * @throws Exception 
 	 * @throws IllegalStateException if the number of Carta Politica is less than one or more than four,
 	 * @throws IndexOutOfBoundsException if an error occurs during the count of the cards
 	 * @throws IndexOutOfBoundsException if giocatore hasn't enough money to perform the action(from method muoviGiocatore)
 	 */
 	@Override
-	public void eseguiAzione (Giocatore giocatore){
+	public void eseguiAzione (Giocatore giocatore) throws Exception{
 		
 		//controllo che le carte politica che voglio usare per acquistare il permesso siano minori o uguali a 4
 		

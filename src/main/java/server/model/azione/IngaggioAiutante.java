@@ -32,8 +32,9 @@ public class IngaggioAiutante implements Azione {
 	 * the player add an assistant to his assistants's list and come back of
 	 * COSTO_AIUTANTE in the richness route
 	 * @param giocatore the player who wants to buy an assistant
+	 * @throws Exception 
 	 */
-	public void eseguiAzione (Giocatore giocatore){
+	public void eseguiAzione (Giocatore giocatore) throws Exception{
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");

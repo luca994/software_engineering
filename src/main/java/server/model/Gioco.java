@@ -90,7 +90,7 @@ public class Gioco extends Observable{
 		
 	}//mettere i catch delle eccezioni della lettura xml
 	
-	public void gioco() throws JDOMException, IOException{//Throws da rimuovere quando si crea il controller
+	public void gioco() throws Exception{//Throws da rimuovere quando si crea il controller
 		vittoria=false;
 		Queue<Giocatore> codaGiocatori= new LinkedList<>(giocatori);
 		int numeroGiocatori=giocatori.size();
@@ -149,7 +149,7 @@ public class Gioco extends Observable{
 	
 	}
 	
-	public void turno(Giocatore gio) throws JDOMException, IOException{
+	public void turno(Giocatore gio) throws Exception{
 		//il giocatore persca una carta
 		gio.getCartePolitica().add(new CartaPolitica());
 		while((!gio.isAzioneOpzionale())||(!gio.isAzionePrincipale())){
@@ -240,7 +240,7 @@ public class Gioco extends Observable{
 		oggetto.transazione(giocatore);
 	}
 	
-	public Set<Giocatore> calcoloVincitore(){
+	public Set<Giocatore> calcoloVincitore() throws Exception{
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
 		ListIterator<Casella> itcasella=tabellone.getPercorsoNobiltà().getCaselle().listIterator(tabellone.getPercorsoNobiltà().getCaselle().size());
 		while(itcasella.hasPrevious())

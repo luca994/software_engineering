@@ -31,8 +31,9 @@ public class TesseraCostruzione extends OggettoVendibile{
 	/**
 	 * assigns all the bonuses in the set of bonus
 	 * @param giocatore
+	 * @throws Exception 
 	 */
-	public void eseguiBonus (Giocatore giocatore){
+	public void eseguiBonus (Giocatore giocatore) throws Exception{
 		for(Bonus b : bonus){
 			b.azioneBonus(giocatore);
 		}

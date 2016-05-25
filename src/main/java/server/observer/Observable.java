@@ -1,5 +1,6 @@
 package server.observer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +14,11 @@ public abstract class Observable {
 	
 	public <T> void notificaObservers(T cambiamento,String[] input){
 		for(Observer o:observers){
-			try {
-				o.update(cambiamento,input);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			o.update(cambiamento,input);
 		}
 	}
 	
-	public <T> void notificaObservers(T cambiamento) {
+	public <T> void notificaObservers(T cambiamento) throws IOException {
 		for(Observer o:observers){
 			o.update(cambiamento);
 		}

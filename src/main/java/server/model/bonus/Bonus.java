@@ -3,6 +3,8 @@
  */
 package server.model.bonus;
 
+import java.io.IOException;
+
 import server.model.Giocatore;
 
 /**
@@ -13,5 +15,5 @@ public interface Bonus {
 	/**
 	 * azioneBonus: abstract method,it will be implemented in the specific subclasses.
 	 */
-	public abstract void azioneBonus(Giocatore giocatore);
+	public abstract void azioneBonus(Giocatore giocatore) throws Exception;
 }

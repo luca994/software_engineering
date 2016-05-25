@@ -35,9 +35,10 @@ public class EleggiConsigliere implements Azione {
 
 /**
  * Elects a new Consigliere from ConsiglieriDisponibili and if all went well , set the boolean AzionePrincipale to true
+ * @throws Exception 
  */
 	@Override
-	public void eseguiAzione (Giocatore giocatore){
+	public void eseguiAzione (Giocatore giocatore) throws Exception{
 		try{	
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");

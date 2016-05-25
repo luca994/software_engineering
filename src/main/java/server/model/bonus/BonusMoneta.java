@@ -22,7 +22,7 @@ public class BonusMoneta implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) 
+	public void azioneBonus(Giocatore giocatore) throws Exception 
 	{
 		try{
 			if(giocatore==null)

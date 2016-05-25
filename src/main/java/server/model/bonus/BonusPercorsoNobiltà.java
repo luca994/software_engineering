@@ -38,7 +38,7 @@ public class BonusPercorsoNobiltà implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) {
+	public void azioneBonus(Giocatore giocatore) throws Exception {
 		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
