@@ -14,6 +14,8 @@ import server.model.Giocatore;
 public interface Bonus {
 	/**
 	 * azioneBonus: abstract method,it will be implemented in the specific subclasses.
+	 * @throws IOException 
+	 * 
 	 */
-	public abstract void azioneBonus(Giocatore giocatore) throws Exception;
+	public abstract void azioneBonus(Giocatore giocatore) throws IOException;
 }

@@ -3,7 +3,6 @@ package server.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
@@ -17,8 +16,6 @@ import server.model.stato.giocatore.StatoGiocatore;
  *
  */
 public class Giocatore {
-
-		private static final Logger log= Logger.getLogger( Giocatore.class.getName() );
 		
 		private int id;
 		private String nome;
@@ -57,7 +54,7 @@ public class Giocatore {
 		/**this method move TesseraCostruzione from list tessereValide to list tessereUsate
 		 * @param tesseraToMove is the Tessera to move from tessereValide to tessereUsate
 		 */
-		public void moveTesseraValidaToTesseraUsata (TesseraCostruzione tesseraToMove){
+		public void spostaTesseraValidaInTesseraUsata (TesseraCostruzione tesseraToMove){
 			if(!tessereValide.contains(tesseraToMove)){
 				throw new IllegalArgumentException("La tessera da spostare non è nelle tessereValide del giocatore");
 			}

@@ -3,6 +3,7 @@
  */
 package server.model.bonus;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ import server.model.TesseraCostruzione;
  *
  */
 public class BonusTesseraPermesso implements Bonus {
-	private static final Logger log= Logger.getLogger( BonusTesseraPermesso.class.getName() );
+
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
 	
@@ -37,19 +38,14 @@ public class BonusTesseraPermesso implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws Exception {
-		try{
+	public void azioneBonus(Giocatore giocatore) throws IOException{
 			gioco.notificaObservers(this);
 			giocatore.getTessereValide().add(tessera);
 			tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
 			for(Bonus b:tessera.getBonus()){
 				b.azioneBonus(giocatore);
 			}
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
+		
 	}
 
 }

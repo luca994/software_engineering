@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -19,12 +17,11 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-
 import server.model.bonus.Bonus;
 
 import server.model.bonus.BonusCreator;
 import server.model.percorso.Percorso;
-import server.model.tesserebonus.TesseraBonusCittà;
+import server.model.tesserebonus.TesseraBonusCitta;
 import server.model.tesserebonus.TesseraBonusCreator;
 import server.model.tesserebonus.TesseraBonusRegione;
 import server.model.tesserebonus.TesseraPremioRe;
@@ -35,383 +32,402 @@ import server.model.tesserebonus.TesseraPremioRe;
  */
 public class Tabellone {
 
-	private static final Logger log = Logger.getLogger(Tabellone.class.getName());
-
 	private static final int NUMERO_TOTALE_CONSIGLIERI = 24;
 	private static final int NUMERO_TOTALE_GETTONI = 14;
-	
+
 	private List<Regione> regioni;
 	private Set<TesseraBonusRegione> tessereBonusRegione;
-	private Set<TesseraBonusCittà> tessereBonusCittà;
+	private Set<TesseraBonusCitta> tessereBonusCitta;
 	private List<TesseraPremioRe> tesserePremioRe;
 	private List<Consigliere> consiglieriDisponibili;
-	private Percorso percorsoNobiltà;
+	private Percorso percorsoNobilta;
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	private Re re;
 	private Gioco gioco;
-	
-	
+
 	/**
-	 * It builds the board by calling methods :
-	 * creaPercorsi() , creaConsiglieriDisponibili() , creaRegioni() , creaGettoniCittà() , collegaCittà(String , Gioco) ,
-	 * creaTessereBonus().
-	 * @throws IOException 
-	 * @throws JDOMException 
-	 * @throws NoSuchElementException if there's an error during the reading of the number of Consiglieri
+	 * It builds the board by calling methods : creaPercorsi() ,
+	 * creaConsiglieriDisponibili() , creaRegioni() , creaGettoniCittà() ,
+	 * collegaCittà(String , Gioco) , creaTessereBonus().
+	 * 
+	 * @throws IOException
+	 * @throws JDOMException
+	 * @throws NoSuchElementException
+	 *             if there's an error during the reading of the number of
+	 *             Consiglieri
 	 */
-	public Tabellone(String nomeFileMappa, Gioco gioco) throws JDOMException, IOException{
-		
-		this.gioco=gioco;
-		
-		//Creo percorsi passando al costruttore del percorso il nome del file che dovrà usare per creare il percorso
+	public Tabellone(String nomeFileMappa, Gioco gioco) throws JDOMException, IOException {
+
+		this.gioco = gioco;
+
+		// Creo percorsi passando al costruttore del percorso il nome del file
+		// che dovrà usare per creare il percorso
 		creaPercorsi();
-		//Creazione consiglieriDisponibili
+		// Creazione consiglieriDisponibili
 		creaConsiglieriDisponibili();
-		
-		
-		//Creo regioni (da file ovviamente):passo al costruttore della regione una lista di nomi di città
-		//Sarà il costruttore delle Regioni a collegarle
+
+		// Creo regioni (da file ovviamente):passo al costruttore della regione
+		// una lista di nomi di città
+		// Sarà il costruttore delle Regioni a collegarle
 		creaRegioni();
-		//Creo bonus per le città(praticamente una lista di bonus corrispondente ai Gettoni Città)
-		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
-		List<Set<Bonus>> gettoniCittà=new ArrayList<>(NUMERO_TOTALE_GETTONI);
-		gettoniCittà=creaGettoniCittà();
-		//Collego, coloro le città(devo passare attraverso le regioni), creo e assegno bonus, piazzo il re
-		collegaCittà(nomeFileMappa, gettoniCittà);
-		//Crea le tessere bonus
+		// Creo bonus per le città(praticamente una lista di bonus
+		// corrispondente ai Gettoni Città)
+		// Creo la lista di bonus per le città(Gettoni città da file), la
+		// mischio
+		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
+		gettoniCitta = creaGettoniCitta();
+		// Collego, coloro le città(devo passare attraverso le regioni), creo e
+		// assegno bonus, piazzo il re
+		collegaCitta(nomeFileMappa, gettoniCitta);
+		// Crea le tessere bonus
 		creaTessereBonus();
 	}
 
 	/**
-	 * creates the various paths by calling the respective constructors
+	 * creates the various paths by calling the respective constructors.
+	 * This method is called only by tabellone's constructor
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	private void creaPercorsi() throws JDOMException, IOException{
-		this.percorsoVittoria=new Percorso("src/main/resources/PercorsoVittoria.xml", this);	
-		this.percorsoRicchezza=new Percorso("src/main/resources/percorsoRicchezza.xml", this);
-		this.percorsoNobiltà= new Percorso("src/main/resources/percorsoNobiltà.xml", this);
+	private void creaPercorsi() throws JDOMException, IOException {
+		this.percorsoVittoria = new Percorso("src/main/resources/PercorsoVittoria.xml", this);
+		this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
+		this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
 	}
-	
-	
+
 	/**
-	 * creates a list of initial counselors available in the board by reading 
-	 * the file the total number of directors to be instantiated and the color of each of them .
+	 * creates a list of initial counselors available in the board by reading
+	 * the file the total number of directors to be instantiated and the color
+	 * of each of them .
+	 * This method is called only by tabellone's constructor
+	 * 
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	private void creaConsiglieriDisponibili() throws JDOMException, IOException{
-		this.consiglieriDisponibili= new ArrayList<>(NUMERO_TOTALE_CONSIGLIERI);
+	private void creaConsiglieriDisponibili() throws JDOMException, IOException {
+		this.consiglieriDisponibili = new ArrayList<>(NUMERO_TOTALE_CONSIGLIERI);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
 		Document documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
 		Element consiglieriRootElement = documentConsiglieri.getRootElement();
-		//acquisizione del numero dei consiglieri nel file
-		//Creo direttamente la lista di Consiglieri
-		List<Element> elencoConsiglieri =consiglieriRootElement.getChildren();
-		for(Element consi:elencoConsiglieri){
-		   //Aggiungo un nuovo consigliere alla lista creandolo direttamente col costruttore 
-		   //passandogli come parametro il valore dell'attributo colore letto dagli elementi del file xml
-		   this.consiglieriDisponibili.add(new Consigliere(ParseColor.colorStringToColor(((consi.getAttributeValue("colore"))))));
-		} 
-		
+		// acquisizione del numero dei consiglieri nel file
+		// Creo direttamente la lista di Consiglieri
+		List<Element> elencoConsiglieri = consiglieriRootElement.getChildren();
+		for (Element consi : elencoConsiglieri) {
+			// Aggiungo un nuovo consigliere alla lista creandolo direttamente
+			// col costruttore
+			// passandogli come parametro il valore dell'attributo colore letto
+			// dagli elementi del file xml
+			this.consiglieriDisponibili
+					.add(new Consigliere(ParseColor.colorStringToColor(consi.getAttributeValue("colore"))));
+		}
+
 		Collections.shuffle(consiglieriDisponibili);
 	}
-	
+
 	/**
-	 * creates regions by reading the name of the file,
-	 * also adds to each region the list of cities that comprise it.
-	 * Even the latter obviously is read from file.
+	 * creates regions by reading the name of the file, also adds to each region
+	 * the list of cities that comprise it. Even the latter obviously is read
+	 * from file.
+	 * This method is called only by tabellone's constructor
 	 * 
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	private void creaRegioni () throws JDOMException, IOException{
-		this.regioni=new ArrayList<Regione>();
+	private void creaRegioni() throws JDOMException, IOException {
+		this.regioni = new ArrayList<>();
 		SAXBuilder builderRegioni = new SAXBuilder();
 		Document documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
-		Element regioniRootElement=documentRegioni.getRootElement();
-		List<Element> elencoRegioni =regioniRootElement.getChildren();
-		for(Element regione:elencoRegioni)
-		{	
-			//Leggo il nome della regione
-			List<String>nomiCittà=new ArrayList<>();
-			List<Element> elencoCittàRegione =regione.getChildren();
-			//Leggo valore dell'unico attributo(nome della città), lo copio nella lista dei nomi 
-			//e la passo al costruttore della regione, la quale creerà le città e penserà a collegarle
-			for(Element città: elencoCittàRegione)
-			{
-				nomiCittà.add(città.getAttributeValue("id"));
+		Element regioniRootElement = documentRegioni.getRootElement();
+		List<Element> elencoRegioni = regioniRootElement.getChildren();
+		for (Element regione : elencoRegioni) {
+			// Leggo il nome della regione
+			List<String> nomiCitta = new ArrayList<>();
+			List<Element> elencoCittaRegione = regione.getChildren();
+			// Leggo valore dell'unico attributo(nome della città), lo copio
+			// nella lista dei nomi
+			// e la passo al costruttore della regione, la quale creerà le città
+			// e penserà a collegarle
+			for (Element citta : elencoCittaRegione) {
+				nomiCitta.add(citta.getAttributeValue("id"));
 			}
-			//Costruisco la regione
-			this.regioni.add(new Regione(regione.getAttributeValue("id"),nomiCittà,this));
+			// Costruisco la regione
+			this.regioni.add(new Regione(regione.getAttributeValue("id"), nomiCitta, this));
 		}
 	}
-	
-	private List<Set<Bonus>> creaGettoniCittà() throws JDOMException, IOException{
-		//Creo la lista di bonus per le città(Gettoni città da file), la mischio
-		List<Set<Bonus>> gettoniCittà=new ArrayList<>(NUMERO_TOTALE_GETTONI);
+
+	private List<Set<Bonus>> creaGettoniCitta() throws JDOMException, IOException {
+		// Creo la lista di bonus per le città(Gettoni città da file), la
+		// mischio
+		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
 		BonusCreator bonusCreator = new BonusCreator(this);
-				//Leggo i set di bonus
-				SAXBuilder builderGettoni = new SAXBuilder();
-				Document documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
-				Element bonusCittàRootElement=documentGettoni.getRootElement();
-				List<Element> elencoSetBonus =bonusCittàRootElement.getChildren();
-				for(Element set:elencoSetBonus){
-					List<Element> elencoBonus =set.getChildren();
-					Set<Bonus> bonus=new HashSet<>();
-					for(Element bon:elencoBonus){ //Leggo i set di bonus, li inizializzo e li copio nella lista di bonus
-						try{
-							bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),gioco));
-						}
-						catch(Exception e){
-							log.log(Level.WARNING,e.getMessage(), e);
-						}
-					}
-					gettoniCittà.add(bonus);//Aggiungo i set di bonus alla lista di bonus
-				}
-				Collections.shuffle(gettoniCittà);
-				return gettoniCittà;
-				
+		// Leggo i set di bonus
+		SAXBuilder builderGettoni = new SAXBuilder();
+		Document documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
+		Element bonusCittaRootElement = documentGettoni.getRootElement();
+		List<Element> elencoSetBonus = bonusCittaRootElement.getChildren();
+		for (Element set : elencoSetBonus) {
+			List<Element> elencoBonus = set.getChildren();
+			Set<Bonus> bonus = new HashSet<>();
+			for (Element bon : elencoBonus) { // Leggo i set di bonus, li
+												// inizializzo e li copio nella
+												// lista di bonus
+					bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"),
+							Integer.parseInt(bon.getAttributeValue("attributo")), gioco));
+			}
+			gettoniCitta.add(bonus);// Aggiungo i set di bonus alla lista di
+									// bonus
+		}
+		Collections.shuffle(gettoniCitta);
+		return gettoniCitta;
+
 	}
-	
-	private void collegaCittà(String nomeFileMappa,List<Set<Bonus>> gettoniCittà) throws JDOMException, IOException {
+
+	private void collegaCitta(String nomeFileMappa, List<Set<Bonus>> gettoniCitta) throws JDOMException, IOException {
 		SAXBuilder builderCollegamenti = new SAXBuilder();
 		Document documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
-		Element collegamentiRootElement=documentCollegamenti.getRootElement();
-		List<Element> elencoCittà =collegamentiRootElement.getChildren();
-		for(Regione reg:regioni)
-		{
-			for(Città cit:reg.getCittà())
-			{
-				//ora devo leggere il file delle città e trovare il match, con il nome, coloro e collego
-				for(Element cittàMappa: elencoCittà)
-				{
-					if(cittàMappa.getAttributeValue("nome").equals(cit.getNome()))
-					{
-						cit.setColore(ParseColor.colorStringToColor(cittàMappa.getAttributeValue("colore")));
-						if(cit.getColore().equals(ParseColor.colorStringToColor("magenta")))
-						{
-							Re re=new Re(ParseColor.colorStringToColor("black"), cit, new Consiglio(this));//Quale dovrebbe essere il colore del re??
+		Element collegamentiRootElement = documentCollegamenti.getRootElement();
+		List<Element> elencoCitta = collegamentiRootElement.getChildren();
+		for (Regione reg : regioni) {
+			for (Citta cit : reg.getCittà()) {
+				// ora devo leggere il file delle città e trovare il match, con
+				// il nome, coloro e collego
+				for (Element cittaMappa : elencoCitta) {
+					if (cittaMappa.getAttributeValue("nome").equals(cit.getNome())) {
+						cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
+						if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
+							Re re = new Re(cit, new Consiglio(this));
 							cit.setRe(re);
 							this.setRe(re);
+						} else {
+							// cit.getBonus().addAll(gettoniCittà.get(0));
+							cit.setBonus(gettoniCitta.get(0));
+							gettoniCitta.remove(0);
 						}
-						else
-						{
-							//cit.getBonus().addAll(gettoniCittà.get(0));
-							cit.setBonus(gettoniCittà.get(0));
-							gettoniCittà.remove(0);
-						}
-						List<Element> elencoCollegamenti =cittàMappa.getChildren();
-						for(Element coll:elencoCollegamenti)
-						{
-							cit.getCittàVicina().add(cercaCittà(coll.getText()));
+						List<Element> elencoCollegamenti = cittaMappa.getChildren();
+						for (Element coll : elencoCollegamenti) {
+							cit.getCittàVicina().add(cercaCitta(coll.getText()));
 						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	/**
-	 * initialize the tiles tessereBonusRegione, tessereBonusCittà, tesserePremioRe
-	 * reading them from a file
+	 * initialize the tiles tessereBonusRegione, tessereBonusCittà,
+	 * tesserePremioRe reading them from a file
+	 * 
 	 * @throws JDOMException
-	 * @throws IOException throw an exception if the method doesn't found the file or
-	 *         there is another error about the file
+	 * @throws IOException
+	 *             throw an exception if the method doesn't found the file or
+	 *             there is another error about the file
 	 */
-	private void creaTessereBonus() throws JDOMException, IOException{
+	private void creaTessereBonus() throws JDOMException, IOException {
 		BonusCreator bonusCreator = new BonusCreator(this);
 		TesseraBonusCreator tesseraBonusCreator = new TesseraBonusCreator(this);
-		//inizializzo i set di tessere
-		this.tessereBonusCittà=new HashSet<>();
-		this.tessereBonusRegione=new HashSet<>();
-		this.tesserePremioRe=new ArrayList<>();
+		// inizializzo i set di tessere
+		this.tessereBonusCitta = new HashSet<>();
+		this.tessereBonusRegione = new HashSet<>();
+		this.tesserePremioRe = new ArrayList<>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
-		//leggo il documento xml per le tessere
+		// leggo il documento xml per le tessere
 		Document documentTessereBonus = builderTessereBonus.build(new File("src/main/resources/TessereBonus.xml"));
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
-		for(Element t:tessere){
-			
-			//leggo il tipo di bonus e l' attributo da assegnare alla tessera
+		for (Element t : tessere) {
+
+			// leggo il tipo di bonus e l' attributo da assegnare alla tessera
 			Element tipoBonus = t.getChild("Bonus");
-			Set<Bonus> bonus= new HashSet<>();
-			try{
-				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"), Integer.parseInt(tipoBonus.getAttributeValue("attributo")),gioco));
-				//creo le tessere bonus per la regione
-				if("regione".equals(t.getAttributeValue("id"))){
-					tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+			Set<Bonus> bonus = new HashSet<>();
+				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"),
+						Integer.parseInt(tipoBonus.getAttributeValue("attributo")), gioco));
+				// creo le tessere bonus per la regione
+				if ("regione".equals(t.getAttributeValue("id"))) {
+					tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator
+							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
 				}
-				//costruisco le tessere bonus per le città
-				else if("città".equals(t.getAttributeValue("id"))){
-					tessereBonusCittà.add((TesseraBonusCittà) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+				// costruisco le tessere bonus per le città
+				else if ("città".equals(t.getAttributeValue("id"))) {
+					tessereBonusCitta.add((TesseraBonusCitta) tesseraBonusCreator
+							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
 				}
-				//costruisco le tessere premio del re
-				else if("premioRe".equals(t.getAttributeValue("id"))){
-					tesserePremioRe.add((TesseraPremioRe) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+				// costruisco le tessere premio del re
+				else if ("premioRe".equals(t.getAttributeValue("id"))) {
+					tesserePremioRe.add((TesseraPremioRe) tesseraBonusCreator
+							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
 				}
-			}
-			catch(Exception e){
-				log.log(Level.WARNING, e.getMessage(), e);
-			}
 		}
 	}
-	
+
 	/**
 	 * 
-	 * @param nome the name of the city
+	 * @param nome
+	 *            the name of the city
 	 * @return return the city which has nome as name
-	 * @throws NullPointerException if nome is null
-	 * @throws IllegalArgumentException if the name of the city isn't correct
+	 * @throws NullPointerException
+	 *             if nome is null
+	 * @throws IllegalArgumentException
+	 *             if the name of the city isn't correct
 	 */
-	public Città cercaCittà(String nome)
-	{
-		if(nome==null)
+	public Citta cercaCitta(String nome) {
+		if (nome == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
-		for(Regione regione:this.regioni){
-			for(Città cit: regione.getCittà()){
-				if(cit.getNome().equals(nome)){
+		for (Regione regione : this.regioni) {
+			for (Citta cit : regione.getCittà()) {
+				if (cit.getNome().equals(nome)) {
 					return cit;
 				}
 			}
 		}
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
-	
+
 	/**
 	 * 
-	 * @param nome the name of the city
-	 * @param regione the region of the city
+	 * @param nome
+	 *            the name of the city
+	 * @param regione
+	 *            the region of the city
 	 * @return the city which has nome as name
-	 * @throws NullPointerException if nome is null
-	 * @throws IllegalArgumentException if the name of the city isn't correct
+	 * @throws NullPointerException
+	 *             if nome is null
+	 * @throws IllegalArgumentException
+	 *             if the name of the city isn't correct
 	 */
-	public Città cercaCittà(String nome,Regione regione)
-	{
-		if(nome==null)
+	public Citta cercaCitta(String nome, Regione regione) {
+		if (nome == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
-		for(Città cit: regione.getCittà()){
-			if(cit.getNome().equals(nome)){
+		for (Citta cit : regione.getCittà()) {
+			if (cit.getNome().equals(nome)) {
 				return cit;
 			}
 		}
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
-	
-	/**
-	 * 
-	 * @param consigliereInTab
-	 * @return Returns true if this list contains the specified element
-	 */
-	public boolean ifConsigliereDisponibile(Consigliere consigliereInTab){
-			return consiglieriDisponibili.contains(consigliereInTab);
-	}
-	
-	
+
+
 	/**
 	 * check if a player has an emporium every the city of a color
-	 * @param giocatore the player who has to check the bonus
-	 * @param città the city in which the method take the color
+	 * 
+	 * @param giocatore
+	 *            the player who has to check the bonus
+	 * @param citta
+	 *            the city in which the method take the color
 	 * @author riccardo
-	 * @return return true if the player has an emporium in every city of a color
+	 * @return return true if the player has an emporium in every city of a
+	 *         color
 	 */
-	public boolean verificaEmporioColoreBonus(Giocatore giocatore,Città città){
-		for(Regione r:regioni){
-			for(Città c:r.getCittà()){
-				if (città.getColore()==c.getColore() && !c.getEmpori().contains(giocatore)){
-						return false;
-			}}}
+	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta) {
+		for (Regione r : regioni) {
+			for (Citta c : r.getCittà()) {
+				if (citta.getColore() == c.getColore() && !c.getEmpori().contains(giocatore)) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
-	
+
 	/**
 	 * 
-	 * @param giocatore the player who builds the emporium
-	 * @param città the city in which the player build the emporium
-	 * @return return true if the player has an emporium in every city of a region
+	 * @param giocatore
+	 *            the player who builds the emporium
+	 * @param citta
+	 *            the city in which the player build the emporium
+	 * @return return true if the player has an emporium in every city of a
+	 *         region
 	 */
-	public boolean verificaEmporioRegioneBonus(Giocatore giocatore,Città città){
-		for(Città c:città.getRegione().getCittà()){
-			if(!c.getEmpori().contains(giocatore)){
+	public boolean verificaEmporioRegioneBonus(Giocatore giocatore, Citta citta) {
+		for (Citta c : citta.getRegione().getCittà()) {
+			if (!c.getEmpori().contains(giocatore)) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
-	 * check if the player who has built the emporium can take the bonus for 
-	 * having built an emporium in every city of a color or in every city of a region.
-	 * Then assigns the tile/tiles.
+	 * check if the player who has built the emporium can take the bonus for
+	 * having built an emporium in every city of a color or in every city of a
+	 * region. Then assigns the tile/tiles.
+	 * 
 	 * @author riccardo
-	 * @param giocatore the player who has built the emporium
-	 * @param città the city where the player has built the emporium
+	 * @param giocatore
+	 *            the player who has built the emporium
+	 * @param citta
+	 *            the city where the player has built the emporium
 	 */
-	public void prendiTesseraBonus(Giocatore giocatore,Città città){
-		if(verificaEmporioColoreBonus(giocatore, città)){
-			for(TesseraBonusCittà t:tessereBonusCittà){
-				if(città.getColore().equals(t.getColore())){
+	public void prendiTesseraBonus(Giocatore giocatore, Citta citta) {
+		if (verificaEmporioColoreBonus(giocatore, citta)) {
+			for (TesseraBonusCitta t : tessereBonusCitta) {
+				if (citta.getColore().equals(t.getColore())) {
 					t.eseguiBonus(giocatore);
-					tessereBonusCittà.remove(t);
+					tessereBonusCitta.remove(t);
 				}
 			}
 		}
-		if(verificaEmporioRegioneBonus(giocatore, città)){
-			for(TesseraBonusRegione t:tessereBonusRegione){
-				if(t.getRegione().equals(città.getRegione())){
+		if (verificaEmporioRegioneBonus(giocatore, citta)) {
+			for (TesseraBonusRegione t : tessereBonusRegione) {
+				if (t.getRegione().equals(citta.getRegione())) {
 					t.eseguiBonus(giocatore);
 					tessereBonusRegione.remove(t);
 				}
 			}
 		}
-		if(!tesserePremioRe.isEmpty()){
+		if (!tesserePremioRe.isEmpty()) {
 			tesserePremioRe.get(0).eseguiBonus(giocatore);
 			tesserePremioRe.remove(0);
 		}
 	}
-	
+
 	/**
 	 * 
-	 * @param nomeRegione the name of the region you wnat to find
+	 * @param nomeRegione
+	 *            the name of the region you wnat to find
 	 * @return return the region with nomeRegione as name
-	 * @throws NullPointerException if nomeRegione is null
-	 * @throws IllegalArgumentException if nomeRegioe isn't correct
+	 * @throws NullPointerException
+	 *             if nomeRegione is null
+	 * @throws IllegalArgumentException
+	 *             if nomeRegioe isn't correct
 	 */
-	public Regione getRegioneDaNome(String nomeRegione){
-		if(nomeRegione==null){
+	public Regione getRegioneDaNome(String nomeRegione) {
+		if (nomeRegione == null) {
 			throw new NullPointerException("nomeRegione non può essere nullo");
 		}
-		for(Regione r:regioni){
-			if(r.getNome().equals(nomeRegione)){
+		for (Regione r : regioni) {
+			if (r.getNome().equals(nomeRegione)) {
 				return r;
 			}
 		}
 		throw new IllegalArgumentException("il nome della regione inserito non esiste");
 	}
-	
+
 	/**
-	 * creating a graph , it puts the cities in each region as a vertex, 
-	 * then I created branches connecting each city with its neighbors
+	 * creating a graph , it puts the cities in each region as a vertex, then I
+	 * created branches connecting each city with its neighbors
+	 * 
 	 * @return the map in the form of graph
 	 */
-	public UndirectedGraph<Città, DefaultEdge> generaGrafo (){
-		
-		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);
-		
-		for(Regione reg : regioni ){
-			for(Città cit : reg.getCittà()){
+	public UndirectedGraph<Citta, DefaultEdge> generaGrafo() {
+
+		UndirectedGraph<Citta, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);
+
+		for (Regione reg : regioni) {
+			for (Citta cit : reg.getCittà()) {
 				mappa.addVertex(cit);
-			}}
-		
-		for(Regione reg : regioni ){
-			for(Città cit : reg.getCittà()){
-				for(Città cit1 : cit.getCittàVicina()){
+			}
+		}
+
+		for (Regione reg : regioni) {
+			for (Citta cit : reg.getCittà()) {
+				for (Citta cit1 : cit.getCittàVicina()) {
 					mappa.addEdge(cit, cit1);
-			}}}
+				}
+			}
+		}
 		return mappa;
 	}
-
 
 	/**
 	 * @return the regioni
@@ -427,8 +443,6 @@ public class Tabellone {
 		return tessereBonusRegione;
 	}
 
-
-
 	/**
 	 * @return the consiglieriDisponibili
 	 */
@@ -436,14 +450,12 @@ public class Tabellone {
 		return consiglieriDisponibili;
 	}
 
-
 	/**
 	 * @return the percorsoNobiltà
 	 */
-	public Percorso getPercorsoNobiltà() {
-		return percorsoNobiltà;
+	public Percorso getPercorsoNobilta() {
+		return percorsoNobilta;
 	}
-
 
 	/**
 	 * @return the percorsoRicchezza
@@ -452,15 +464,12 @@ public class Tabellone {
 		return percorsoRicchezza;
 	}
 
-
-
 	/**
 	 * @return the percorsoVittoria
 	 */
 	public Percorso getPercorsoVittoria() {
 		return percorsoVittoria;
 	}
-
 
 	/**
 	 * @return the re
@@ -469,14 +478,13 @@ public class Tabellone {
 		return re;
 	}
 
-
 	/**
-	 * @param re the re to set
+	 * @param re
+	 *            the re to set
 	 */
 	public void setRe(Re re) {
 		this.re = re;
 	}
-
 
 	/**
 	 * @return the gioco

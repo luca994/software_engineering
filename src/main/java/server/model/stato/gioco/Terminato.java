@@ -10,7 +10,6 @@ public class Terminato extends StatoGioco {
 
 	@Override
 	public void eseguiFase() {
-		// TODO Auto-generated method stub
 		
 	}
 	

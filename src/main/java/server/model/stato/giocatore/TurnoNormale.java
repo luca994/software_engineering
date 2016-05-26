@@ -9,16 +9,13 @@ public class TurnoNormale extends StatoGiocatore {
 	
 	private int azioniPrincipaliEseguibili;
 	private int azioniRapideEseguibili;
-	
-	
+	private boolean tuttiGliEmporiCostruiti;
 	
 	public TurnoNormale(Giocatore giocatore){
 		super(giocatore);
 		this.azioniPrincipaliEseguibili=AZIONI_PRINCIPALI_PER_TURNO;
 		this.azioniRapideEseguibili=AZIONI_RAPIDE_PER_TURNO;
 	}
-	
-	
 	
 	
 	/**
@@ -54,12 +51,32 @@ public class TurnoNormale extends StatoGiocatore {
 	}
 	
 
+	@Override
+	public void azionePrincipaleAggiuntiva() {
+		azioniPrincipaliEseguibili++;
+	}
+
+
 
 
 	@Override
-	public void prossimoStato() {
-		giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
+	public void azioneRapidaAggiuntiva() {
+		azioniRapideEseguibili++;
+		
 	}
 
+
+	@Override
+	public void tuttiGliEmporiCostruiti() {
+		tuttiGliEmporiCostruiti=true;
+	}
+
+	@Override
+	public void prossimoStato() {
+		if(tuttiGliEmporiCostruiti)
+			giocatore.setStatoGiocatore(new TurniConclusi(giocatore));
+		else
+			giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
+	}
 	
 }

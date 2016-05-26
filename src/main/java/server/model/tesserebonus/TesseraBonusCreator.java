@@ -34,7 +34,7 @@ public class TesseraBonusCreator {
 			return new TesseraBonusRegione(bonus, tabellone.getRegioneDaNome(attributo));
 		}
 		else if(tipoTessera.equals("città")){
-			return new TesseraBonusCittà(bonus, attributo);
+			return new TesseraBonusCitta(bonus, attributo);
 		}
 		else if(tipoTessera.equals("premioRe")){
 			return new TesseraPremioRe(bonus);

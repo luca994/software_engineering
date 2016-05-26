@@ -69,7 +69,7 @@ public class Consiglio {
 		{
 			if(consigliereDaAggiungere==null)
 				throw new NullPointerException("Il consigliere non può essere nullo");
-			if(tabellone.ifConsigliereDisponibile(consigliereDaAggiungere))
+			if(tabellone.getConsiglieriDisponibili().contains(consigliereDaAggiungere))
 			{
 				tabellone.getConsiglieriDisponibili().remove(consigliereDaAggiungere);
 				consiglieri.add(consigliereDaAggiungere);

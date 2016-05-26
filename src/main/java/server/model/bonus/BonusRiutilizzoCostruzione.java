@@ -3,8 +3,7 @@
  */
 package server.model.bonus;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
 
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -18,7 +17,7 @@ import server.model.TesseraCostruzione;
  *
  */
 public class BonusRiutilizzoCostruzione implements Bonus {
-	private static final Logger log= Logger.getLogger( BonusRiutilizzoCostruzione.class.getName() );
+
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
 	private Giocatore giocatore;
@@ -50,8 +49,8 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	}
 
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws Exception {
-		try{
+	public void azioneBonus(Giocatore giocatore) throws IOException {
+		
 			this.giocatore=giocatore;
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");		
@@ -61,11 +60,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 					b.azioneBonus(giocatore);
 				}
 			}
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
 	}
 
 }
