@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import server.model.stato.Attesa;
-import server.model.stato.StatoGiocatore;
+import server.model.stato.giocatore.AttesaTurno;
+import server.model.stato.giocatore.StatoGiocatore;
 
 /**
  * @author Luca
@@ -41,7 +41,7 @@ public class Giocatore {
 			this.cartePolitica=new ArrayList<>();
 			this.tessereUsate=new ArrayList<>();
 			this.tessereValide=new ArrayList<>();
-			statoGiocatore=new Attesa();
+			statoGiocatore=new AttesaTurno(this);
 		}
 
 	

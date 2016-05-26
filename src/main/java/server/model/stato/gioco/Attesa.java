@@ -1,0 +1,19 @@
+package server.model.stato.gioco;
+
+import server.model.Gioco;
+
+public class Attesa extends StatoGioco {
+	
+	public Attesa(Gioco gioco){
+		super(gioco);
+	}
+	
+	@Override
+	public void eseguiFase() {
+	}
+	
+	@Override
+	public void prossimoStato(){
+		gioco.setStato(new FaseTurnoSemplice(gioco));
+	}
+}

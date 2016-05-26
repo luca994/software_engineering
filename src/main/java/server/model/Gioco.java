@@ -10,9 +10,10 @@ import java.util.Set;
 import org.jdom2.JDOMException;
 
 import server.model.percorso.Casella;
-import server.model.stato.AttesaGioco;
-import server.model.stato.Esecuzione;
-import server.model.stato.StatoGioco;
+import server.model.stato.gioco.Attesa;
+import server.model.stato.gioco.Esecuzione;
+import server.model.stato.gioco.StatoGioco;
+import server.model.stato.gioco.Terminato;
 import server.observer.Observable;
 
 /**
@@ -35,8 +36,9 @@ public class Gioco extends Observable{
 		giocatori=new ArrayList<>();
 		this.tabellone=null;
 		this.mercato=null;
-		this.statoGioco=new AttesaGioco();
+		this.statoGioco=new Attesa(this);
 	} 
+	
 	
 	
 	
@@ -58,7 +60,7 @@ public class Gioco extends Observable{
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void inizializzaPartita () throws JDOMException, IOException, IllegalStateException, IllegalArgumentException{
+	public void inizializzaPartita () throws JDOMException, IOException{
 		
 		if(giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
@@ -78,9 +80,6 @@ public class Gioco extends Observable{
 		
 		/*Setup mercato */
 		mercato=new Mercato(tabellone.getPercorsoRicchezza());
-		
-		/*Setto lo stato ad Esecuzione*/
-		statoGioco.prossimoStato(this);
 		
 		}
 	
@@ -128,6 +127,17 @@ public class Gioco extends Observable{
 				}
 				Collections.shuffle(regi.getTessereCoperte());
 			}}
+	
+	
+	
+	
+	public void eseguiPartita(){
+		while(!(statoGioco instanceof Terminato)){
+			statoGioco.prossimoStato();
+			statoGioco.eseguiFase();
+			}
+	}
+	
 	
 	
 	
