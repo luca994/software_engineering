@@ -1,5 +1,7 @@
 package server.model;
 
+import java.io.IOException;
+
 import server.model.percorso.Percorso;
 
 /**
@@ -24,8 +26,9 @@ public abstract class OggettoVendibile {
 	 * does the transaction between two players. It will be implemented
 	 * in the subclasses
 	 * @param giocatore the player who wants to buy the object
+	 * @throws IOException 
 	 */
-	public abstract void transazione(Giocatore giocatore);
+	public abstract void transazione(Giocatore giocatore) throws IOException;
 	
 	/**
 	 * return the price

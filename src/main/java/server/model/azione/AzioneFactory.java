@@ -6,80 +6,67 @@ package server.model.azione;
 import java.util.List;
 
 import server.model.CartaPolitica;
-import server.model.Città;
+import server.model.Citta;
 import server.model.Consigliere;
 import server.model.Consiglio;
-import server.model.Giocatore;
+import server.model.Gioco;
 import server.model.Regione;
-import server.model.Tabellone;
 import server.model.TesseraCostruzione;
-import server.model.percorso.Percorso;
 
 /**
  * @author Luca
  *
  */
 public class AzioneFactory {
-	
-	private Giocatore giocatore;
+
 	private Consiglio consiglio;
 	private Consigliere consigliere;
-	private Percorso percorsoRicchezza;
 	private TesseraCostruzione tesseraCostruzione;
 	private List<CartaPolitica> cartePolitica;
 	private Regione regione;
-	private Città citta;
-	private Tabellone tabellone;
-	
-	
-	public Azione createAzione(String tipoAzione){
-		if (tipoAzione == null){
+	private Citta citta;
+
+	private Gioco gioco;
+
+	public AzioneFactory(Gioco gioco) {
+		this.gioco = gioco;
+	}
+
+	public Azione createAzione(String tipoAzione) {
+		if (tipoAzione == null) {
 			throw new IllegalStateException("l'azione non può essere nulla");
 		}
-		if (tipoAzione.equalsIgnoreCase("ELEGGI CONSIGLIERE")){
-			EleggiConsigliere eleggiConsigliere = new EleggiConsigliere(consigliere, consiglio, percorsoRicchezza);
-			return eleggiConsigliere;
+		if ("ELEGGI CONSIGLIERE".equalsIgnoreCase(tipoAzione)) {
+			return new EleggiConsigliere(gioco,consigliere, consiglio);
 		}
-		if (tipoAzione.equalsIgnoreCase("ACQUISTA PERMESSO")){
-			AcquistaPermesso acquistaPermesso = new AcquistaPermesso(tesseraCostruzione,cartePolitica,consiglio,percorsoRicchezza);
-			return acquistaPermesso;
+		if ("ACQUISTA PERMESSO".equalsIgnoreCase(tipoAzione)) {
+			return new AcquistaPermesso(gioco,tesseraCostruzione, cartePolitica, consiglio);
 		}
-		if (tipoAzione.equalsIgnoreCase("AZIONE OPZIONALE NULLA")){
-			AzioneOpzionaleNulla azioneOpNulla = new AzioneOpzionaleNulla();
-			return azioneOpNulla;
+		if ("AZIONE OPZIONALE NULLA".equalsIgnoreCase(tipoAzione)) {
+			return new AzioneOpzionaleNulla();
 		}
-		if (tipoAzione.equalsIgnoreCase("AZIONE PRINCIPALE AGGIUNTIVA")){
-			AzionePrincipaleAggiuntiva azionePrincAgg = new AzionePrincipaleAggiuntiva();
-			return azionePrincAgg;
+		if ("AZIONE PRINCIPALE AGGIUNTIVA".equalsIgnoreCase(tipoAzione)) {
+			return new AzionePrincipaleAggiuntiva();
 		}
-		if (tipoAzione.equalsIgnoreCase("AZIONE PRINCIPALE NULLA")){
-			AzionePrincipaleNulla azionePrincNulla = new AzionePrincipaleNulla();
-			return azionePrincNulla;
+		if ("AZIONE PRINCIPALE NULLA".equalsIgnoreCase(tipoAzione)) {
+			return new AzionePrincipaleNulla();
 		}
-		if (tipoAzione.equalsIgnoreCase("CAMBIO TESSERE COSTRUZIONE")){
-			CambioTessereCostruzione cambioTessere = new CambioTessereCostruzione(regione);
-			return cambioTessere;
+		if ("CAMBIO TESSERE COSTRUZIONE".equalsIgnoreCase(tipoAzione)) {
+			return new CambioTessereCostruzione(regione);
 		}
-		if (tipoAzione.equalsIgnoreCase("COSTRUISCI EMPORIO CON RE")){
-			CostruisciEmporioConRe costrEmpRe = new CostruisciEmporioConRe(tabellone, giocatore, cartePolitica,citta);
-			return costrEmpRe;
+		if ("COSTRUISCI EMPORIO CON RE".equalsIgnoreCase(tipoAzione)) {
+			return new CostruisciEmporioConRe(gioco, cartePolitica, citta);
 		}
-		if (tipoAzione.equalsIgnoreCase("COSTRUISCI EMPORIO CON TESSERA")){
-			CostruisciEmporioConTessera costrEmpTess = new CostruisciEmporioConTessera(citta, tesseraCostruzione, tabellone);
-			return costrEmpTess;
+		if ("COSTRUISCI EMPORIO CON TESSERA".equalsIgnoreCase(tipoAzione)) {
+			return new CostruisciEmporioConTessera(citta, tesseraCostruzione);
 		}
-		if (tipoAzione.equalsIgnoreCase("ELEGGI CONSIGLIERE RAPIDO")){
-			EleggiConsigliereRapido eleggiConsigliereRapido = new EleggiConsigliereRapido(consigliere, consiglio);
-			return eleggiConsigliereRapido;
+		if ("ELEGGI CONSIGLIERE RAPIDO".equalsIgnoreCase(tipoAzione)) {
+			return new EleggiConsigliereRapido(consigliere, consiglio);
 		}
-		if (tipoAzione.equalsIgnoreCase("INGAGGIO AIUTANTE")){
-			IngaggioAiutante ingaggiaAiutante = new IngaggioAiutante(percorsoRicchezza);
-			return ingaggiaAiutante;
+		if ("INGAGGIO AIUTANTE".equalsIgnoreCase(tipoAzione)) {
+			return new IngaggioAiutante(gioco);
 		}
 		throw new IllegalStateException("l'azione inserita non è corretta");
 	}
-	
-	
-	
-	
+
 }

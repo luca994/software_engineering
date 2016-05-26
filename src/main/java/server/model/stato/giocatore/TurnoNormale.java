@@ -11,14 +11,11 @@ public class TurnoNormale extends StatoGiocatore {
 	private int azioniRapideEseguibili;
 	
 	
-	
 	public TurnoNormale(Giocatore giocatore){
 		super(giocatore);
 		this.azioniPrincipaliEseguibili=AZIONI_PRINCIPALI_PER_TURNO;
 		this.azioniRapideEseguibili=AZIONI_RAPIDE_PER_TURNO;
 	}
-	
-	
 	
 	
 	/**
@@ -54,12 +51,26 @@ public class TurnoNormale extends StatoGiocatore {
 	}
 	
 
+	@Override
+	public void azionePrincipaleAggiuntiva() {
+		azioniPrincipaliEseguibili++;
+	}
+
+
+
+
+	@Override
+	public void azioneRapidaAggiuntiva() {
+		azioniRapideEseguibili++;
+		
+	}
+
+
 
 
 	@Override
 	public void prossimoStato() {
 		giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
 	}
-
 	
 }

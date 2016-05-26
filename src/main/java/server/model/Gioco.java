@@ -122,7 +122,7 @@ public class Gioco extends Observable{
 			/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 			
 			for(Regione regi: tabellone.getRegioni() ){
-				for(Città cit:regi.getTessereCoperte().get(0).getCittà()){
+				for(Citta cit:regi.getTessereCoperte().get(0).getCittà()){
 					cit.aggiungiEmporio(dummy);
 				}
 				Collections.shuffle(regi.getTessereCoperte());
@@ -133,8 +133,8 @@ public class Gioco extends Observable{
 	
 	public void eseguiPartita(){
 		while(!(statoGioco instanceof Terminato)){
-			statoGioco.prossimoStato();
 			statoGioco.eseguiFase();
+			statoGioco.prossimoStato();
 			}
 	}
 	
@@ -158,8 +158,9 @@ public class Gioco extends Observable{
 	 * a player can buy object in the list of oggettiInVendita
 	 * @param giocatore the player who wants to buy the objects
 	 * @param oggetto the object the player wants to buy
+	 * @throws IOException 
 	 */
-	public void faseMercatoAcquisto(Giocatore giocatore, OggettoVendibile oggetto){
+	public void faseMercatoAcquisto(Giocatore giocatore, OggettoVendibile oggetto) throws IOException{
 		oggetto.transazione(giocatore);
 	}
 	

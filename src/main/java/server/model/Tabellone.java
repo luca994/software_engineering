@@ -182,7 +182,7 @@ public class Tabellone {
 		List<Element> elencoCittà =collegamentiRootElement.getChildren();
 		for(Regione reg:regioni)
 		{
-			for(Città cit:reg.getCittà())
+			for(Citta cit:reg.getCittà())
 			{
 				//ora devo leggere il file delle città e trovare il match, con il nome, coloro e collego
 				for(Element cittàMappa: elencoCittà)
@@ -265,12 +265,12 @@ public class Tabellone {
 	 * @throws NullPointerException if nome is null
 	 * @throws IllegalArgumentException if the name of the city isn't correct
 	 */
-	public Città cercaCittà(String nome)
+	public Citta cercaCittà(String nome)
 	{
 		if(nome==null)
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for(Regione regione:this.regioni){
-			for(Città cit: regione.getCittà()){
+			for(Citta cit: regione.getCittà()){
 				if(cit.getNome().equals(nome)){
 					return cit;
 				}
@@ -287,11 +287,11 @@ public class Tabellone {
 	 * @throws NullPointerException if nome is null
 	 * @throws IllegalArgumentException if the name of the city isn't correct
 	 */
-	public Città cercaCittà(String nome,Regione regione)
+	public Citta cercaCittà(String nome,Regione regione)
 	{
 		if(nome==null)
 			throw new NullPointerException("il nome della città non può essere nullo");
-		for(Città cit: regione.getCittà()){
+		for(Citta cit: regione.getCittà()){
 			if(cit.getNome().equals(nome)){
 				return cit;
 			}
@@ -312,14 +312,14 @@ public class Tabellone {
 	/**
 	 * check if a player has an emporium every the city of a color
 	 * @param giocatore the player who has to check the bonus
-	 * @param città the city in which the method take the color
+	 * @param citta the city in which the method take the color
 	 * @author riccardo
 	 * @return return true if the player has an emporium in every city of a color
 	 */
-	public boolean verificaEmporioColoreBonus(Giocatore giocatore,Città città){
+	public boolean verificaEmporioColoreBonus(Giocatore giocatore,Citta citta){
 		for(Regione r:regioni){
-			for(Città c:r.getCittà()){
-				if (città.getColore()==c.getColore() && !c.getEmpori().contains(giocatore)){
+			for(Citta c:r.getCittà()){
+				if (citta.getColore()==c.getColore() && !c.getEmpori().contains(giocatore)){
 						return false;
 			}}}
 		return true;
@@ -328,11 +328,11 @@ public class Tabellone {
 	/**
 	 * 
 	 * @param giocatore the player who builds the emporium
-	 * @param città the city in which the player build the emporium
+	 * @param citta the city in which the player build the emporium
 	 * @return return true if the player has an emporium in every city of a region
 	 */
-	public boolean verificaEmporioRegioneBonus(Giocatore giocatore,Città città){
-		for(Città c:città.getRegione().getCittà()){
+	public boolean verificaEmporioRegioneBonus(Giocatore giocatore,Citta citta){
+		for(Citta c:citta.getRegione().getCittà()){
 			if(!c.getEmpori().contains(giocatore)){
 				return false;
 			}
@@ -346,20 +346,20 @@ public class Tabellone {
 	 * Then assigns the tile/tiles.
 	 * @author riccardo
 	 * @param giocatore the player who has built the emporium
-	 * @param città the city where the player has built the emporium
+	 * @param citta the city where the player has built the emporium
 	 */
-	public void prendiTesseraBonus(Giocatore giocatore,Città città){
-		if(verificaEmporioColoreBonus(giocatore, città)){
+	public void prendiTesseraBonus(Giocatore giocatore,Citta citta){
+		if(verificaEmporioColoreBonus(giocatore, citta)){
 			for(TesseraBonusCittà t:tessereBonusCittà){
-				if(città.getColore().equals(t.getColore())){
+				if(citta.getColore().equals(t.getColore())){
 					t.eseguiBonus(giocatore);
 					tessereBonusCittà.remove(t);
 				}
 			}
 		}
-		if(verificaEmporioRegioneBonus(giocatore, città)){
+		if(verificaEmporioRegioneBonus(giocatore, citta)){
 			for(TesseraBonusRegione t:tessereBonusRegione){
-				if(t.getRegione().equals(città.getRegione())){
+				if(t.getRegione().equals(citta.getRegione())){
 					t.eseguiBonus(giocatore);
 					tessereBonusRegione.remove(t);
 				}
@@ -395,18 +395,18 @@ public class Tabellone {
 	 * then I created branches connecting each city with its neighbors
 	 * @return the map in the form of graph
 	 */
-	public UndirectedGraph<Città, DefaultEdge> generaGrafo (){
+	public UndirectedGraph<Citta, DefaultEdge> generaGrafo (){
 		
-		UndirectedGraph<Città, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);
+		UndirectedGraph<Citta, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);
 		
 		for(Regione reg : regioni ){
-			for(Città cit : reg.getCittà()){
+			for(Citta cit : reg.getCittà()){
 				mappa.addVertex(cit);
 			}}
 		
 		for(Regione reg : regioni ){
-			for(Città cit : reg.getCittà()){
-				for(Città cit1 : cit.getCittàVicina()){
+			for(Citta cit : reg.getCittà()){
+				for(Citta cit1 : cit.getCittàVicina()){
 					mappa.addEdge(cit, cit1);
 			}}}
 		return mappa;

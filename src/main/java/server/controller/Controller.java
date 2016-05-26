@@ -6,7 +6,7 @@ package server.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.model.Città;
+import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Regione;
@@ -16,7 +16,6 @@ import server.model.bonus.BonusGettoneCittà;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.observer.Observer;
-import server.view.ServerSocketView;
 
 /**
  * @author Massimiliano Ventura
@@ -65,8 +64,8 @@ public class Controller implements Observer{
 		if(cambiamento instanceof BonusGettoneCittà){
 			try{	
 				if(!input[0].equals("passa")){
-					Città città = this.gioco.getTabellone().cercaCittà(input[0]);
-					if(!((BonusGettoneCittà) cambiamento).getCittà().add(città)){
+					Citta citta = this.gioco.getTabellone().cercaCittà(input[0]);
+					if(!((BonusGettoneCittà) cambiamento).getCittà().add(citta)){
 						((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
 						gioco.notificaObservers("la città inserita è già stata scelta");
 					}

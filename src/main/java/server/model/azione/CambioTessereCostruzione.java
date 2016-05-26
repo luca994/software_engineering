@@ -1,8 +1,5 @@
 package server.model.azione;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import server.model.Giocatore;
 import server.model.Regione;
 
@@ -10,9 +7,7 @@ import server.model.Regione;
  * @author Luca
  *
  */
-public class CambioTessereCostruzione implements Azione {
-	
-	private static final Logger log= Logger.getLogger( CambioTessereCostruzione.class.getName() );
+public class CambioTessereCostruzione extends Azione {
 	
 	private Regione regione;
 	
@@ -21,6 +16,7 @@ public class CambioTessereCostruzione implements Azione {
 	 * @param regione
 	 */
 	public CambioTessereCostruzione(Regione regione) {
+		super(null);
 		this.regione = regione;
 	}
 
@@ -31,7 +27,7 @@ public class CambioTessereCostruzione implements Azione {
 	 */
 	@Override
 	public void eseguiAzione (Giocatore giocatore){
-		try{
+		
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			if(giocatore.getAssistenti().isEmpty())
@@ -44,10 +40,13 @@ public class CambioTessereCostruzione implements Azione {
 			regione.getTessereCoperte().remove(0);
 			giocatore.getAssistenti().remove(0);
 		//	giocatore.setAzioneOpzionale(true);
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
+		
+	}
+
+
+	@Override
+	public boolean verificaInput(Giocatore giocatore) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

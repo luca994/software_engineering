@@ -14,27 +14,27 @@ import java.util.logging.Logger;
  *
  */
 
-public class Città extends OggettoConBonus {
+public class Citta extends OggettoConBonus {
 
-	private static final Logger log= Logger.getLogger( Città.class.getName() );
+	private static final Logger log= Logger.getLogger( Citta.class.getName() );
 	private final String nome;
 	private final Regione regione;
 	private Color colore;
 	private Set<Giocatore> empori;
 	private Re re;
-	private Set<Città> cittàVicina;
+	private Set<Citta> cittàVicina;
 	
 	
 	/**
 	 * @param nome
 	 * @param regione
 	 */
-	public Città(String nome, Regione regione) {
+	public Citta(String nome, Regione regione) {
 		super(null);
 		this.nome = nome;
 		this.regione = regione;
 		this.empori=new HashSet<Giocatore>();
-		this.cittàVicina= new HashSet<Città>();
+		this.cittàVicina= new HashSet<Citta>();
 	}
 	
 	/**
@@ -90,11 +90,11 @@ public class Città extends OggettoConBonus {
 	 * @return return a list of near cities which have the player' s emporium
 	 */
 	//cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione
-	public List<Città> cittàVicinaConEmporio(Giocatore giocatore,List<Città> cittàVicineConEmpori){
+	public List<Citta> cittàVicinaConEmporio(Giocatore giocatore,List<Citta> cittàVicineConEmpori){
 		try{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			for(Città c:cittàVicina){
+			for(Citta c:cittàVicina){
 				if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
 					cittàVicineConEmpori.add(c);
 					c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
@@ -139,14 +139,14 @@ public class Città extends OggettoConBonus {
 	/**
 	 * @return the cittàVicina
 	 */
-	public Set<Città> getCittàVicina() {
+	public Set<Citta> getCittàVicina() {
 		return cittàVicina;
 	}
 
 	/**
 	 * @param cittàVicina the cittàVicina to set
 	 */
-	public void setCittàVicina(Set<Città> cittàVicina) {
+	public void setCittàVicina(Set<Citta> cittàVicina) {
 		this.cittàVicina = cittàVicina;
 	}
 

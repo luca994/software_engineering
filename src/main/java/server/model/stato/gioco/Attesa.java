@@ -8,6 +8,9 @@ public class Attesa extends StatoGioco {
 		super(gioco);
 	}
 	
+	/**
+	 * when the game is on stand-by, nothing is done
+	 */
 	@Override
 	public void eseguiFase() {
 	}

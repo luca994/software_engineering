@@ -9,8 +9,13 @@ import server.model.Giocatore;
  * @author Luca
  *
  */
-public class AzionePrincipaleAggiuntiva implements Azione {
+public class AzionePrincipaleAggiuntiva extends Azione {
 	
+	public AzionePrincipaleAggiuntiva() {
+		super(null);
+	}
+
+
 	private static final Logger log= Logger.getLogger( AzionePrincipaleAggiuntiva.class.getName() );
 	
 	
@@ -35,5 +40,12 @@ public class AzionePrincipaleAggiuntiva implements Azione {
 			log.log( Level.WARNING,e.getLocalizedMessage(),e );
 			throw e;
 		}
+	}
+
+
+	@Override
+	public boolean verificaInput(Giocatore giocatore) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

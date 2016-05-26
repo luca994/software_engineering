@@ -25,7 +25,7 @@ public class Regione {
 
 	Logger log = Logger.getLogger(Regione.class.getName());
 	
-	private Set<Città> città;
+	private Set<Citta> citta;
 	private Consiglio consiglio;
 	private String nome;
 	private List<TesseraCostruzione> tessereCostruzione;
@@ -45,7 +45,7 @@ public class Regione {
 		this.nome=nomeRegione;
 		this.tessereCostruzione=new ArrayList<TesseraCostruzione>();
 		this.tessereCoperte=new ArrayList<TesseraCostruzione>();
-		this.città= new HashSet<Città>();
+		this.citta= new HashSet<Citta>();
 		creaCittà(nomiCittà);		
 		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
 		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
@@ -75,7 +75,7 @@ public class Regione {
 		{
 			List<Element> elencoSet =tessere.getChildren();
 			Set<Bonus> bonusTessera =new HashSet<Bonus>(3);
-			Set<Città> elencoRiferimentiCittà=new HashSet<Città>(3);
+			Set<Citta> elencoRiferimentiCittà=new HashSet<Citta>(3);
 			for(Element set:elencoSet)//Scorro i set di bonus e città nel file
 			{
 				if(set.getName().equals("SetCittà"))
@@ -122,7 +122,7 @@ public class Regione {
 	public void creaCittà(List<String> nomiCittà){
 		for(String nome: nomiCittà)//Creo città
 		{
-			this.città.add(new Città(nome,this));
+			this.citta.add(new Citta(nome,this));
 		}
 		//da cancellare
 		/*for(Città c:this.città){
@@ -157,8 +157,8 @@ public class Regione {
 	/**
 	 * @return the città
 	 */
-	public Set<Città> getCittà() {
-		return città;
+	public Set<Citta> getCittà() {
+		return citta;
 	}
 	/**
 	 * @return the consiglio

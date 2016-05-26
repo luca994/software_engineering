@@ -11,7 +11,7 @@ import server.model.Giocatore;
  * @author Luca
  *
  */
-public class EleggiConsigliereRapido implements Azione {
+public class EleggiConsigliereRapido extends Azione {
 
 	private static final Logger log= Logger.getLogger( EleggiConsigliereRapido.class.getName() );
 	
@@ -23,7 +23,7 @@ public class EleggiConsigliereRapido implements Azione {
 	 * @param consiglio
 	 */
 	public EleggiConsigliereRapido(Consigliere consigliere, Consiglio consiglio) {
-		super();
+		super(null);
 		this.consigliere = consigliere;
 		this.consiglio = consiglio;
 	}
@@ -65,5 +65,10 @@ public class EleggiConsigliereRapido implements Azione {
 	 */
 	public void setConsigliere(Consigliere consigliere) {
 		this.consigliere = consigliere;
+	}
+	@Override
+	public boolean verificaInput(Giocatore giocatore) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

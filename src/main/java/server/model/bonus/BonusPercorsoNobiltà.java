@@ -1,7 +1,6 @@
 package server.model.bonus;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
 
 import server.model.Giocatore;
 import server.model.percorso.Percorso;
@@ -13,7 +12,7 @@ import server.model.percorso.Percorso;
  */
 public class BonusPercorsoNobiltà implements Bonus {
 
-	private static final Logger log= Logger.getLogger( BonusPercorsoNobiltà.class.getName() );
+	
 	private final int steps;
 	private final Percorso percorsoNobiltà;
 	
@@ -38,15 +37,10 @@ public class BonusPercorsoNobiltà implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws Exception {
-		try{
+	public void azioneBonus(Giocatore giocatore) throws IOException {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			percorsoNobiltà.muoviGiocatoreAvanti(giocatore, steps);
 		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
+		
 	}
-}

@@ -5,7 +5,7 @@ import server.model.stato.Stato;
 
 public abstract class StatoGioco implements Stato {
 
-	protected Gioco gioco;
+	protected final Gioco gioco;
 	
 	public StatoGioco(Gioco gioco){
 		this.gioco=gioco;

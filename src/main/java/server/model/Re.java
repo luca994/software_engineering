@@ -18,16 +18,16 @@ public class Re {
 	private static final Logger log= Logger.getLogger( Re.class.getName() );
 	private final Color colore;
 	private Consiglio consiglio;
-	private Città città;
+	private Citta citta;
 	private Tabellone tabellone;
 	
 	/**
 	 * build the king
 	 * @param colore the color of the king
 	 */
-	public Re(Color colore, Città città, Consiglio consiglio){
+	public Re(Color colore, Citta citta, Consiglio consiglio){
 		this.colore=colore;
-		this.città=città;
+		this.citta=citta;
 		this.consiglio=consiglio;
 	}
 	
@@ -41,8 +41,8 @@ public class Re {
 	/**
 	 * @return the città
 	 */
-	public Città getCittà() {
-		return città;
+	public Citta getCittà() {
+		return citta;
 	}
 	
 	
@@ -52,10 +52,10 @@ public class Re {
 	 * @param destinazione is the end vertex
 	 * @return number of steps that the king must do
 	 */
-	public int contaPassi(Città destinazione){
+	public int contaPassi(Citta destinazione){
 		if(destinazione == null)
 	    	throw new NullPointerException("La città di destinazione non può essere nulla");
-		DijkstraShortestPath<Città, DefaultEdge> percorso = new DijkstraShortestPath<>(tabellone.generaGrafo(), città, destinazione);
+		DijkstraShortestPath<Citta, DefaultEdge> percorso = new DijkstraShortestPath<>(tabellone.generaGrafo(), citta, destinazione);
 		return (int) percorso.getPathLength(); 
 	}
 	
@@ -64,12 +64,12 @@ public class Re {
 	 * @param destinazione is 
 	 * @return number of steps that the king must do
 	 */
-	public int muoviRe(Città destinazione){
+	public int muoviRe(Citta destinazione){
 	    if(destinazione == null)
 	    	throw new NullPointerException("La città di destinazione non può essere nulla");
-		this.città.setRe(null);
-		this.città=destinazione;
-		this.città.setRe(this);
+		this.citta.setRe(null);
+		this.citta=destinazione;
+		this.citta.setRe(this);
 		return contaPassi(destinazione);
 	}
 }
