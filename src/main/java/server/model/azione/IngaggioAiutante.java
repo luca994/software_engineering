@@ -32,19 +32,16 @@ public class IngaggioAiutante extends Azione {
 	 * @throws IOException 
 	 */
 	public void eseguiAzione (Giocatore giocatore) throws IOException{
-		
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
 			giocatore.getAssistenti().add(new Assistente());
-	//		giocatore.setAzioneOpzionale(true);
-		
+			giocatore.getStatoGiocatore().azioneRapidaEseguita();
 	}
 
 
 	@Override
 	public boolean verificaInput(Giocatore giocatore) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }

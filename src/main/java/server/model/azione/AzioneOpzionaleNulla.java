@@ -20,14 +20,15 @@ public class AzioneOpzionaleNulla extends Azione {
 	public void eseguiAzione(Giocatore giocatore) {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			//giocatore.setAzioneOpzionale(true);	
+			giocatore.getStatoGiocatore().azioneRapidaEseguita();
 	}
 
 
 	@Override
 	public boolean verificaInput(Giocatore giocatore) {
-		// TODO Auto-generated method stub
-		return false;
+		if(giocatore==null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		return true;
 	}
 
 }

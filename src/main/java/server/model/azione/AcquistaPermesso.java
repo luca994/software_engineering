@@ -47,7 +47,7 @@ public class AcquistaPermesso extends Azione {
 	 * @throws IOException
 	 * 
 	 * @throws IllegalStateException
-	 * 			   if the number of numeroConsiglieriSoddisfatti is equal of 0
+	 * 			   if the number of numeroConsiglieriSoddisfatti is equal to 0
 	 * @throws IllegalArgumentException
 	 *             if the number of Carta Politica is less than one or more than
 	 *             four

@@ -15,6 +15,7 @@ public abstract class StatoGiocatore implements Stato {
 	public abstract void azioneRapidaEseguita();
 	public abstract void azionePrincipaleAggiuntiva();
 	public abstract void azioneRapidaAggiuntiva();
+	public abstract void tuttiGliEmporiCostruiti();
 	public abstract void prossimoStato(); 
 	
 }

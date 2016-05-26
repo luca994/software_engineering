@@ -64,7 +64,7 @@ public class Controller implements Observer{
 		if(cambiamento instanceof BonusGettoneCittà){
 			try{	
 				if(!input[0].equals("passa")){
-					Citta citta = this.gioco.getTabellone().cercaCittà(input[0]);
+					Citta citta = this.gioco.getTabellone().cercaCitta(input[0]);
 					if(!((BonusGettoneCittà) cambiamento).getCittà().add(citta)){
 						((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
 						gioco.notificaObservers("la città inserita è già stata scelta");

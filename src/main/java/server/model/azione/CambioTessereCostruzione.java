@@ -9,8 +9,8 @@ import server.model.Regione;
  */
 public class CambioTessereCostruzione extends Azione {
 	
-	private Regione regione;
 	
+	private Regione regione;
 	
 	/**
 	 * @param regione
@@ -39,14 +39,17 @@ public class CambioTessereCostruzione extends Azione {
 			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
 			regione.getTessereCoperte().remove(0);
 			giocatore.getAssistenti().remove(0);
-		//	giocatore.setAzioneOpzionale(true);
+			giocatore.getStatoGiocatore().azioneRapidaEseguita();
 		
 	}
 
 
 	@Override
 	public boolean verificaInput(Giocatore giocatore) {
-		// TODO Auto-generated method stub
-		return false;
+		if (giocatore==null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		if(giocatore.getAssistenti().size()>0)
+			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
+		return true;
 	}
 }

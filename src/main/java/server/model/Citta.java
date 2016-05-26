@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  * 
@@ -16,15 +13,13 @@ import java.util.logging.Logger;
 
 public class Citta extends OggettoConBonus {
 
-	private static final Logger log= Logger.getLogger( Citta.class.getName() );
 	private final String nome;
 	private final Regione regione;
 	private Color colore;
 	private Set<Giocatore> empori;
 	private Re re;
-	private Set<Citta> cittàVicina;
-	
-	
+	private Set<Citta> cittaVicina;
+
 	/**
 	 * @param nome
 	 * @param regione
@@ -33,79 +28,28 @@ public class Citta extends OggettoConBonus {
 		super(null);
 		this.nome = nome;
 		this.regione = regione;
-		this.empori=new HashSet<Giocatore>();
-		this.cittàVicina= new HashSet<Citta>();
+		this.empori = new HashSet<>();
+		this.cittaVicina = new HashSet<>();
 	}
-	
+
 	/**
-	 * checks if there is already a player's emporium.
-	 * If there is not, add a player's emporium.
-	 * @param giocatore the player who wants to add the emporium  
-	 * @return return true if there is a player's emporium
-	 * @throws NullPointerException if giocatore is null
-	 * @throws IllegalStateException if there is already a player's emporium
-	 */
-	public void aggiungiEmporio(Giocatore giocatore){
-		try{
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(!presenzaEmporio(giocatore)){
-				empori.add(giocatore);
-			}
-			else{
-				throw new IllegalStateException("Hai già un'emporio in questa città");
-			}
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
-	}
-	
-	/**
+	 * creates a list of cities which have the player's emporium
 	 * 
-	 * @param giocatore the owner of the emporium
-	 * @return return true if there is an emporium of the player
+	 * @param giocatore
+	 *            the owner of the emporium
+	 * @return return a list of near cities which have the player's emporium
 	 */
-	public boolean presenzaEmporio(Giocatore giocatore){
-		try{
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(empori.contains(giocatore)){
-				return true;
+	/* cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione */
+	public List<Citta> cittaVicinaConEmporio(Giocatore giocatore, List<Citta> cittaVicineConEmpori) {
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		for (Citta c : cittaVicina) {
+			if (c.getEmpori().contains(giocatore) && !cittaVicineConEmpori.contains(c)) {
+				cittaVicineConEmpori.add(c);
+				c.cittaVicinaConEmporio(giocatore, cittaVicineConEmpori);
 			}
-			else{
-				return false;
-			}
 		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param giocatore the owner of the emporium
-	 * @return return a list of near cities which have the player' s emporium
-	 */
-	//cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione
-	public List<Citta> cittàVicinaConEmporio(Giocatore giocatore,List<Citta> cittàVicineConEmpori){
-		try{
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			for(Citta c:cittàVicina){
-				if (c.presenzaEmporio(giocatore)&&!cittàVicineConEmpori.contains(c)){
-					cittàVicineConEmpori.add(c);
-					c.cittàVicinaConEmporio(giocatore, cittàVicineConEmpori);
-				}
-			}
-		return cittàVicineConEmpori;
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}
+		return cittaVicineConEmpori;
 	}
 
 	/**
@@ -116,21 +60,8 @@ public class Citta extends OggettoConBonus {
 	}
 
 	/**
-	 * @param empori the empori to set
-	 */
-	public void setEmpori(Set<Giocatore> empori) {
-		this.empori = empori;
-	}
-
-	/**
-	 * @return the re
-	 */
-	public Re getRe() {
-		return re;
-	}
-
-	/**
-	 * @param re the re to set
+	 * @param re
+	 *            the re to set
 	 */
 	public void setRe(Re re) {
 		this.re = re;
@@ -140,28 +71,7 @@ public class Citta extends OggettoConBonus {
 	 * @return the cittàVicina
 	 */
 	public Set<Citta> getCittàVicina() {
-		return cittàVicina;
-	}
-
-	/**
-	 * @param cittàVicina the cittàVicina to set
-	 */
-	public void setCittàVicina(Set<Citta> cittàVicina) {
-		this.cittàVicina = cittàVicina;
-	}
-
-	/**
-	 * @return the log
-	 */
-	public static Logger getLog() {
-		return log;
-	}
-
-	/**
-	 * @return the nome
-	 */
-	public String getNome() {
-		return nome;
+		return cittaVicina;
 	}
 
 	/**
@@ -179,14 +89,24 @@ public class Citta extends OggettoConBonus {
 	}
 
 	/**
-	 * @param colore the colore to set
+	 * @param colore
+	 *            the colore to set
 	 */
 	public void setColore(Color colore) {
 		this.colore = colore;
 	}
 
-	@Override
-	public String toString() {
-		return "Città [nome=" + nome + "]";
+	/**
+	 * @return the re
+	 */
+	public Re getRe() {
+		return re;
+	}
+
+	/**
+	 * @return the nome
+	 */
+	public String getNome() {
+		return nome;
 	}
 }

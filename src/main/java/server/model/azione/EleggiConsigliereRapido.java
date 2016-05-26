@@ -1,11 +1,9 @@
 package server.model.azione;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import server.model.Consigliere;
 import server.model.Consiglio;
 import server.model.Giocatore;
+import server.model.Regione;
 
 /**
  * @author Luca
@@ -13,11 +11,11 @@ import server.model.Giocatore;
  */
 public class EleggiConsigliereRapido extends Azione {
 
-	private static final Logger log= Logger.getLogger( EleggiConsigliereRapido.class.getName() );
-	
+	private static final int NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO = 1;
+
 	private Consigliere consigliere;
 	private Consiglio consiglio;
-	
+
 	/**
 	 * @param consigliere
 	 * @param consiglio
@@ -27,48 +25,41 @@ public class EleggiConsigliereRapido extends Azione {
 		this.consigliere = consigliere;
 		this.consiglio = consiglio;
 	}
+
 	/**
-	 *Elects a specified Consigliere, 
-	 *@throws IllegalStateException if giocatore hasn't enough Aiutanti 
-	 *@param giocatore
+	 * Elects a specified Consigliere,
+	 * 
+	 * @throws IllegalStateException
+	 *             if giocatore hasn't enough Aiutanti
+	 * @param giocatore
 	 */
 	@Override
-	public void eseguiAzione (Giocatore giocatore)
-	{
-		try{
-			if(giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(!giocatore.getAssistenti().isEmpty()){
-				if(this.consiglio.addConsigliere(this.consigliere))
-				{
-					this.consiglio.removeConsigliere();
-					giocatore.getAssistenti().remove(0);
-				//	giocatore.setAzioneOpzionale(true);
-				}
-			}
-		else
+	public void eseguiAzione(Giocatore giocatore) {
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		if (giocatore.getAssistenti().size() < NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO)
 			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-			throw e;
-		}	
+
+		consiglio.addConsigliere(consigliere);
+		consiglio.removeConsigliere();
+		giocatore.getAssistenti().remove(0);
+		giocatore.getStatoGiocatore().azioneRapidaEseguita();
+
 	}
-	/**
-	 * @param consiglio the consiglio to set
-	 */
-	public void setConsiglio(Consiglio consiglio) {
-		this.consiglio = consiglio;
-	}
-	/**
-	 * @param consigliere the consigliere to set
-	 */
-	public void setConsigliere(Consigliere consigliere) {
-		this.consigliere = consigliere;
-	}
-	@Override
+
 	public boolean verificaInput(Giocatore giocatore) {
-		// TODO Auto-generated method stub
-		return false;
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		boolean consigliereValido = false;
+		boolean consiglioValido = false;
+		if (gioco.getTabellone().getConsiglieriDisponibili().contains(consigliere))
+			consigliereValido = true;
+		for (Regione regione : gioco.getTabellone().getRegioni()) {
+			if (regione.getConsiglio().equals(consiglio)) {
+				consiglioValido = true;
+				break;
+			}
+		}
+		return consiglioValido && consigliereValido;
 	}
 }

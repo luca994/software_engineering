@@ -9,7 +9,7 @@ public class TurnoNormale extends StatoGiocatore {
 	
 	private int azioniPrincipaliEseguibili;
 	private int azioniRapideEseguibili;
-	
+	private boolean tuttiGliEmporiCostruiti;
 	
 	public TurnoNormale(Giocatore giocatore){
 		super(giocatore);
@@ -66,11 +66,17 @@ public class TurnoNormale extends StatoGiocatore {
 	}
 
 
-
+	@Override
+	public void tuttiGliEmporiCostruiti() {
+		tuttiGliEmporiCostruiti=true;
+	}
 
 	@Override
 	public void prossimoStato() {
-		giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
+		if(tuttiGliEmporiCostruiti)
+			giocatore.setStatoGiocatore(new TurniConclusi(giocatore));
+		else
+			giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
 	}
 	
 }

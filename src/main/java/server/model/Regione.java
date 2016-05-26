@@ -84,7 +84,7 @@ public class Regione {
 					List<Element> elencoCittà=set.getChildren();
 					for(Element cit:elencoCittà){
 						//System.out.println(cit.getAttributeValue("id")+"  "+this.nome); //da cancellare
-						elencoRiferimentiCittà.add(tabellone.cercaCittà(cit.getAttributeValue("id"),this));
+						elencoRiferimentiCittà.add(tabellone.cercaCitta(cit.getAttributeValue("id"),this));
 					}
 				}
 				else if(set.getName().equals("SetBonus"))

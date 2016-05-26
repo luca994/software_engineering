@@ -15,8 +15,6 @@ import java.util.logging.Logger;
  */
 public class Re {
 
-	private static final Logger log= Logger.getLogger( Re.class.getName() );
-	private final Color colore;
 	private Consiglio consiglio;
 	private Citta citta;
 	private Tabellone tabellone;
@@ -25,8 +23,7 @@ public class Re {
 	 * build the king
 	 * @param colore the color of the king
 	 */
-	public Re(Color colore, Citta citta, Consiglio consiglio){
-		this.colore=colore;
+	public Re(Citta citta, Consiglio consiglio){
 		this.citta=citta;
 		this.consiglio=consiglio;
 	}

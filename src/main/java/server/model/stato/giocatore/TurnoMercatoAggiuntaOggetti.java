@@ -37,4 +37,10 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 		throw new IllegalStateException(ERRORE);
 	}
 
+	@Override
+	public void tuttiGliEmporiCostruiti() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

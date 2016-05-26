@@ -35,5 +35,11 @@ public class AttesaTurno extends StatoGiocatore {
 	public void azioneRapidaAggiuntiva() {
 		throw new IllegalStateException(ERRORE_2);
 	}
+
+	@Override
+	public void tuttiGliEmporiCostruiti() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

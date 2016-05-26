@@ -99,7 +99,7 @@ public class Gioco extends Observable{
 				gio.getAssistenti().add(new Assistente());
 			}
 			
-			this.tabellone.getPercorsoNobiltà().getCaselle().get(0).getGiocatori().add(gio);
+			this.tabellone.getPercorsoNobilta().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoVittoria().getCaselle().get(0).getGiocatori().add(gio);
 			this.tabellone.getPercorsoRicchezza().getCaselle().get(9+numGiocatore).getGiocatori().add(gio);
 			
@@ -123,18 +123,26 @@ public class Gioco extends Observable{
 			
 			for(Regione regi: tabellone.getRegioni() ){
 				for(Citta cit:regi.getTessereCoperte().get(0).getCittà()){
-					cit.aggiungiEmporio(dummy);
+					cit.getEmpori().add(dummy);
 				}
 				Collections.shuffle(regi.getTessereCoperte());
 			}}
 	
 	
 	
-	
+	/**
+	 * run the entire game.
+	 * It should be called when the game has already been initialized 
+	 * and is therefore still in Attesa state.
+	 * After the method has been executed the game will be terminated.
+	 * @throws IllegalStateException if the game is not in Attesa state. 
+	 */
 	public void eseguiPartita(){
+		if(!(statoGioco instanceof Attesa))
+				throw new IllegalStateException("Stai eseguendo una partita che è già in esecuzione!");
 		while(!(statoGioco instanceof Terminato)){
-			statoGioco.eseguiFase();
 			statoGioco.prossimoStato();
+			statoGioco.eseguiFase();
 			}
 	}
 	
@@ -168,7 +176,7 @@ public class Gioco extends Observable{
 	
 	public Set<Giocatore> calcoloVincitore() throws Exception{
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
-		ListIterator<Casella> itcasella=tabellone.getPercorsoNobiltà().getCaselle().listIterator(tabellone.getPercorsoNobiltà().getCaselle().size());
+		ListIterator<Casella> itcasella=tabellone.getPercorsoNobilta().getCaselle().listIterator(tabellone.getPercorsoNobilta().getCaselle().size());
 		while(itcasella.hasPrevious())
 		{
 			Set<Giocatore> giocatoriPiùAvanti=itcasella.previous().getGiocatori();

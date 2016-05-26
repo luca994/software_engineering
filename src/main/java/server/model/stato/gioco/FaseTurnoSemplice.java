@@ -14,11 +14,26 @@ public class FaseTurnoSemplice extends Esecuzione {
 		super(gioco);
 	}
 	
+	/**
+	 * executes this phase of the game.
+	 * if a player has build the last emporium, it starts the last turn for each other players.
+	 */
 	public void eseguiFase(){
+		boolean exit=false;
 		for(Giocatore giocat : giocatori){
+			if(giocat.getStatoGiocatore() instanceof TurniConclusi){
+				exit=true;
+				break;
+				}
 			giocat.getStatoGiocatore().prossimoStato();
 			while(giocat.getStatoGiocatore() instanceof TurnoNormale);
-		}
+			if(ultimoTurno)
+				giocat.setStatoGiocatore(new TurniConclusi(giocat));
+			if(giocat.getStatoGiocatore() instanceof TurniConclusi){
+				ultimoTurno=true;
+		}}
+		if(ultimoTurno && !exit)
+			eseguiFase();
 	}
 
 	
@@ -30,13 +45,5 @@ public class FaseTurnoSemplice extends Esecuzione {
 		else
 		gioco.setStato(new FaseTurnoMercatoAggiuntaOggetti(gioco));
 	}
-
-	/**
-	 * @param ultimoTurno the ultimoTurno to set
-	 */
-	public void setUltimoTurno(boolean ultimoTurno) {
-		this.ultimoTurno = ultimoTurno;
-	}
-
 	
 }

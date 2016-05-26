@@ -30,50 +30,49 @@ public class CostruisciEmporioConTessera extends Azione {
 	/**
 	 * Build a new emporio using a Tessera Costruzione owned by the player
 	 * 
-	 * @throws NullPointerException if giocatore is null
+	 * @throws NullPointerException
+	 *             if giocatore is null
 	 * @throws IOException
 	 */
 	@Override
 	public void eseguiAzione(Giocatore giocatore) throws IOException {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		 {
-			giocatore.moveTesseraValidaToTesseraUsata(tessera);
-			citta.aggiungiEmporio(giocatore);
-			giocatore.decrementaEmporiRimasti();
 
-			// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
-			if (giocatore.getEmporiRimasti() == 0)
-				gioco.getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
+		citta.getEmpori().add(giocatore);
+		giocatore.spostaTesseraValidaInTesseraUsata(tessera);
+		giocatore.decrementaEmporiRimasti();
 
-			// Il giocatore ottiene i bonus di questa e delle città collegate
+		// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
+		if (giocatore.getEmporiRimasti() == 0) {
+			gioco.getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
+			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
+		}
 
-			List<Citta> cittàConBonusDaOttenere = new ArrayList<Citta>();
-			cittàConBonusDaOttenere.add(citta);
-			citta.cittàVicinaConEmporio(giocatore, cittàConBonusDaOttenere);
+		// Il giocatore ottiene i bonus di questa e delle città collegate
 
-			/*
-			 * la lista cittàConBonusDaOttenere che viene creata è un lista di
-			 * città in cui viene messa inizialmente la città corrente, poi
-			 * viene chiamato il metodo cittàVicinaConEmporio che riempe la
-			 * lista con tutte le città adiacenti che hanno un emporio del
-			 * giocatore.
-			 */
+		List<Citta> cittaConBonusDaOttenere = new ArrayList<>();
+		cittaConBonusDaOttenere.add(citta);
+		citta.cittaVicinaConEmporio(giocatore, cittaConBonusDaOttenere);
 
-			for (Citta citt : cittàConBonusDaOttenere)
-				citt.eseguiBonus(giocatore);
-			// giocatore.setAzionePrincipale(true);
+		/*
+		 * la lista cittàConBonusDaOttenere che viene creata è un lista di città
+		 * in cui viene messa inizialmente la città corrente, poi viene chiamato
+		 * il metodo cittàVicinaConEmporio che riempe la lista con tutte le
+		 * città adiacenti che hanno un emporio del giocatore.
+		 */
 
-			/*
-			 * controllo se ho gli empori in tutte le città di un colore o di
-			 * una regione e prendo la tessera bonus se mi spetta (IL controllo
-			 * viene fatto direttamente dal metodo del tabellone
-			 * prendiTesseraBonus)
-			 */
+		for (Citta citt : cittaConBonusDaOttenere)
+			citt.eseguiBonus(giocatore);
 
-			gioco.getTabellone().prendiTesseraBonus(giocatore, citta);
-		} 
-			throw new IllegalStateException("L'emporio è già presente oppure la tessera non è appropriata");
+		/*
+		 * controllo se ho gli empori in tutte le città di un colore o di una
+		 * regione e prendo la tessera bonus se mi spetta (IL controllo viene
+		 * fatto direttamente dal metodo del tabellone prendiTesseraBonus)
+		 */
+		gioco.getTabellone().prendiTesseraBonus(giocatore, citta);
+
+		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class CostruisciEmporioConTessera extends Azione {
 		boolean cittaValida = false;
 		if (giocatore.getTessereValide().contains(tessera))
 			tesseraValida = true;
-		if (tessera.getCittà().contains(citta))
+		if (tessera.getCittà().contains(citta) && !citta.getEmpori().contains(giocatore))
 			cittaValida = true;
 		return tesseraValida && cittaValida;
 	}
