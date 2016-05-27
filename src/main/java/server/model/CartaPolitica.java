@@ -1,8 +1,6 @@
 package server.model;
 
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Luca
@@ -10,8 +8,6 @@ import java.util.logging.Logger;
  */
 public class CartaPolitica extends OggettoVendibile {
 
-	private static final Logger log= Logger.getLogger( CartaPolitica.class.getName() );
-	
 	private final Color colore;
 
 	/**
@@ -38,13 +34,13 @@ public class CartaPolitica extends OggettoVendibile {
 		}
 	
 	@Override
-	public void transazione(Giocatore giocatore) {
-			if(giocatore==null)
+	public void compra(Giocatore nuovoProprietario) {
+			if(nuovoProprietario==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
-			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
-			giocatore.getCartePolitica().add(this);
+			transazioneDenaro(nuovoProprietario);
+			nuovoProprietario.getCartePolitica().add(this);
 			getGiocatore().getCartePolitica().remove(this);
+			resettaAttributiOggettoVendibile(nuovoProprietario);
 			getMercato().getOggettiInVendita().remove(this);
 	}
 

@@ -129,7 +129,7 @@ public class CostruisciEmporioConRe extends Azione {
 			return false;
 		if(giocatore.getCartePolitica().containsAll(cartePolitica))
 			for(Regione reg: gioco.getTabellone().getRegioni())
-				for(Citta cit: reg.getCittà())
+				for(Citta cit: reg.getCitta())
 					if(cit.equals(destinazione))
 						return true;
 		return false;

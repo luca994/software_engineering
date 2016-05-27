@@ -7,16 +7,15 @@ import server.model.Mercato;
 import server.model.OggettoVendibile;
 
 public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
-	
-	private static final String ERRORE= "Errore: il giocatore ha eseguito un'azionePrincipale durante il turno di mercato";
+
 	private Mercato mercato;
-	
-	public TurnoMercatoAggiuntaOggetti(Giocatore giocatore,Mercato mercato) {
+
+	public TurnoMercatoAggiuntaOggetti(Giocatore giocatore, Mercato mercato) {
 		super(giocatore);
-		this.mercato=mercato;
+		this.mercato = mercato;
 	}
-	
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere,int prezzo){
+
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
 		oggettoDaAggiungere.setMercato(mercato);
 		oggettoDaAggiungere.setPrezzo(prezzo);
 		oggettoDaAggiungere.setGiocatore(giocatore);
@@ -30,24 +29,22 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 
 	@Override
 	public void azionePrincipaleEseguita() {
-		throw new IllegalStateException(ERRORE);
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void azioneRapidaEseguita() {
-		throw new IllegalStateException(ERRORE);
-		
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void azionePrincipaleAggiuntiva() {
-		throw new IllegalStateException(ERRORE);
-		
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void azioneRapidaAggiuntiva() {
-		throw new IllegalStateException(ERRORE);
+		throw new IllegalStateException();
 	}
 
 	@Override
@@ -57,9 +54,6 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 
 	@Override
 	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
-		throw new IllegalStateException("Il giocatore"+giocatore+" ha eseguito un metodo per comprare un oggetto"
-				+ "durante la fase di aggiunta degli oggetti");
-		
+		throw new IllegalStateException();
 	}
-
 }

@@ -1,56 +1,65 @@
 package server.model;
 
-import java.io.IOException;
-
-import server.model.percorso.Percorso;
-
 /**
  * @author Riccardo
  *
  */
 public abstract class OggettoVendibile {
 
-	private int prezzo;
-	private Giocatore giocatore;
 	private Mercato mercato;
+	private int prezzo;
+	private Giocatore proprietario;
+
+	/**
+	 * does the transaction between two players. It will be implemented in the
+	 * subclasses
+	 * 
+	 * @param nuovoProprietario
+	 *            the player who wants to buy the object
+	 */
+	public abstract void compra(Giocatore nuovoProprietario);
+
+	/**
+	 * this method should be called by transazione, to reset the parameters of
+	 * the purchased item.
+	 */
+	public void resettaAttributiOggettoVendibile(Giocatore nuovoProprietario) {
+		proprietario = nuovoProprietario;
+		prezzo = 0;
+		mercato = null;
+	}
+
+	public void transazioneDenaro(Giocatore nuovoProprietario) {
+		mercato.getPercorsoRicchezza().muoviGiocatore(nuovoProprietario, -getPrezzo());
+		mercato.getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
+	}
 
 	/**
 	 * add an object to the list of oggettiInVendita of the market
-	 * @param mercato the market in which there is the list
+	 * 
+	 * @param mercato
+	 *            the market in which there is the list
 	 */
-	public void aggiungiOggetto(Mercato mercato){
+	public void aggiungiOggetto(Mercato mercato) {
 		mercato.getOggettiInVendita().add(this);
 	}
 
 	/**
-	 * does the transaction between two players. It will be implemented
-	 * in the subclasses
-	 * @param giocatore the player who wants to buy the object
-	 * @throws IOException 
-	 */
-	public abstract void transazione(Giocatore giocatore);
-	
-	/**
 	 * return the price
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public int getPrezzo() {
 		return prezzo;
 	}
+
 	/**
 	 * return the owner of the object
+	 * 
 	 * @return
 	 */
 	public Giocatore getGiocatore() {
-		return giocatore;
-	}
-
-	/**
-	 * 
-	 * @return the money route of the game
-	 */
-	public Percorso getPercorsoRicchezza() {
-		return getMercato().getPercorsoRicchezza();
+		return proprietario;
 	}
 
 	/**
@@ -63,7 +72,8 @@ public abstract class OggettoVendibile {
 
 	/**
 	 * 
-	 * @param prezzo the price of the object you want to sell to set
+	 * @param prezzo
+	 *            the price of the object you want to sell to set
 	 */
 	public void setPrezzo(int prezzo) {
 		this.prezzo = prezzo;
@@ -71,15 +81,17 @@ public abstract class OggettoVendibile {
 
 	/**
 	 * 
-	 * @param giocatore the player who wants to sell the object
+	 * @param giocatore
+	 *            the player who wants to sell the object
 	 */
 	public void setGiocatore(Giocatore giocatore) {
-		this.giocatore = giocatore;
+		this.proprietario = giocatore;
 	}
 
 	/**
 	 * 
-	 * @param mercato the market of the game
+	 * @param mercato
+	 *            the market of the game
 	 */
 	public void setMercato(Mercato mercato) {
 		this.mercato = mercato;

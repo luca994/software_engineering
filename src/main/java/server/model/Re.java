@@ -4,10 +4,6 @@ package server.model;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * 
  * @author Riccardo
@@ -28,22 +24,6 @@ public class Re {
 		this.consiglio=consiglio;
 	}
 	
-	/**
-	 * @return the consiglio
-	 */
-	public Consiglio getConsiglio() {
-		return consiglio;
-	}
-
-	/**
-	 * @return the città
-	 */
-	public Citta getCittà() {
-		return citta;
-	}
-	
-	
-
 	/**
 	 * counts the number of steps that the king must do to reach the destination city
 	 * @param destinazione is the end vertex
@@ -69,4 +49,21 @@ public class Re {
 		this.citta.setRe(this);
 		return contaPassi(destinazione);
 	}
+	
+	
+	
+	/**
+	 * @return the consiglio
+	 */
+	public Consiglio getConsiglio() {
+		return consiglio;
+	}
+
+	/**
+	 * @return the città
+	 */
+	public Citta getCittà() {
+		return citta;
+	}
+	
 }

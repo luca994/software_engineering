@@ -193,7 +193,7 @@ public class Tabellone {
 		Element collegamentiRootElement = documentCollegamenti.getRootElement();
 		List<Element> elencoCitta = collegamentiRootElement.getChildren();
 		for (Regione reg : regioni) {
-			for (Citta cit : reg.getCittà()) {
+			for (Citta cit : reg.getCitta()) {
 				// ora devo leggere il file delle città e trovare il match, con
 				// il nome, coloro e collego
 				for (Element cittaMappa : elencoCitta) {
@@ -283,7 +283,7 @@ public class Tabellone {
 		if (nome == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Regione regione : this.regioni) {
-			for (Citta cit : regione.getCittà()) {
+			for (Citta cit : regione.getCitta()) {
 				if (cit.getNome().equals(nome)) {
 					return cit;
 				}
@@ -307,7 +307,7 @@ public class Tabellone {
 	public Citta cercaCitta(String nome, Regione regione) {
 		if (nome == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
-		for (Citta cit : regione.getCittà()) {
+		for (Citta cit : regione.getCitta()) {
 			if (cit.getNome().equals(nome)) {
 				return cit;
 			}
@@ -329,7 +329,7 @@ public class Tabellone {
 	 */
 	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta) {
 		for (Regione r : regioni) {
-			for (Citta c : r.getCittà()) {
+			for (Citta c : r.getCitta()) {
 				if (citta.getColore() == c.getColore() && !c.getEmpori().contains(giocatore)) {
 					return false;
 				}
@@ -348,7 +348,7 @@ public class Tabellone {
 	 *         region
 	 */
 	public boolean verificaEmporioRegioneBonus(Giocatore giocatore, Citta citta) {
-		for (Citta c : citta.getRegione().getCittà()) {
+		for (Citta c : citta.getRegione().getCitta()) {
 			if (!c.getEmpori().contains(giocatore)) {
 				return false;
 			}
@@ -423,13 +423,13 @@ public class Tabellone {
 		UndirectedGraph<Citta, DefaultEdge> mappa = new SimpleGraph<>(DefaultEdge.class);
 
 		for (Regione reg : regioni) {
-			for (Citta cit : reg.getCittà()) {
+			for (Citta cit : reg.getCitta()) {
 				mappa.addVertex(cit);
 			}
 		}
 
 		for (Regione reg : regioni) {
-			for (Citta cit : reg.getCittà()) {
+			for (Citta cit : reg.getCitta()) {
 				for (Citta cit1 : cit.getCittàVicina()) {
 					mappa.addEdge(cit, cit1);
 				}

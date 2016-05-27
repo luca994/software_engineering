@@ -14,10 +14,18 @@ import server.model.Gioco;
  */
 public abstract class Esecuzione extends StatoGioco {
 
-	protected List<Giocatore> giocatori;
+	private final List<Giocatore> giocatori;
 	
 	public Esecuzione(Gioco gioco) {
 		super(gioco);
 		this.giocatori=gioco.getGiocatori();
 	}
+
+	/**
+	 * @return the giocatori
+	 */
+	public List<Giocatore> getGiocatori() {
+		return giocatori;
+	}
+
 }

@@ -8,13 +8,13 @@ public class Assistente extends OggettoVendibile {
 	
 	
 	@Override
-	public void transazione(Giocatore giocatore) {
-			if(giocatore==null)
+	public void compra(Giocatore nuovoProprietario) {
+			if(nuovoProprietario==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
-			getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
-			giocatore.getAssistenti().add(this);
+			transazioneDenaro(nuovoProprietario);
+			nuovoProprietario.getAssistenti().add(this);
 			getGiocatore().getAssistenti().remove(this);
+			resettaAttributiOggettoVendibile(nuovoProprietario);
 			getMercato().getOggettiInVendita().remove(this);
 	}
 	

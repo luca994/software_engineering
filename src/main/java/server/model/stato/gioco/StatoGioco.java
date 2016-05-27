@@ -5,7 +5,7 @@ import server.model.stato.Stato;
 
 public abstract class StatoGioco implements Stato {
 
-	protected final Gioco gioco;
+	private final Gioco gioco;
 	
 	public StatoGioco(Gioco gioco){
 		this.gioco=gioco;
@@ -14,4 +14,12 @@ public abstract class StatoGioco implements Stato {
 	public abstract void eseguiFase();
 	
 	public abstract void prossimoStato();
+
+	/**
+	 * @return the gioco
+	 */
+	public Gioco getGioco() {
+		return gioco;
+	}
+	
 }

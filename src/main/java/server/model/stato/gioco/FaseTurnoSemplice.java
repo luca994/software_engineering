@@ -15,12 +15,13 @@ public class FaseTurnoSemplice extends Esecuzione {
 	}
 	
 	/**
-	 * executes this phase of the game.
-	 * if a player has build the last emporium, it starts the last turn for each other players.
+	 * before executing the method , all players must be in the state of AttesaTurno
+	 * Executes a regular turn for each players, and
+	 * if a player has build the last emporium, it executes the last turn for each other players.
 	 */
 	public void eseguiFase(){
 		boolean exit=false;
-		for(Giocatore giocat : giocatori){
+		for(Giocatore giocat : getGiocatori()){
 			if(giocat.getStatoGiocatore() instanceof TurniConclusi){
 				exit=true;
 				break;
@@ -37,13 +38,13 @@ public class FaseTurnoSemplice extends Esecuzione {
 	}
 
 	
-	
+
 	@Override
 	public void prossimoStato() {
 		if(ultimoTurno)
-			gioco.setStato(new Terminato(gioco));
+			getGioco().setStato(new Terminato(getGioco()));
 		else
-		gioco.setStato(new FaseTurnoMercatoAggiuntaOggetti(gioco));
+		getGioco().setStato(new FaseTurnoMercatoAggiuntaOggetti(getGioco()));
 	}
 	
 }

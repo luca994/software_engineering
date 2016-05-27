@@ -17,6 +17,6 @@ public class Attesa extends StatoGioco {
 	
 	@Override
 	public void prossimoStato(){
-		gioco.setStato(new FaseTurnoSemplice(gioco));
+		getGioco().setStato(new FaseTurnoSemplice(getGioco()));
 	}
 }

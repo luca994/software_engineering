@@ -1,7 +1,5 @@
 package server.model.stato.giocatore;
 
-import java.lang.instrument.IllegalClassFormatException;
-
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
 
@@ -41,13 +39,12 @@ public class TurniConclusi extends StatoGiocatore {
 	}
 
 	@Override
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo)
-			throws IllegalClassFormatException {
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
+	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) {
 		throw new IllegalStateException();
 	}
 

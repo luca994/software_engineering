@@ -28,14 +28,12 @@ public class Gioco extends Observable{
 	
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
-	private Mercato mercato;
 	private StatoGioco statoGioco;
 	
 	public Gioco (){
 
 		giocatori=new ArrayList<>();
 		this.tabellone=null;
-		this.mercato=null;
 		this.statoGioco=new Attesa(this);
 	} 
 	
@@ -78,8 +76,7 @@ public class Gioco extends Observable{
 		if(giocatori.size()==2)
 			inizializzazioneGiocatoreDummy();
 		
-		/*Setup mercato */
-		mercato=new Mercato(tabellone.getPercorsoRicchezza());
+		new Mercato(tabellone.getPercorsoRicchezza());
 		
 		}
 	

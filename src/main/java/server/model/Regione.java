@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -23,169 +22,168 @@ import server.model.bonus.BonusCreator;
  */
 public class Regione {
 
-	Logger log = Logger.getLogger(Regione.class.getName());
-	
+
 	private Set<Citta> citta;
 	private Consiglio consiglio;
 	private String nome;
 	private List<TesseraCostruzione> tessereCostruzione;
 	private List<TesseraCostruzione> tessereCoperte;
-	private Tabellone tabellone;
 	
 	/**
 	 * build the region
-	 * @param nomeRegione the name of the region
-	 * @param nomiCittà the list of the cities names
-	 * @param tabellone the game board
+	 * 
+	 * @param nomeRegione
+	 *            the name of the region
+	 * @param nomiCitta
+	 *            the list of the cities names
+	 * @param tabellone
+	 *            the game board
 	 * @throws JDOMException
-	 * @throws IOException if the file doesn't exist or there is an error in the file reading
+	 * @throws IOException
+	 *             if the file doesn't exist or there is an error in the file
+	 *             reading
 	 */
-	public Regione(String nomeRegione, List<String> nomiCittà, Tabellone tabellone) throws JDOMException, IOException{
-		this.tabellone=tabellone;
-		this.nome=nomeRegione;
-		this.tessereCostruzione=new ArrayList<TesseraCostruzione>();
-		this.tessereCoperte=new ArrayList<TesseraCostruzione>();
-		this.citta= new HashSet<Citta>();
-		creaCittà(nomiCittà);		
-		//Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri dalla lista dei consiglieri disponibili
-		//Devo passagli il tabellone, altrimenti non so dove andare a prendere i nuovi consiglieri
-		this.consiglio=new Consiglio(tabellone);
+	public Regione(String nomeRegione, List<String> nomiCitta, Tabellone tabellone) throws JDOMException, IOException {
+		this.nome = nomeRegione;
+		this.tessereCostruzione = new ArrayList<>();
+		this.tessereCoperte = new ArrayList<>();
+		this.citta = new HashSet<>();
+		creaCitta(nomiCitta);
+		// Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri
+		// dalla lista dei consiglieri disponibili
+		// Devo passagli il tabellone, altrimenti non so dove andare a prendere
+		// i nuovi consiglieri
+		this.consiglio = new Consiglio(tabellone);
 		this.consiglio.setRegione(this);
-		//Crea tessere permesso
+		// Crea tessere permesso
 		creaTesserePermesso(tabellone);
 	}
-	
+
 	/**
-	 * creates permit tiles reading them from a file. Then assigns the tiles to the list of tiles of the region 
-	 * @param tabellone the game board
+	 * creates permit tiles reading them from a file. Then assigns the tiles to
+	 * the list of tiles of the region
+	 * 
+	 * @param tabellone
+	 *            the game board
 	 * @throws JDOMException
-	 * @throws IOException if the file doesn't exist or there is an error in the file reading 
+	 * @throws IOException
+	 *             if the file doesn't exist or there is an error in the file
+	 *             reading
 	 */
-	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException{
+	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException {
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
-		//Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("src/main/resources/TessereCostruzione"+this.nome+".xml");
-		//Leggo file e creo le TesserePermessoDiCostruzione
+		// Creo il nome del file a partire dal nome della regione
+		String nomefile = new String("src/main/resources/TessereCostruzione" + this.nome + ".xml");
+		// Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
-		Element tessereRootElement=documentTessereCostruzione.getRootElement();
-		List<Element> elencoTessere =tessereRootElement.getChildren();
-		List<TesseraCostruzione> elencoRiferimentiTessere =new ArrayList<TesseraCostruzione>(15);
-		for(Element tessere: elencoTessere)//scorro le tessere nel file
+		Element tessereRootElement = documentTessereCostruzione.getRootElement();
+		List<Element> elencoTessere = tessereRootElement.getChildren();
+		List<TesseraCostruzione> elencoRiferimentiTessere = new ArrayList<>(15);
+		for (Element tessere : elencoTessere)// scorro le tessere nel file
 		{
-			List<Element> elencoSet =tessere.getChildren();
-			Set<Bonus> bonusTessera =new HashSet<Bonus>(3);
-			Set<Citta> elencoRiferimentiCittà=new HashSet<Citta>(3);
-			for(Element set:elencoSet)//Scorro i set di bonus e città nel file
+			List<Element> elencoSet = tessere.getChildren();
+			Set<Bonus> bonusTessera = new HashSet<>(3);
+			Set<Citta> elencoRiferimentiCitta = new HashSet<>(3);
+			for (Element set : elencoSet)// Scorro i set di bonus e città nel
+											// file
 			{
-				if(set.getName().equals("SetCittà"))
-				{
-					
-					List<Element> elencoCittà=set.getChildren();
-					for(Element cit:elencoCittà){
-						//System.out.println(cit.getAttributeValue("id")+"  "+this.nome); //da cancellare
-						elencoRiferimentiCittà.add(tabellone.cercaCitta(cit.getAttributeValue("id"),this));
+				if ("SetCittà".equals(set.getName())) {
+
+					List<Element> elencoCitta = set.getChildren();
+					for (Element cit : elencoCitta) {
+						elencoRiferimentiCitta.add(tabellone.cercaCitta(cit.getAttributeValue("id"), this));
 					}
-				}
-				else if(set.getName().equals("SetBonus"))
-				{
-					List<Element> elencoBonus=set.getChildren();
-					for(Element bon:elencoBonus)
-					{
-						if(bon.getAttributeValue("attributo")!=null)
-							bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), Integer.parseInt(bon.getAttributeValue("attributo")),tabellone.getGioco()));
-						else{
-							bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), 0,tabellone.getGioco()));
+				} else if ("SetBonus".equals(set.getName())) {
+					List<Element> elencoBonus = set.getChildren();
+					for (Element bon : elencoBonus) {
+						if (bon.getAttributeValue("attributo") != null)
+							bonusTessera.add(bonusCreator.creaBonus(bon.getAttributeValue("id"),
+									Integer.parseInt(bon.getAttributeValue("attributo")), tabellone.getGioco()));
+						else {
+							bonusTessera
+									.add(bonusCreator.creaBonus(bon.getAttributeValue("id"), 0, tabellone.getGioco()));
 						}
 					}
 				}
 			}
-			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera,elencoRiferimentiCittà,this));
+			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera, elencoRiferimentiCitta, this));
 		}
 		setTessereCoperte(elencoRiferimentiTessere);
-		
-		//da cancellare
-		/*
-		for(TesseraCostruzione t:elencoRiferimentiTessere){
-			System.out.println(t.getRegioneDiAppartenenza().getNome()+"     "+t);
-			System.out.println("    ");
-			for(Città c:t.getCittà()){
-				System.out.println(c);
-			}
-		}*/
 	}
-	
+
 	/**
 	 * creates the cities of a region
-	 * @param nomiCittà the list of names of the cities
+	 * 
+	 * @param nomiCitta
+	 *            the list of names of the cities
 	 */
-	public void creaCittà(List<String> nomiCittà){
-		for(String nome: nomiCittà)//Creo città
-		{
-			this.citta.add(new Citta(nome,this));
+	public void creaCitta(List<String> nomiCitta) {
+		for (String nomeCit : nomiCitta) {
+			this.citta.add(new Citta(nomeCit, this));
 		}
-		//da cancellare
-		/*for(Città c:this.città){
-			System.out.println(c.getNome()+"    "+c);
-		}*/
 	}
-	
+
 	/**
 	 * sets the covered permit tiles of a region.
-	 * @param elencoRiferimentiTessere the list of permit tiles to set in the region
+	 * 
+	 * @param elencoRiferimentiTessere
+	 *            the list of permit tiles to set in the region
 	 */
-	public void setTessereCoperte(List<TesseraCostruzione> elencoRiferimentiTessere){
-		this.tessereCoperte=elencoRiferimentiTessere;
+	public void setTessereCoperte(List<TesseraCostruzione> elencoRiferimentiTessere) {
+		this.tessereCoperte = elencoRiferimentiTessere;
 		Collections.shuffle(this.tessereCoperte);
 		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
 		this.tessereCostruzione.add(this.tessereCoperte.remove(0));
 	}
-	
+
 	/**
-	 *Removes the parameter tessera from the list of obtainable Tessere Permesso Costruzione and moves the first
-	 *element of the covered Tessere Permesso Costruzione in to the list of obtainable Tessere
+	 * Removes the parameter tessera from the list of obtainable Tessere
+	 * Permesso Costruzione and moves the first element of the covered Tessere
+	 * Permesso Costruzione in to the list of obtainable Tessere
+	 * 
 	 * @param tessera
 	 */
-	public void nuovaTessera(TesseraCostruzione tessera)
-	{
-		if(this.tessereCostruzione.remove(tessera)){
+	public void nuovaTessera(TesseraCostruzione tessera) {
+		if (this.tessereCostruzione.remove(tessera)) {
 			this.tessereCostruzione.add(this.tessereCoperte.get(0));
 			this.tessereCoperte.remove(0);
 		}
 	}
-	
+
 	/**
 	 * @return the città
 	 */
-	public Set<Citta> getCittà() {
+	public Set<Citta> getCitta() {
 		return citta;
 	}
+
 	/**
 	 * @return the consiglio
 	 */
 	public Consiglio getConsiglio() {
 		return consiglio;
 	}
-	
+
 	/**
 	 * @return the nome
 	 */
 	public String getNome() {
 		return nome;
 	}
-	
+
 	/**
 	 * @return the tessereCostruzione
 	 */
 	public List<TesseraCostruzione> getTessereCostruzione() {
 		return tessereCostruzione;
 	}
-	
+
 	/**
 	 * @return the tessereCoperte
 	 */
 	public List<TesseraCostruzione> getTessereCoperte() {
 		return tessereCoperte;
 	}
-	
+
 }
