@@ -118,7 +118,7 @@ public class Percorso {
 	 *            the number of steps
 	 * @throws IOException
 	 */
-	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi){
+	private void muoviGiocatoreAvanti(Giocatore giocatore, int passi){
 		Casella casellacorrente = null;
 		ListIterator<Casella> itcasella = this.caselle.listIterator();
 		while (itcasella.hasNext())// mentre scorro le caselle controllo di non
@@ -154,7 +154,7 @@ public class Percorso {
 	 * @param passi
 	 *            the number of steps
 	 */
-	public void muoviGiocatoreIndietro(Giocatore giocatore, int passi) {
+	private void muoviGiocatoreIndietro(Giocatore giocatore, int passi) {
 
 		ListIterator<Casella> itcasella = this.caselle.listIterator(caselle.size());
 		while (itcasella.hasPrevious()) {
