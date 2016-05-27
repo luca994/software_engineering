@@ -38,15 +38,7 @@ public class Percorso {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * builds a route from a file
-	 * @param nomefile the file path
-	 * @param tabellone the game board
-	 * @throws JDOMException if there is a problem in the reading of the file
-	 * @throws IOException if the file doesn't exist or there is an error in the file reading
-	 * @throws NullPointerException if nomefile or tabellone is null
-=======
-	 * build a route from a file
 	 * 
 	 * @param nomefile
 	 *            the file path
@@ -56,7 +48,6 @@ public class Percorso {
 	 * @throws IOException
 	 *             if the file doesn't exist or there is an error in the file
 	 *             reading
->>>>>>> branch 'master' of https://Ric18@bitbucket.org/luca994/ingsw.git
 	 */
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
