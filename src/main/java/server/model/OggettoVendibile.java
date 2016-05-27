@@ -28,7 +28,7 @@ public abstract class OggettoVendibile {
 	 * @param giocatore the player who wants to buy the object
 	 * @throws IOException 
 	 */
-	public abstract void transazione(Giocatore giocatore) throws IOException;
+	public abstract void transazione(Giocatore giocatore);
 	
 	/**
 	 * return the price

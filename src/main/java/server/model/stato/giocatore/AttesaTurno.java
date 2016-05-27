@@ -1,6 +1,10 @@
 package server.model.stato.giocatore;
 
+
+import java.lang.instrument.IllegalClassFormatException;
+
 import server.model.Giocatore;
+import server.model.OggettoVendibile;
 
 public class AttesaTurno extends StatoGiocatore {
 
@@ -38,8 +42,18 @@ public class AttesaTurno extends StatoGiocatore {
 
 	@Override
 	public void tuttiGliEmporiCostruiti() {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo)
+			throws IllegalClassFormatException {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
+		throw new IllegalStateException();		
 	}
 	
 }
