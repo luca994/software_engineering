@@ -18,7 +18,7 @@ public class ParseColor{
 			case 16762880 : return "ORANGE";
 			case 65535 : return "CYAN";
 			case 16756655 : return "PINK";
-			default : throw new IllegalStateException("il colore inserito non va bene");
+			default : throw new IllegalStateException("il colore inserito non è corretto");
 		}
 	}
 	
@@ -35,7 +35,7 @@ public class ParseColor{
 			case "ORANGE" : return 16762880;
 			case "CYAN" : return 65535;
 			case "PINK" : return 16756655;
-			default : throw new IllegalStateException("il colore inserito non va bene");
+			default : throw new IllegalStateException("il colore inserito non è corretto");
 		}
 	}
 	
@@ -52,19 +52,18 @@ public class ParseColor{
 	 * 
 	 * @param color the string of the color
 	 * @return the object color which has the string color as name
-	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
-	 * @throws SecurityException 
-	 * @throws NoSuchFieldException 
-	 * @throws Exception if the string isn't correct
+	 * @throws NoSuchFieldException if the color isn't correct
 	 */
-	public static Color colorStringToColor(String color){
+	public static Color colorStringToColor(String color) throws NoSuchFieldException{
 		Field field;
-			try {
-				field = Color.class.getField(color.toLowerCase());
-				return (Color)field.get(null);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				e.printStackTrace();}
-			return null;}
+		try{
+			field = Color.class.getField(color.toLowerCase());
+			return (Color)field.get(null);
+		}
+		catch(IllegalAccessException | IllegalArgumentException e){
+			throw new IllegalArgumentException();
+		}
+	}
 	
 }
