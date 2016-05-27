@@ -118,8 +118,12 @@ public class Tabellone {
 			// col costruttore
 			// passandogli come parametro il valore dell'attributo colore letto
 			// dagli elementi del file xml
-			this.consiglieriDisponibili
-					.add(new Consigliere(ParseColor.colorStringToColor(consi.getAttributeValue("colore"))));
+			try {
+				this.consiglieriDisponibili
+						.add(new Consigliere(ParseColor.colorStringToColor(consi.getAttributeValue("colore"))));
+			} catch (NoSuchFieldException e) {
+				throw new IllegalStateException("i colori nel file dei consiglieri non sono corretti");
+			}
 		}
 
 		Collections.shuffle(consiglieriDisponibili);
@@ -194,19 +198,24 @@ public class Tabellone {
 				// il nome, coloro e collego
 				for (Element cittaMappa : elencoCitta) {
 					if (cittaMappa.getAttributeValue("nome").equals(cit.getNome())) {
-						cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
-						if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
-							Re re = new Re(cit, new Consiglio(this));
-							cit.setRe(re);
-							this.setRe(re);
-						} else {
-							// cit.getBonus().addAll(gettoniCittà.get(0));
-							cit.setBonus(gettoniCitta.get(0));
-							gettoniCitta.remove(0);
+						try{
+							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
+							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
+								Re re = new Re(cit, new Consiglio(this));
+								cit.setRe(re);
+								this.setRe(re);
+							} else {
+								// cit.getBonus().addAll(gettoniCittà.get(0));
+								cit.setBonus(gettoniCitta.get(0));
+								gettoniCitta.remove(0);
+							}
+							List<Element> elencoCollegamenti = cittaMappa.getChildren();
+							for (Element coll : elencoCollegamenti) {
+								cit.getCittàVicina().add(cercaCitta(coll.getText()));
+							}
 						}
-						List<Element> elencoCollegamenti = cittaMappa.getChildren();
-						for (Element coll : elencoCollegamenti) {
-							cit.getCittàVicina().add(cercaCitta(coll.getText()));
+						catch(NoSuchFieldException e){
+							throw new IllegalStateException("i colori delle città nei file non sono corretti");
 						}
 					}
 				}
