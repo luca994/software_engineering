@@ -45,6 +45,6 @@ public class BonusPuntoVittoria implements Bonus {
 	{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere null");
-			percorsoVittoria.muoviGiocatoreAvanti(giocatore, steps);
+			percorsoVittoria.muoviGiocatore(giocatore, steps);
 	}
 }

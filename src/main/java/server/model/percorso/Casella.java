@@ -14,11 +14,18 @@ import server.model.Giocatore;
 public abstract class Casella {
 	
 	private Set<Giocatore> giocatori;
-	
+
+	/**
+	 * builds a box
+	 */
 	public Casella(){
-		this.giocatori= new HashSet<Giocatore>();
+		this.giocatori=new HashSet<>();
 	}
 	
+	/**
+	 * set the set of players
+	 * @param giocatori the set of players to set
+	 */
 	public void setGiocatori(Set<Giocatore> giocatori) {
 		this.giocatori = giocatori;
 	}

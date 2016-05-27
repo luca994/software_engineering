@@ -1,19 +1,27 @@
 package testPercorso;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jdom2.JDOMException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Tabellone;
+import server.model.bonus.Bonus;
+import server.model.bonus.BonusMoneta;
+import server.model.percorso.Casella;
+import server.model.percorso.CasellaConBonus;
+import server.model.percorso.CasellaSenzaBonus;
 import server.model.percorso.Percorso;
 
 public class TestPercorso {
@@ -34,8 +42,14 @@ public class TestPercorso {
 	}
 	
 	@Test
-	public void testGetCaselle() {
-		fail("Not yet implemented");
+	public void testGetCaselle() throws JDOMException, IOException {
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		List<Casella> caselleProva = new ArrayList<>();
+		for(int i=0;i<6;i++)
+			caselleProva.add(new CasellaSenzaBonus());
+		percorso.getCaselle().clear();
+		percorso.getCaselle().addAll(caselleProva);
+		assertEquals(caselleProva, percorso.getCaselle());
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -49,25 +63,46 @@ public class TestPercorso {
 	}
 
 	@Test
-	public void testMuoviGiocatore() throws Exception {
+	public void testMuoviGiocatoreWithPositiveSteps() throws Exception {
 		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
 		percorso.getCaselle().get(0).setGiocatori(giocatori);
-		percorso.muoviGiocatore(g1, 4);	
+		percorso.muoviGiocatore(g1, 50);
+		assertEquals(20,percorso.posizioneAttualeGiocatore(g1));
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testMuoviGiocatoreWithNegativeSteps() throws Exception {
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		percorso.getCaselle().get(0).setGiocatori(giocatori);
+		percorso.muoviGiocatore(g1, -5);
+		assertEquals(0,percorso.posizioneAttualeGiocatore(g1));
 	}
 
 	@Test
-	public void testMuoviGiocatoreAvanti() {
-		fail("Not yet implemented");
+	public void testPosizioneAttualeGiocatore() throws JDOMException, IOException {
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		percorso.getCaselle().get(14).setGiocatori(giocatori);
+		assertEquals(14, percorso.posizioneAttualeGiocatore(g1));
 	}
-
+	
 	@Test
-	public void testMuoviGiocatoreIndietro() {
-		fail("Not yet implemented");
+	public void testMuoviGiocatoreWithNegativeStepsWithoutException() throws JDOMException, IOException{
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		percorso.getCaselle().get(4).setGiocatori(giocatori);
+		percorso.muoviGiocatore(g1, -4);
+		percorso.muoviGiocatore(g2, -2);
+		assertEquals(0, percorso.posizioneAttualeGiocatore(g1));
+		assertEquals(2, percorso.posizioneAttualeGiocatore(g2));
 	}
-
+	/*
 	@Test
-	public void testPosizioneAttualeGiocatore() {
-		fail("Not yet implemented");
-	}
+	public void testBonusRoute() throws JDOMException, IOException{
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		Set<Bonus> bonus = new HashSet<>();
+		bonus.add(new BonusMoneta(percorso, 6));
+		percorso.getCaselle().set(5,new CasellaConBonus(bonus));
+		percorso.muoviGiocatore(g1, 5);
+		assertEquals(11, percorso.posizioneAttualeGiocatore(g1));
+	}*/
 
 }

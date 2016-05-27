@@ -21,6 +21,8 @@ public class CasellaConBonus extends Casella {
 	private Set<Bonus> bonus;
 	
 	public CasellaConBonus (Set<Bonus> bonus){
+		if(bonus==null)
+			throw new NullPointerException("il bonus non può essere nullo");
 		this.bonus=bonus;
 	}
 	
