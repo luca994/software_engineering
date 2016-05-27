@@ -18,7 +18,7 @@ public class Mercato {
 	 * build the object
 	 */
 	public Mercato(Percorso percorsoRicchezza){
-		oggettiInVendita=new ArrayList<OggettoVendibile>();
+		oggettiInVendita=new ArrayList<>();
 		this.percorsoRicchezza=percorsoRicchezza;
 	}
 

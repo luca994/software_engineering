@@ -56,7 +56,7 @@ public class BonusGettoneCittà implements Bonus {
 	}
 
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException{
+	public void azioneBonus(Giocatore giocatore) throws IOException {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			for(int i=0; i<numeroCittà; i++)
