@@ -38,7 +38,7 @@ public class BonusTesseraPermesso implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException{
+	public void azioneBonus(Giocatore giocatore){
 			gioco.notificaObservers(this);
 			giocatore.getTessereValide().add(tessera);
 			tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);

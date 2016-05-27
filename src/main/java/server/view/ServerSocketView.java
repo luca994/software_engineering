@@ -11,7 +11,7 @@ import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
-import server.model.bonus.BonusGettoneCittà;
+import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.observer.Observable;
@@ -28,82 +28,70 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	private ObjectOutputStream socketOut;
 	private Giocatore giocatore;
 	
-	public ServerSocketView(Gioco gioco,Socket socket, Giocatore nuovoGiocatore) throws IOException{
+	public ServerSocketView(Gioco gioco,Socket socket, Giocatore nuovoGiocatore){
 		gioco.registerObserver(this);
 		this.giocatore=nuovoGiocatore;
 		this.socket=socket;
-		this.socketIn=new ObjectInputStream(socket.getInputStream());
-		this.socketOut=new ObjectOutputStream(socket.getOutputStream());
+		try {
+			this.socketIn=new ObjectInputStream(socket.getInputStream());
+			this.socketOut=new ObjectOutputStream(socket.getOutputStream());
+		} catch (IOException e) {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	public String ottieniStringa(String messaggioInformativo){
 		try {
 			socketOut.writeObject(messaggioInformativo);
 			socketOut.flush();
-			String messaggioInput=(String) 
-			socketIn.readObject();
-			return messaggioInput;
+			return (String)socketIn.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
+			throw new IllegalArgumentException();
 		}
 		
 	}
-	
+	@Override
 	public void run(){
 		while(true)
 		{
-			try {
-				Object object = socketIn.readObject();
-				if(object instanceof Azione){
-					this.notificaObservers(object);
+				Object object;
+				try {
+					object = socketIn.readObject();
+				} catch (ClassNotFoundException | IOException e) {
+					throw new IllegalArgumentException();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		}
-	}
+				if(object instanceof Azione)
+					this.notificaObservers(object);
+		
+	}}
 	
 	@Override
-	public <Bonus> void update(Bonus cambiamento) throws IOException{
-		if(cambiamento instanceof BonusGettoneCittà){
-			String[] nomeCittà = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
+	public <Bonus> void update(Bonus cambiamento){
+		if(cambiamento instanceof BonusGettoneCitta){
+			String[] nomeCitta = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
 					+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
-			this.notificaObservers(cambiamento, nomeCittà);
+			this.notificaObservers(cambiamento, nomeCitta);
 		}
 		if(cambiamento instanceof BonusTesseraPermesso){
 			String[] tessera = {ottieniStringa("Inserisci il numero della tessera permesso che vuoi ottenere")};
-			try{
 				this.notificaObservers(cambiamento, tessera);
-			}
-			catch(IllegalArgumentException e){
-				socketOut.writeObject(e.getMessage());
-				socketOut.flush();
-				update(cambiamento);
-			}
 		}
 		if(cambiamento instanceof BonusRiutilizzoCostruzione){
-			try{
 				Giocatore gio=((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
 				for(TesseraCostruzione t:gio.getTessereUsate()){
-					socketOut.writeObject(t.toString());	
-				}
+					try {
+						socketOut.writeObject(t.toString());
+					} catch (IOException e) {
+						throw new IllegalArgumentException();
+					}	
 				String numLista= ottieniStringa("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				String numTessera = ottieniStringa("inserisci il numero della tessera da riciclare");
 				String[] array = {numLista,numTessera};
 				this.notificaObservers(cambiamento,array);
-			}
-			catch(IllegalArgumentException e){
-				socketOut.writeObject(e.getMessage());
-				socketOut.flush();
-				update(cambiamento);
-			}
 		}
-	}
+	}}
 	
 	@Override
 	public void update(Object cambiamento, String[] input) {
-	
 	}
 }

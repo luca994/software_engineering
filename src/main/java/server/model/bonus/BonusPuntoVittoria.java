@@ -41,7 +41,7 @@ public class BonusPuntoVittoria implements Bonus {
 	 * @throws Exception 
 	 */
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException 
+	public void azioneBonus(Giocatore giocatore) 
 	{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere null");

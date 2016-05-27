@@ -39,7 +39,6 @@ public class CartaPolitica extends OggettoVendibile {
 	
 	@Override
 	public void transazione(Giocatore giocatore) {
-		try{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
@@ -47,10 +46,6 @@ public class CartaPolitica extends OggettoVendibile {
 			giocatore.getCartePolitica().add(this);
 			getGiocatore().getCartePolitica().remove(this);
 			getMercato().getOggettiInVendita().remove(this);
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
-		}
 	}
 
 	/**

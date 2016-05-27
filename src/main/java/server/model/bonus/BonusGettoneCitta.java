@@ -15,7 +15,7 @@ import server.model.Gioco;
  * @author Massimiliano Ventura
  *
  */
-public class BonusGettoneCittà implements Bonus {
+public class BonusGettoneCitta implements Bonus {
 
 	
 	//private Cambiamento cambiamento;
@@ -24,7 +24,7 @@ public class BonusGettoneCittà implements Bonus {
 	private Gioco gioco;
 	boolean cittàGiusta;
 	
-	public BonusGettoneCittà(int numeroCittà, Gioco gioco)
+	public BonusGettoneCitta(int numeroCittà, Gioco gioco)
 	{
 		//cambiamento = new Cambiamento();
 		this.gioco=gioco;
@@ -56,7 +56,7 @@ public class BonusGettoneCittà implements Bonus {
 	}
 
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException {
+	public void azioneBonus(Giocatore giocatore) {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			for(int i=0; i<numeroCittà; i++)
@@ -66,7 +66,7 @@ public class BonusGettoneCittà implements Bonus {
 					gioco.notificaObservers(this);
 					for(Citta c:citta){
 						for(Bonus b:c.getBonus()){
-							if(b instanceof BonusPercorsoNobiltà){
+							if(b instanceof BonusPercorsoNobilta){
 								cittàGiusta=false;
 								citta.remove(c);
 								gioco.notificaObservers("C'è un bonus percorso nobiltà");

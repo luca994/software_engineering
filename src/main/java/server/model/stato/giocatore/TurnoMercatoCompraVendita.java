@@ -8,7 +8,6 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 	
 	public TurnoMercatoCompraVendita(Giocatore giocatore) {
 		super(giocatore);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

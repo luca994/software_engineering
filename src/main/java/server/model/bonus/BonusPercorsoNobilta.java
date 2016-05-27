@@ -10,13 +10,13 @@ import server.model.percorso.Percorso;
  *previously set number of steps (from file) along the victory route
  * @author Massimiliano Ventura
  */
-public class BonusPercorsoNobiltà implements Bonus {
+public class BonusPercorsoNobilta implements Bonus {
 
 	
 	private final int steps;
 	private final Percorso percorsoNobiltà;
 	
-	public BonusPercorsoNobiltà(Percorso percorsoNobiltà, int steps)
+	public BonusPercorsoNobilta(Percorso percorsoNobiltà, int steps)
 	{
 		this.percorsoNobiltà=percorsoNobiltà;
 		this.steps=steps;
@@ -37,7 +37,7 @@ public class BonusPercorsoNobiltà implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException {
+	public void azioneBonus(Giocatore giocatore) {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			percorsoNobiltà.muoviGiocatoreAvanti(giocatore, steps);

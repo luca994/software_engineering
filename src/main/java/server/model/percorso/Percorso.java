@@ -95,7 +95,7 @@ public class Percorso {
 	 *            the number of steps
 	 * @throws IOException
 	 */
-	public void muoviGiocatore(Giocatore giocatore, int passi) throws IOException {
+	public void muoviGiocatore(Giocatore giocatore, int passi){
 		if (passi > 0)
 			muoviGiocatoreAvanti(giocatore, passi);
 		else if (passi < 0) {
@@ -118,7 +118,7 @@ public class Percorso {
 	 *            the number of steps
 	 * @throws IOException
 	 */
-	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi) throws IOException {
+	public void muoviGiocatoreAvanti(Giocatore giocatore, int passi){
 		Casella casellacorrente = null;
 		ListIterator<Casella> itcasella = this.caselle.listIterator();
 		while (itcasella.hasNext())// mentre scorro le caselle controllo di non
