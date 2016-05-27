@@ -18,7 +18,7 @@ public abstract class Observable {
 		}
 	}
 	
-	public <T> void notificaObservers(T cambiamento) throws IOException {
+	public <T> void notificaObservers(T cambiamento) throws IOException{
 		for(Observer o:observers){
 			o.update(cambiamento);
 		}

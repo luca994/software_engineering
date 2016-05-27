@@ -1,7 +1,6 @@
 package server.model;
 
 import java.awt.Color;
-import java.awt.color.ColorSpace;
 import java.lang.reflect.Field;
 
 public class ParseColor{
@@ -53,17 +52,19 @@ public class ParseColor{
 	 * 
 	 * @param color the string of the color
 	 * @return the object color which has the string color as name
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
 	 * @throws Exception if the string isn't correct
 	 */
 	public static Color colorStringToColor(String color){
 		Field field;
-		try {
-			field = Color.class.getField(color.toLowerCase());
-			return (Color)field.get(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+			try {
+				field = Color.class.getField(color.toLowerCase());
+				return (Color)field.get(null);
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+				e.printStackTrace();}
+			return null;}
 	
 }

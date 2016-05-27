@@ -4,7 +4,7 @@ import java.util.Set;
 
 import server.model.bonus.Bonus;
 
-public class TesseraBonusCittà extends TesseraBonus {
+public class TesseraBonusCitta extends TesseraBonus {
 
 	private String colore;
 	
@@ -13,7 +13,7 @@ public class TesseraBonusCittà extends TesseraBonus {
 	 * @param bonus the set of bonus of the tile
 	 * @param colore the color of the cities associated to the tile
 	 */
-	public TesseraBonusCittà(Set<Bonus> bonus, String colore) {
+	public TesseraBonusCitta(Set<Bonus> bonus, String colore) {
 		super(bonus);
 		this.colore=colore;
 	}

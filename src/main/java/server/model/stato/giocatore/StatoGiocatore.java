@@ -11,5 +11,11 @@ public abstract class StatoGiocatore implements Stato {
 		this.giocatore=giocatore;
 	}
 	
+	public abstract void azionePrincipaleEseguita();
+	public abstract void azioneRapidaEseguita();
+	public abstract void azionePrincipaleAggiuntiva();
+	public abstract void azioneRapidaAggiuntiva();
+	public abstract void tuttiGliEmporiCostruiti();
 	public abstract void prossimoStato(); 
+	
 }

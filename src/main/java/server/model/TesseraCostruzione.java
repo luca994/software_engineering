@@ -1,39 +1,37 @@
 package server.model;
 
+import java.io.IOException;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import server.model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile{
 
-	private static final Logger log= Logger.getLogger( TesseraCostruzione.class.getName() );
-	private Set<Città> città;
+	private Set<Citta> citta;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;
 	
 	/**
 	 * @param bonus
-	 * @param città
+	 * @param citta
 	 * @param regioneDiAppartenenza
 	 */
-	public TesseraCostruzione(Set<Bonus> bonus, Set<Città> città, Regione regioneDiAppartenenza) {
+	public TesseraCostruzione(Set<Bonus> bonus, Set<Citta> citta, Regione regioneDiAppartenenza) {
 		this.bonus=bonus;
-		this.città = città;
+		this.citta = citta;
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 	
-	public boolean verifyCittà(Città cittàDaVerificare){
-		return this.città.contains(cittàDaVerificare);
+	public boolean verifyCittà(Citta cittàDaVerificare){
+		return this.citta.contains(cittàDaVerificare);
 		}
 	
 	/**
 	 * assigns all the bonuses in the set of bonus
 	 * @param giocatore
-	 * @throws Exception 
+	 * @throws IOException  
 	 */
-	public void eseguiBonus (Giocatore giocatore) throws Exception{
+	public void eseguiBonus (Giocatore giocatore) throws IOException{
 		for(Bonus b : bonus){
 			b.azioneBonus(giocatore);
 		}
@@ -49,8 +47,8 @@ public class TesseraCostruzione extends OggettoVendibile{
 	/**
 	 * @return the città
 	 */
-	public Set<Città> getCittà() {
-		return città;
+	public Set<Citta> getCittà() {
+		return citta;
 	}
 	
 	/**
@@ -62,10 +60,10 @@ public class TesseraCostruzione extends OggettoVendibile{
 
 
 	/**
-	 * @param città the città to set
+	 * @param citta the città to set
 	 */
-	public void setCittà(Set<Città> città) {
-		this.città = città;
+	public void setCittà(Set<Citta> citta) {
+		this.citta = citta;
 	}
 
 
@@ -77,8 +75,7 @@ public class TesseraCostruzione extends OggettoVendibile{
 	}
 
 	@Override
-	public void transazione(Giocatore giocatore) {
-		try{
+	public void transazione(Giocatore giocatore) throws IOException {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
@@ -86,15 +83,11 @@ public class TesseraCostruzione extends OggettoVendibile{
 			giocatore.getTessereValide().add(this);
 			getGiocatore().getTessereValide().remove(this);
 			getMercato().getOggettiInVendita().remove(this);
-		}
-		catch(Exception e){
-			log.log(Level.WARNING, e.getMessage(), e);
-		}
 	}
 
 	@Override
 	public String toString() {
-		return "TesseraCostruzione [città=" + città + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
+		return "TesseraCostruzione [città=" + citta + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
 				+ bonus + "]";
 	}
 	
