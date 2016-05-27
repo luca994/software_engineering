@@ -11,24 +11,25 @@ import server.model.Giocatore;
  *
  */
 public class BonusAssistenti implements Bonus {
-	
+
 	private int numeroAssistenti;
-	
-	
-	public BonusAssistenti(int numeroAssistenti){
-		this.numeroAssistenti=numeroAssistenti;
+
+	public BonusAssistenti(int numeroAssistenti) {
+		this.numeroAssistenti = numeroAssistenti;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see model.Bonus#azioneBonus(model.Giocatore)
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-			if(giocatore==null)
+		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-			
-		for(int i=0;i<numeroAssistenti;i++)
-		giocatore.getAssistenti().add(new Assistente());
+
+		for (int i = 0; i < numeroAssistenti; i++)
+			giocatore.getAssistenti().add(new Assistente());
 	}
-	
+
 }

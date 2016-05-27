@@ -3,8 +3,6 @@
  */
 package server.model.bonus;
 
-import java.io.IOException;
-
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.TesseraCostruzione;
