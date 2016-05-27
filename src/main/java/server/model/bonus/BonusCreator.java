@@ -33,9 +33,9 @@ public class BonusCreator {
 		else if("BonusAssistenti".equals(tipoBonus)) 
 			return new BonusAssistenti(attributo);
 		else if("BonusPercorsoNobiltà".equals(tipoBonus)) 
-			return new BonusPercorsoNobiltà(tabellone.getPercorsoNobilta(), attributo);
+			return new BonusPercorsoNobilta(tabellone.getPercorsoNobilta(), attributo);
 		else if("BonusGettoneCittà".equals(tipoBonus)) 
-			return new BonusGettoneCittà(attributo,gioco);
+			return new BonusGettoneCitta(attributo,gioco);
 		else if("BonusAzionePrincipale".equals(tipoBonus))
 			return new BonusAzionePrincipale();
 		else if("BonusRiutilizzoCostruzione".equals(tipoBonus)) 

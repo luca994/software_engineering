@@ -149,31 +149,6 @@ public class Gioco extends Observable{
 	
 	
 	
-	/**
-	 * the player can add an object in the list oggettiInVendita
-	 * @param giocatore the player who wants to add an object in the market
-	 * @param oggetto the object you want to sell
-	 */
-	public void faseMercatoVendita(Giocatore giocatore, OggettoVendibile oggetto){
-		int prezzo=0;
-		oggetto.aggiungiOggetto(mercato);
-		//bisogna chiamare il metodo per chiedere il prezzo (controller)
-		oggetto.setPrezzo(prezzo);
-		oggetto.setGiocatore(giocatore);
-	}
-	
-	/**
-	 * a player can buy object in the list of oggettiInVendita
-	 * @param giocatore the player who wants to buy the objects
-	 * @param oggetto the object the player wants to buy
-	 * @throws IOException 
-	 */
-	public void faseMercatoAcquisto(Giocatore giocatore, OggettoVendibile oggetto) throws IOException{
-		oggetto.transazione(giocatore);
-	}
-	
-	
-	
 	public Set<Giocatore> calcoloVincitore() throws Exception{
 		//Controllo chi è più avanti nel percorso nobiltà e assegno punti
 		ListIterator<Casella> itcasella=tabellone.getPercorsoNobilta().getCaselle().listIterator(tabellone.getPercorsoNobilta().getCaselle().size());
@@ -210,7 +185,8 @@ public class Gioco extends Observable{
 			}
 			
 		}
-		//Conto tessere permesso e assegno punti
+		
+		/* Conto tessere permesso e assegno punti */
 		int numTesserePermesso=-1;
 		Giocatore giocatorePiùPermessi=new Giocatore(null,null);
 		for(Giocatore gio: giocatori)

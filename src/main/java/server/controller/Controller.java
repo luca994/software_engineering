@@ -12,7 +12,7 @@ import server.model.Gioco;
 import server.model.Regione;
 import server.model.TesseraCostruzione;
 import server.model.bonus.Bonus;
-import server.model.bonus.BonusGettoneCittà;
+import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.observer.Observer;
@@ -61,19 +61,19 @@ public class Controller implements Observer{
 
 	@Override
 	public <Bonus> void update(Bonus cambiamento, String[] input) {
-		if(cambiamento instanceof BonusGettoneCittà){
+		if(cambiamento instanceof BonusGettoneCitta){
 			try{	
 				if(!input[0].equals("passa")){
 					Citta citta = this.gioco.getTabellone().cercaCitta(input[0]);
-					if(!((BonusGettoneCittà) cambiamento).getCittà().add(citta)){
-						((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
+					if(!((BonusGettoneCitta) cambiamento).getCittà().add(citta)){
+						((BonusGettoneCitta) cambiamento).setCittàGiusta(false);
 						gioco.notificaObservers("la città inserita è già stata scelta");
 					}
 					else return;
 					}
 			}
 			catch(IllegalArgumentException e){
-				((BonusGettoneCittà) cambiamento).setCittàGiusta(false);
+				((BonusGettoneCitta) cambiamento).setCittàGiusta(false);
 				try {
 					gioco.notificaObservers(e.getMessage());
 				} catch (Exception e1) {

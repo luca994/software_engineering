@@ -17,5 +17,5 @@ public interface Bonus {
 	 * @throws IOException 
 	 * 
 	 */
-	public abstract void azioneBonus(Giocatore giocatore) throws IOException;
+	public abstract void azioneBonus(Giocatore giocatore);
 }

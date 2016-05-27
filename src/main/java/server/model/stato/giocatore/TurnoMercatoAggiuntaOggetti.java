@@ -39,8 +39,6 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 
 	@Override
 	public void tuttiGliEmporiCostruiti() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

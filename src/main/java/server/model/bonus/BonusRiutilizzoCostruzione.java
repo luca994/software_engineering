@@ -49,7 +49,7 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	}
 
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException {
+	public void azioneBonus(Giocatore giocatore){
 		
 			this.giocatore=giocatore;
 			if(giocatore==null)

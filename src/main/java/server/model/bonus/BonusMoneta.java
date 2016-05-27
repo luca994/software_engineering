@@ -21,7 +21,7 @@ public class BonusMoneta implements Bonus {
 	}
 	
 	@Override
-	public void azioneBonus(Giocatore giocatore) throws IOException
+	public void azioneBonus(Giocatore giocatore)
 	{
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
