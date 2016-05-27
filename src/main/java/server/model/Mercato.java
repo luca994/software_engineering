@@ -13,13 +13,13 @@ public class Mercato {
 
 	private List<OggettoVendibile> oggettiInVendita;
 	private Percorso percorsoRicchezza;
-	
+
 	/**
 	 * build the object
 	 */
-	public Mercato(Percorso percorsoRicchezza){
-		oggettiInVendita=new ArrayList<>();
-		this.percorsoRicchezza=percorsoRicchezza;
+	public Mercato(Percorso percorsoRicchezza) {
+		oggettiInVendita = new ArrayList<>();
+		this.percorsoRicchezza = percorsoRicchezza;
 	}
 
 	/**
@@ -37,6 +37,5 @@ public class Mercato {
 	public Percorso getPercorsoRicchezza() {
 		return percorsoRicchezza;
 	}
-	
-	
+
 }

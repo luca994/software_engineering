@@ -85,8 +85,9 @@ public class Tabellone {
 	}
 
 	/**
-	 * creates the various paths by calling the respective constructors.
-	 * This method is called only by tabellone's constructor
+	 * creates the various paths by calling the respective constructors. This
+	 * method is called only by tabellone's constructor
+	 * 
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
@@ -99,8 +100,7 @@ public class Tabellone {
 	/**
 	 * creates a list of initial counselors available in the board by reading
 	 * the file the total number of directors to be instantiated and the color
-	 * of each of them .
-	 * This method is called only by tabellone's constructor
+	 * of each of them . This method is called only by tabellone's constructor
 	 * 
 	 * @throws JDOMException
 	 * @throws IOException
@@ -132,8 +132,7 @@ public class Tabellone {
 	/**
 	 * creates regions by reading the name of the file, also adds to each region
 	 * the list of cities that comprise it. Even the latter obviously is read
-	 * from file.
-	 * This method is called only by tabellone's constructor
+	 * from file. This method is called only by tabellone's constructor
 	 * 
 	 * @throws JDOMException
 	 * @throws IOException
@@ -176,8 +175,8 @@ public class Tabellone {
 			for (Element bon : elencoBonus) { // Leggo i set di bonus, li
 												// inizializzo e li copio nella
 												// lista di bonus
-					bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"),
-							Integer.parseInt(bon.getAttributeValue("attributo")), gioco));
+				bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"),
+						Integer.parseInt(bon.getAttributeValue("attributo")), gioco));
 			}
 			gettoniCitta.add(bonus);// Aggiungo i set di bonus alla lista di
 									// bonus
@@ -198,7 +197,7 @@ public class Tabellone {
 				// il nome, coloro e collego
 				for (Element cittaMappa : elencoCitta) {
 					if (cittaMappa.getAttributeValue("nome").equals(cit.getNome())) {
-						try{
+						try {
 							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
 							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
 								Re re = new Re(cit, new Consiglio(this));
@@ -213,8 +212,7 @@ public class Tabellone {
 							for (Element coll : elencoCollegamenti) {
 								cit.getCittàVicina().add(cercaCitta(coll.getText()));
 							}
-						}
-						catch(NoSuchFieldException e){
+						} catch (NoSuchFieldException e) {
 							throw new IllegalStateException("i colori delle città nei file non sono corretti");
 						}
 					}
@@ -249,23 +247,23 @@ public class Tabellone {
 			// leggo il tipo di bonus e l' attributo da assegnare alla tessera
 			Element tipoBonus = t.getChild("Bonus");
 			Set<Bonus> bonus = new HashSet<>();
-				bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"),
-						Integer.parseInt(tipoBonus.getAttributeValue("attributo")), gioco));
-				// creo le tessere bonus per la regione
-				if ("regione".equals(t.getAttributeValue("id"))) {
-					tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator
-							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
-				}
-				// costruisco le tessere bonus per le città
-				else if ("città".equals(t.getAttributeValue("id"))) {
-					tessereBonusCitta.add((TesseraBonusCitta) tesseraBonusCreator
-							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
-				}
-				// costruisco le tessere premio del re
-				else if ("premioRe".equals(t.getAttributeValue("id"))) {
-					tesserePremioRe.add((TesseraPremioRe) tesseraBonusCreator
-							.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
-				}
+			bonus.add(bonusCreator.creaBonus(tipoBonus.getAttributeValue("id"),
+					Integer.parseInt(tipoBonus.getAttributeValue("attributo")), gioco));
+			// creo le tessere bonus per la regione
+			if ("regione".equals(t.getAttributeValue("id"))) {
+				tessereBonusRegione.add((TesseraBonusRegione) tesseraBonusCreator
+						.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+			}
+			// costruisco le tessere bonus per le città
+			else if ("città".equals(t.getAttributeValue("id"))) {
+				tessereBonusCitta.add((TesseraBonusCitta) tesseraBonusCreator
+						.creaTesseraBonus(t.getAttributeValue("id"), t.getAttributeValue("attributo"), bonus));
+			}
+			// costruisco le tessere premio del re
+			else if ("premioRe".equals(t.getAttributeValue("id"))) {
+				tesserePremioRe.add((TesseraPremioRe) tesseraBonusCreator.creaTesseraBonus(t.getAttributeValue("id"),
+						t.getAttributeValue("attributo"), bonus));
+			}
 		}
 	}
 
@@ -314,7 +312,6 @@ public class Tabellone {
 		}
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
-
 
 	/**
 	 * check if a player has an emporium every the city of a color

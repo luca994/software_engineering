@@ -3,7 +3,6 @@ package server.model.tesserebonus;
 import java.util.Set;
 
 import server.model.OggettoConBonus;
-import server.model.Regione;
 import server.model.bonus.Bonus;
 
 /**

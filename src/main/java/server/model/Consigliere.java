@@ -25,5 +25,4 @@ public class Consigliere {
 		return colore;
 	}
 
-	
 }

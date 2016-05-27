@@ -1,17 +1,13 @@
 package server.model;
 
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import server.model.bonus.Bonus;
 
 public abstract class OggettoConBonus {
 
-	private static final Logger log= Logger.getLogger( OggettoConBonus.class.getName() );
 	private Set<Bonus> bonus;
-	
-	
+
 	/**
 	 * @param bonus
 	 */
@@ -19,16 +15,11 @@ public abstract class OggettoConBonus {
 		this.bonus = bonus;
 	}
 
-	public void eseguiBonus (Giocatore giocatore){
-		try{
-			if(giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			for(Bonus b : bonus){
-				b.azioneBonus(giocatore);
-			}
-		}
-		catch(Exception e){
-			log.log( Level.WARNING,e.getLocalizedMessage(),e );
+	public void eseguiBonus(Giocatore giocatore) {
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		for (Bonus b : bonus) {
+			b.azioneBonus(giocatore);
 		}
 	}
 
@@ -41,11 +32,12 @@ public abstract class OggettoConBonus {
 
 	/**
 	 * set the set of bonus
-	 * @param bonus the set bonus to set
+	 * 
+	 * @param bonus
+	 *            the set bonus to set
 	 */
 	public void setBonus(Set<Bonus> bonus) {
 		this.bonus = bonus;
 	}
-	
-	
+
 }

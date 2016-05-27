@@ -22,13 +22,12 @@ import server.model.bonus.BonusCreator;
  */
 public class Regione {
 
-
 	private Set<Citta> citta;
 	private Consiglio consiglio;
 	private String nome;
 	private List<TesseraCostruzione> tessereCostruzione;
 	private List<TesseraCostruzione> tessereCoperte;
-	
+
 	/**
 	 * build the region
 	 * 
@@ -49,13 +48,8 @@ public class Regione {
 		this.tessereCoperte = new ArrayList<>();
 		this.citta = new HashSet<>();
 		creaCitta(nomiCitta);
-		// Creo consiglio, andrà lui a pigliarsi i primi quattro consiglieri
-		// dalla lista dei consiglieri disponibili
-		// Devo passagli il tabellone, altrimenti non so dove andare a prendere
-		// i nuovi consiglieri
 		this.consiglio = new Consiglio(tabellone);
 		this.consiglio.setRegione(this);
-		// Crea tessere permesso
 		creaTesserePermesso(tabellone);
 	}
 

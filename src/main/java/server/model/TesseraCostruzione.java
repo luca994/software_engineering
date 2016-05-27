@@ -5,52 +5,53 @@ import java.util.Set;
 
 import server.model.bonus.Bonus;
 
-public class TesseraCostruzione extends OggettoVendibile{
+public class TesseraCostruzione extends OggettoVendibile {
 
 	private Set<Citta> citta;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;
-	
+
 	/**
 	 * @param bonus
 	 * @param citta
 	 * @param regioneDiAppartenenza
 	 */
 	public TesseraCostruzione(Set<Bonus> bonus, Set<Citta> citta, Regione regioneDiAppartenenza) {
-		this.bonus=bonus;
+		this.bonus = bonus;
 		this.citta = citta;
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
-	
-	public boolean verifyCittà(Citta cittàDaVerificare){
+
+	public boolean verifyCittà(Citta cittàDaVerificare) {
 		return this.citta.contains(cittàDaVerificare);
-		}
-	
+	}
+
 	/**
 	 * assigns all the bonuses in the set of bonus
+	 * 
 	 * @param giocatore
-	 * @throws IOException  
+	 * @throws IOException
 	 */
-	public void eseguiBonus (Giocatore giocatore) throws IOException{
-		for(Bonus b : bonus){
+	public void eseguiBonus(Giocatore giocatore) throws IOException {
+		for (Bonus b : bonus) {
 			b.azioneBonus(giocatore);
 		}
 	}
-	
+
 	/**
 	 * @return the bonus
 	 */
 	public Set<Bonus> getBonus() {
 		return bonus;
 	}
-	
+
 	/**
 	 * @return the città
 	 */
 	public Set<Citta> getCittà() {
 		return citta;
 	}
-	
+
 	/**
 	 * @return the regioneDiAppartenenza
 	 */
@@ -58,31 +59,31 @@ public class TesseraCostruzione extends OggettoVendibile{
 		return regioneDiAppartenenza;
 	}
 
-
 	/**
-	 * @param citta the città to set
+	 * @param citta
+	 *            the città to set
 	 */
 	public void setCittà(Set<Citta> citta) {
 		this.citta = citta;
 	}
 
-
 	/**
-	 * @param regioneDiAppartenenza the regioneDiAppartenenza to set
+	 * @param regioneDiAppartenenza
+	 *            the regioneDiAppartenenza to set
 	 */
 	public void setRegioneDiAppartenenza(Regione regioneDiAppartenenza) {
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 
 	@Override
-	public void compra(Giocatore nuovoProprietario){
-			if(nuovoProprietario==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			transazioneDenaro(nuovoProprietario);
-			nuovoProprietario.getTessereValide().add(this);
-			getGiocatore().getTessereValide().remove(this);
-			resettaAttributiOggettoVendibile(nuovoProprietario);
-			getMercato().getOggettiInVendita().remove(this);
+	public void compra(Giocatore nuovoProprietario) {
+		if (nuovoProprietario == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		transazioneDenaro(nuovoProprietario);
+		nuovoProprietario.getTessereValide().add(this);
+		getGiocatore().getTessereValide().remove(this);
+		resettaAttributiOggettoVendibile(nuovoProprietario);
+		getMercato().getOggettiInVendita().remove(this);
 	}
 
 	@Override
@@ -90,6 +91,5 @@ public class TesseraCostruzione extends OggettoVendibile{
 		return "TesseraCostruzione [città=" + citta + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
 				+ bonus + "]";
 	}
-	
-	
+
 }
