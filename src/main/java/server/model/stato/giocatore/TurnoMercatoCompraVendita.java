@@ -1,10 +1,13 @@
 package server.model.stato.giocatore;
 
+import java.lang.instrument.IllegalClassFormatException;
+
 import server.model.Giocatore;
+import server.model.OggettoVendibile;
 
 public class TurnoMercatoCompraVendita extends TurnoMercato {
 
-	private static final String ERRORE= "Errore: il giocatore ha eseguito un'azionePrincipale durante il turno di mercato";
+	private static final String ERRORE= "Errore: il giocatore ha eseguito un'azione normale durante il turno di mercato";
 	
 	public TurnoMercatoCompraVendita(Giocatore giocatore) {
 		super(giocatore);
@@ -38,8 +41,18 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 
 	@Override
 	public void tuttiGliEmporiCostruiti() {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalStateException(ERRORE);
+	}
+
+	@Override
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo)
+			throws IllegalClassFormatException {
+		throw new IllegalStateException("Il giocatore"+giocatore+" ha eseguito un metodo per aggiungere un oggetto al mercato"
+				+ "durante la fase di compravendita");
+	}
+
+	@Override
+	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
 	}
 
 }

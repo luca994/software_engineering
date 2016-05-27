@@ -1,6 +1,9 @@
 package server.model.stato.giocatore;
 
+import java.lang.instrument.IllegalClassFormatException;
+
 import server.model.Giocatore;
+import server.model.OggettoVendibile;
 
 public class TurnoNormale extends StatoGiocatore {
 	
@@ -77,6 +80,19 @@ public class TurnoNormale extends StatoGiocatore {
 			giocatore.setStatoGiocatore(new TurniConclusi(giocatore));
 		else
 			giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
+	}
+
+
+	@Override
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo)
+			throws IllegalClassFormatException {
+		throw new IllegalStateException("Il giocatore"+giocatore+" ha eseguito un metodo di mercato durante la fase del turno");
+	}
+
+
+	@Override
+	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
+		throw new IllegalStateException("Il giocatore"+giocatore+" ha eseguito un metodo di mercato durante la fase del turno");
 	}
 	
 }

@@ -1,7 +1,5 @@
 package server.model;
 
-import java.io.IOException;
-
 /**
  * @author Luca
  *
@@ -10,7 +8,7 @@ public class Assistente extends OggettoVendibile {
 	
 	
 	@Override
-	public void transazione(Giocatore giocatore) throws IOException {
+	public void transazione(Giocatore giocatore) {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			getPercorsoRicchezza().muoviGiocatore(giocatore, -getPrezzo());
