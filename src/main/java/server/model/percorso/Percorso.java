@@ -38,7 +38,7 @@ public class Percorso {
 	}
 
 	/**
-	 * build a route from a file
+	 * builds a route from a file
 	 * 
 	 * @param nomefile
 	 *            the file path
@@ -49,7 +49,10 @@ public class Percorso {
 	 *             if the file doesn't exist or there is an error in the file
 	 *             reading
 	 */
-	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException{
+	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
+	{
+		if(nomefile==null || tabellone==null)
+			throw new NullPointerException("il nomefile e il tabellone non possono essere nulli");
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
 		Document documentPercorso = builderPercorso.build(new File(nomefile));
