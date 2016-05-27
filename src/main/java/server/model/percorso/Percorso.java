@@ -40,14 +40,17 @@ public class Percorso {
 	}
 	
 	/**
-	 * build a route from a file
+	 * builds a route from a file
 	 * @param nomefile the file path
 	 * @param tabellone the game board
-	 * @throws JDOMException
+	 * @throws JDOMException if there is a problem in the reading of the file
 	 * @throws IOException if the file doesn't exist or there is an error in the file reading
+	 * @throws NullPointerException if nomefile or tabellone is null
 	 */
 	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
 	{
+		if(nomefile==null || tabellone==null)
+			throw new NullPointerException("il nomefile e il tabellone non possono essere nulli");
 		this.tabellone=tabellone;
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
