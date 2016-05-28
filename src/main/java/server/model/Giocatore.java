@@ -70,6 +70,20 @@ public class Giocatore {
 		tessereValide.remove(tesseraToMove);
 		tessereUsate.add(tesseraToMove);
 	}
+	
+	/**
+	 * calculate and return the total number
+	 * of tessereCostruzione of the player
+	 * @return the number of numeroPermessiTotali
+	 */
+	public int numeroPermessiTotali(){
+		return tessereUsate.size()+tessereValide.size();
+	}
+	
+	public int numeroAiutantiECartePolitica(){
+		return assistenti.size()+cartePolitica.size();
+	}
+	
 
 	/**
 	 * @return the nome

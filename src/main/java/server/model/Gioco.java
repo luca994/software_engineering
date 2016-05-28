@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
+
 import org.jdom2.JDOMException;
 
-import server.model.percorso.Casella;
 import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.Esecuzione;
 import server.model.stato.gioco.StatoGioco;
@@ -138,81 +136,6 @@ public class Gioco extends Observable {
 			statoGioco.prossimoStato();
 			statoGioco.eseguiFase();
 		}
-	}
-
-	public Set<Giocatore> calcoloVincitore() throws Exception {
-		// Controllo chi è più avanti nel percorso nobiltà e assegno punti
-		ListIterator<Casella> itcasella = tabellone.getPercorsoNobilta().getCaselle()
-				.listIterator(tabellone.getPercorsoNobilta().getCaselle().size());
-		while (itcasella.hasPrevious()) {
-			Set<Giocatore> giocatoriPiùAvanti = itcasella.previous().getGiocatori();
-			if (!itcasella.hasPrevious()) {
-				// System.out.println("Sei all'inizio del percorso, nella prima
-				// casella\n");
-				break;
-			}
-			if (!giocatoriPiùAvanti.isEmpty()) {
-				// ho trovato i giocatori più avanzati, gli assegno il punteggio
-				for (Giocatore gio : giocatoriPiùAvanti)
-					tabellone.getPercorsoVittoria().muoviGiocatore(gio, 5);
-				int numGiocatoriPiùAvanti = giocatoriPiùAvanti.size();
-				if (numGiocatoriPiùAvanti > 1) {
-					break;
-				} else {
-					while (itcasella.hasPrevious()) {
-						Set<Giocatore> giocatoriSecondi = itcasella.previous().getGiocatori();
-						if (!giocatoriSecondi.isEmpty()) {
-							// Assegno punti ai secondi
-							for (Giocatore gio : giocatoriSecondi)
-								tabellone.getPercorsoVittoria().muoviGiocatore(gio, 2);
-							break;
-						}
-					}
-					break;
-				}
-			}
-
-		}
-
-		/* Conto tessere permesso e assegno punti */
-		int numTesserePermesso = -1;
-		Giocatore giocatorePiùPermessi = new Giocatore(null, null);
-		for (Giocatore gio : giocatori) {
-			if ((gio.getTessereUsate().size() + gio.getTessereValide().size()) > numTesserePermesso) {
-				numTesserePermesso = (gio.getTessereUsate().size() + gio.getTessereValide().size());
-				giocatorePiùPermessi = gio;
-			}
-		}
-		tabellone.getPercorsoVittoria().muoviGiocatore(giocatorePiùPermessi, 3);
-
-		/* Calcolo vincitore */
-
-		itcasella = tabellone.getPercorsoVittoria().getCaselle()
-				.listIterator(tabellone.getPercorsoVittoria().getCaselle().size());
-		while (itcasella.hasPrevious()) {
-			Casella casellaVincitori = itcasella.previous();
-			Set<Giocatore> vincitore = casellaVincitori.getGiocatori();
-			if (vincitore.isEmpty()) {
-				if (vincitore.size() < 1)
-					return vincitore;
-				else {
-					int paramVittoria = -1;// Somma tessere e aiutanti
-					for (Giocatore gio : vincitore) {
-						if ((gio.getAssistenti().size() + gio.getTessereValide().size()
-								+ gio.getTessereValide().size()) > paramVittoria)
-							paramVittoria = gio.getAssistenti().size() + gio.getTessereValide().size()
-									+ gio.getTessereValide().size();
-					}
-					for (Giocatore gio : vincitore) {
-						if ((gio.getAssistenti().size() + gio.getTessereValide().size()
-								+ gio.getTessereValide().size()) < paramVittoria)
-							vincitore.remove(gio);
-					}
-					return vincitore;
-				}
-			}
-		}
-		throw new IllegalStateException("Errore nel calcolo del percorso");
 	}
 
 	/**
