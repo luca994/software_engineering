@@ -98,17 +98,6 @@ public class GiocatoreTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link server.model.Giocatore#spostaTesseraValidaInTesseraUsata(server.model.TesseraCostruzione)}
-	 * .
-	 */
-	@Test
-	public void testSpostaTesseraValidaInTesseraUsata() {
-		//fail("Not yet implemented");
-	}
-
-
-	/**
 	 * Test method for {@link server.model.Giocatore#getNome()}.
 	 */
 	@Test
@@ -148,58 +137,6 @@ public class GiocatoreTest {
 		giocatoreTester.setColore(Color.red);
 		assertEquals(Color.red, giocatoreTester.getColore());
 	}
-
-
-	/**
-	 * Test method for {@link server.model.Giocatore#getTessereUsate()}.
-	 */
-	@Test
-	public void testGetTessereUsate() {
-		//fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for
-	 * {@link server.model.Giocatore#setTessereUsate(java.util.List)}.
-	 */
-	@Test
-	public void testSetTessereUsate() {
-		//fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link server.model.Giocatore#getTessereValide()}.
-	 */
-	@Test
-	public void testGetTessereValide() {
-		//fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for
-	 * {@link server.model.Giocatore#setTessereValide(java.util.List)}.
-	 */
-	@Test
-	public void testSetTessereValide() {
-		//fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link server.model.Giocatore#getEmporiRimasti()}.
-	 */
-	@Test
-	public void testGetEmporiRimasti() {
-		//fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link server.model.Giocatore#setEmporiRimasti(int)}.
-	 */
-	@Test
-	public void testSetEmporiRimasti() {
-		//fail("Not yet implemented");
-	}
-
 	
 	/**
 	 * Test method for

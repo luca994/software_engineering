@@ -1,12 +1,10 @@
 package server.model;
 
 import java.awt.Color;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.jdom2.JDOMException;
 
 import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.Esecuzione;
@@ -28,9 +26,9 @@ public class Gioco extends Observable {
 	private StatoGioco statoGioco;
 
 	/**
-	 * Constructor of Gioco.
-	 * instantiate an object of type Gioco with an arrayList of giocatori, initially empty,
-	 * with the StatoGioco set to Attesa, and with tabellone set to null.
+	 * Constructor of Gioco. instantiate an object of type Gioco with an
+	 * arrayList of giocatori, initially empty, with the StatoGioco set to
+	 * Attesa, and with tabellone set to null.
 	 */
 	public Gioco() {
 
@@ -39,15 +37,16 @@ public class Gioco extends Observable {
 		this.statoGioco = new Attesa(this);
 	}
 
-
 	/**
-	 * initializes the game environment
-	 * Before call this method you have to add Giocatori to Gioco, and the game must not already be in Esecuzione
-	 * it create the tabellone, initializes the attributes of the Giocatori to participate in a game.
-	 * If there are only two Giocatori , this method performs the extra initialization
+	 * initializes the game environment Before call this method you have to add
+	 * Giocatori to Gioco, and the game must not already be in Esecuzione it
+	 * create the tabellone, initializes the attributes of the Giocatori to
+	 * participate in a game. If there are only two Giocatori , this method
+	 * performs the extra initialization
 	 * 
-	 * @throws IllegalArgumentException if the list of Giocatori is less than MIN_NUM_GIOCATORI
-	 * @throws IllegalStateException 
+	 * @throws IllegalArgumentException
+	 *             if the list of Giocatori is less than MIN_NUM_GIOCATORI
+	 * @throws IllegalStateException
 	 */
 	public void inizializzaPartita() {
 
@@ -61,24 +60,20 @@ public class Gioco extends Observable {
 																				 * dal
 																				 * controller
 																				 */
-		
-		try {
-			this.tabellone = new Tabellone(nomeMappaScelta, this);
-		} catch (JDOMException | IOException e) {
-			throw new IllegalArgumentException("Errore nella lettura dei file!");
-		}
-		
+
+		this.tabellone = new Tabellone(nomeMappaScelta, this);
+
 		inizializzaGiocatori();
 
 		/* Setup aggiuntivo per 2 giocatori */
 		if (giocatori.size() == 2)
 			inizializzazioneGiocatoreDummy();
 
-
 	}
+
 	/**
-	 * initializes the parameters of the players and prepare them to match
-	 * this method is called by inizializzaPartita()
+	 * initializes the parameters of the players and prepare them to match this
+	 * method is called by inizializzaPartita()
 	 */
 	private void inizializzaGiocatori() {
 
@@ -110,7 +105,7 @@ public class Gioco extends Observable {
 	private void inizializzazioneGiocatoreDummy() {
 
 		Giocatore dummy = new Giocatore("dummy", Color.DARK_GRAY);
-		
+
 		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
 		for (Regione regi : tabellone.getRegioni()) {
