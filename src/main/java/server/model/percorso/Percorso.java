@@ -3,6 +3,7 @@ package server.model.percorso;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -31,13 +32,6 @@ public class Percorso {
 	private List<Casella> caselle;
 
 	/**
-	 * @return the caselle
-	 */
-	public List<Casella> getCaselle() {
-		return this.caselle;
-	}
-
-	/**
 	 * builds a route from a file
 	 * 
 	 * @param nomefile
@@ -49,9 +43,8 @@ public class Percorso {
 	 *             if the file doesn't exist or there is an error in the file
 	 *             reading
 	 */
-	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException
-	{
-		if(nomefile==null || tabellone==null)
+	public Percorso(String nomefile, Tabellone tabellone) throws JDOMException, IOException {
+		if (nomefile == null || tabellone == null)
 			throw new NullPointerException("il nomefile e il tabellone non possono essere nulli");
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
@@ -95,7 +88,7 @@ public class Percorso {
 	 *            the number of steps
 	 * @throws IOException
 	 */
-	public void muoviGiocatore(Giocatore giocatore, int passi){
+	public void muoviGiocatore(Giocatore giocatore, int passi) {
 		if (passi > 0)
 			muoviGiocatoreAvanti(giocatore, passi);
 		else if (passi < 0) {
@@ -118,16 +111,12 @@ public class Percorso {
 	 *            the number of steps
 	 * @throws IOException
 	 */
-	private void muoviGiocatoreAvanti(Giocatore giocatore, int passi){
+	private void muoviGiocatoreAvanti(Giocatore giocatore, int passi) {
 		Casella casellacorrente = null;
 		ListIterator<Casella> itcasella = this.caselle.listIterator();
-		while (itcasella.hasNext())// mentre scorro le caselle controllo di non
-									// essere in fondo al percorso
-		{
+		while (itcasella.hasNext()) {
 			Set<Giocatore> giocatoriCasellaCorrente = itcasella.next().getGiocatori();
 			if (!itcasella.hasNext()) {
-				// System.out.println("Sei alla fine del percorso, nell'ultima
-				// casella\n");
 				break;
 			}
 			if (giocatoriCasellaCorrente.contains(giocatore)) {
@@ -160,8 +149,6 @@ public class Percorso {
 		while (itcasella.hasPrevious()) {
 			Set<Giocatore> giocatoriCasellaCorrente = itcasella.previous().getGiocatori();
 			if (!itcasella.hasPrevious()) {
-				// System.out.println("Sei all'inizio del percorso, nella prima
-				// casella\n");
 				break;
 			}
 			if (giocatoriCasellaCorrente.contains(giocatore)) {
@@ -186,7 +173,6 @@ public class Percorso {
 	public int posizioneAttualeGiocatore(Giocatore giocatore) {
 		boolean trovato = false;
 		int posizione = -1;
-		// funzionamento analogo a muoviGiocatoreAvanti
 		Iterator<Casella> itcasella = caselle.iterator();
 		while (itcasella.hasNext() && !trovato) {
 			posizione++;
@@ -196,5 +182,32 @@ public class Percorso {
 		if (!trovato)
 			throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 		return posizione;
+	}
+
+	/**
+	 * creates and returns a list of non- empty caselle, order from last to
+	 * first .
+	 * 
+	 * 
+	 * @return the list that contains no empty caselle ordered . The last
+	 *         non-empty casella in the route is the first of the list returned.
+	 */
+	public List<Casella> caselleNonVuotePiuAvanti() {
+		List<Casella> ordineInvertito = new ArrayList<>();
+		List<Casella> caselleNonVuote = new ArrayList<>();
+		Collections.copy(ordineInvertito, caselle);
+		Collections.reverse(ordineInvertito);
+		for (Casella c : ordineInvertito) {
+			if (!c.getGiocatori().isEmpty())
+				caselleNonVuote.add(c);
+		}
+		return caselleNonVuote;
+	}
+
+	/**
+	 * @return the caselle
+	 */
+	public List<Casella> getCaselle() {
+		return this.caselle;
 	}
 }

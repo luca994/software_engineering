@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
+
 import org.jdom2.JDOMException;
 
-import server.model.percorso.Casella;
 import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.Esecuzione;
 import server.model.stato.gioco.StatoGioco;
@@ -29,6 +27,11 @@ public class Gioco extends Observable {
 	private Tabellone tabellone;
 	private StatoGioco statoGioco;
 
+	/**
+	 * Constructor of Gioco.
+	 * instantiate an object of type Gioco with an arrayList of giocatori, initially empty,
+	 * with the StatoGioco set to Attesa, and with tabellone set to null.
+	 */
 	public Gioco() {
 
 		giocatori = new ArrayList<>();
@@ -36,28 +39,17 @@ public class Gioco extends Observable {
 		this.statoGioco = new Attesa(this);
 	}
 
-	/**
-	 * adds a Giocatore to the list of giocatori for this Gioco
-	 * 
-	 * @param nome
-	 *            the name of the Giocatore
-	 * @param colore
-	 *            the color of the Giocatore
-	 */
-	public void aggiungiGiocatore(String nome, Color colore) {
-
-		giocatori.add(new Giocatore(nome, colore));
-	}
 
 	/**
 	 * initializes the game environment
+	 * Before call this method you have to add Giocatori to Gioco, and the game must not already be in Esecuzione
+	 * it create the tabellone, initializes the attributes of the Giocatori to participate in a game.
+	 * If there are only two Giocatori , this method performs the extra initialization
 	 * 
-	 * @param giocatori
-	 *            the list of giocatori who plays the game
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws IllegalArgumentException if the list of Giocatori is less than MIN_NUM_GIOCATORI
+	 * @throws IllegalStateException 
 	 */
-	public void inizializzaPartita() throws JDOMException, IOException {
+	public void inizializzaPartita() {
 
 		if (giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
@@ -69,19 +61,25 @@ public class Gioco extends Observable {
 																				 * dal
 																				 * controller
 																				 */
-
-		this.tabellone = new Tabellone(nomeMappaScelta, this);
-
+		
+		try {
+			this.tabellone = new Tabellone(nomeMappaScelta, this);
+		} catch (JDOMException | IOException e) {
+			throw new IllegalArgumentException("Errore nella lettura dei file!");
+		}
+		
 		inizializzaGiocatori();
 
 		/* Setup aggiuntivo per 2 giocatori */
 		if (giocatori.size() == 2)
 			inizializzazioneGiocatoreDummy();
 
-		new Mercato(tabellone.getPercorsoRicchezza());
 
 	}
-
+	/**
+	 * initializes the parameters of the players and prepare them to match
+	 * this method is called by inizializzaPartita()
+	 */
 	private void inizializzaGiocatori() {
 
 		/* ottengo elenco nome giocatori */
@@ -107,12 +105,12 @@ public class Gioco extends Observable {
 
 	/**
 	 * initializes the additional player who needs to be created once the game
-	 * has only two players
+	 * has only two players. This method is called by inizializzaPartita()
 	 */
 	private void inizializzazioneGiocatoreDummy() {
 
-		Giocatore dummy = new Giocatore(null, Color.DARK_GRAY);
-
+		Giocatore dummy = new Giocatore("dummy", Color.DARK_GRAY);
+		
 		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
 		for (Regione regi : tabellone.getRegioni()) {
@@ -124,7 +122,7 @@ public class Gioco extends Observable {
 	}
 
 	/**
-	 * run the entire game. It should be called when the game has already been
+	 * Run the entire game. It should be called when the game has already been
 	 * initialized and is therefore still in Attesa state. After the method has
 	 * been executed the game will be terminated.
 	 * 
@@ -138,81 +136,6 @@ public class Gioco extends Observable {
 			statoGioco.prossimoStato();
 			statoGioco.eseguiFase();
 		}
-	}
-
-	public Set<Giocatore> calcoloVincitore() throws Exception {
-		// Controllo chi è più avanti nel percorso nobiltà e assegno punti
-		ListIterator<Casella> itcasella = tabellone.getPercorsoNobilta().getCaselle()
-				.listIterator(tabellone.getPercorsoNobilta().getCaselle().size());
-		while (itcasella.hasPrevious()) {
-			Set<Giocatore> giocatoriPiùAvanti = itcasella.previous().getGiocatori();
-			if (!itcasella.hasPrevious()) {
-				// System.out.println("Sei all'inizio del percorso, nella prima
-				// casella\n");
-				break;
-			}
-			if (!giocatoriPiùAvanti.isEmpty()) {
-				// ho trovato i giocatori più avanzati, gli assegno il punteggio
-				for (Giocatore gio : giocatoriPiùAvanti)
-					tabellone.getPercorsoVittoria().muoviGiocatore(gio, 5);
-				int numGiocatoriPiùAvanti = giocatoriPiùAvanti.size();
-				if (numGiocatoriPiùAvanti > 1) {
-					break;
-				} else {
-					while (itcasella.hasPrevious()) {
-						Set<Giocatore> giocatoriSecondi = itcasella.previous().getGiocatori();
-						if (!giocatoriSecondi.isEmpty()) {
-							// Assegno punti ai secondi
-							for (Giocatore gio : giocatoriSecondi)
-								tabellone.getPercorsoVittoria().muoviGiocatore(gio, 2);
-							break;
-						}
-					}
-					break;
-				}
-			}
-
-		}
-
-		/* Conto tessere permesso e assegno punti */
-		int numTesserePermesso = -1;
-		Giocatore giocatorePiùPermessi = new Giocatore(null, null);
-		for (Giocatore gio : giocatori) {
-			if ((gio.getTessereUsate().size() + gio.getTessereValide().size()) > numTesserePermesso) {
-				numTesserePermesso = (gio.getTessereUsate().size() + gio.getTessereValide().size());
-				giocatorePiùPermessi = gio;
-			}
-		}
-		tabellone.getPercorsoVittoria().muoviGiocatore(giocatorePiùPermessi, 3);
-
-		/* Calcolo vincitore */
-
-		itcasella = tabellone.getPercorsoVittoria().getCaselle()
-				.listIterator(tabellone.getPercorsoVittoria().getCaselle().size());
-		while (itcasella.hasPrevious()) {
-			Casella casellaVincitori = itcasella.previous();
-			Set<Giocatore> vincitore = casellaVincitori.getGiocatori();
-			if (vincitore.isEmpty()) {
-				if (vincitore.size() < 1)
-					return vincitore;
-				else {
-					int paramVittoria = -1;// Somma tessere e aiutanti
-					for (Giocatore gio : vincitore) {
-						if ((gio.getAssistenti().size() + gio.getTessereValide().size()
-								+ gio.getTessereValide().size()) > paramVittoria)
-							paramVittoria = gio.getAssistenti().size() + gio.getTessereValide().size()
-									+ gio.getTessereValide().size();
-					}
-					for (Giocatore gio : vincitore) {
-						if ((gio.getAssistenti().size() + gio.getTessereValide().size()
-								+ gio.getTessereValide().size()) < paramVittoria)
-							vincitore.remove(gio);
-					}
-					return vincitore;
-				}
-			}
-		}
-		throw new IllegalStateException("Errore nel calcolo del percorso");
 	}
 
 	/**

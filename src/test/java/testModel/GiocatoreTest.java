@@ -6,12 +6,17 @@ package testModel;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import server.model.Assistente;
+import server.model.CartaPolitica;
 import server.model.Giocatore;
 import server.model.stato.giocatore.AttesaTurno;
+import server.model.stato.giocatore.TurnoNormale;
 
 /**
  * @author Luca
@@ -115,51 +120,35 @@ public class GiocatoreTest {
 	 * Test method for {@link server.model.Giocatore#getAssistenti()}.
 	 */
 	@Test
-	public void testGetAssistenti() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for
-	 * {@link server.model.Giocatore#setAssistenti(java.util.List)}.
-	 */
-	@Test
-	public void testSetAssistenti() {
-		fail("Not yet implemented");
+	public void testSetAndGetAssistente() {
+		List<Assistente> assistenti = new ArrayList<>();
+		giocatoreTester.setAssistenti(assistenti);
+		assertEquals(assistenti, giocatoreTester.getAssistenti());
+		assertTrue(assistenti==giocatoreTester.getAssistenti());
 	}
 
 	/**
 	 * Test method for {@link server.model.Giocatore#getCartePolitica()}.
 	 */
 	@Test
-	public void testGetCartePolitica() {
-		fail("Not yet implemented");
+	public void testSetAndGetCartePolitica() {
+		List<CartaPolitica> carte = new ArrayList<>();
+		giocatoreTester.setCartePolitica(carte);
+		assertEquals(carte, giocatoreTester.getCartePolitica());
+		assertTrue(carte==giocatoreTester.getCartePolitica());
 	}
 
-	/**
-	 * Test method for
-	 * {@link server.model.Giocatore#setCartePolitica(java.util.List)}.
-	 */
-	@Test
-	public void testSetCartePolitica() {
-		fail("Not yet implemented");
-	}
+
 
 	/**
 	 * Test method for {@link server.model.Giocatore#getColore()}.
 	 */
 	@Test
-	public void testGetColore() {
-		fail("Not yet implemented");
+	public void testSetAndGetColore() {
+		giocatoreTester.setColore(Color.red);
+		assertEquals(Color.red, giocatoreTester.getColore());
 	}
 
-	/**
-	 * Test method for {@link server.model.Giocatore#setColore(java.awt.Color)}.
-	 */
-	@Test
-	public void testSetColore() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link server.model.Giocatore#getTessereUsate()}.
@@ -211,22 +200,17 @@ public class GiocatoreTest {
 		fail("Not yet implemented");
 	}
 
-	/**
-	 * Test method for {@link server.model.Giocatore#getStatoGiocatore()}.
-	 */
-	@Test
-	public void testGetStatoGiocatore() {
-		fail("Not yet implemented");
-	}
-
+	
 	/**
 	 * Test method for
 	 * {@link server.model.Giocatore#setStatoGiocatore(server.model.stato.giocatore.StatoGiocatore)}
 	 * .
 	 */
 	@Test
-	public void testSetStatoGiocatore() {
-		fail("Not yet implemented");
+	public void testSetandGetStatoGiocatore() {
+		assertTrue(giocatoreTester.getStatoGiocatore() instanceof AttesaTurno);
+		giocatoreTester.setStatoGiocatore(new TurnoNormale(giocatoreTester));
+		assertTrue(giocatoreTester.getStatoGiocatore() instanceof TurnoNormale);
 	}
 
 }
