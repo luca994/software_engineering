@@ -22,7 +22,7 @@ public class TesseraCostruzione extends OggettoVendibile {
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 
-	public boolean verifyCittà(Citta cittàDaVerificare) {
+	public boolean verifyCitta(Citta cittàDaVerificare) {
 		return this.citta.contains(cittàDaVerificare);
 	}
 
@@ -48,7 +48,7 @@ public class TesseraCostruzione extends OggettoVendibile {
 	/**
 	 * @return the città
 	 */
-	public Set<Citta> getCittà() {
+	public Set<Citta> getCitta() {
 		return citta;
 	}
 
@@ -63,7 +63,7 @@ public class TesseraCostruzione extends OggettoVendibile {
 	 * @param citta
 	 *            the città to set
 	 */
-	public void setCittà(Set<Citta> citta) {
+	public void setCitta(Set<Citta> citta) {
 		this.citta = citta;
 	}
 

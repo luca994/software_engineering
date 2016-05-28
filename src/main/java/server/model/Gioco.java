@@ -114,7 +114,7 @@ public class Gioco extends Observable {
 		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
 		for (Regione regi : tabellone.getRegioni()) {
-			for (Citta cit : regi.getTessereCoperte().get(0).getCittà()) {
+			for (Citta cit : regi.getTessereCoperte().get(0).getCitta()) {
 				cit.getEmpori().add(dummy);
 			}
 			Collections.shuffle(regi.getTessereCoperte());

@@ -83,7 +83,7 @@ public class CostruisciEmporioConTessera extends Azione {
 		boolean cittaValida = false;
 		if (giocatore.getTessereValide().contains(tessera))
 			tesseraValida = true;
-		if (tessera.getCittà().contains(citta) && !citta.getEmpori().contains(giocatore))
+		if (tessera.getCitta().contains(citta) && !citta.getEmpori().contains(giocatore))
 			cittaValida = true;
 		return tesseraValida && cittaValida;
 	}

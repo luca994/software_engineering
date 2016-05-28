@@ -2,6 +2,7 @@ package server.model.tesserebonus;
 
 import java.util.Set;
 
+import server.model.ParseColor;
 import server.model.Tabellone;
 import server.model.bonus.Bonus;
 
@@ -34,7 +35,12 @@ public class TesseraBonusCreator {
 			return new TesseraBonusRegione(bonus, tabellone.getRegioneDaNome(attributo));
 		}
 		else if(tipoTessera.equals("città")){
-			return new TesseraBonusCitta(bonus, attributo);
+			try{
+				return new TesseraBonusCitta(bonus, ParseColor.colorStringToColor(attributo));
+			}
+			catch(NoSuchFieldException e){
+				throw new IllegalStateException("i colori nelle tessere bonus città sono sbagliati");
+			}
 		}
 		else if(tipoTessera.equals("premioRe")){
 			return new TesseraPremioRe(bonus);
