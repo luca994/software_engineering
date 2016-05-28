@@ -42,12 +42,12 @@ public class Gioco extends Observable {
 
 	/**
 	 * initializes the game environment
-	 * 
+	 * Before call this method you have to add Giocatori to Gioco, and the game must not already be in Esecuzione
 	 * it create the tabellone, initializes the attributes of the Giocatori to participate in a game.
 	 * If there are only two Giocatori , this method performs the extra initialization
 	 * 
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws IllegalArgumentException if the list of Giocatori is less than MIN_NUM_GIOCATORI
+	 * @throws IllegalStateException 
 	 */
 	public void inizializzaPartita() {
 
@@ -76,7 +76,10 @@ public class Gioco extends Observable {
 
 
 	}
-
+	/**
+	 * initializes the parameters of the players and prepare them to match
+	 * this method is called by inizializzaPartita()
+	 */
 	private void inizializzaGiocatori() {
 
 		/* ottengo elenco nome giocatori */
@@ -102,12 +105,12 @@ public class Gioco extends Observable {
 
 	/**
 	 * initializes the additional player who needs to be created once the game
-	 * has only two players
+	 * has only two players. This method is called by inizializzaPartita()
 	 */
 	private void inizializzazioneGiocatoreDummy() {
 
 		Giocatore dummy = new Giocatore("dummy", Color.DARK_GRAY);
-
+		
 		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
 		for (Regione regi : tabellone.getRegioni()) {
@@ -119,7 +122,7 @@ public class Gioco extends Observable {
 	}
 
 	/**
-	 * run the entire game. It should be called when the game has already been
+	 * Run the entire game. It should be called when the game has already been
 	 * initialized and is therefore still in Attesa state. After the method has
 	 * been executed the game will be terminated.
 	 * 
