@@ -9,6 +9,10 @@ import server.model.percorso.Percorso;
  */
 public class BonusMoneta implements Bonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -752223726614249534L;
 	private final int steps;
 	private final Percorso percorsoRicchezza;
 

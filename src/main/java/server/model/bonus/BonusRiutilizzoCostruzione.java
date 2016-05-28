@@ -16,6 +16,10 @@ import server.model.TesseraCostruzione;
  */
 public class BonusRiutilizzoCostruzione implements Bonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1470256807943263026L;
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
 	private Giocatore giocatore;

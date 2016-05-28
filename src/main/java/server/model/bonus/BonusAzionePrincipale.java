@@ -13,6 +13,10 @@ import server.model.Giocatore;
  *         main move(Azione Principale)
  */
 public class BonusAzionePrincipale implements Bonus {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6309046785344410844L;
 	private static final Logger log = Logger.getLogger(BonusAzionePrincipale.class.getName());
 
 	/*

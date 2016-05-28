@@ -45,7 +45,7 @@ public class GestisciGioco implements Runnable{
 	 */
 	public void creaGiochi() throws IOException, JDOMException, ClassNotFoundException{
 		ExecutorService executor = Executors.newCachedThreadPool();
-		executor.submit(new GestisciGioco());
+		executor.submit(this);
 		List<Giocatore> giocatori = new ArrayList<>();
 		while(true){
 			int numGiocatori=0;

@@ -103,6 +103,6 @@ public class TestPercorso {
 		percorso.getCaselle().set(5,new CasellaConBonus(bonus));
 		percorso.muoviGiocatore(g1, 5);
 		assertEquals(11, percorso.posizioneAttualeGiocatore(g1));
-	}*/
+	}*/ 
 
 }

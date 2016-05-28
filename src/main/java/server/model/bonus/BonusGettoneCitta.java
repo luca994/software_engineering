@@ -16,6 +16,10 @@ import server.model.Gioco;
  */
 public class BonusGettoneCitta implements Bonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9062172546546184125L;
 	private int numeroCitta;
 	private Set<Citta> citta;
 	private Gioco gioco;
@@ -30,7 +34,7 @@ public class BonusGettoneCitta implements Bonus {
 	/**
 	 * @return the numeroCittà
 	 */
-	public int getNumeroCittà() {
+	public int getNumeroCitta() {
 		return numeroCitta;
 	}
 
@@ -40,7 +44,7 @@ public class BonusGettoneCitta implements Bonus {
 	 * @param cittaGiusta
 	 *            the parameter to set
 	 */
-	public void setCittàGiusta(boolean cittaGiusta) {
+	public void setCittaGiusta(boolean cittaGiusta) {
 		this.cittaGiusta = cittaGiusta;
 	}
 

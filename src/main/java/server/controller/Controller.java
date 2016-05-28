@@ -29,33 +29,8 @@ public class Controller implements Observer{
 		this.gioco=gioco;
 	}
 	
-	/*
-	public Città ottieniCittàBonus(Giocatore giocatore){
-		
-		String nomeCittà= new View(gioco).acquisisciCittàBonus();
-		Città temp=gioco.getTabellone().cercaCittà(nomeCittà);
-		if (temp.getEmpori().contains(giocatore))
-			return temp;
-		else
-		{
-			new View(gioco).messaggioErrore("Non ci sono empori di "+giocatore.getNome()+" nella città, scegline un'altra");
-			return ottieniCittàBonus(giocatore);
-		}
-	}*/
-
-	/*public void update(BonusGettoneCittà cambiamento,String input){
-		Città città = this.gioco.getTabellone().cercaCittà(input);
-		if(!cambiamento.getCittà().contains(città)){
-			cambiamento.getCittà().add(città);
-		}
-		else{
-			throw new IllegalStateException("Hai già scelto questa città");
-		}
-	}*/
-
 	@Override
 	public void update(Object cambiamento) { 
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -66,23 +41,15 @@ public class Controller implements Observer{
 				if(!input[0].equals("passa")){
 					Citta citta = this.gioco.getTabellone().cercaCitta(input[0]);
 					if(!((BonusGettoneCitta) cambiamento).getCitta().add(citta)){
-						((BonusGettoneCitta) cambiamento).setCittàGiusta(false);
+						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 						gioco.notificaObservers("la città inserita è già stata scelta");
 					}
 					else return;
-					}
+				}
 			}
 			catch(IllegalArgumentException e){
-				((BonusGettoneCitta) cambiamento).setCittàGiusta(false);
-				try {
-					gioco.notificaObservers(e.getMessage());
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
+				gioco.notificaObservers(e.getMessage());
 			}
 		}
 		if(cambiamento instanceof BonusTesseraPermesso){

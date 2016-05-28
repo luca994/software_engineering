@@ -14,6 +14,10 @@ import server.model.Giocatore;
  *
  */
 public class BonusCartaPolitica implements Bonus {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2539790215830619005L;
 	private static final Logger log = Logger.getLogger(BonusCartaPolitica.class.getName());
 	private int numeroCarte;
 

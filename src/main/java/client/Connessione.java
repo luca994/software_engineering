@@ -2,7 +2,7 @@ package client;
 
 import java.io.IOException;
 
-public interface Connessione{ 
+public interface Connessione extends Runnable{ 
 	
 	/**
 	 * sends an object through the socket

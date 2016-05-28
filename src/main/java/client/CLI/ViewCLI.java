@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
@@ -11,6 +13,9 @@ import client.Login;
 import client.View;
 import server.model.ParseColor;
 import server.model.azione.AzioneFactory;
+import server.model.bonus.BonusGettoneCitta;
+import server.model.bonus.BonusRiutilizzoCostruzione;
+import server.model.bonus.BonusTesseraPermesso;
 
 public class ViewCLI extends View implements Runnable{
 
@@ -81,8 +86,10 @@ public class ViewCLI extends View implements Runnable{
 	 */
 	public void startClient(){
 		inizializzazione();
-		Thread t = new Thread(new ViewCLI());
-		t.start();
+		ExecutorService executor = Executors.newCachedThreadPool();
+		executor.submit(this.getConnessione());
+		executor.submit(this);
+
 	}
 	
 	/**
@@ -92,8 +99,13 @@ public class ViewCLI extends View implements Runnable{
 	public void run() {
 		Scanner input = new Scanner(System.in);
 		while(true){
-			System.out.println("inserisci l'azione");
-			String azione = input.nextLine();
+			try{	
+				String inputString = input.nextLine();
+				this.getConnessione().inviaOggetto(inputString);
+			}
+			catch(IOException e){
+				//da gestire
+			}
 		}
 	}
 	
@@ -102,6 +114,38 @@ public class ViewCLI extends View implements Runnable{
 	 * @param oggetto the object passed by the connection
 	 */
 	public void riceviOggetto(Object oggetto){
-		System.out.println(oggetto);
+		try{	
+			if(oggetto instanceof String)
+				System.out.println(oggetto);
+			if(oggetto instanceof BonusGettoneCitta){
+				String[] nomeCitta = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
+													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
+				this.getConnessione().inviaOggetto(nomeCitta);
+			}
+			if(oggetto instanceof BonusTesseraPermesso){
+				String[] tessera = {ottieniStringa("Inserisci il numero della tessera permesso che vuoi ottenere")};
+				this.getConnessione().inviaOggetto(tessera);
+			}
+			if(oggetto instanceof BonusRiutilizzoCostruzione){
+				String numLista= ottieniStringa("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
+				String numTessera = ottieniStringa("inserisci il numero della tessera da riciclare");
+				String[] array = {numLista,numTessera};
+				this.getConnessione().inviaOggetto(array);
+			}
+		}catch(IOException e){
+			//da gestire
+		}
+	}
+	
+	/**
+	 * asks an input to the player
+	 * @param messaggioInformativo the message you want to show to the player
+	 * @return the input of the player
+	 */
+	public String ottieniStringa(String messaggio){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println(messaggio);
+		String ritorno = scanner.nextLine();
+		return ritorno;
 	}
 }

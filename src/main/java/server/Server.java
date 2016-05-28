@@ -11,7 +11,7 @@ import org.jdom2.JDOMException;
  */
 public class Server {
 
-	private final static int PORT = 29999;
+	private static final int PORT = 29999;
 	private final ServerSocket serverSocket;
 
 	/**
@@ -34,7 +34,6 @@ public class Server {
 	 * @throws JDOMException
 	 */
 	public Socket startSocket() throws IOException {
-
 		System.out.println("SERVER SOCKET READY ON PORT: " + PORT);
 		return serverSocket.accept();
 	}

@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class ConnessioneSocket implements Connessione, Runnable {
+public class ConnessioneSocket implements Connessione{
 
 	private Socket socket;
 	private ObjectInputStream streamIn;
@@ -28,6 +28,10 @@ public class ConnessioneSocket implements Connessione, Runnable {
 		streamOut=new ObjectOutputStream(socket.getOutputStream());
 	}
 	
+	/**
+	 * reads the socket and calls the method riceviOggetto of the view
+	 * to pass the object to the view
+	 */
 	@Override
 	public void run() {
 		while(true){

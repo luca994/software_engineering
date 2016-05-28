@@ -12,6 +12,10 @@ import server.model.Giocatore;
  */
 public class BonusAssistenti implements Bonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4956022062307571028L;
 	private int numeroAssistenti;
 
 	public BonusAssistenti(int numeroAssistenti) {
