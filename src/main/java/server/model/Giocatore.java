@@ -99,13 +99,6 @@ public class Giocatore {
 		return assistenti;
 	}
 
-	/**
-	 * @param assistenti
-	 *            the assistenti to set
-	 */
-	public void setAssistenti(List<Assistente> assistenti) {
-		this.assistenti = assistenti;
-	}
 
 	/**
 	 * @return the cartePolitica
@@ -114,13 +107,6 @@ public class Giocatore {
 		return cartePolitica;
 	}
 
-	/**
-	 * @param cartePolitica
-	 *            the cartePolitica to set
-	 */
-	public void setCartePolitica(List<CartaPolitica> cartePolitica) {
-		this.cartePolitica = cartePolitica;
-	}
 
 	/**
 	 * @return the colore
@@ -198,6 +184,20 @@ public class Giocatore {
 	 */
 	public void setStatoGiocatore(StatoGiocatore statoGiocatore) {
 		this.statoGiocatore = statoGiocatore;
+	}
+
+	/**
+	 * @param assistenti the assistenti to set
+	 */
+	public void setAssistenti(List<Assistente> assistenti) {
+		this.assistenti = assistenti;
+	}
+
+	/**
+	 * @param cartePolitica the cartePolitica to set
+	 */
+	public void setCartePolitica(List<CartaPolitica> cartePolitica) {
+		this.cartePolitica = cartePolitica;
 	}
 
 }

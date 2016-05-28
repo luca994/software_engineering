@@ -27,6 +27,11 @@ public class Gioco extends Observable {
 	private Tabellone tabellone;
 	private StatoGioco statoGioco;
 
+	/**
+	 * Constructor of Gioco.
+	 * instantiate an object of type Gioco with an arrayList of giocatori, initially empty,
+	 * with the StatoGioco set to Attesa, and with tabellone set to null.
+	 */
 	public Gioco() {
 
 		giocatori = new ArrayList<>();
@@ -34,28 +39,17 @@ public class Gioco extends Observable {
 		this.statoGioco = new Attesa(this);
 	}
 
-	/**
-	 * adds a Giocatore to the list of giocatori for this Gioco
-	 * 
-	 * @param nome
-	 *            the name of the Giocatore
-	 * @param colore
-	 *            the color of the Giocatore
-	 */
-	public void aggiungiGiocatore(String nome, Color colore) {
-
-		giocatori.add(new Giocatore(nome, colore));
-	}
 
 	/**
 	 * initializes the game environment
 	 * 
-	 * @param giocatori
-	 *            the list of giocatori who plays the game
+	 * it create the tabellone, initializes the attributes of the Giocatori to participate in a game.
+	 * If there are only two Giocatori , this method performs the extra initialization
+	 * 
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public void inizializzaPartita() throws JDOMException, IOException {
+	public void inizializzaPartita() {
 
 		if (giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
@@ -67,16 +61,19 @@ public class Gioco extends Observable {
 																				 * dal
 																				 * controller
 																				 */
-
-		this.tabellone = new Tabellone(nomeMappaScelta, this);
-
+		
+		try {
+			this.tabellone = new Tabellone(nomeMappaScelta, this);
+		} catch (JDOMException | IOException e) {
+			throw new IllegalArgumentException("Errore nella lettura dei file!");
+		}
+		
 		inizializzaGiocatori();
 
 		/* Setup aggiuntivo per 2 giocatori */
 		if (giocatori.size() == 2)
 			inizializzazioneGiocatoreDummy();
 
-		new Mercato(tabellone.getPercorsoRicchezza());
 
 	}
 
@@ -109,7 +106,7 @@ public class Gioco extends Observable {
 	 */
 	private void inizializzazioneGiocatoreDummy() {
 
-		Giocatore dummy = new Giocatore(null, Color.DARK_GRAY);
+		Giocatore dummy = new Giocatore("dummy", Color.DARK_GRAY);
 
 		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
