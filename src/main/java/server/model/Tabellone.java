@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.jdom2.Document;
@@ -17,6 +16,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import eccezioniNuove.PercorsoFileNonCorretto;
 import server.model.bonus.Bonus;
 
 import server.model.bonus.BonusCreator;
@@ -49,38 +49,42 @@ public class Tabellone {
 	/**
 	 * It builds the board by calling methods : creaPercorsi() ,
 	 * creaConsiglieriDisponibili() , creaRegioni() , creaGettoniCittà() ,
-	 * collegaCittà(String , Gioco) , creaTessereBonus().
+	 * collegaCittà(nomeFileMappa,gettoniCitta) , creaTessereBonus().
 	 * 
-	 * @throws IOException
-	 * @throws JDOMException
-	 * @throws NoSuchElementException
-	 *             if there's an error during the reading of the number of
-	 *             Consiglieri
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
 	 */
-	public Tabellone(String nomeFileMappa, Gioco gioco) throws JDOMException, IOException {
+	public Tabellone(String nomeFileMappa, Gioco gioco) {
 
 		this.gioco = gioco;
 
-		// Creo percorsi passando al costruttore del percorso il nome del file
-		// che dovrà usare per creare il percorso
+		/*
+		 * Creo percorsi passando al costruttore del percorso il nome del file
+		 * che dovrà usare per creare il percorso
+		 */
 		creaPercorsi();
-		// Creazione consiglieriDisponibili
+		/* Creazione consiglieriDisponibili */
 		creaConsiglieriDisponibili();
 
-		// Creo regioni (da file ovviamente):passo al costruttore della regione
-		// una lista di nomi di città
-		// Sarà il costruttore delle Regioni a collegarle
+		/*
+		 * Creo regioni (da file ovviamente):passo al costruttore della regione
+		 * una lista di nomi di città Sarà il costruttore delle Regioni a
+		 * collegarle
+		 */
 		creaRegioni();
-		// Creo bonus per le città(praticamente una lista di bonus
-		// corrispondente ai Gettoni Città)
-		// Creo la lista di bonus per le città(Gettoni città da file), la
-		// mischio
+		/*
+		 * Creo bonus per le città(praticamente una lista di bonus
+		 * corrispondente ai Gettoni Città) Creo la lista di bonus per le
+		 * città(Gettoni città da file), la mischio
+		 */
 		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
 		gettoniCitta = creaGettoniCitta();
-		// Collego, coloro le città(devo passare attraverso le regioni), creo e
-		// assegno bonus, piazzo il re
+		/*
+		 * Collego, coloro le città(devo passare attraverso le regioni), creo e
+		 * assegno bonus, piazzo il re
+		 */
 		collegaCitta(nomeFileMappa, gettoniCitta);
-		// Crea le tessere bonus
+		/* Crea le tessere bonus */
 		creaTessereBonus();
 	}
 
@@ -88,36 +92,39 @@ public class Tabellone {
 	 * creates the various paths by calling the respective constructors. This
 	 * method is called only by tabellone's constructor
 	 * 
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
 	 */
-	private void creaPercorsi() throws JDOMException, IOException {
-		this.percorsoVittoria = new Percorso("src/main/resources/PercorsoVittoria.xml", this);
-		this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
-		this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
+	private void creaPercorsi() {
+		try {
+			this.percorsoVittoria = new Percorso("src/main/resources/PercorsoVittoria.xml", this);
+			this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
+			this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
+		} catch (JDOMException | IOException e) {
+			throw new PercorsoFileNonCorretto("Errore nella lettura dei file xml dei percorsi", e);
+		}
 	}
 
 	/**
 	 * creates a list of initial counselors available in the board by reading
 	 * the file the total number of directors to be instantiated and the color
-	 * of each of them . This method is called only by tabellone's constructor
+	 * of each of them. This method is called only by tabellone's constructor
 	 * 
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
 	 */
-	private void creaConsiglieriDisponibili() throws JDOMException, IOException {
+	private void creaConsiglieriDisponibili() {
 		this.consiglieriDisponibili = new ArrayList<>(NUMERO_TOTALE_CONSIGLIERI);
 		SAXBuilder builderConsiglieri = new SAXBuilder();
-		Document documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
+		Document documentConsiglieri;
+		try {
+			documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
+		} catch (JDOMException | IOException e1) {
+			throw new PercorsoFileNonCorretto("Errore nella lettura del file Consiglieri.xml", e1);
+		}
 		Element consiglieriRootElement = documentConsiglieri.getRootElement();
-		// acquisizione del numero dei consiglieri nel file
-		// Creo direttamente la lista di Consiglieri
 		List<Element> elencoConsiglieri = consiglieriRootElement.getChildren();
 		for (Element consi : elencoConsiglieri) {
-			// Aggiungo un nuovo consigliere alla lista creandolo direttamente
-			// col costruttore
-			// passandogli come parametro il valore dell'attributo colore letto
-			// dagli elementi del file xml
 			try {
 				this.consiglieriDisponibili
 						.add(new Consigliere(ParseColor.colorStringToColor(consi.getAttributeValue("colore"))));
@@ -134,13 +141,18 @@ public class Tabellone {
 	 * the list of cities that comprise it. Even the latter obviously is read
 	 * from file. This method is called only by tabellone's constructor
 	 * 
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
 	 */
-	private void creaRegioni() throws JDOMException, IOException {
+	private void creaRegioni() {
 		this.regioni = new ArrayList<>();
 		SAXBuilder builderRegioni = new SAXBuilder();
-		Document documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
+		Document documentRegioni;
+		try {
+			documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
+		} catch (JDOMException | IOException e) {
+			throw new PercorsoFileNonCorretto("Errore nella lettura del file Regioni.xml", e);
+		}
 		Element regioniRootElement = documentRegioni.getRootElement();
 		List<Element> elencoRegioni = regioniRootElement.getChildren();
 		for (Element regione : elencoRegioni) {
@@ -159,14 +171,28 @@ public class Tabellone {
 		}
 	}
 
-	private List<Set<Bonus>> creaGettoniCitta() throws JDOMException, IOException {
+	/**
+	 * creates gettoniBonus by reading them from file and assigns them to the
+	 * respective city. This method is called only by tabellone's constructor.
+	 * 
+	 * @return
+	 * 
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
+	 */
+	private List<Set<Bonus>> creaGettoniCitta() {
 		// Creo la lista di bonus per le città(Gettoni città da file), la
 		// mischio
 		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
 		BonusCreator bonusCreator = new BonusCreator(this);
 		// Leggo i set di bonus
 		SAXBuilder builderGettoni = new SAXBuilder();
-		Document documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
+		Document documentGettoni;
+		try {
+			documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
+		} catch (JDOMException | IOException e) {
+			throw new PercorsoFileNonCorretto("Errore nella lettura del file BonusCittà.xml", e);
+		}
 		Element bonusCittaRootElement = documentGettoni.getRootElement();
 		List<Element> elencoSetBonus = bonusCittaRootElement.getChildren();
 		for (Element set : elencoSetBonus) {
@@ -186,9 +212,25 @@ public class Tabellone {
 
 	}
 
-	private void collegaCitta(String nomeFileMappa, List<Set<Bonus>> gettoniCitta) throws JDOMException, IOException {
+	/**
+	 * Reads from the files of the city links and appropriately interconnects.
+	 * This method is called only by tabellone's constructor.
+	 * 
+	 * @param nomeFileMappa
+	 * @param gettoniCitta
+	 * 
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
+	 * 
+	 */
+	private void collegaCitta(String nomeFileMappa, List<Set<Bonus>> gettoniCitta) {
 		SAXBuilder builderCollegamenti = new SAXBuilder();
-		Document documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
+		Document documentCollegamenti;
+		try {
+			documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
+		} catch (JDOMException | IOException e1) {
+			throw new IllegalStateException(e1);
+		}
 		Element collegamentiRootElement = documentCollegamenti.getRootElement();
 		List<Element> elencoCitta = collegamentiRootElement.getChildren();
 		for (Regione reg : regioni) {
@@ -200,11 +242,9 @@ public class Tabellone {
 						try {
 							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
 							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
-								Re re = new Re(cit, new Consiglio(this));
+								re = new Re(cit, new Consiglio(this));
 								cit.setRe(re);
-								this.setRe(re);
 							} else {
-								// cit.getBonus().addAll(gettoniCittà.get(0));
 								cit.setBonus(gettoniCitta.get(0));
 								gettoniCitta.remove(0);
 							}
@@ -225,12 +265,10 @@ public class Tabellone {
 	 * initialize the tiles tessereBonusRegione, tessereBonusCittà,
 	 * tesserePremioRe reading them from a file
 	 * 
-	 * @throws JDOMException
-	 * @throws IOException
-	 *             throw an exception if the method doesn't found the file or
-	 *             there is another error about the file
+	 * @throws PercorsoFileNonCorretto
+	 *             if there is an error in reading files
 	 */
-	private void creaTessereBonus() throws JDOMException, IOException {
+	private void creaTessereBonus() {
 		BonusCreator bonusCreator = new BonusCreator(this);
 		TesseraBonusCreator tesseraBonusCreator = new TesseraBonusCreator(this);
 		// inizializzo i set di tessere
@@ -239,7 +277,12 @@ public class Tabellone {
 		this.tesserePremioRe = new ArrayList<>();
 		SAXBuilder builderTessereBonus = new SAXBuilder();
 		// leggo il documento xml per le tessere
-		Document documentTessereBonus = builderTessereBonus.build(new File("src/main/resources/TessereBonus.xml"));
+		Document documentTessereBonus;
+		try {
+			documentTessereBonus = builderTessereBonus.build(new File("src/main/resources/TessereBonus.xml"));
+		} catch (JDOMException | IOException e) {
+			throw new PercorsoFileNonCorretto("Errore nella lettura del file TessereBonus.xml", e);
+		}
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
 		for (Element t : tessere) {
@@ -303,7 +346,7 @@ public class Tabellone {
 	 *             if the name of the city isn't correct
 	 */
 	public Citta cercaCitta(String nome, Regione regione) {
-		if (nome == null)
+		if (nome == null || regione == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Citta cit : regione.getCitta()) {
 			if (cit.getNome().equals(nome)) {
@@ -314,13 +357,13 @@ public class Tabellone {
 	}
 
 	/**
-	 * check if a player has an emporium every the city of a color
+	 * check if a player has an emporium in every city of a color
 	 * 
 	 * @param giocatore
 	 *            the player who has to check the bonus
 	 * @param citta
 	 *            the city in which the method take the color
-	 * @author riccardo
+	 * 
 	 * @return return true if the player has an emporium in every city of a
 	 *         color
 	 */

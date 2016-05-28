@@ -42,7 +42,7 @@ public class Regione {
 	 *             if the file doesn't exist or there is an error in the file
 	 *             reading
 	 */
-	public Regione(String nomeRegione, List<String> nomiCitta, Tabellone tabellone) throws JDOMException, IOException {
+	public Regione(String nomeRegione, List<String> nomiCitta, Tabellone tabellone) {
 		this.nome = nomeRegione;
 		this.tessereCostruzione = new ArrayList<>();
 		this.tessereCoperte = new ArrayList<>();
@@ -64,13 +64,18 @@ public class Regione {
 	 *             if the file doesn't exist or there is an error in the file
 	 *             reading
 	 */
-	public void creaTesserePermesso(Tabellone tabellone) throws JDOMException, IOException {
+	public void creaTesserePermesso(Tabellone tabellone) {
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		// Creo il nome del file a partire dal nome della regione
 		String nomefile = new String("src/main/resources/TessereCostruzione" + this.nome + ".xml");
 		// Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
-		Document documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
+		Document documentTessereCostruzione;
+		try {
+			documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
+		} catch (JDOMException | IOException e) {
+			throw new IllegalStateException(e);
+		}
 		Element tessereRootElement = documentTessereCostruzione.getRootElement();
 		List<Element> elencoTessere = tessereRootElement.getChildren();
 		List<TesseraCostruzione> elencoRiferimentiTessere = new ArrayList<>(15);
