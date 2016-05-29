@@ -35,7 +35,7 @@ public class CostruisciEmporioConTessera extends Azione {
 	 * @throws IOException
 	 */
 	@Override
-	public void eseguiAzione(Giocatore giocatore) throws IOException {
+	public void eseguiAzione(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 
