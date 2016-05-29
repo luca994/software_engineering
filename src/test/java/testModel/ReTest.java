@@ -13,7 +13,6 @@ import org.junit.Test;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Re;
-import server.model.Tabellone;
 
 /**
  * @author Luca
@@ -22,7 +21,6 @@ import server.model.Tabellone;
 public class ReTest {
 
 	private Gioco giocoTester;
-	private Tabellone tabelloneTester;
 
 	@Before
 	public void inizializzaOggettiPerTest() {
@@ -50,8 +48,8 @@ public class ReTest {
 	 */
 	@Test
 	public void testReInputValidi() {
-		assertNotNull(new Re(tabelloneTester.cercaCitta("indur"), tabelloneTester.getRegioni().get(1).getConsiglio(),
-				tabelloneTester));
+		assertNotNull(new Re(giocoTester.getTabellone().cercaCitta("indur"),
+				giocoTester.getTabellone().getRegioni().get(1).getConsiglio(), giocoTester.getTabellone()));
 	}
 
 	/**
@@ -59,10 +57,11 @@ public class ReTest {
 	 */
 	@Test
 	public void testContaPassi() {
-		assertEquals(2, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("Osium")));
-		assertEquals(3, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("naris")));
-		assertEquals(0, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("juvelar")));
-		assertEquals(4, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("arkon")));
+		assertEquals(2, giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("Osium")));
+		assertEquals(3, giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("naris")));
+		assertEquals(0,
+				giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("juvelar")));
+		assertEquals(4, giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("arkon")));
 	}
 
 	/**
@@ -70,12 +69,13 @@ public class ReTest {
 	 */
 	@Test
 	public void testMuoviRe() {
-		tabelloneTester.getRe().muoviRe(tabelloneTester.cercaCitta("esti"));
-		assertNull(tabelloneTester.cercaCitta("juvelar").getRe());
-		assertEquals(tabelloneTester.getRe(), tabelloneTester.cercaCitta("esti").getRe());
-		assertEquals(2, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("arkon")));
-		assertEquals(3, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("castrum")));
-		assertEquals(4, tabelloneTester.getRe().contaPassi(tabelloneTester.cercaCitta("naris")));
+		giocoTester.getTabellone().getRe().muoviRe(giocoTester.getTabellone().cercaCitta("esti"));
+		assertNull(giocoTester.getTabellone().cercaCitta("juvelar").getRe());
+		assertEquals(giocoTester.getTabellone().getRe(), giocoTester.getTabellone().cercaCitta("esti").getRe());
+		assertEquals(2, giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("arkon")));
+		assertEquals(3,
+				giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("castrum")));
+		assertEquals(4, giocoTester.getTabellone().getRe().contaPassi(giocoTester.getTabellone().cercaCitta("naris")));
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ReTest {
 	 */
 	@Test
 	public void testGetCittà() {
-		assertEquals(tabelloneTester.cercaCitta("juvelar"), tabelloneTester.getRe().getCittà());
+		assertEquals(giocoTester.getTabellone().cercaCitta("juvelar"), giocoTester.getTabellone().getRe().getCittà());
 	}
 
 }
