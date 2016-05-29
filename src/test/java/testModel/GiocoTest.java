@@ -82,6 +82,8 @@ public class GiocoTest {
 			assertEquals(i + 1, giocat.getAssistenti().size());
 			i++;
 		}}
+		assertNotNull(giocoTester.getTabellone());
+		assertEquals(giocoTester.getTabellone(),giocoTester.getTabellone().getRegioni().get(0).getConsiglio().getTabellone());
 	}
 
 	/**

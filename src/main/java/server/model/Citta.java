@@ -21,8 +21,10 @@ public class Citta extends OggettoConBonus {
 	private Set<Citta> cittaVicina;
 
 	/**
-	 * @param nome
-	 * @param regione
+	 * Constructor for citta, initializes nome,regione,empori,cittaVicina.
+	 * @param nome the nome for the inizialization
+	 * @param regione the regione for the inizialization
+	 * 
 	 */
 	public Citta(String nome, Regione regione) {
 		super(null);
@@ -37,12 +39,15 @@ public class Citta extends OggettoConBonus {
 	 * 
 	 * @param giocatore
 	 *            the owner of the emporium
+	 *            
+	 * @param cittaVicineConEmpori an empty list.
 	 * @return return a list of near cities which have the player's emporium
+	 * @throws NullPointerException if giocatore or cittaVicineConEmpori are null
 	 */
 	/* cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione */
 	public List<Citta> cittaVicinaConEmporio(Giocatore giocatore, List<Citta> cittaVicineConEmpori) {
-		if (giocatore == null)
-			throw new NullPointerException("Il giocatore non può essere nullo");
+		if (giocatore == null || cittaVicineConEmpori==null)
+			throw new NullPointerException();
 		for (Citta c : cittaVicina) {
 			if (c.getEmpori().contains(giocatore) && !cittaVicineConEmpori.contains(c)) {
 				cittaVicineConEmpori.add(c);

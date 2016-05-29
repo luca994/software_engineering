@@ -20,13 +20,14 @@ public class Re {
 	 * @param colore
 	 *            the color of the king
 	 */
-	public Re(Citta citta, Consiglio consiglio) {
+	public Re(Citta citta, Consiglio consiglio,Tabellone tabellone) {
 		this.citta = citta;
 		this.consiglio = consiglio;
+		this.tabellone=tabellone;
 	}
 
 	/**
-	 * counts the number of steps that the king must do to reach the destination
+	 * counts the minimum number of steps that the king must do to reach the destination
 	 * city
 	 * 
 	 * @param destinazione

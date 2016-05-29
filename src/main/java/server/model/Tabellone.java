@@ -245,7 +245,7 @@ public class Tabellone {
 						try {
 							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
 							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
-								re = new Re(cit, new Consiglio(this));
+								re = new Re(cit, new Consiglio(this),this);
 								cit.setRe(re);
 							} else {
 								cit.setBonus(gettoniCitta.get(0));

@@ -37,12 +37,12 @@ public class Regione {
 	 *            the list of the cities names
 	 * @param tabellone
 	 *            the game board
-	 * @throws JDOMException
-	 * @throws IOException
-	 *             if the file doesn't exist or there is an error in the file
-	 *             reading
+	 *           @throws NullPointerException if an input parameter is null
+	 *            
 	 */
 	public Regione(String nomeRegione, List<String> nomiCitta, Tabellone tabellone) {
+		if(nomeRegione==null || nomiCitta==null || tabellone==null)
+			throw new NullPointerException();
 		this.nome = nomeRegione;
 		this.tessereCostruzione = new ArrayList<>();
 		this.tessereCoperte = new ArrayList<>();

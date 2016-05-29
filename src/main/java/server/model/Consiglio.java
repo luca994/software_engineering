@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Riccardo
@@ -14,16 +12,19 @@ import java.util.logging.Logger;
  */
 public class Consiglio {
 
-	private static final Logger log = Logger.getLogger(Consiglio.class.getName());
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglieri;
 	private Regione regione;
 
 	/**
-	 * @param tabellone
+	 * constructor for Consiglio, it creates a new consiglio with 4 consiglieri taken from those available
+	 * @param tabellone the tabellone from which the counciliers must be taken
+	 * @throws NullPointerException if the tabellone in input is null
 	 */
 	public Consiglio(Tabellone tabellone) {
-
+		if (tabellone==null)
+			throw new NullPointerException();
+		this.tabellone=tabellone;
 		this.consiglieri = new LinkedList<>();
 		for (int i = 0; i < 4; i++)// Prendo quattro consiglieri da quelli
 									// disponibili e li metto nel consiglio
@@ -34,7 +35,7 @@ public class Consiglio {
 	}
 
 	/**
-	 * this method create a list of <String>colori that contain the color of the
+	 * creates a list of color that contain the colors of the
 	 * councillors
 	 * 
 	 * @return a list with the color of the councillors
@@ -47,37 +48,29 @@ public class Consiglio {
 	}
 
 	/**
-	 * this metod Retrieves and remove the head of this queue, Throws
-	 * NoSuchElementException if this queue is empty.
+	 * Retrieves and remove the head of this queue.
+	 * @throws NoSuchElementException if this queue is empty.
 	 */
 
 	public void removeConsigliere() {
-		try {
-			tabellone.getConsiglieriDisponibili().add(consiglieri.element());
-			consiglieri.remove();
-		} catch (Exception e) {
-			log.log(Level.WARNING, e.getLocalizedMessage(), e);
-		}
+		tabellone.getConsiglieriDisponibili().add(consiglieri.element());
+		consiglieri.remove();
 	}
 
 	/**
-	 * this method Inserts the specified element into this queue if it is
+	 * Inserts the specified element into this queue if it is
 	 * possible to do so immediately without violating capacity restrictions,
 	 * returning true upon success and throwing an IllegalStateException if no
 	 * space is currently available.
 	 */
 	public boolean addConsigliere(Consigliere consigliereDaAggiungere) {
-		try {
-			if (consigliereDaAggiungere == null)
-				throw new NullPointerException("Il consigliere non può essere nullo");
-			if (tabellone.getConsiglieriDisponibili().contains(consigliereDaAggiungere)) {
-				tabellone.getConsiglieriDisponibili().remove(consigliereDaAggiungere);
-				consiglieri.add(consigliereDaAggiungere);
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			log.log(Level.WARNING, e.getLocalizedMessage(), e);
+		if (consigliereDaAggiungere == null)
+			throw new NullPointerException("Il consigliere non può essere nullo");
+		if (tabellone.getConsiglieriDisponibili().contains(consigliereDaAggiungere)) {
+			tabellone.getConsiglieriDisponibili().remove(consigliereDaAggiungere);
+			consiglieri.add(consigliereDaAggiungere);
+		} else {
+			return false;
 		}
 		return true;
 	}
@@ -110,13 +103,6 @@ public class Consiglio {
 	 */
 	public void setConsiglieri(Queue<Consigliere> consiglieri) {
 		this.consiglieri = consiglieri;
-	}
-
-	/**
-	 * @return the log
-	 */
-	public static Logger getLog() {
-		return log;
 	}
 
 	/**
