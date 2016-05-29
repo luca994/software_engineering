@@ -16,11 +16,14 @@ import server.model.azione.AzioneFactory;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.stato.giocatore.StatoGiocatore;
+import server.model.stato.giocatore.TurnoNormale;
 
 public class ViewCLI extends View implements Runnable{
 
 	private AzioneFactory azione;
 	private Login login;
+	private StatoGiocatore statoAttuale;
 	
 	/**
 	 * builds a ViewCLI object
@@ -100,8 +103,11 @@ public class ViewCLI extends View implements Runnable{
 		Scanner input = new Scanner(System.in);
 		while(true){
 			try{	
-				String inputString = input.nextLine();
-				this.getConnessione().inviaOggetto(inputString);
+				if(statoAttuale instanceof TurnoNormale){
+					System.out.println("Inserisci l'azione da fare");
+					String inputString = input.nextLine();
+					this.getConnessione().inviaOggetto(inputString);
+				}
 			}
 			catch(IOException e){
 				//da gestire
@@ -148,4 +154,14 @@ public class ViewCLI extends View implements Runnable{
 		String ritorno = scanner.nextLine();
 		return ritorno;
 	}
+
+	/**
+	 * sets the player state
+	 * @param statoAttuale the state of the player to set
+	 */
+	public void setStatoAttuale(StatoGiocatore statoAttuale) {
+		this.statoAttuale = statoAttuale;
+	}
+	
+	
 }

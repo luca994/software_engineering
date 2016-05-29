@@ -26,7 +26,7 @@ public class GestisciGioco implements Runnable{
 	private AtomicLong timer;
 	
 	/**
-	 * build an object GestisciGioco
+	 * builds an object GestisciGioco
 	 * @throws IOException if there is an error while the server is waiting the connection
 	 */
 	public GestisciGioco() throws IOException{
