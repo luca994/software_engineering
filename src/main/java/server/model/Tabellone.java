@@ -53,9 +53,12 @@ public class Tabellone {
 	 * 
 	 * @throws PercorsoFileNonCorretto
 	 *             if there is an error in reading files
+	 *             
+	 * @throws NullPointerException if nomeFileMappa is null
 	 */
 	public Tabellone(String nomeFileMappa, Gioco gioco) {
-
+		if(nomeFileMappa==null)
+			throw new NullPointerException();
 		this.gioco = gioco;
 
 		/*
@@ -159,10 +162,11 @@ public class Tabellone {
 			// Leggo il nome della regione
 			List<String> nomiCitta = new ArrayList<>();
 			List<Element> elencoCittaRegione = regione.getChildren();
-			// Leggo valore dell'unico attributo(nome della città), lo copio
-			// nella lista dei nomi
-			// e la passo al costruttore della regione, la quale creerà le città
-			// e penserà a collegarle
+			/*
+			 * Leggo il valore dell'unico attributo(nome della città), lo copio
+			 * nella lista dei nomi e la passo al costruttore della regione, la
+			 * quale creerà le città e in seguito le collegherà tra loro.
+			 */
 			for (Element citta : elencoCittaRegione) {
 				nomiCitta.add(citta.getAttributeValue("id"));
 			}
@@ -198,14 +202,11 @@ public class Tabellone {
 		for (Element set : elencoSetBonus) {
 			List<Element> elencoBonus = set.getChildren();
 			Set<Bonus> bonus = new HashSet<>();
-			for (Element bon : elencoBonus) { // Leggo i set di bonus, li
-												// inizializzo e li copio nella
-												// lista di bonus
+			for (Element bon : elencoBonus) {
 				bonus.add(bonusCreator.creaBonus(bon.getAttributeValue("id"),
 						Integer.parseInt(bon.getAttributeValue("attributo")), gioco));
 			}
-			gettoniCitta.add(bonus);// Aggiungo i set di bonus alla lista di
-									// bonus
+			gettoniCitta.add(bonus);
 		}
 		Collections.shuffle(gettoniCitta);
 		return gettoniCitta;
@@ -235,8 +236,10 @@ public class Tabellone {
 		List<Element> elencoCitta = collegamentiRootElement.getChildren();
 		for (Regione reg : regioni) {
 			for (Citta cit : reg.getCitta()) {
-				// ora devo leggere il file delle città e trovare il match, con
-				// il nome, coloro e collego
+				/*
+				 * ora devo leggere il file delle città e trovare il match, con
+				 * il nome, coloro e collego
+				 */
 				for (Element cittaMappa : elencoCitta) {
 					if (cittaMappa.getAttributeValue("nome").equals(cit.getNome())) {
 						try {
@@ -311,7 +314,8 @@ public class Tabellone {
 	}
 
 	/**
-	 * 
+	 * searches for the city with the input name you entered 
+	 * and returns the reference to this , if it exists. The name in input is not case sensitive.
 	 * @param nome
 	 *            the name of the city
 	 * @return return the city which has nome as name
@@ -325,7 +329,7 @@ public class Tabellone {
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Regione regione : this.regioni) {
 			for (Citta cit : regione.getCitta()) {
-				if (cit.getNome().equals(nome)) {
+				if (cit.getNome().toLowerCase().equals(nome.toLowerCase())) {
 					return cit;
 				}
 			}
@@ -334,7 +338,8 @@ public class Tabellone {
 	}
 
 	/**
-	 * 
+	 * searches for the city with the input name you entered and returns 
+	 * the reference to this , if it exists.The name in input is not case sensitive.
 	 * @param nome
 	 *            the name of the city
 	 * @param regione
@@ -349,7 +354,7 @@ public class Tabellone {
 		if (nome == null || regione == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Citta cit : regione.getCitta()) {
-			if (cit.getNome().equals(nome)) {
+			if (cit.getNome().toLowerCase().equals(nome.toLowerCase())) {
 				return cit;
 			}
 		}
@@ -357,7 +362,7 @@ public class Tabellone {
 	}
 
 	/**
-	 * check if a player has an emporium in every city of a color
+	 * checks if a player who has just built an emporium in every city of a color
 	 * 
 	 * @param giocatore
 	 *            the player who has to check the bonus
@@ -367,27 +372,29 @@ public class Tabellone {
 	 * @return return true if the player has an emporium in every city of a
 	 *         color
 	 */
-	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta) {
+	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta){
 		for (Regione r : regioni) {
-			for (Citta c : r.getCitta()) {
-				if (citta.getColore() == c.getColore() && !c.getEmpori().contains(giocatore)) {
+			for (Citta c : r.getCitta())
+				if (citta.getColore() == c.getColore() && !c.getEmpori().contains(giocatore))
 					return false;
-				}
-			}
 		}
 		return true;
 	}
 
 	/**
+	 * checks if a player who has just built an emporium in every city of a region.
 	 * 
 	 * @param giocatore
 	 *            the player who builds the emporium
 	 * @param citta
-	 *            the city in which the player build the emporium
+	 *            the city in which the player has just built the emporium
 	 * @return return true if the player has an emporium in every city of a
 	 *         region
+	 * @throws NullPointerException if citta is null.
 	 */
 	public boolean verificaEmporioRegioneBonus(Giocatore giocatore, Citta citta) {
+		if(citta==null)
+			throw new NullPointerException();
 		for (Citta c : citta.getRegione().getCitta()) {
 			if (!c.getEmpori().contains(giocatore)) {
 				return false;
@@ -397,7 +404,7 @@ public class Tabellone {
 	}
 
 	/**
-	 * check if the player who has built the emporium can take the bonus for
+	 * checks if the player who has just built the emporium can take the bonus for
 	 * having built an emporium in every city of a color or in every city of a
 	 * region. Then assigns the tile/tiles.
 	 * 
@@ -433,7 +440,7 @@ public class Tabellone {
 	/**
 	 * 
 	 * @param nomeRegione
-	 *            the name of the region you wnat to find
+	 *            the name of the region you want to find.(non case sensitive)
 	 * @return return the region with nomeRegione as name
 	 * @throws NullPointerException
 	 *             if nomeRegione is null
@@ -445,7 +452,7 @@ public class Tabellone {
 			throw new NullPointerException("nomeRegione non può essere nullo");
 		}
 		for (Regione r : regioni) {
-			if (r.getNome().equals(nomeRegione)) {
+			if (r.getNome().toLowerCase().equals(nomeRegione.toLowerCase())) {
 				return r;
 			}
 		}
@@ -453,7 +460,7 @@ public class Tabellone {
 	}
 
 	/**
-	 * creating a graph , it puts the cities in each region as a vertex, then I
+	 * creates a graph , it puts the cities in each region as a vertex, then
 	 * created branches connecting each city with its neighbors
 	 * 
 	 * @return the map in the form of graph
