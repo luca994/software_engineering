@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,6 +62,41 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
+	 * {@link server.model.Tabellone#Tabellone(java.lang.String, server.model.Gioco)}
+	 * .
+	 */
+	@Test
+	public void testTabelloneConInputGiocoNull() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", null);
+		assertNotNull(tabelloneTester);
+		assertNotNull(tabelloneTester.getConsiglieriDisponibili());
+		assertNotNull(tabelloneTester.getRegioni());
+		assertNotNull(tabelloneTester.getPercorsoNobilta());
+		assertNotNull(tabelloneTester.getPercorsoRicchezza());
+		assertNotNull(tabelloneTester.getPercorsoVittoria());
+		assertNotNull(tabelloneTester.getTessereBonusRegione());
+		assertNotNull(tabelloneTester.getRe());
+		for (Regione reg : tabelloneTester.getRegioni())
+			for (Citta cit : reg.getCitta()) {
+				assertNotNull(cit);
+				for (Citta citt : cit.getCittàVicina())
+					assertNotNull(citt);
+			}
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#Tabellone(java.lang.String, server.model.Gioco)}
+	 * .
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testTabelloneConInputPercorsoEGiocoNull() {
+		Tabellone tabelloneTester = new Tabellone(null, null);
+		assertNotNull(tabelloneTester);
+	}
+
+	/**
+	 * Test method for
 	 * {@link server.model.Tabellone#cercaCitta(java.lang.String)}.
 	 */
 	@Test(expected = NullPointerException.class)
@@ -82,12 +119,12 @@ public class TabelloneTest {
 	 * Test method for
 	 * {@link server.model.Tabellone#cercaCitta(java.lang.String)}.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCercaCittaValida() {
 		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
 		Citta cittaTester = new Citta("test", tabelloneTester.getRegioni().get(0));
 		tabelloneTester.getRegioni().get(0).getCitta().add(cittaTester);
-		assertEquals(cittaTester, tabelloneTester.cercaCitta("test"));
+		assertEquals(cittaTester, tabelloneTester.cercaCitta("tEsT"));
 	}
 
 	/**
@@ -132,7 +169,7 @@ public class TabelloneTest {
 	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.Regione)}
 	 * .
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCercaCittaConRegioneValida() {
 		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
 		Citta cittaTester = new Citta("test", tabelloneTester.getRegioni().get(0));
@@ -146,8 +183,25 @@ public class TabelloneTest {
 	 * .
 	 */
 	@Test
-	public void testVerificaEmporioColoreBonus() {
-		fail("Not yet implemented"); // TODO
+	public void testVerificaEmporioColoreBonusFalso() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("Arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		assertFalse(tabelloneTester.verificaEmporioColoreBonus(giocoTester.getGiocatori().get(0),
+				tabelloneTester.cercaCitta("Arkon")));
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#verificaEmporioColoreBonus(server.model.Giocatore, server.model.Citta)}
+	 * .
+	 */
+	@Test
+	public void testVerificaEmporioColoreBonusVero() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("Arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.cercaCitta("Merkatim").getEmpori().add(giocoTester.getGiocatori().get(0));
+		assertTrue(tabelloneTester.verificaEmporioColoreBonus(giocoTester.getGiocatori().get(0),
+				tabelloneTester.cercaCitta("Arkon")));
 	}
 
 	/**
@@ -156,8 +210,52 @@ public class TabelloneTest {
 	 * .
 	 */
 	@Test
-	public void testVerificaEmporioRegioneBonus() {
-		fail("Not yet implemented"); // TODO
+	public void testVerificaEmporioRegioneBonusVero() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.cercaCitta("burgen").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.cercaCitta("castrum").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.cercaCitta("dortid").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.cercaCitta("esti").getEmpori().add(giocoTester.getGiocatori().get(0));
+		assertTrue(tabelloneTester.verificaEmporioRegioneBonus(giocoTester.getGiocatori().get(0),
+				tabelloneTester.cercaCitta("esti")));
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * .
+	 */
+	@Test
+	public void testVerificaEmporioRegioneBonusFalso() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		assertFalse(tabelloneTester.verificaEmporioRegioneBonus(giocoTester.getGiocatori().get(0),
+				tabelloneTester.cercaCitta("arkon")));
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * .
+	 */
+	@Test
+	public void testVerificaEmporioRegioneBonusNullGiocatore() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		assertFalse(tabelloneTester.verificaEmporioRegioneBonus(null, tabelloneTester.cercaCitta("arkon")));
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * .
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testVerificaEmporioRegioneBonusNullRegione() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
+		tabelloneTester.verificaEmporioRegioneBonus(null, null);
 	}
 
 	/**
@@ -165,9 +263,28 @@ public class TabelloneTest {
 	 * {@link server.model.Tabellone#prendiTesseraBonus(server.model.Giocatore, server.model.Citta)}
 	 * .
 	 */
-	@Test
-	public void testPrendiTesseraBonus() {
-		fail("Not yet implemented"); // TODO
+	/*
+	 * @Test public void testPrendiTesseraBonus() { fail("Not yet implemented");
+	 * // TODO } NOT ALREADY TESTED
+	 */
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#getRegioneDaNome(java.lang.String)}.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetRegioneInesistenteDaNome() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.getRegioneDaNome("test");
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.model.Tabellone#getRegioneDaNome(java.lang.String)}.
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testGetRegioneNullDaNome() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		tabelloneTester.getRegioneDaNome(null);
 	}
 
 	/**
@@ -175,8 +292,9 @@ public class TabelloneTest {
 	 * {@link server.model.Tabellone#getRegioneDaNome(java.lang.String)}.
 	 */
 	@Test
-	public void testGetRegioneDaNome() {
-		fail("Not yet implemented"); // TODO
+	public void testGetRegioneValidaDaNome() {
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		assertEquals(tabelloneTester.getRegioni().get(0), tabelloneTester.getRegioneDaNome("mare"));
 	}
 
 	/**
@@ -184,80 +302,17 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testGeneraGrafo() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getRegioni()}.
-	 */
-	@Test
-	public void testGetRegioni() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getTessereBonusRegione()}.
-	 */
-	@Test
-	public void testGetTessereBonusRegione() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link server.model.Tabellone#getConsiglieriDisponibili()}.
-	 */
-	@Test
-	public void testGetConsiglieriDisponibili() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getPercorsoNobilta()}.
-	 */
-	@Test
-	public void testGetPercorsoNobilta() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getPercorsoRicchezza()}.
-	 */
-	@Test
-	public void testGetPercorsoRicchezza() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getPercorsoVittoria()}.
-	 */
-	@Test
-	public void testGetPercorsoVittoria() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getRe()}.
-	 */
-	@Test
-	public void testGetRe() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#setRe(server.model.Re)}.
-	 */
-	@Test
-	public void testSetRe() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link server.model.Tabellone#getGioco()}.
-	 */
-	@Test
-	public void testGetGioco() {
-		fail("Not yet implemented"); // TODO
+		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
+		UndirectedGraph<Citta, DefaultEdge> mappaTest = tabelloneTester.generaGrafo();
+		assertNotNull(mappaTest);
+		for (Regione r : tabelloneTester.getRegioni())
+			for (Citta c : r.getCitta())
+				assertTrue(mappaTest.containsVertex(c));
+		assertTrue(mappaTest.containsEdge(tabelloneTester.cercaCitta("burgen"), tabelloneTester.cercaCitta("esti")));
+		assertTrue(mappaTest.containsEdge(tabelloneTester.cercaCitta("esti"), tabelloneTester.cercaCitta("burgen")));
+		assertTrue(mappaTest.containsEdge(tabelloneTester.cercaCitta("kultos"), tabelloneTester.cercaCitta("indur")));
+		assertTrue(mappaTest.containsEdge(tabelloneTester.cercaCitta("indur"), tabelloneTester.cercaCitta("kultos")));
+		assertFalse(mappaTest.containsEdge(tabelloneTester.cercaCitta("osium"), tabelloneTester.cercaCitta("juvelar")));
 	}
 
 }
