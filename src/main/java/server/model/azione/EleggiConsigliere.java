@@ -41,7 +41,7 @@ public class EleggiConsigliere extends Azione {
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		consiglio.addConsigliere(consigliere);
 		consiglio.removeConsigliere();
-		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
 		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
 	}
 
@@ -51,9 +51,9 @@ public class EleggiConsigliere extends Azione {
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		boolean consigliereValido = false;
 		boolean consiglioValido = false;
-		if (gioco.getTabellone().getConsiglieriDisponibili().contains(consigliere))
+		if (getGioco().getTabellone().getConsiglieriDisponibili().contains(consigliere))
 			consigliereValido = true;
-		for (Regione regione : gioco.getTabellone().getRegioni()) {
+		for (Regione regione : getGioco().getTabellone().getRegioni()) {
 			if (regione.getConsiglio().equals(consiglio)) {
 				consiglioValido = true;
 				break;

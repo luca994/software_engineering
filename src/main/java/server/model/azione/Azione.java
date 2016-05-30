@@ -11,7 +11,7 @@ import server.model.Gioco;
  */
 public abstract class Azione {
 
-	protected Gioco gioco;
+	private Gioco gioco;
 
 	public Azione(Gioco gioco) {
 		this.gioco = gioco;
@@ -33,4 +33,11 @@ public abstract class Azione {
 	 * @throws IOException
 	 */
 	public abstract void eseguiAzione(Giocatore giocatore) throws IOException;
+
+	/**
+	 * @return the gioco
+	 */
+	public Gioco getGioco() {
+		return gioco;
+	}
 }

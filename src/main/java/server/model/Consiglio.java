@@ -12,6 +12,7 @@ import java.util.Queue;
  */
 public class Consiglio {
 
+	private static final int MIN_NUMERO_CONSIGLIERI_DA_SODDISFARE = 1;
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglieri;
 	private Regione regione;
@@ -74,6 +75,26 @@ public class Consiglio {
 		}
 		return true;
 	}
+	
+	public List<CartaColorata> soddisfaConsiglio(List<CartaPolitica> carte){
+		if(carte==null)
+			throw new NullPointerException("In input è stato passato un giocatore null");
+		if(carte.size()<MIN_NUMERO_CONSIGLIERI_DA_SODDISFARE || carte.size()>consiglieri.size())
+			throw new IllegalArgumentException("Il numero di carte selezionato non è appropriato");
+		List<CartaColorata> carteUtilizzate = new ArrayList<>();
+		List<Color> coloriConsiglio = acquisisciColoriConsiglio();
+		for(CartaPolitica cp : carte)
+			for(Color col: coloriConsiglio)
+				if(((CartaColorata)cp).getColore().equals(col)){
+					coloriConsiglio.remove(col);
+					carteUtilizzate.add((CartaColorata)cp);
+					break;
+					}
+		return carteUtilizzate;
+	}
+	
+	
+	
 
 	/**
 	 * @return the tabellone

@@ -45,7 +45,7 @@ public class CostruisciEmporioConTessera extends Azione {
 
 		// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
 		if (giocatore.getEmporiRimasti() == 0) {
-			gioco.getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
+			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
 		}
 
@@ -70,7 +70,7 @@ public class CostruisciEmporioConTessera extends Azione {
 		 * regione e prendo la tessera bonus se mi spetta (IL controllo viene
 		 * fatto direttamente dal metodo del tabellone prendiTesseraBonus)
 		 */
-		gioco.getTabellone().prendiTesseraBonus(giocatore, citta);
+		getGioco().getTabellone().prendiTesseraBonus(giocatore, citta);
 
 		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
 	}

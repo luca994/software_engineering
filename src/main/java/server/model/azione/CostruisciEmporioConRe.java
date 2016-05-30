@@ -1,15 +1,15 @@
 package server.model.azione;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Citta;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.Jolly;
 import server.model.Regione;
 
 /**
@@ -46,62 +46,50 @@ public class CostruisciEmporioConRe extends Azione {
 	 *             method muoviGiocatore)
 	 */
 	public void eseguiAzione(Giocatore giocatore) throws IOException {
-		if (giocatore == null)
-			throw new NullPointerException("Il giocatore non può essere nullo");
-		Consiglio consiglioDaSoddisfare = gioco.getTabellone().getRe().getConsiglio();
-		int numeroCartePolitica = cartePolitica.size();
-		int jollyUsati = 0;
-		int counter = 0;
-		if (numeroCartePolitica < 1 || numeroCartePolitica > 4)
-			throw new IllegalArgumentException("Il numero di carte selezionato non è appropriato");
-		List<Color> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-		for (CartaPolitica car : cartePolitica) {
-			if (car.getColore().equals(Color.red))
-				jollyUsati++;
-			for (Color col : colori) {
-				if (car.getColore().equals(col)) {
-					counter++;
-					colori.remove(col);
-					break;
-				}
+		if(giocatore==null)
+			throw new NullPointerException();
+		List<Jolly> carteJollyUtilizzate = new ArrayList<>();
+		for(CartaPolitica c:cartePolitica)
+			if(c instanceof Jolly){
+				carteJollyUtilizzate.add((Jolly)c);
+				cartePolitica.remove(c);
 			}
-		}
-
-		switch (counter) {
-		case 0: 
-			throw new IllegalArgumentException("Non hai soddisfatto nessun consigliere");
-		case 1:
-			gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,-10-jollyUsati);
-			break;
-		case 2:
-			gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,-7-jollyUsati);
-			break;
-		case 3:
-			gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,-4-jollyUsati);
-			break;
-		case 4:
-			break;
-		default:
-			throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
-		}
+		List<CartaColorata> carteColorateUtilizzate = getGioco().getTabellone().getRe().getConsiglio().soddisfaConsiglio(cartePolitica);
+			
+		switch (carteColorateUtilizzate.size()+carteJollyUtilizzate.size()) {
+			case 0:
+				throw new IllegalStateException("Nessun Consigliere soddisfatto");
+			case 1:
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -10-carteJollyUtilizzate.size());
+				break;
+			case 2:
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -7-carteJollyUtilizzate.size());
+				break;
+			case 3:
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -4-carteJollyUtilizzate.size());
+				break;
+			case 4:
+				break;
+			default:
+				throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
+			}
 		
 		/*
-		 * Rimozione tessere selezionate dalla mano del giocatore, se il
-		 * giocatore ha selezionato tessere in più o del colore sbagliato
-		 * gli vengono comunque rimosse.
+		 * Rimozione carte usate dalla mano del giocatore
 		 */
 		
-		giocatore.getCartePolitica().removeAll(cartePolitica);
+		giocatore.getCartePolitica().removeAll(carteColorateUtilizzate);
+		giocatore.getCartePolitica().removeAll(carteJollyUtilizzate);
 
-		gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-				0 - 2 * gioco.getTabellone().getRe().contaPassi(destinazione));
+		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+				0 - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
 
 		destinazione.getEmpori().add(giocatore);
 		giocatore.decrementaEmporiRimasti();
 		
 		/* Se il giocatore ha finito gli empori guadagna 3 punti vittoria */
 		if (giocatore.getEmporiRimasti() == 0){
-			gioco.getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
+			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();}
 		
 		/* Prendo i bonus di questa e delle città collegate */
@@ -116,7 +104,7 @@ public class CostruisciEmporioConRe extends Azione {
 		 * tutte le città di un colore o di una regione e prendo la tessera
 		 * bonus se mi spetta
 		 */
-		gioco.getTabellone().prendiTesseraBonus(giocatore, destinazione);
+		getGioco().getTabellone().prendiTesseraBonus(giocatore, destinazione);
 		
 		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
 	}
@@ -128,7 +116,7 @@ public class CostruisciEmporioConRe extends Azione {
 		if(destinazione.getEmpori().contains(giocatore))
 			return false;
 		if(giocatore.getCartePolitica().containsAll(cartePolitica))
-			for(Regione reg: gioco.getTabellone().getRegioni())
+			for(Regione reg: getGioco().getTabellone().getRegioni())
 				for(Citta cit: reg.getCitta())
 					if(cit.equals(destinazione))
 						return true;

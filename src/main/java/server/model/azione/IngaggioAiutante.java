@@ -34,7 +34,7 @@ public class IngaggioAiutante extends Azione {
 	public void eseguiAzione (Giocatore giocatore) throws IOException{
 			if (giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");
-			gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
 			giocatore.getAssistenti().add(new Assistente());
 			giocatore.getStatoGiocatore().azioneRapidaEseguita();
 	}

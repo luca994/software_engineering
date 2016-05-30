@@ -1,14 +1,15 @@
 package server.model.azione;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.Jolly;
 import server.model.Regione;
 import server.model.TesseraCostruzione;
 
@@ -59,42 +60,28 @@ public class AcquistaPermesso extends Azione {
 	 * @throws NullPointerException if giocatore is null
 	 */
 	@Override
-	public void eseguiAzione(Giocatore giocatore) throws IOException {
-
-		if (giocatore == null)
-			throw new NullPointerException ("In input è stato passato un giocatore null");
-		int numeroCartePolitica = cartePoliticaScelte.size();
-		int jollyUsati = 0;
-		int numeroConsiglieriSoddisfatti = 0;
-		List<Color> colori = consiglioDaSoddisfare.acquisisciColoriConsiglio();
-		List<CartaPolitica> cartePoliticaUsate = new ArrayList<>();
-		if (numeroCartePolitica < 1 || numeroCartePolitica > 4)
-			throw new IllegalArgumentException("Il numero di carte selezionato non è appropriato");
-		
-		for (CartaPolitica car : cartePoliticaScelte) {
-			if (car.getColore().equals(Color.red))
-				jollyUsati++;
-
-			for (Color col : colori) {
-				if (car.getColore().equals(col)) {
-					numeroConsiglieriSoddisfatti++;
-					colori.remove(col);
-					cartePoliticaUsate.add(car);
-					break;
-				}
+	public void eseguiAzione(Giocatore giocatore) {
+		if(giocatore==null)
+			throw new NullPointerException();
+		List<Jolly> carteJollyUtilizzate = new ArrayList<>();
+		for(CartaPolitica c:cartePoliticaScelte)
+			if(c instanceof Jolly){
+				carteJollyUtilizzate.add((Jolly)c);
+				cartePoliticaScelte.remove(c);
 			}
-		}
-			switch (numeroConsiglieriSoddisfatti) {
+		List<CartaColorata> carteColorateUtilizzate = consiglioDaSoddisfare.soddisfaConsiglio(cartePoliticaScelte);
+			
+		switch (carteColorateUtilizzate.size()+carteJollyUtilizzate.size()) {
 			case 0:
-				throw new IllegalStateException("Nessuno Consigliere soddisfatto");
+				throw new IllegalStateException("Nessun Consigliere soddisfatto");
 			case 1:
-				gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -10-jollyUsati);
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -10-carteJollyUtilizzate.size());
 				break;
 			case 2:
-				gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -7-jollyUsati);
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -7-carteJollyUtilizzate.size());
 				break;
 			case 3:
-				gioco.getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -4-jollyUsati);
+				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -4-carteJollyUtilizzate.size());
 				break;
 			case 4:
 				break;
@@ -102,14 +89,19 @@ public class AcquistaPermesso extends Azione {
 				throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
 			}
 			
-		/*  Rimozione tessere selezionate dalla mano del giocatore */
-		giocatore.getCartePolitica().removeAll(cartePoliticaUsate);
-
+		/*  Rimozione c selezionate dalla mano del giocatore */
+		giocatore.getCartePolitica().removeAll(carteColorateUtilizzate);
+		giocatore.getCartePolitica().removeAll(carteJollyUtilizzate);
+		
 		List<TesseraCostruzione> tessereDaScegliere = consiglioDaSoddisfare.getRegione().getTessereCostruzione();
 		if (tessereDaScegliere.contains(tesseraScelta)) {
 			/* Aggiunta tessera acquistata al set di tessere valide del giocatore */
 			giocatore.getTessereValide().add(tesseraScelta);
-			tesseraScelta.eseguiBonus(giocatore);
+			try {
+				tesseraScelta.eseguiBonus(giocatore);
+			} catch (IOException e) {
+				throw new IllegalArgumentException();
+			}
 
 			/* Scopri dal mazzetto una nuova tessera costruzione */
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
@@ -127,7 +119,7 @@ public class AcquistaPermesso extends Azione {
 		boolean tesseraValida=false;
 		Regione regioneDelConsiglio = null;
 		
-		for(Regione regione: gioco.getTabellone().getRegioni()){
+		for(Regione regione: getGioco().getTabellone().getRegioni()){
 			if(regione.getConsiglio().equals(consiglioDaSoddisfare)){
 				consiglioValido=true;
 				regioneDelConsiglio=regione;

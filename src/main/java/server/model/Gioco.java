@@ -92,7 +92,7 @@ public class Gioco extends Observable {
 			this.tabellone.getPercorsoRicchezza().getCaselle().get(9 + numGiocatore).getGiocatori().add(gio);
 
 			for (int i = 0; i < 6; i++) {
-				gio.getCartePolitica().add(new CartaPolitica());
+				gio.getCartePolitica().add(new CartePoliticaFactory().creaCartaPolitica());
 			}
 			numGiocatore++;
 		}

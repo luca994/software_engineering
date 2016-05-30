@@ -16,7 +16,6 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import eccezioniNuove.PercorsoFileNonCorretto;
 import server.model.bonus.Bonus;
 
 import server.model.bonus.BonusCreator;
@@ -51,13 +50,14 @@ public class Tabellone {
 	 * creaConsiglieriDisponibili() , creaRegioni() , creaGettoniCittà() ,
 	 * collegaCittà(nomeFileMappa,gettoniCitta) , creaTessereBonus().
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
-	 *             
-	 * @throws NullPointerException if nomeFileMappa is null
+	 * 
+	 * @throws NullPointerException
+	 *             if nomeFileMappa is null
 	 */
 	public Tabellone(String nomeFileMappa, Gioco gioco) {
-		if(nomeFileMappa==null)
+		if (nomeFileMappa == null)
 			throw new NullPointerException();
 		this.gioco = gioco;
 
@@ -95,7 +95,7 @@ public class Tabellone {
 	 * creates the various paths by calling the respective constructors. This
 	 * method is called only by tabellone's constructor
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 */
 	private void creaPercorsi() {
@@ -104,7 +104,7 @@ public class Tabellone {
 			this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
 			this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
 		} catch (JDOMException | IOException e) {
-			throw new PercorsoFileNonCorretto("Errore nella lettura dei file xml dei percorsi", e);
+			throw new IllegalArgumentException("Errore nella lettura dei file xml dei percorsi", e);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class Tabellone {
 	 * the file the total number of directors to be instantiated and the color
 	 * of each of them. This method is called only by tabellone's constructor
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 */
 	private void creaConsiglieriDisponibili() {
@@ -123,7 +123,7 @@ public class Tabellone {
 		try {
 			documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
 		} catch (JDOMException | IOException e1) {
-			throw new PercorsoFileNonCorretto("Errore nella lettura del file Consiglieri.xml", e1);
+			throw new IllegalArgumentException("Errore nella lettura del file Consiglieri.xml", e1);
 		}
 		Element consiglieriRootElement = documentConsiglieri.getRootElement();
 		List<Element> elencoConsiglieri = consiglieriRootElement.getChildren();
@@ -144,7 +144,7 @@ public class Tabellone {
 	 * the list of cities that comprise it. Even the latter obviously is read
 	 * from file. This method is called only by tabellone's constructor
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 */
 	private void creaRegioni() {
@@ -154,7 +154,7 @@ public class Tabellone {
 		try {
 			documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
 		} catch (JDOMException | IOException e) {
-			throw new PercorsoFileNonCorretto("Errore nella lettura del file Regioni.xml", e);
+			throw new IllegalArgumentException("Errore nella lettura del file Regioni.xml", e);
 		}
 		Element regioniRootElement = documentRegioni.getRootElement();
 		List<Element> elencoRegioni = regioniRootElement.getChildren();
@@ -181,7 +181,7 @@ public class Tabellone {
 	 * 
 	 * @return
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 */
 	private List<Set<Bonus>> creaGettoniCitta() {
@@ -195,7 +195,7 @@ public class Tabellone {
 		try {
 			documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
 		} catch (JDOMException | IOException e) {
-			throw new PercorsoFileNonCorretto("Errore nella lettura del file BonusCittà.xml", e);
+			throw new IllegalArgumentException("Errore nella lettura del file BonusCittà.xml", e);
 		}
 		Element bonusCittaRootElement = documentGettoni.getRootElement();
 		List<Element> elencoSetBonus = bonusCittaRootElement.getChildren();
@@ -220,7 +220,7 @@ public class Tabellone {
 	 * @param nomeFileMappa
 	 * @param gettoniCitta
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 * 
 	 */
@@ -230,7 +230,7 @@ public class Tabellone {
 		try {
 			documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
 		} catch (JDOMException | IOException e1) {
-			throw new IllegalStateException(e1);
+			throw new IllegalArgumentException(e1);
 		}
 		Element collegamentiRootElement = documentCollegamenti.getRootElement();
 		List<Element> elencoCitta = collegamentiRootElement.getChildren();
@@ -245,7 +245,7 @@ public class Tabellone {
 						try {
 							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
 							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
-								re = new Re(cit, new Consiglio(this),this);
+								re = new Re(cit, new Consiglio(this), this);
 								cit.setRe(re);
 							} else {
 								cit.setBonus(gettoniCitta.get(0));
@@ -256,7 +256,7 @@ public class Tabellone {
 								cit.getCittàVicina().add(cercaCitta(coll.getText()));
 							}
 						} catch (NoSuchFieldException e) {
-							throw new IllegalStateException("i colori delle città nei file non sono corretti");
+							throw new IllegalArgumentException("i colori delle città nei file non sono corretti");
 						}
 					}
 				}
@@ -268,7 +268,7 @@ public class Tabellone {
 	 * initialize the tiles tessereBonusRegione, tessereBonusCittà,
 	 * tesserePremioRe reading them from a file
 	 * 
-	 * @throws PercorsoFileNonCorretto
+	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
 	 */
 	private void creaTessereBonus() {
@@ -284,7 +284,7 @@ public class Tabellone {
 		try {
 			documentTessereBonus = builderTessereBonus.build(new File("src/main/resources/TessereBonus.xml"));
 		} catch (JDOMException | IOException e) {
-			throw new PercorsoFileNonCorretto("Errore nella lettura del file TessereBonus.xml", e);
+			throw new IllegalArgumentException("Errore nella lettura del file TessereBonus.xml", e);
 		}
 		Element tessereBonusRootElement = documentTessereBonus.getRootElement();
 		List<Element> tessere = tessereBonusRootElement.getChildren();
@@ -314,8 +314,10 @@ public class Tabellone {
 	}
 
 	/**
-	 * searches for the city with the input name you entered 
-	 * and returns the reference to this , if it exists. The name in input is not case sensitive.
+	 * searches for the city with the input name you entered and returns the
+	 * reference to this , if it exists. The name in input is not case
+	 * sensitive.
+	 * 
 	 * @param nome
 	 *            the name of the city
 	 * @return return the city which has nome as name
@@ -338,8 +340,9 @@ public class Tabellone {
 	}
 
 	/**
-	 * searches for the city with the input name you entered and returns 
-	 * the reference to this , if it exists.The name in input is not case sensitive.
+	 * searches for the city with the input name you entered and returns the
+	 * reference to this , if it exists.The name in input is not case sensitive.
+	 * 
 	 * @param nome
 	 *            the name of the city
 	 * @param regione
@@ -362,7 +365,8 @@ public class Tabellone {
 	}
 
 	/**
-	 * checks if a player who has just built an emporium in every city of a color
+	 * checks if a player who has just built an emporium in every city of a
+	 * color
 	 * 
 	 * @param giocatore
 	 *            the player who has to check the bonus
@@ -372,7 +376,7 @@ public class Tabellone {
 	 * @return return true if the player has an emporium in every city of a
 	 *         color
 	 */
-	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta){
+	public boolean verificaEmporioColoreBonus(Giocatore giocatore, Citta citta) {
 		for (Regione r : regioni) {
 			for (Citta c : r.getCitta())
 				if (citta.getColore() == c.getColore() && !c.getEmpori().contains(giocatore))
@@ -382,7 +386,8 @@ public class Tabellone {
 	}
 
 	/**
-	 * checks if a player who has just built an emporium in every city of a region.
+	 * checks if a player who has just built an emporium in every city of a
+	 * region.
 	 * 
 	 * @param giocatore
 	 *            the player who builds the emporium
@@ -390,10 +395,11 @@ public class Tabellone {
 	 *            the city in which the player has just built the emporium
 	 * @return return true if the player has an emporium in every city of a
 	 *         region
-	 * @throws NullPointerException if citta is null.
+	 * @throws NullPointerException
+	 *             if citta is null.
 	 */
 	public boolean verificaEmporioRegioneBonus(Giocatore giocatore, Citta citta) {
-		if(citta==null)
+		if (citta == null)
 			throw new NullPointerException();
 		for (Citta c : citta.getRegione().getCitta()) {
 			if (!c.getEmpori().contains(giocatore)) {
@@ -404,9 +410,9 @@ public class Tabellone {
 	}
 
 	/**
-	 * checks if the player who has just built the emporium can take the bonus for
-	 * having built an emporium in every city of a color or in every city of a
-	 * region. Then assigns the tile/tiles.
+	 * checks if the player who has just built the emporium can take the bonus
+	 * for having built an emporium in every city of a color or in every city of
+	 * a region. Then assigns the tile/tiles.
 	 * 
 	 * @author riccardo
 	 * @param giocatore

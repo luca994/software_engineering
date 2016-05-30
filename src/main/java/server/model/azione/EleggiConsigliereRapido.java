@@ -52,9 +52,9 @@ public class EleggiConsigliereRapido extends Azione {
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		boolean consigliereValido = false;
 		boolean consiglioValido = false;
-		if (gioco.getTabellone().getConsiglieriDisponibili().contains(consigliere))
+		if (getGioco().getTabellone().getConsiglieriDisponibili().contains(consigliere))
 			consigliereValido = true;
-		for (Regione regione : gioco.getTabellone().getRegioni()) {
+		for (Regione regione : getGioco().getTabellone().getRegioni()) {
 			if (regione.getConsiglio().equals(consiglio)) {
 				consiglioValido = true;
 				break;
