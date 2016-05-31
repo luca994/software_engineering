@@ -42,14 +42,8 @@ public class AzioneFactory {
 		if ("ACQUISTA PERMESSO".equalsIgnoreCase(tipoAzione)) {
 			return new AcquistaPermesso(gioco,tesseraCostruzione, cartePolitica, consiglio);
 		}
-		if ("AZIONE OPZIONALE NULLA".equalsIgnoreCase(tipoAzione)) {
-			return new AzioneOpzionaleNulla();
-		}
 		if ("AZIONE PRINCIPALE AGGIUNTIVA".equalsIgnoreCase(tipoAzione)) {
 			return new AzionePrincipaleAggiuntiva();
-		}
-		if ("AZIONE PRINCIPALE NULLA".equalsIgnoreCase(tipoAzione)) {
-			return new AzionePrincipaleNulla();
 		}
 		if ("CAMBIO TESSERE COSTRUZIONE".equalsIgnoreCase(tipoAzione)) {
 			return new CambioTessereCostruzione(regione);

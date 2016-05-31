@@ -1,6 +1,6 @@
 package testPercorso;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.jdom2.JDOMException;
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 
 import server.model.Giocatore;
@@ -25,14 +25,14 @@ import server.model.percorso.CasellaSenzaBonus;
 import server.model.percorso.Percorso;
 
 public class TestPercorso {
-	
+
 	private Tabellone tabellone;
 	private Giocatore g1;
 	private Giocatore g2;
 	private Set<Giocatore> giocatori;
-	
+
 	@Before
-	public void oggettiPerTest() throws JDOMException, IOException{
+	public void oggettiPerTest() throws JDOMException, IOException {
 		tabellone = new Tabellone("src/main/resources/mappacollegamenti0.xml", new Gioco());
 		g1 = new Giocatore("pippo", Color.black);
 		g2 = new Giocatore("piero", Color.cyan);
@@ -40,12 +40,12 @@ public class TestPercorso {
 		giocatori.add(g1);
 		giocatori.add(g2);
 	}
-	
+
 	@Test
 	public void testGetCaselle() throws JDOMException, IOException {
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		List<Casella> caselleProva = new ArrayList<>();
-		for(int i=0;i<6;i++)
+		for (int i = 0; i < 6; i++)
 			caselleProva.add(new CasellaSenzaBonus());
 		percorso.getCaselle().clear();
 		percorso.getCaselle().addAll(caselleProva);
@@ -54,55 +54,58 @@ public class TestPercorso {
 
 	@Test(expected = NullPointerException.class)
 	public void testIfNomeFileIsNull() throws JDOMException, IOException {
-		Percorso percorso= new Percorso(null,tabellone);
+		Percorso percorso = new Percorso(null, tabellone);
+		assertNotNull(percorso);
 	}
-	
+
 	@Test(expected = NullPointerException.class)
-	public void testIfTabelloneIsNull() throws JDOMException, IOException{
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",null);
+	public void testIfTabelloneIsNull() throws JDOMException, IOException {
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", null);
+		assertNotNull(percorso);
 	}
 
 	@Test
 	public void testMuoviGiocatoreWithPositiveSteps() throws Exception {
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		percorso.getCaselle().get(0).setGiocatori(giocatori);
 		percorso.muoviGiocatore(g1, 50);
-		assertEquals(20,percorso.posizioneAttualeGiocatore(g1));
+		assertEquals(20, percorso.posizioneAttualeGiocatore(g1));
 	}
-	
-	@Test(expected=IndexOutOfBoundsException.class)
+
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testMuoviGiocatoreWithNegativeSteps() throws Exception {
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		percorso.getCaselle().get(0).setGiocatori(giocatori);
 		percorso.muoviGiocatore(g1, -5);
-		assertEquals(0,percorso.posizioneAttualeGiocatore(g1));
+		assertEquals(0, percorso.posizioneAttualeGiocatore(g1));
 	}
 
 	@Test
 	public void testPosizioneAttualeGiocatore() throws JDOMException, IOException {
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		percorso.getCaselle().get(14).setGiocatori(giocatori);
 		assertEquals(14, percorso.posizioneAttualeGiocatore(g1));
 	}
-	
+
 	@Test
-	public void testMuoviGiocatoreWithNegativeStepsWithoutException() throws JDOMException, IOException{
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+	public void testMuoviGiocatoreWithNegativeStepsWithoutException() throws JDOMException, IOException {
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		percorso.getCaselle().get(4).setGiocatori(giocatori);
 		percorso.muoviGiocatore(g1, -4);
 		percorso.muoviGiocatore(g2, -2);
 		assertEquals(0, percorso.posizioneAttualeGiocatore(g1));
 		assertEquals(2, percorso.posizioneAttualeGiocatore(g2));
 	}
-	/*
-	@Test
-	public void testBonusRoute() throws JDOMException, IOException{
-		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
-		Set<Bonus> bonus = new HashSet<>();
-		bonus.add(new BonusMoneta(percorso, 6));
-		percorso.getCaselle().set(5,new CasellaConBonus(bonus));
-		percorso.muoviGiocatore(g1, 5);
-		assertEquals(11, percorso.posizioneAttualeGiocatore(g1));
-	}*/ 
+
+	  @Test public void testBonusRoute() throws JDOMException, IOException{
+	  Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml",tabellone);
+	  percorso.getCaselle().get(0).getGiocatori().add(g1);
+	  Set<Bonus> bonus = new HashSet<>(); 
+	  bonus.add(new BonusMoneta(percorso,6)); 
+	  percorso.getCaselle().set(5,new CasellaConBonus(bonus));
+	  percorso.muoviGiocatore(g1, 5); 
+	  assertEquals(11,percorso.posizioneAttualeGiocatore(g1));
+	  }
+	 
 
 }

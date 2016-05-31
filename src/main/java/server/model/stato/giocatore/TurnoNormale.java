@@ -2,6 +2,9 @@ package server.model.stato.giocatore;
 
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
+import server.model.azione.Azione;
+import server.model.azione.AzionePrincipale;
+import server.model.azione.AzioneRapida;
 
 public class TurnoNormale extends StatoGiocatore {
 
@@ -26,29 +29,14 @@ public class TurnoNormale extends StatoGiocatore {
 	 *             if the main actions still make include equal to 0 or even a
 	 *             negative number
 	 */
-	public void azionePrincipaleEseguita() {
-		if (azioniPrincipaliEseguibili <= 0) {
-			throw new IllegalStateException("Errore nel conteggio delle azioni principali eseguite");
+	public void azioneEseguita(Azione azione) {
+		if (azioniPrincipaliEseguibili < 0 || azioniRapideEseguibili<0) {
+			throw new IllegalStateException("Errore nel conteggio delle azioni eseguite");
 		}
-		azioniPrincipaliEseguibili--;
-		if (azioniPrincipaliEseguibili == 0 && azioniRapideEseguibili == 0) {
-			prossimoStato();
-		}
-	}
-
-	/**
-	 * This method should be called every time an AzioneRapida is performed.
-	 * decrements the action's counter and checks if it is finished the turn.
-	 * 
-	 * @throws IllegalStateException
-	 *             if the quick actions still make include equal to 0 or even a
-	 *             negative number
-	 */
-	public void azioneRapidaEseguita() {
-		if (azioniRapideEseguibili <= 0) {
-			throw new IllegalStateException("Errore nel conteggio delle azioni principali eseguite");
-		}
-		azioniRapideEseguibili--;
+		if(azione instanceof AzionePrincipale)
+			azioniPrincipaliEseguibili--;
+		if(azione instanceof AzioneRapida)
+			azioniRapideEseguibili--;
 		if (azioniPrincipaliEseguibili == 0 && azioniRapideEseguibili == 0) {
 			prossimoStato();
 		}

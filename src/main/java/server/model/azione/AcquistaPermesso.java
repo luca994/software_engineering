@@ -18,7 +18,7 @@ import server.model.TesseraCostruzione;
  * action within the game that is passed as a parameter to the constructor
  *
  */
-public class AcquistaPermesso extends Azione {
+public class AcquistaPermesso extends AzionePrincipale {
 
 	
 	private TesseraCostruzione tesseraScelta;
@@ -106,7 +106,7 @@ public class AcquistaPermesso extends Azione {
 			/* Scopri dal mazzetto una nuova tessera costruzione */
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
 			
-			giocatore.getStatoGiocatore().azionePrincipaleEseguita();
+			giocatore.getStatoGiocatore().azioneEseguita(this);
 		}}
 	
 	@Override

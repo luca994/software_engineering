@@ -22,8 +22,8 @@ public class TestCasellaConBonus {
 	@Before
 	public void oggettiTest(){
 		bonus = new HashSet<>();
-		Bonus b1 = new BonusAzionePrincipale();
-		Bonus b2 = new BonusCartaPolitica(4);
+		b1 = new BonusAzionePrincipale();
+		b2 = new BonusCartaPolitica(4);
 		bonus.add(b1);
 		bonus.add(b2);
 	}
@@ -31,6 +31,7 @@ public class TestCasellaConBonus {
 	@Test(expected=NullPointerException.class)
 	public void testCasellaConBonusWithNullBonus() {
 		Casella casella = new CasellaConBonus(null);
+		assertNotNull(casella);
 	}
 	
 	@Test

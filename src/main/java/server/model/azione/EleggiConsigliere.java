@@ -12,7 +12,7 @@ import server.model.Regione;
  * @author Luca
  *
  */
-public class EleggiConsigliere extends Azione {
+public class EleggiConsigliere extends AzionePrincipale {
 
 	private static final int MONETE_ELEZIONE_CONSIGLIERE = 4;
 
@@ -42,7 +42,7 @@ public class EleggiConsigliere extends Azione {
 		consiglio.addConsigliere(consigliere);
 		consiglio.removeConsigliere();
 		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
-		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 	@Override

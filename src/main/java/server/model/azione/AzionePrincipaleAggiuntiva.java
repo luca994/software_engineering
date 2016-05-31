@@ -6,7 +6,7 @@ import server.model.Giocatore;
  * @author Luca
  *
  */
-public class AzionePrincipaleAggiuntiva extends Azione {
+public class AzionePrincipaleAggiuntiva extends AzioneRapida {
 	
 	public AzionePrincipaleAggiuntiva() {
 		super(null);
@@ -26,7 +26,7 @@ public class AzionePrincipaleAggiuntiva extends Azione {
 			for(int i=0;i<3;i++)
 			giocatore.getAssistenti().remove(0);	
 			giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
-			giocatore.getStatoGiocatore().azioneRapidaEseguita();
+			giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 

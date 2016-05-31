@@ -4,6 +4,7 @@ import java.lang.instrument.IllegalClassFormatException;
 
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
+import server.model.azione.Azione;
 
 public class TurnoMercatoCompraVendita extends TurnoMercato {
 
@@ -18,15 +19,11 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 	}
 
 	@Override
-	public void azionePrincipaleEseguita() {
+	public void azioneEseguita(Azione azione) {
 		throw new IllegalStateException();
 	}
 
-	@Override
-	public void azioneRapidaEseguita() {
-		throw new IllegalStateException();
-	}
-
+	
 	@Override
 	public void azionePrincipaleAggiuntiva() {
 		throw new IllegalStateException();

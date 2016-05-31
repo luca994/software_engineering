@@ -9,7 +9,7 @@ import server.model.Regione;
  * @author Luca
  *
  */
-public class EleggiConsigliereRapido extends Azione {
+public class EleggiConsigliereRapido extends AzioneRapida {
 
 	private static final int NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO = 1;
 
@@ -43,7 +43,7 @@ public class EleggiConsigliereRapido extends Azione {
 		consiglio.addConsigliere(consigliere);
 		consiglio.removeConsigliere();
 		giocatore.getAssistenti().remove(0);
-		giocatore.getStatoGiocatore().azioneRapidaEseguita();
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 
 	}
 

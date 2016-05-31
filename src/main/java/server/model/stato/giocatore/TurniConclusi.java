@@ -2,6 +2,7 @@ package server.model.stato.giocatore;
 
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
+import server.model.azione.Azione;
 
 public class TurniConclusi extends StatoGiocatore {
 
@@ -10,12 +11,7 @@ public class TurniConclusi extends StatoGiocatore {
 	}
 
 	@Override
-	public void azionePrincipaleEseguita() {
-		throw new IllegalStateException();
-	}
-
-	@Override
-	public void azioneRapidaEseguita() {
+	public void azioneEseguita(Azione azione) {
 		throw new IllegalStateException();
 	}
 

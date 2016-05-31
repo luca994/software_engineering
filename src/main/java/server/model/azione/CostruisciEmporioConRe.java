@@ -16,7 +16,7 @@ import server.model.Regione;
  * @author Luca
  *
  */
-public class CostruisciEmporioConRe extends Azione {
+public class CostruisciEmporioConRe extends AzionePrincipale {
 
 	private Citta destinazione;
 	private List<CartaPolitica> cartePolitica;
@@ -106,7 +106,7 @@ public class CostruisciEmporioConRe extends Azione {
 		 */
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, destinazione);
 		
-		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 	@Override

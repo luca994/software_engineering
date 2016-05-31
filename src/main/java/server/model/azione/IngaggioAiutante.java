@@ -10,7 +10,7 @@ import server.model.Gioco;
  * @author Luca
  *
  */
-public class IngaggioAiutante extends Azione {
+public class IngaggioAiutante extends AzioneRapida {
 
 	
 	private final static int COSTO_AIUTANTE=3;
@@ -36,7 +36,7 @@ public class IngaggioAiutante extends Azione {
 				throw new NullPointerException("Il giocatore non può essere nullo");
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
 			giocatore.getAssistenti().add(new Assistente());
-			giocatore.getStatoGiocatore().azioneRapidaEseguita();
+			giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 

@@ -12,7 +12,7 @@ import server.model.TesseraCostruzione;
  * @author Luca
  *
  */
-public class CostruisciEmporioConTessera extends Azione {
+public class CostruisciEmporioConTessera extends AzionePrincipale {
 
 	private Citta citta;
 	private TesseraCostruzione tessera;
@@ -72,7 +72,7 @@ public class CostruisciEmporioConTessera extends Azione {
 		 */
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, citta);
 
-		giocatore.getStatoGiocatore().azionePrincipaleEseguita();
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 	@Override

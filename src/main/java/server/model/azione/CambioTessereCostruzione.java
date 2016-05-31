@@ -7,7 +7,7 @@ import server.model.Regione;
  * @author Luca
  *
  */
-public class CambioTessereCostruzione extends Azione {
+public class CambioTessereCostruzione extends AzioneRapida {
 	
 	
 	private Regione regione;
@@ -39,7 +39,7 @@ public class CambioTessereCostruzione extends Azione {
 			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
 			regione.getTessereCoperte().remove(0);
 			giocatore.getAssistenti().remove(0);
-			giocatore.getStatoGiocatore().azioneRapidaEseguita();
+			giocatore.getStatoGiocatore().azioneEseguita(this);
 		
 	}
 

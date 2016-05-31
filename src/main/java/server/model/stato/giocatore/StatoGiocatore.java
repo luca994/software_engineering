@@ -4,6 +4,7 @@ import java.lang.instrument.IllegalClassFormatException;
 
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
+import server.model.azione.Azione;
 import server.model.stato.Stato;
 
 public abstract class StatoGiocatore implements Stato {
@@ -14,8 +15,7 @@ public abstract class StatoGiocatore implements Stato {
 		this.giocatore=giocatore;
 	}
 	
-	public abstract void azionePrincipaleEseguita();
-	public abstract void azioneRapidaEseguita();
+	public abstract void azioneEseguita(Azione azione);
 	public abstract void azionePrincipaleAggiuntiva();
 	public abstract void azioneRapidaAggiuntiva();
 	public abstract void tuttiGliEmporiCostruiti();

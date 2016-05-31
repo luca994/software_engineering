@@ -2,6 +2,7 @@ package server.model.stato.giocatore;
 
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
+import server.model.azione.Azione;
 
 public class AttesaTurno extends StatoGiocatore {
 
@@ -15,14 +16,10 @@ public class AttesaTurno extends StatoGiocatore {
 	}
 
 	@Override
-	public void azionePrincipaleEseguita() {
+	public void azioneEseguita(Azione azione) {
 		throw new IllegalStateException();
 	}
 
-	@Override
-	public void azioneRapidaEseguita() {
-		throw new IllegalStateException();
-	}
 
 	@Override
 	public void azionePrincipaleAggiuntiva() {
