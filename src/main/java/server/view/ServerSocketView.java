@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.TesseraCostruzione;
-import server.model.azione.Azione;
-import server.model.bonus.BonusGettoneCitta;
-import server.model.bonus.BonusRiutilizzoCostruzione;
-import server.model.bonus.BonusTesseraPermesso;
+import server.model.bonus.Bonus;
 import server.observer.Observable;
 import server.observer.Observer;
 
@@ -68,14 +65,14 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	public void run(){
 		while(true)
 		{
-			Object object;
 			try {
-				object = socketIn.readObject();
+				Object object = socketIn.readObject();
+				if(object instanceof Bonus){
+					
+				}
 			}catch (ClassNotFoundException | IOException e){
 				throw new IllegalArgumentException();
 			}
-			if(object instanceof Azione)
-				this.notificaObservers(object);
 		}
 	}
 	

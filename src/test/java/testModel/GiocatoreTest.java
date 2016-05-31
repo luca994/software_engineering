@@ -28,7 +28,7 @@ public class GiocatoreTest {
 	
 	@Before
 	public void inizializzaOggettiPerTest() {
-		Giocatore g1 = new Giocatore("pippo",Color.black );
+		Giocatore g1 = new Giocatore("pippo");
 		giocatoreTester = g1;
 	}
 
@@ -39,7 +39,7 @@ public class GiocatoreTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void testGiocatoreNomeNull() {
-		Giocatore g1 = new Giocatore(null, Color.black);
+		Giocatore g1 = new Giocatore(null);
 		assertNotNull(g1);
 	}
 
@@ -48,22 +48,22 @@ public class GiocatoreTest {
 	 * {@link server.model.Giocatore#Giocatore(java.lang.String, java.awt.Color)}
 	 * .
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	/*@Test(expected = IllegalArgumentException.class)
 	public void testGiocatoreColoreNull() {
 		Giocatore g1 = new Giocatore("pippo", null);
 		assertNotNull(g1);
-	}
+	}*/
 
 	/**
 	 * Test method for
 	 * {@link server.model.Giocatore#Giocatore(java.lang.String, java.awt.Color)}
 	 * .
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	/*@Test(expected = IllegalArgumentException.class)
 	public void testGiocatoreParametriNull() {
 		Giocatore g1 = new Giocatore(null, null);
 		assertNotNull(g1);
-	}
+	}*/
 
 	/**
 	 * Test method for
@@ -74,7 +74,7 @@ public class GiocatoreTest {
 	public void testGiocatoreValido() {
 		assertNotNull(giocatoreTester);
 		assertEquals("pippo", giocatoreTester.getNome());
-		assertEquals(Color.black, giocatoreTester.getColore());
+		//assertEquals(Color.black, giocatoreTester.getColore());
 		assertTrue(giocatoreTester.getStatoGiocatore() instanceof AttesaTurno);
 	}
 

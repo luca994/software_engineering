@@ -104,9 +104,8 @@ public class Gioco extends Observable {
 	 */
 	private void inizializzazioneGiocatoreDummy() {
 
-		Giocatore dummy = new Giocatore("dummy", Color.DARK_GRAY);
+		Giocatore dummy = new Giocatore("dummy");
 
-		/* Per il giocatore aggiuntivo è stato scelto il grigio scuro */
 
 		for (Regione regi : tabellone.getRegioni()) {
 			for (Citta cit : regi.getTessereCoperte().get(0).getCitta()) {

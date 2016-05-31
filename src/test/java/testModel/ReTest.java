@@ -24,8 +24,8 @@ public class ReTest {
 
 	@Before
 	public void inizializzaOggettiPerTest() {
-		Giocatore g1 = new Giocatore("pippo", Color.blue);
-		Giocatore g2 = new Giocatore("paolo", Color.black);
+		Giocatore g1 = new Giocatore("pippo");
+		Giocatore g2 = new Giocatore("paolo");
 		Gioco gioco = new Gioco();
 		gioco.getGiocatori().add(g1);
 		gioco.getGiocatori().add(g2);

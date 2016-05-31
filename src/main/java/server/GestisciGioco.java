@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.jdom2.JDOMException;
 
-import client.Login;
 import server.controller.Controller;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -57,8 +56,8 @@ public class GestisciGioco implements Runnable{
 					Socket socket = giocatoriAttesa.get(0);
 					giocatoriAttesa.remove(0);
 					ObjectInputStream streamIn=new ObjectInputStream(socket.getInputStream());
-					Login login=(Login) streamIn.readObject();
-					Giocatore giocatore = new Giocatore(login.getNome(), login.getColore());
+					String nome=(String) streamIn.readObject();
+					Giocatore giocatore = new Giocatore(nome);
 					giocatori.add(giocatore);
 					ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
 					executor.submit(serverView);

@@ -3,6 +3,7 @@ package server.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
@@ -34,11 +35,18 @@ public class Giocatore {
 	 * @param colore to set
 	 * @throws IllegalArgumentException if nome or colore are null
 	 */
-	public Giocatore(String nome, Color colore) {
-		if(nome==null || colore==null)
+	public Giocatore(String nome) {
+		if(nome==null)
 			throw new IllegalArgumentException();
 		this.nome = nome;
-		this.colore = colore;
+		
+		//creo il colore casualmente
+		Random random = new Random();
+		final float hue = random.nextFloat();
+		final float saturation = 0.9f;//1.0 for brilliant, 0.0 for dull
+		final float luminance = 1.0f; //1.0 for brighter, 0.0 for black
+		this.colore = Color.getHSBColor(hue, saturation, luminance);
+		
 		this.assistenti = new ArrayList<>();
 		this.cartePolitica = new ArrayList<>();
 		this.tessereUsate = new ArrayList<>();

@@ -20,8 +20,8 @@ public class TestCasella {
 	@Before
 	public void oggettiTest(){
 		giocatori=new HashSet<>();
-		Giocatore g1 = new Giocatore("pippo",Color.magenta);
-		Giocatore g2 = new Giocatore("pluto", Color.black);
+		Giocatore g1 = new Giocatore("pippo");
+		Giocatore g2 = new Giocatore("pluto");
 		giocatori.add(g1);
 		giocatori.add(g2);
 	}
