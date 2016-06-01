@@ -1,12 +1,13 @@
 package server.model.azione;
 
+import eccezioni.NumeroAiutantiIncorretto;
 import server.model.Consigliere;
 import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Regione;
 
 /**
- * @author Luca
+ * Rapid action that allows you to elect a councilor for an assistant .
  *
  */
 public class EleggiConsigliereRapido extends AzioneRapida {
@@ -27,18 +28,20 @@ public class EleggiConsigliereRapido extends AzioneRapida {
 	}
 
 	/**
-	 * Elects a specified Consigliere,
+	 * Performs the action
 	 * 
-	 * @throws IllegalStateException
-	 *             if giocatore hasn't enough Aiutanti
-	 * @param giocatore
+	 * @throws NumeroAiutantiIncorretto
+	 *             if the number of Assistenti that player owns is insufficient
+	 *             to execute the action.
+	 * @throws NullPointerException
+	 *             if the player is null
 	 */
 	@Override
-	public void eseguiAzione(Giocatore giocatore) {
+	public void eseguiAzione(Giocatore giocatore) throws NumeroAiutantiIncorretto {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		if (giocatore.getAssistenti().size() < NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO)
-			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti par eseguire l'azione");
+			throw new NumeroAiutantiIncorretto("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
 
 		consiglio.addConsigliere(consigliere);
 		consiglio.removeConsigliere();

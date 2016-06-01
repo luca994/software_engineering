@@ -1,17 +1,19 @@
 package server.model.azione;
 
+import eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Regione;
 
 /**
- * @author Luca
+ * Rapid action that allows you to take the two TesserePermesso face up in a
+ * region, return them to the bottom of the corresponding deck and draws two new
+ * ones from the top of the deck.
  *
  */
 public class CambioTessereCostruzione extends AzioneRapida {
-	
-	
+
 	private Regione regione;
-	
+
 	/**
 	 * @param regione
 	 */
@@ -20,36 +22,33 @@ public class CambioTessereCostruzione extends AzioneRapida {
 		this.regione = regione;
 	}
 
-
 	/**
-	 * Get two new Tessere Costruzione in the visble list of obtaiable Tessere Costruzione
-	 * @throws IllegalStateException if giocatore hasn't enough Aiutanti 
+	 * Performs the action
+	 * 
+	 * @throws NumeroAiutantiIncorretto
+	 *             if the number of Assistenti that player owns is insufficient
+	 *             to execute the action.
+	 * 
+	 * @throws NullPointerException
+	 *             if the player is null
+	 * 
 	 */
 	@Override
-	public void eseguiAzione (Giocatore giocatore){
-		
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			if(giocatore.getAssistenti().isEmpty())
-				throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
-			regione.getTessereCoperte().addAll(regione.getTessereCostruzione());
-			regione.getTessereCostruzione().clear();
-			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
-			regione.getTessereCoperte().remove(0);
-			regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
-			regione.getTessereCoperte().remove(0);
-			giocatore.getAssistenti().remove(0);
-			giocatore.getStatoGiocatore().azioneEseguita(this);
-		
-	}
+	public void eseguiAzione(Giocatore giocatore) throws NumeroAiutantiIncorretto {
 
-
-	@Override
-	public boolean verificaInput(Giocatore giocatore) {
-		if (giocatore==null)
+		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		if(giocatore.getAssistenti().size()>0)
-			throw new IllegalStateException("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
-		return true;
+		if (giocatore.getAssistenti().isEmpty())
+			throw new NumeroAiutantiIncorretto("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
+		regione.getTessereCoperte().addAll(regione.getTessereCostruzione());
+		regione.getTessereCostruzione().clear();
+		regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
+		regione.getTessereCoperte().remove(0);
+		regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
+		regione.getTessereCoperte().remove(0);
+		giocatore.getAssistenti().remove(0);
+		giocatore.getStatoGiocatore().azioneEseguita(this);
+
 	}
+
 }

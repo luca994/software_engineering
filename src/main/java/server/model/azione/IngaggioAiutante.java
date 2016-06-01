@@ -1,47 +1,36 @@
 package server.model.azione;
 
-import java.io.IOException;
-
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Assistente;
 import server.model.Giocatore;
 import server.model.Gioco;
 
 /**
- * @author Luca
+ * Rapid action that allows you to hire an assistant paying 3 coins
  *
  */
 public class IngaggioAiutante extends AzioneRapida {
 
-	
-	private final static int COSTO_AIUTANTE=3;
-	
-	
-	/**
-	 * @param percorsoRicchezza
-	 */
+	private final static int COSTO_AIUTANTE = 3;
+
 	public IngaggioAiutante(Gioco gioco) {
 		super(gioco);
 	}
 
-	
 	/**
-	 * @author Riccardo
-	 * the player add an assistant to his assistants's list and come back of
-	 * COSTO_AIUTANTE in the richness route
-	 * @param giocatore the player who wants to buy an assistant
-	 * @throws IOException 
+	 * Performs the action
+	 * 
+	 * 
+	 * @throws FuoriDalLimiteDelPercorso
+	 *             if the player doesn't have enough money to executes the
+	 *             action.
 	 */
-	public void eseguiAzione (Giocatore giocatore) throws IOException{
-			if (giocatore==null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
-			giocatore.getAssistenti().add(new Assistente());
-			giocatore.getStatoGiocatore().azioneEseguita(this);
+	public void eseguiAzione(Giocatore giocatore) throws FuoriDalLimiteDelPercorso {
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
+		giocatore.getAssistenti().add(new Assistente());
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
-
-	@Override
-	public boolean verificaInput(Giocatore giocatore) {
-		return true;
-	}
 }

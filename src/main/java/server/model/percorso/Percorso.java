@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.ListIterator;
+
 import java.util.Set;
 
 import org.jdom2.Document;
@@ -15,6 +15,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Tabellone;
 import server.model.bonus.Bonus;
@@ -23,8 +24,6 @@ import server.model.bonus.BonusCreator;
 /**
  * This class is used to implement all the routes; the generic type "Casella"
  * allow the program to use only this class to implement every kind of route.
- * 
- * @author Massimiliano Ventura
  *
  */
 public class Percorso {
@@ -78,88 +77,33 @@ public class Percorso {
 
 	/**
 	 * Moves the player along the route(Percorso) if the number of steps(passi)
-	 * is negative the player will move backwards.
-	 * 
-	 * @throws IndexOutOfBoundsException
-	 *             if giocatore hasn't enough money
-	 * @param giocatore
-	 *            the player who wants to move
-	 * @param passi
-	 *            the number of steps
-	 * @throws IOException
-	 */
-	public void muoviGiocatore(Giocatore giocatore, int passi) {
-		if (passi > 0)
-			muoviGiocatoreAvanti(giocatore, passi);
-		else if (passi < 0) {
-			int posizione = posizioneAttualeGiocatore(giocatore);
-			if (posizione >= (0 - passi)) {
-				passi = 0 - passi;
-				muoviGiocatoreIndietro(giocatore, passi);
-			} else {
-				throw new IndexOutOfBoundsException("Soldi insufficienti per eseguire la mossa");
-			}
-		}
-	}
-
-	/**
-	 * it is called by muoviGiocatore to move the player forward
+	 * is negative the player will move backwards. If the player would exceed
+	 * the end of the path remains on the last box. If the player is already in
+	 * the last box , before you move forward , the player does not move and
+	 * does not take its bonus.
 	 * 
 	 * @param giocatore
 	 *            the player who wants to move
 	 * @param passi
 	 *            the number of steps
-	 * @throws IOException
-	 */
-	private void muoviGiocatoreAvanti(Giocatore giocatore, int passi) {
-		Casella casellacorrente = null;
-		ListIterator<Casella> itcasella = this.caselle.listIterator();
-		while (itcasella.hasNext()) {
-			Set<Giocatore> giocatoriCasellaCorrente = itcasella.next().getGiocatori();
-			if (!itcasella.hasNext()) {
-				break;
-			}
-			if (giocatoriCasellaCorrente.contains(giocatore)) {
-				giocatoriCasellaCorrente.remove(giocatore);
-				for (int j = 0; j < passi && itcasella.hasNext(); j++) {
-					casellacorrente = itcasella.next();
-					giocatoriCasellaCorrente = casellacorrente.getGiocatori();
-				}
-				giocatoriCasellaCorrente.add(giocatore);
-				if (casellacorrente instanceof CasellaConBonus) {
-					for (Bonus bon : ((CasellaConBonus) casellacorrente).getBonus())
-						bon.azioneBonus(giocatore);
-				}
-				break;
-			}
-		}
-	}
-
-	/**
-	 * it is called by muoviGiocatore to move the player back
+	 * @throws FuoriDalLimiteDelPercorso
+	 *             if the player , making steps back , would exceed the box 0
 	 * 
-	 * @param giocatore
-	 *            the player who wants to move
-	 * @param passi
-	 *            the number of steps
+	 * 
 	 */
-	private void muoviGiocatoreIndietro(Giocatore giocatore, int passi) {
-
-		ListIterator<Casella> itcasella = this.caselle.listIterator(caselle.size());
-		while (itcasella.hasPrevious()) {
-			Set<Giocatore> giocatoriCasellaCorrente = itcasella.previous().getGiocatori();
-			if (!itcasella.hasPrevious()) {
-				break;
-			}
-			if (giocatoriCasellaCorrente.contains(giocatore)) {
-				giocatoriCasellaCorrente.remove(giocatore);
-				for (int j = 0; j < passi && itcasella.hasPrevious(); j++)
-					giocatoriCasellaCorrente = itcasella.previous().getGiocatori();
-				giocatoriCasellaCorrente.add(giocatore);
-				break;
-			}
-		}
-
+	public void muoviGiocatore(Giocatore giocatore, int passi) throws FuoriDalLimiteDelPercorso {
+		int posizioneFinale = posizioneAttualeGiocatore(giocatore) + passi;
+		if (posizioneFinale < 0)
+			throw new FuoriDalLimiteDelPercorso();
+		if (posizioneFinale > caselle.size() - 1)
+			posizioneFinale = caselle.size() - 1;
+		if (posizioneAttualeGiocatore(giocatore) == caselle.size() - 1)
+			return;
+		caselle.get(posizioneAttualeGiocatore(giocatore)).getGiocatori().remove(giocatore);
+		caselle.get(posizioneFinale).getGiocatori().add(giocatore);
+		if (caselle.get(posizioneFinale) instanceof CasellaConBonus && passi > 0)
+			for (Bonus bon : ((CasellaConBonus) caselle.get(posizioneFinale)).getBonus())
+				bon.azioneBonus(giocatore);
 	}
 
 	/**
@@ -171,17 +115,12 @@ public class Percorso {
 	 * 
 	 */
 	public int posizioneAttualeGiocatore(Giocatore giocatore) {
-		boolean trovato = false;
-		int posizione = -1;
-		Iterator<Casella> itcasella = caselle.iterator();
-		while (itcasella.hasNext() && !trovato) {
-			posizione++;
-			if (itcasella.next().getGiocatori().contains(giocatore))
-				trovato = true;
-		}
-		if (!trovato)
-			throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
-		return posizione;
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore è nullo");
+		for (Casella c : caselle)
+			if (c.getGiocatori().contains(giocatore))
+				return caselle.indexOf(c);
+		throw new IllegalArgumentException("Il giocatore non è stato inizializzato in questo percorso");
 	}
 
 	/**

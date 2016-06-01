@@ -41,7 +41,11 @@ public class BonusPercorsoNobilta implements Bonus {
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		percorsoNobilta.muoviGiocatore(giocatore, steps);
+		try {
+			percorsoNobilta.muoviGiocatore(giocatore, steps);
+		} catch (Exception e) {
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 }

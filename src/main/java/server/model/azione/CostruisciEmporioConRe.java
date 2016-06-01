@@ -1,19 +1,24 @@
 package server.model.azione;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import eccezioni.CartePoliticaIncorrette;
+import eccezioni.EmporioGiaCostruito;
+import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezioni.NumeroAiutantiIncorretto;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Jolly;
-import server.model.Regione;
 
 /**
- * @author Luca
+ * 
+ * Main action that allows you to build an emporium. First you have to fulfill
+ * the council of the king , then you can move the king by paying some money,
+ * then you can build the store in the city in which is located the king now.
  *
  */
 public class CostruisciEmporioConRe extends AzionePrincipale {
@@ -22,7 +27,7 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 	private List<CartaPolitica> cartePolitica;
 
 	/**
-	 * @param re
+	 * Constructor
 	 *
 	 */
 	public CostruisciEmporioConRe(Gioco gioco, List<CartaPolitica> cartePolitica, Citta destinazione) {
@@ -32,95 +37,103 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 	}
 
 	/**
-	 * Builds an emporio in the same city where the king is situated.
+	 * Performs the action
 	 * 
-	 * @throws IOException
+	 * @throws FuoriDalLimiteDelPercorso
+	 *             if giocatore hasn't enough money to perform the action.
 	 * 
+	 * @throws CartePoliticaIncorrette
+	 *             if the number of Politics cards selected is incorrect, or if
+	 *             you have not fulfill even one councilor.
+	 * @throws NumeroAiutantiIncorretto
+	 *             if the player builds an emporium in a city where there are
+	 *             already other emporiums of other player and has no helpers
+	 *             needed to build
+	 * @throws EmporioGiaCostruito
+	 *             if there is already a player's emporium in the destination
+	 *             city.
+	 * @throws NullPointerException
+	 *             if the player is null.
 	 * 
-	 * @throws IllegalStateException
-	 *             when the number of CartaPolitica is not correct.
-	 * @throws IndexOutOfBoundsException
-	 *             if an error occurs during the count of the cards
-	 * @throws IndexOutOfBoundsException
-	 *             if giocatore hasn't enough money to perform the action(from
-	 *             method muoviGiocatore)
+	 *
 	 */
-	public void eseguiAzione(Giocatore giocatore) throws IOException {
-		if(giocatore==null)
+	@Override
+	public void eseguiAzione(Giocatore giocatore)
+			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+		if (giocatore == null)
 			throw new NullPointerException();
+		if (cartePolitica.isEmpty()
+				|| cartePolitica.size() > getGioco().getTabellone().getRe().getConsiglio().getConsiglieri().size())
+			throw new CartePoliticaIncorrette("Il numero di carte Politica scelte non è corretto");
 		List<Jolly> carteJollyUtilizzate = new ArrayList<>();
-		for(CartaPolitica c:cartePolitica)
-			if(c instanceof Jolly){
-				carteJollyUtilizzate.add((Jolly)c);
+		for (CartaPolitica c : cartePolitica)
+			if (c instanceof Jolly) {
+				carteJollyUtilizzate.add((Jolly) c);
 				cartePolitica.remove(c);
 			}
-		List<CartaColorata> carteColorateUtilizzate = getGioco().getTabellone().getRe().getConsiglio().soddisfaConsiglio(cartePolitica);
-			
-		switch (carteColorateUtilizzate.size()+carteJollyUtilizzate.size()) {
-			case 0:
-				throw new IllegalStateException("Nessun Consigliere soddisfatto");
-			case 1:
-				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -10-carteJollyUtilizzate.size());
-				break;
-			case 2:
-				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -7-carteJollyUtilizzate.size());
-				break;
-			case 3:
-				getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -4-carteJollyUtilizzate.size());
-				break;
-			case 4:
-				break;
-			default:
-				throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
-			}
-		
+		List<CartaColorata> carteColorateUtilizzate = getGioco().getTabellone().getRe().getConsiglio()
+				.soddisfaConsiglio(cartePolitica);
+		if (destinazione.getEmpori().contains(giocatore))
+			throw new EmporioGiaCostruito("Hai già un Emporio in questa città");
+		if (destinazione.getEmpori().size() > giocatore.getAssistenti().size())
+			throw new NumeroAiutantiIncorretto(
+					"Il giocatore non ha abbastanza aiutanti per costruire l'emporio in quella posizione");
+		switch (carteColorateUtilizzate.size() + carteJollyUtilizzate.size()) {
+		case 0:
+			throw new CartePoliticaIncorrette("Nessun Consigliere soddisfatto");
+		case 1:
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+					-10 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+			break;
+		case 2:
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+					-7 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+			break;
+		case 3:
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+					-4 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+			break;
+		case 4:
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+					-2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+			break;
+		default:
+			throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
+		}
+
+		/* Paga gli aiutanti */
+		for (int i = 0; i < destinazione.getEmpori().size(); i++)
+			giocatore.getAssistenti().remove(0);
 		/*
 		 * Rimozione carte usate dalla mano del giocatore
 		 */
-		
+
 		giocatore.getCartePolitica().removeAll(carteColorateUtilizzate);
 		giocatore.getCartePolitica().removeAll(carteJollyUtilizzate);
 
-		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-				0 - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
-
 		destinazione.getEmpori().add(giocatore);
 		giocatore.decrementaEmporiRimasti();
-		
+
 		/* Se il giocatore ha finito gli empori guadagna 3 punti vittoria */
-		if (giocatore.getEmporiRimasti() == 0){
+		if (giocatore.getEmporiRimasti() == 0) {
 			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
-			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();}
-		
+			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
+		}
+
 		/* Prendo i bonus di questa e delle città collegate */
 		List<Citta> cittaConBonusDaOttenere = new ArrayList<>();
 		cittaConBonusDaOttenere.add(destinazione);
 		destinazione.cittaVicinaConEmporio(giocatore, cittaConBonusDaOttenere);
-		
+
 		for (Citta citt : cittaConBonusDaOttenere)
 			citt.eseguiBonus(giocatore);
 		/*
-		 * controllo se ho gli empori in
-		 * tutte le città di un colore o di una regione e prendo la tessera
-		 * bonus se mi spetta
+		 * controllo se ho gli empori in tutte le città di un colore o di una
+		 * regione e prendo la tessera bonus se mi spetta
 		 */
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, destinazione);
-		
+
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
-	@Override
-	public boolean verificaInput(Giocatore giocatore) {
-		if (giocatore == null)
-			throw new NullPointerException("Il giocatore non può essere nullo");
-		if(destinazione.getEmpori().contains(giocatore))
-			return false;
-		if(giocatore.getCartePolitica().containsAll(cartePolitica))
-			for(Regione reg: getGioco().getTabellone().getRegioni())
-				for(Citta cit: reg.getCitta())
-					if(cit.equals(destinazione))
-						return true;
-		return false;
-	}
-	
 }

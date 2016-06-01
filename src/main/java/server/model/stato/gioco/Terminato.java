@@ -3,6 +3,7 @@ package server.model.stato.gioco;
 import java.util.ArrayList;
 import java.util.List;
 
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.percorso.Casella;
@@ -34,7 +35,13 @@ public class Terminato extends StatoGioco {
 			throw new NullPointerException();
 	}
 
-	public List<Giocatore> calcoloVincitore() {
+	/**
+	 * Calculates the player/players who have the largest number of victory
+	 * points
+	 * 
+	 * @return the winner/winners
+	 */
+	private List<Giocatore> calcoloVincitore() {
 		List<Giocatore> vincitore = new ArrayList<>();
 		List<Casella> caselleNobilta = getGioco().getTabellone().getPercorsoVittoria().caselleNonVuotePiuAvanti();
 		vincitore.addAll(caselleNobilta.get(0).getGiocatori());
@@ -42,7 +49,16 @@ public class Terminato extends StatoGioco {
 
 	}
 
-	public Giocatore ricalcoloVincitore(List<Giocatore> possibiliVincitori) {
+	/**
+	 * it is called when there is a draw between players . Recalculates the
+	 * winner by counting the number of Politics cards and the number of
+	 * assistants.
+	 * 
+	 * @param possibiliVincitori
+	 *            the list of players who can win the game.
+	 * @return the winner
+	 */
+	private Giocatore ricalcoloVincitore(List<Giocatore> possibiliVincitori) {
 		Giocatore vincitore = null;
 		int maxNumCarteEAiutanti = 0;
 		for (Giocatore giocat : possibiliVincitori) {
@@ -54,17 +70,30 @@ public class Terminato extends StatoGioco {
 		return vincitore;
 	}
 
-	public void assegnaPuntiFinaliNobilta() {
+	/**
+	 * searches for the first and the second player in the path of nobility and
+	 * assigns their points.
+	 * 
+	 */
+	private void assegnaPuntiFinaliNobilta() {
 		List<Casella> caselleNobilta = getGioco().getTabellone().getPercorsoNobilta().caselleNonVuotePiuAvanti();
-		for (Giocatore giocat : caselleNobilta.get(0).getGiocatori())
-			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PRIMO_PERCORSO_NOBILTA);
-		if (caselleNobilta.get(0).getGiocatori().size() > 1)
-			return;
-		for (Giocatore giocat : caselleNobilta.get(1).getGiocatori())
-			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_SECONDO_PERCORSO_NOBILTA);
+		try {
+			for (Giocatore giocat : caselleNobilta.get(0).getGiocatori())
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PRIMO_PERCORSO_NOBILTA);
+
+			if (caselleNobilta.get(0).getGiocatori().size() > 1)
+				return;
+			for (Giocatore giocat : caselleNobilta.get(1).getGiocatori())
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_SECONDO_PERCORSO_NOBILTA);
+		} catch (FuoriDalLimiteDelPercorso e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
-	public void assegnoPuntiGiocatoriConPiuPermessi() {
+	/**
+	 * Assigns points to players with more permessiCostruzione.
+	 */
+	private void assegnoPuntiGiocatoriConPiuPermessi() {
 		List<Giocatore> giocatoriConPiuPermessi = new ArrayList<>();
 		int maxNumTesserePermesso = 0;
 		for (Giocatore giocat : getGioco().getGiocatori()) {
@@ -77,7 +106,11 @@ public class Terminato extends StatoGioco {
 			}
 		}
 		for (Giocatore giocat : giocatoriConPiuPermessi)
-			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PIU_TESSERE_PERMESSO);
+			try {
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PIU_TESSERE_PERMESSO);
+			} catch (FuoriDalLimiteDelPercorso e) {
+				throw new IllegalArgumentException(e);
+			}
 	}
 
 	@Override

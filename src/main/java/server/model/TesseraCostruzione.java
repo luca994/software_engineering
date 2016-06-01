@@ -1,8 +1,8 @@
 package server.model;
 
-import java.io.IOException;
 import java.util.Set;
 
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile {
@@ -30,9 +30,8 @@ public class TesseraCostruzione extends OggettoVendibile {
 	 * assigns all the bonuses in the set of bonus
 	 * 
 	 * @param giocatore
-	 * @throws IOException
 	 */
-	public void eseguiBonus(Giocatore giocatore) throws IOException {
+	public void eseguiBonus(Giocatore giocatore) {
 		for (Bonus b : bonus) {
 			b.azioneBonus(giocatore);
 		}
@@ -76,7 +75,7 @@ public class TesseraCostruzione extends OggettoVendibile {
 	}
 
 	@Override
-	public void compra(Giocatore nuovoProprietario) {
+	public void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso {
 		if (nuovoProprietario == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		transazioneDenaro(nuovoProprietario);

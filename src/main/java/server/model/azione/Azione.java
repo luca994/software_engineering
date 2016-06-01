@@ -1,12 +1,14 @@
 package server.model.azione;
 
-import java.io.IOException;
-
+import eccezioni.CartePoliticaIncorrette;
+import eccezioni.EmporioGiaCostruito;
+import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 
 /**
- * @author Luca
+ * Abstact class for the actions
  *
  */
 public abstract class Azione {
@@ -18,21 +20,16 @@ public abstract class Azione {
 	}
 
 	/**
-	 * This method must be called by the controller before executing an action .
-	 * It used to check if the input entered is correct
+	 * Performs the action
 	 * 
-	 * @param giocatore is the player who performs the action
-	 * @return true if is possible to make the actions, else return false
-	 * 
+	 * @param giocatore
+	 *            player who performs the action
+	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws CartePoliticaIncorrette 
+	 * @throws NumeroAiutantiIncorretto 
+	 * @throws EmporioGiaCostruito 
 	 */
-	public abstract boolean verificaInput(Giocatore giocatore);
-
-	/**
-	 * performs the action
-	 * @param giocatore player who performs the action
-	 * @throws IOException
-	 */
-	public abstract void eseguiAzione(Giocatore giocatore) throws IOException;
+	public abstract void eseguiAzione(Giocatore giocatore) throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito;
 
 	/**
 	 * @return the gioco

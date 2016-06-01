@@ -1,13 +1,11 @@
 package server.model.stato.giocatore;
 
-import java.lang.instrument.IllegalClassFormatException;
-
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
 import server.model.azione.Azione;
 
 public class TurnoMercatoCompraVendita extends TurnoMercato {
-
 
 	public TurnoMercatoCompraVendita(Giocatore giocatore) {
 		super(giocatore);
@@ -23,7 +21,6 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 		throw new IllegalStateException();
 	}
 
-	
 	@Override
 	public void azionePrincipaleAggiuntiva() {
 		throw new IllegalStateException();
@@ -47,7 +44,7 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 	}
 
 	@Override
-	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws IllegalClassFormatException {
+	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws FuoriDalLimiteDelPercorso {
 		oggettoDaAcquistare.compra(giocatore);
 	}
 

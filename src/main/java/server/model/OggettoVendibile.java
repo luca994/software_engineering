@@ -1,5 +1,7 @@
 package server.model;
 
+import eccezioni.FuoriDalLimiteDelPercorso;
+
 /**
  * @author Riccardo
  *
@@ -17,7 +19,7 @@ public abstract class OggettoVendibile {
 	 * @param nuovoProprietario
 	 *            the player who wants to buy the object
 	 */
-	public abstract void compra(Giocatore nuovoProprietario);
+	public abstract void compra(Giocatore nuovoProprietario)throws FuoriDalLimiteDelPercorso;
 
 	/**
 	 * this method should be called by transazione, to reset the parameters of
@@ -29,7 +31,7 @@ public abstract class OggettoVendibile {
 		mercato = null;
 	}
 
-	public void transazioneDenaro(Giocatore nuovoProprietario) {
+	public void transazioneDenaro(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso {
 		mercato.getPercorsoRicchezza().muoviGiocatore(nuovoProprietario, -getPrezzo());
 		mercato.getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());
 	}

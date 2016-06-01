@@ -1,5 +1,7 @@
 package server.model;
 
+import eccezioni.FuoriDalLimiteDelPercorso;
+
 /**
  * @author Luca
  *
@@ -7,7 +9,7 @@ package server.model;
 public abstract class CartaPolitica extends OggettoVendibile {
 
 	@Override
-	public void compra(Giocatore nuovoProprietario) {
+	public void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso {
 		if (nuovoProprietario == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		transazioneDenaro(nuovoProprietario);

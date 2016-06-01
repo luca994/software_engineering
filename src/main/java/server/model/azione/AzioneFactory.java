@@ -14,7 +14,7 @@ import server.model.Regione;
 import server.model.TesseraCostruzione;
 
 /**
- * @author Luca
+ * Factory class for actions, is used to instantiate a new action. 
  *
  */
 public class AzioneFactory {

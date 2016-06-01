@@ -1,15 +1,15 @@
 package server.model.azione;
 
-import java.io.IOException;
-
+import eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Consigliere;
 import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Regione;
 
 /**
- * @author Luca
+ * Main action that allows you to elect a councilor. Choose one of the
+ * counselors available from the board , put it on the board by eliminating the
+ * last. Gain 4 coins.
  *
  */
 public class EleggiConsigliere extends AzionePrincipale {
@@ -31,35 +31,25 @@ public class EleggiConsigliere extends AzionePrincipale {
 	}
 
 	/**
-	 * elects a new counselor
+	 * Performs the action
 	 * 
-	 * @throws IOException
+	 * @throws NullPointerException
+	 *             if the player is null
+	 * @throws IllegalArgumentException
+	 *             if there is an error and the player moves out of the limit.
 	 */
 	@Override
-	public void eseguiAzione(Giocatore giocatore) throws IOException {
+	public void eseguiAzione(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		consiglio.addConsigliere(consigliere);
-		consiglio.removeConsigliere();
-		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
-		giocatore.getStatoGiocatore().azioneEseguita(this);
-	}
-
-	@Override
-	public boolean verificaInput(Giocatore giocatore) {
-		if (giocatore == null)
-			throw new NullPointerException("Il giocatore non può essere nullo");
-		boolean consigliereValido = false;
-		boolean consiglioValido = false;
-		if (getGioco().getTabellone().getConsiglieriDisponibili().contains(consigliere))
-			consigliereValido = true;
-		for (Regione regione : getGioco().getTabellone().getRegioni()) {
-			if (regione.getConsiglio().equals(consiglio)) {
-				consiglioValido = true;
-				break;
-			}
+		try {
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+			consiglio.addConsigliere(consigliere);
+			consiglio.removeConsigliere();
+		} catch (FuoriDalLimiteDelPercorso e) {
+			throw new IllegalArgumentException(e);
 		}
-		return consiglioValido && consigliereValido;
+		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}
 
 	/**

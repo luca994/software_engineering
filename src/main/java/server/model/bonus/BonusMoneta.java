@@ -25,7 +25,11 @@ public class BonusMoneta implements Bonus {
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		percorsoRicchezza.muoviGiocatore(giocatore, steps);
+		try {
+			percorsoRicchezza.muoviGiocatore(giocatore, steps);
+		} catch (Exception e) {
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 }
