@@ -34,8 +34,8 @@ public class TestPercorso {
 	@Before
 	public void oggettiPerTest() throws JDOMException, IOException {
 		tabellone = new Tabellone("src/main/resources/mappacollegamenti0.xml", new Gioco());
-		g1 = new Giocatore("pippo", Color.black);
-		g2 = new Giocatore("piero", Color.cyan);
+		g1 = new Giocatore("pippo");
+		g2 = new Giocatore("piero");
 		giocatori = new HashSet<>();
 		giocatori.add(g1);
 		giocatori.add(g2);

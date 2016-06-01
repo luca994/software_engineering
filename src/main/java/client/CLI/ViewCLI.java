@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
-import client.Login;
 import client.View;
 import server.model.ParseColor;
 import server.model.azione.AzioneFactory;
@@ -22,7 +21,6 @@ import server.model.stato.giocatore.TurnoNormale;
 public class ViewCLI extends View implements Runnable{
 
 	private AzioneFactory azione;
-	private Login login;
 	private StatoGiocatore statoAttuale;
 	
 	/**
@@ -69,15 +67,8 @@ public class ViewCLI extends View implements Runnable{
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Inserisci il nome:");
 			String nome = scanner.nextLine();
-			System.out.println("Inserisci il colore:"+"\n"+"black"+"\n"+"blue"+"\n"+"cyan"+"\n"+"darkGray"+"\n"+"gray"+"\n"+"green"+"\n"+"lightGray"+"\n"+"magenta"+"\n"+"orange"+"\n"+"pink"+"\n"+"red"+"\n"+"white"+"\n"+"yellow");
-			Color colore = ParseColor.colorStringToColor(scanner.nextLine());
-			login = new Login(nome, colore);
 			impostaConnessione();
-			getConnessione().inviaOggetto(login);
-		}
-		catch(NoSuchFieldException e){
-			System.out.println("il colore inserito non è corretto");
-			inizializzazione();
+			getConnessione().inviaOggetto(nome);
 		}
 		catch(IOException e){
 			//da gestire
