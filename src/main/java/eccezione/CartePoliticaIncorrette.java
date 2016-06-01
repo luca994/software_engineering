@@ -1,4 +1,4 @@
-package eccezioni;
+package eccezione;
 
 public class CartePoliticaIncorrette extends Exception {
 

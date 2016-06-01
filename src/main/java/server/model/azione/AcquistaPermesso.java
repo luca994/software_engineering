@@ -3,8 +3,8 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezioni.CartePoliticaIncorrette;
-import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezione.CartePoliticaIncorrette;
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Consiglio;

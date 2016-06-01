@@ -1,9 +1,9 @@
 package server.model.azione;
 
-import eccezioni.CartePoliticaIncorrette;
-import eccezioni.EmporioGiaCostruito;
-import eccezioni.FuoriDalLimiteDelPercorso;
-import eccezioni.NumeroAiutantiIncorretto;
+import eccezione.CartePoliticaIncorrette;
+import eccezione.EmporioGiaCostruito;
+import eccezione.FuoriDalLimiteDelPercorso;
+import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 

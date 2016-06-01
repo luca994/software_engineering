@@ -1,6 +1,6 @@
 package server.model.azione;
 
-import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Consigliere;
 import server.model.Consiglio;
 import server.model.Giocatore;

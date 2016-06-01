@@ -1,6 +1,6 @@
 package server.model.azione;
 
-import eccezioni.NumeroAiutantiIncorretto;
+import eccezione.NumeroAiutantiIncorretto;
 import server.model.Consigliere;
 import server.model.Consiglio;
 import server.model.Giocatore;

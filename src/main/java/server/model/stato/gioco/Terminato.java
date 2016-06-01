@@ -3,7 +3,7 @@ package server.model.stato.gioco;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.percorso.Casella;

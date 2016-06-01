@@ -3,9 +3,9 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezioni.EmporioGiaCostruito;
-import eccezioni.FuoriDalLimiteDelPercorso;
-import eccezioni.NumeroAiutantiIncorretto;
+import eccezione.EmporioGiaCostruito;
+import eccezione.FuoriDalLimiteDelPercorso;
+import eccezione.NumeroAiutantiIncorretto;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.TesseraCostruzione;

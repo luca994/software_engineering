@@ -1,6 +1,6 @@
 package server.model;
 
-import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezione.FuoriDalLimiteDelPercorso;
 
 /**
  * @author Luca

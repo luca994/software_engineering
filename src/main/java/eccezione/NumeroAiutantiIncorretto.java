@@ -1,4 +1,4 @@
-package eccezioni;
+package eccezione;
 
 public class NumeroAiutantiIncorretto extends Exception {
 

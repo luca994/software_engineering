@@ -3,10 +3,10 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezioni.CartePoliticaIncorrette;
-import eccezioni.EmporioGiaCostruito;
-import eccezioni.FuoriDalLimiteDelPercorso;
-import eccezioni.NumeroAiutantiIncorretto;
+import eccezione.CartePoliticaIncorrette;
+import eccezione.EmporioGiaCostruito;
+import eccezione.FuoriDalLimiteDelPercorso;
+import eccezione.NumeroAiutantiIncorretto;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Citta;

@@ -2,7 +2,7 @@ package server.model;
 
 import java.util.Set;
 
-import eccezioni.FuoriDalLimiteDelPercorso;
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile {

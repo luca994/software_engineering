@@ -1,7 +1,5 @@
 package server.model;
 
-import java.awt.Color;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -105,7 +103,6 @@ public class Gioco extends Observable {
 	private void inizializzazioneGiocatoreDummy() {
 
 		Giocatore dummy = new Giocatore("dummy");
-
 
 		for (Regione regi : tabellone.getRegioni()) {
 			for (Citta cit : regi.getTessereCoperte().get(0).getCitta()) {
