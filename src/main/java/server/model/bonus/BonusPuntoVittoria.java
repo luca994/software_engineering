@@ -2,6 +2,7 @@ package server.model.bonus;
 
 import java.io.IOException;
 
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.percorso.Percorso;
 
@@ -47,6 +48,9 @@ public class BonusPuntoVittoria implements Bonus {
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere null");
+		try{
+			percorsoVittoria.muoviGiocatore(giocatore, steps);
+		}catch(FuoriDalLimiteDelPercorso e){
 		throw new IndexOutOfBoundsException();
-	}
+	}}
 }

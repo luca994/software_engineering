@@ -3,9 +3,10 @@
  */
 package testModel;
 
-import static org.junit.Assert.*;
-
-import java.awt.Color;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;

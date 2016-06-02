@@ -91,4 +91,11 @@ public class TesseraCostruzione extends OggettoVendibile {
 				+ bonus + "]";
 	}
 
+	/**
+	 * @param bonus the bonus to set
+	 */
+	public void setBonus(Set<Bonus> bonus) {
+		this.bonus = bonus;
+	}
+
 }

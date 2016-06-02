@@ -1,5 +1,6 @@
 package server.model.bonus;
 
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.percorso.Percorso;
 
@@ -43,7 +44,7 @@ public class BonusPercorsoNobilta implements Bonus {
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		try {
 			percorsoNobilta.muoviGiocatore(giocatore, steps);
-		} catch (Exception e) {
+		} catch (FuoriDalLimiteDelPercorso e) {
 			throw new IndexOutOfBoundsException();
 		}
 	}

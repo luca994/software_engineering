@@ -20,9 +20,9 @@ import server.model.TesseraCostruzione;
  */
 public class AcquistaPermesso extends AzionePrincipale {
 
-	private TesseraCostruzione tesseraScelta;
-	private List<CartaPolitica> cartePoliticaScelte;
-	private Consiglio consiglioDaSoddisfare;
+	private final TesseraCostruzione tesseraScelta;
+	private final List<CartaPolitica> cartePoliticaScelte;
+	private final Consiglio consiglioDaSoddisfare;
 
 	/**
 	 * Constructor
@@ -64,9 +64,9 @@ public class AcquistaPermesso extends AzionePrincipale {
 		for (CartaPolitica c : cartePoliticaScelte)
 			if (c instanceof Jolly) {
 				carteJollyUtilizzate.add((Jolly) c);
-				cartePoliticaScelte.remove(c);
 			}
-
+		cartePoliticaScelte.removeAll(carteJollyUtilizzate);
+		
 		List<CartaColorata> carteColorateUtilizzate = consiglioDaSoddisfare.soddisfaConsiglio(cartePoliticaScelte);
 
 		switch (carteColorateUtilizzate.size() + carteJollyUtilizzate.size()) {
@@ -85,6 +85,8 @@ public class AcquistaPermesso extends AzionePrincipale {
 					-4 - carteJollyUtilizzate.size());
 			break;
 		case 4:
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
+					- carteJollyUtilizzate.size());
 			break;
 		default:
 			throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
@@ -94,8 +96,7 @@ public class AcquistaPermesso extends AzionePrincipale {
 		giocatore.getCartePolitica().removeAll(carteColorateUtilizzate);
 		giocatore.getCartePolitica().removeAll(carteJollyUtilizzate);
 
-		List<TesseraCostruzione> tessereDaScegliere = consiglioDaSoddisfare.getRegione().getTessereCostruzione();
-		if (tessereDaScegliere.contains(tesseraScelta)) {
+	
 			/*
 			 * Aggiunta tessera acquistata al set di tessere valide del
 			 * giocatore
@@ -107,31 +108,7 @@ public class AcquistaPermesso extends AzionePrincipale {
 			consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
 
 			giocatore.getStatoGiocatore().azioneEseguita(this);
-		}
-	}
-
-	/**
-	 * @param tesseraScelta
-	 *            the tesseraScelta to set
-	 */
-	public void setTesseraScelta(TesseraCostruzione tesseraScelta) {
-		this.tesseraScelta = tesseraScelta;
-	}
-
-	/**
-	 * @param cartePoliticaScelte
-	 *            the cartePoliticaScelte to set
-	 */
-	public void setCartePoliticaScelte(List<CartaPolitica> cartePoliticaScelte) {
-		this.cartePoliticaScelte = cartePoliticaScelte;
-	}
-
-	/**
-	 * @param consiglioDaSoddisfare
-	 *            the consiglioDaSoddisfare to set
-	 */
-	public void setConsiglioDaSoddisfare(Consiglio consiglioDaSoddisfare) {
-		this.consiglioDaSoddisfare = consiglioDaSoddisfare;
+		
 	}
 
 }

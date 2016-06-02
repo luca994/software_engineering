@@ -26,7 +26,7 @@ public class AzioneFactory {
 	private Regione regione;
 	private Citta citta;
 
-	private Gioco gioco;
+	private final Gioco gioco;
 
 	public AzioneFactory(Gioco gioco) {
 		this.gioco = gioco;
@@ -61,6 +61,48 @@ public class AzioneFactory {
 			return new IngaggioAiutante(gioco);
 		}
 		throw new IllegalStateException("l'azione inserita non è corretta");
+	}
+
+	/**
+	 * @param consiglio the consiglio to set
+	 */
+	public void setConsiglio(Consiglio consiglio) {
+		this.consiglio = consiglio;
+	}
+
+	/**
+	 * @param consigliere the consigliere to set
+	 */
+	public void setConsigliere(Consigliere consigliere) {
+		this.consigliere = consigliere;
+	}
+
+	/**
+	 * @param tesseraCostruzione the tesseraCostruzione to set
+	 */
+	public void setTesseraCostruzione(TesseraCostruzione tesseraCostruzione) {
+		this.tesseraCostruzione = tesseraCostruzione;
+	}
+
+	/**
+	 * @param cartePolitica the cartePolitica to set
+	 */
+	public void setCartePolitica(List<CartaPolitica> cartePolitica) {
+		this.cartePolitica = cartePolitica;
+	}
+
+	/**
+	 * @param regione the regione to set
+	 */
+	public void setRegione(Regione regione) {
+		this.regione = regione;
+	}
+
+	/**
+	 * @param citta the citta to set
+	 */
+	public void setCitta(Citta citta) {
+		this.citta = citta;
 	}
 
 }

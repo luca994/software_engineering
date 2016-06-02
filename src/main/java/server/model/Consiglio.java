@@ -79,8 +79,6 @@ public class Consiglio {
 	public List<CartaColorata> soddisfaConsiglio(List<CartaPolitica> carte){
 		if(carte==null)
 			throw new NullPointerException("In input è stato passato un giocatore null");
-		if(carte.size()<MIN_NUMERO_CONSIGLIERI_DA_SODDISFARE || carte.size()>consiglieri.size())
-			throw new IllegalArgumentException("Il numero di carte selezionato non è appropriato");
 		List<CartaColorata> carteUtilizzate = new ArrayList<>();
 		List<Color> coloriConsiglio = acquisisciColoriConsiglio();
 		for(CartaPolitica cp : carte)
