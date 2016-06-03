@@ -15,7 +15,7 @@ import server.model.bonus.BonusCreator;
  * @author Massimiliano Ventura
  *
  */
-public class TestBonusAssistenete {
+public class TestBonusAssisteneti {
 
 	private Giocatore g1 = new Giocatore("pippo");
 	private BonusCreator creaBonusTester=new BonusCreator(null);

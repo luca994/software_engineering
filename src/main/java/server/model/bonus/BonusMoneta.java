@@ -17,6 +17,8 @@ public class BonusMoneta implements Bonus {
 	private final Percorso percorsoRicchezza;
 
 	public BonusMoneta(Percorso percorsoRicchezza, int steps) {
+		if(steps<0||percorsoRicchezza==null)
+			throw new IllegalStateException("Il percorso non può essere nullo e le monete non possono essere negative");
 		this.steps = steps;
 		this.percorsoRicchezza = percorsoRicchezza;
 	}

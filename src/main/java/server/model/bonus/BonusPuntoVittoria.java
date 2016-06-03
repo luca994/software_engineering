@@ -12,37 +12,20 @@ import server.model.percorso.Percorso;
  */
 public class BonusPuntoVittoria implements Bonus {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4725534973807481625L;
 	private final Percorso percorsoVittoria;
 	private final int steps;
 
 	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
+		if(steps<0||percorsoVittoria==null)
+			throw new IllegalStateException("Il percorso non può essere nullo e i passi non possono essere negativi");
 		this.percorsoVittoria = percorsoVittoria;
 		this.steps = steps;
 	}
 
 	/**
-	 * @return the steps
-	 */
-	public int getSteps() {
-		return steps;
-	}
-
-	/**
-	 * @return the percorsoVittoria
-	 */
-	public Percorso getPercorsoVittoria() {
-		return percorsoVittoria;
-	}
-
-	/**
 	 * @param steps
 	 *            the steps to set
-	 * @throws IOException
-	 * @throws Exception
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
