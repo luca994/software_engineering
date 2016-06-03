@@ -20,7 +20,7 @@ import server.model.bonus.BonusPercorsoNobilta;
 public class TestBonusPercorsoNobilta {
 
 	Gioco giocoTester;
-	Bonus bonusNobiltà;
+	Bonus bonusNobilta;
 	Giocatore g1;
 	Giocatore g2;
 	
@@ -36,32 +36,32 @@ public class TestBonusPercorsoNobilta {
 
 	@Test(expected = IllegalStateException.class)
 	public void testCostruzioneBonusPercorsoNobiltaConParametroPassiNegativo(){
-		bonusNobiltà=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), -12);		
+		bonusNobilta=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), -12);		
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testCostruzioneBonusBonusPercorsoNobiltaConPercorsoRicchezzaNullo() {
-		bonusNobiltà=new BonusPercorsoNobilta(null, 3);		
+		bonusNobilta=new BonusPercorsoNobilta(null, 3);		
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testAzioneBonusConGiocatoreNullo() {
-		bonusNobiltà=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), 3);
-		bonusNobiltà.azioneBonus(null);
+		bonusNobilta=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), 3);
+		bonusNobilta.azioneBonus(null);
 	}
 	@Test
 	public void testAzioneBonusConValoriInRange() {
 		int posizioneIniziale=giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1);
 		int incremento=6;
-		bonusNobiltà=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), incremento);
-		bonusNobiltà.azioneBonus(g1);
+		bonusNobilta=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), incremento);
+		bonusNobilta.azioneBonus(g1);
 		assertEquals(posizioneIniziale+incremento,giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1));
 	}
 	@Test
 	public void testAzioneBonusConValoriFuoriRangePositivi() {
 		int incremento=93;
-		bonusNobiltà=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), incremento);
-		bonusNobiltà.azioneBonus(g1);
+		bonusNobilta=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), incremento);
+		bonusNobilta.azioneBonus(g1);
 		assertEquals(giocoTester.getTabellone().getPercorsoNobilta().getCaselle().size()-1,giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1));
 	}
 }
