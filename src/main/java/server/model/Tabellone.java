@@ -327,11 +327,9 @@ public class Tabellone implements Serializable{
 	 * 
 	 * @param nome
 	 *            the name of the city
-	 * @return return the city which has nome as name
+	 * @return return the city which has nome as name or null if the name of the city isn't correct
 	 * @throws NullPointerException
 	 *             if nome is null
-	 * @throws IllegalArgumentException
-	 *             if the name of the city isn't correct
 	 */
 	public Citta cercaCitta(String nome) {
 		if (nome == null)
@@ -343,7 +341,7 @@ public class Tabellone implements Serializable{
 				}
 			}
 		}
-		throw new IllegalArgumentException("la città inserita non è corretta");
+		return null;
 	}
 
 	/**
@@ -454,11 +452,9 @@ public class Tabellone implements Serializable{
 	 * 
 	 * @param nomeRegione
 	 *            the name of the region you want to find.(non case sensitive)
-	 * @return return the region with nomeRegione as name
+	 * @return return the region with nomeRegione as name or null if the name of the region isn't correct
 	 * @throws NullPointerException
 	 *             if nomeRegione is null
-	 * @throws IllegalArgumentException
-	 *             if nomeRegioe isn't correct
 	 */
 	public Regione getRegioneDaNome(String nomeRegione) {
 		if (nomeRegione == null) {
