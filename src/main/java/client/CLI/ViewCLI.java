@@ -1,6 +1,5 @@
 package client.CLI;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -10,7 +9,6 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import client.View;
-import server.model.ParseColor;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;

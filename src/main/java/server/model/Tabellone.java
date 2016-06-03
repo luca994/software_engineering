@@ -253,7 +253,7 @@ public class Tabellone {
 							}
 							List<Element> elencoCollegamenti = cittaMappa.getChildren();
 							for (Element coll : elencoCollegamenti) {
-								cit.getCittàVicina().add(cercaCitta(coll.getText()));
+								cit.getCittaVicina().add(cercaCitta(coll.getText()));
 							}
 						} catch (NoSuchFieldException e) {
 							throw new IllegalArgumentException("i colori delle città nei file non sono corretti");
@@ -483,7 +483,7 @@ public class Tabellone {
 
 		for (Regione reg : regioni) {
 			for (Citta cit : reg.getCitta()) {
-				for (Citta cit1 : cit.getCittàVicina()) {
+				for (Citta cit1 : cit.getCittaVicina()) {
 					mappa.addEdge(cit, cit1);
 				}
 			}

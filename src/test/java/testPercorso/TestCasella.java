@@ -2,7 +2,6 @@ package testPercorso;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 

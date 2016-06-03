@@ -56,7 +56,7 @@ public class TabelloneTest {
 		for (Regione reg : tabelloneTester.getRegioni())
 			for (Citta cit : reg.getCitta()) {
 				assertNotNull(cit);
-				for (Citta citt : cit.getCittàVicina())
+				for (Citta citt : cit.getCittaVicina())
 					assertNotNull(citt);
 			}
 	}
@@ -80,7 +80,7 @@ public class TabelloneTest {
 		for (Regione reg : tabelloneTester.getRegioni())
 			for (Citta cit : reg.getCitta()) {
 				assertNotNull(cit);
-				for (Citta citt : cit.getCittàVicina())
+				for (Citta citt : cit.getCittaVicina())
 					assertNotNull(citt);
 			}
 	}
