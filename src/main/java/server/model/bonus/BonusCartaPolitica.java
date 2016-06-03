@@ -18,6 +18,8 @@ public class BonusCartaPolitica implements Bonus {
 	private int numeroCarte;
 
 	public BonusCartaPolitica(int numeroCarte) {
+		if(numeroCarte<0)
+			throw new IllegalStateException("Il numero di carte non può essere negativo");
 		this.numeroCarte = numeroCarte;
 	}
 
