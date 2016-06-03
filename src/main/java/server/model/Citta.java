@@ -75,7 +75,7 @@ public class Citta extends OggettoConBonus {
 	/**
 	 * @return the cittàVicina
 	 */
-	public Set<Citta> getCittàVicina() {
+	public Set<Citta> getCittaVicina() {
 		return cittaVicina;
 	}
 

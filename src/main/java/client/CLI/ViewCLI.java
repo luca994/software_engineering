@@ -1,6 +1,5 @@
 package client.CLI;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -10,7 +9,6 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import client.View;
-import server.model.ParseColor;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
@@ -22,6 +20,7 @@ public class ViewCLI extends View implements Runnable{
 
 	private AzioneFactory azione;
 	private StatoGiocatore statoAttuale;
+	private String inputString;
 	
 	/**
 	 * builds a ViewCLI object
@@ -93,15 +92,8 @@ public class ViewCLI extends View implements Runnable{
 	public void run() {
 		Scanner input = new Scanner(System.in);
 		while(true){
-			try{	
-				if(statoAttuale instanceof TurnoNormale){
-					System.out.println("Inserisci l'azione da fare");
-					String inputString = input.nextLine();
-					this.getConnessione().inviaOggetto(inputString);
-				}
-			}
-			catch(IOException e){
-				//da gestire
+			if(statoAttuale instanceof TurnoNormale){
+				inputString = input.nextLine();
 			}
 		}
 	}
@@ -115,21 +107,28 @@ public class ViewCLI extends View implements Runnable{
 			if(oggetto instanceof String)
 				System.out.println(oggetto);
 			if(oggetto instanceof BonusGettoneCitta){
-				String[] nomeCitta = {ottieniStringa("Inserisci il nome di una città dove hai un emporio"
-													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'")};
-				this.getConnessione().inviaOggetto(nomeCitta);
+				ottieniStringa("Inserisci il nome di una città dove hai un emporio"
+													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
+				wait();
+				String[] prov = {inputString};
+				this.getConnessione().inviaOggetto(oggetto);
+				this.getConnessione().inviaOggetto(prov);
 			}
 			if(oggetto instanceof BonusTesseraPermesso){
-				String[] tessera = {ottieniStringa("Inserisci il numero della tessera permesso che vuoi ottenere")};
-				this.getConnessione().inviaOggetto(tessera);
+				ottieniStringa("Inserisci il numero della tessera permesso che vuoi ottenere");
+				String[] prov = {inputString};
+				this.getConnessione().inviaOggetto(oggetto);
+				this.getConnessione().inviaOggetto(prov);
 			}
 			if(oggetto instanceof BonusRiutilizzoCostruzione){
-				String numLista= ottieniStringa("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
-				String numTessera = ottieniStringa("inserisci il numero della tessera da riciclare");
-				String[] array = {numLista,numTessera};
+				ottieniStringa("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
+				String prov = inputString;
+				ottieniStringa("inserisci il numero della tessera da riciclare");
+				String[] array = {prov, inputString};
+				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(array);
 			}
-		}catch(IOException e){
+		}catch(IOException | InterruptedException e){
 			//da gestire
 		}
 	}
@@ -139,11 +138,10 @@ public class ViewCLI extends View implements Runnable{
 	 * @param messaggioInformativo the message you want to show to the player
 	 * @return the input of the player
 	 */
-	public String ottieniStringa(String messaggio){
+	public void ottieniStringa(String messaggio){
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(messaggio);
-		String ritorno = scanner.nextLine();
-		return ritorno;
+		inputString = scanner.nextLine();
 	}
 
 	/**

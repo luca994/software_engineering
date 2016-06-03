@@ -48,7 +48,6 @@ public class Controller implements Observer{
 				}
 			}
 			catch(IllegalArgumentException e){
-				((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 				gioco.notificaObservers(e.getMessage());
 			}
 		}
@@ -62,35 +61,40 @@ public class Controller implements Observer{
 				for(Regione r:gioco.getTabellone().getRegioni()){
 					r.nuovaTessera(listaTessere.get(Integer.parseInt(input[0])));
 				}
+				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
 			}
 			else{
-				throw new IllegalArgumentException("il numero inserito non è corretto");
+				gioco.notificaObservers("tessera inserita non valida");
 			}
 		}
 		if(cambiamento instanceof BonusRiutilizzoCostruzione){
 			Giocatore gio=((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
-			if(input[0].equals("passa"))
+			if(input[0].equals("passa")){
+				((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				return;
+			}
 			if(Integer.parseInt(input[0])==0){//sto usando la lista di tessere valide
 				if(Integer.parseInt(input[0])<gio.getTessereValide().size() && Integer.parseInt(input[0])>=0){
 					TesseraCostruzione tessera= gio.getTessereValide().get(Integer.parseInt(input[0]));
 					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
+					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				}
 				else{
-					throw new IllegalArgumentException("input incoerente");
+					gioco.notificaObservers("input incoerente");
 				}
 			}
 			else if(Integer.parseInt(input[0])==1){
 				if(Integer.parseInt(input[0])<gio.getTessereUsate().size() && Integer.parseInt(input[0])>=0){
 					TesseraCostruzione tessera= gio.getTessereUsate().get(Integer.parseInt(input[0]));
 					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
+					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				}
 				else{
-					throw new IllegalArgumentException("input incoerente");
+					gioco.notificaObservers("input incoerente");
 				}
 			}
 			else
-				throw new IllegalArgumentException("lista sbagliata");
+				gioco.notificaObservers("lista sbagliata");
 		}
 	}
 }

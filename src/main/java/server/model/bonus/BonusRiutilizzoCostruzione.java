@@ -23,9 +23,11 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
 	private Giocatore giocatore;
+	private boolean tesseraCostruzioneCorretta;
 	
 	public BonusRiutilizzoCostruzione(Gioco gioco){
 		this.gioco=gioco;
+		tesseraCostruzioneCorretta=false;
 	}
 	
 	/**
@@ -49,6 +51,14 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	public Giocatore getGiocatore() {
 		return giocatore;
 	}
+	
+	/**
+	 * set the value of tesseraCostruzioneCorretta
+	 * @param tesseraCostruzioneCorretta the value to set
+	 */
+	public void setTesseraCostruzioneCorretta(boolean tesseraCostruzioneCorretta) {
+		this.tesseraCostruzioneCorretta = tesseraCostruzioneCorretta;
+	}
 
 	@Override
 	public void azioneBonus(Giocatore giocatore){
@@ -56,7 +66,9 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 			this.giocatore=giocatore;
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");		
-			gioco.notificaObservers(this);
+			while(!tesseraCostruzioneCorretta){
+				gioco.notificaObservers(this);
+			}
 			if(tessera!=null){
 				for(Bonus b: tessera.getBonus()){
 					b.azioneBonus(giocatore);

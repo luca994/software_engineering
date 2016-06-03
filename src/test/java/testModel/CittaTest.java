@@ -43,7 +43,7 @@ public class CittaTest {
 	public void testCittaNomeNull() {
 		Citta cittaTester = new Citta(null, giocoTester.getTabellone().getRegioni().get(1));
 		assertNotNull(cittaTester);
-		assertNotNull(cittaTester.getCittàVicina());
+		assertNotNull(cittaTester.getCittaVicina());
 		assertNotNull(cittaTester.getEmpori());
 		assertNull(cittaTester.getNome());
 		assertEquals(giocoTester.getTabellone().getRegioni().get(1), cittaTester.getRegione());
@@ -57,7 +57,7 @@ public class CittaTest {
 	public void testCittaRegioneNull() {
 		Citta cittaTester = new Citta("test", null);
 		assertNotNull(cittaTester);
-		assertNotNull(cittaTester.getCittàVicina());
+		assertNotNull(cittaTester.getCittaVicina());
 		assertNotNull(cittaTester.getEmpori());
 		assertEquals("test", cittaTester.getNome().toString());
 		assertNull(cittaTester.getRegione());
@@ -71,7 +71,7 @@ public class CittaTest {
 	public void testCittaValida() {
 		Citta cittaTester = new Citta("test", giocoTester.getTabellone().getRegioni().get(2));
 		assertNotNull(cittaTester);
-		assertNotNull(cittaTester.getCittàVicina());
+		assertNotNull(cittaTester.getCittaVicina());
 		assertNotNull(cittaTester.getEmpori());
 		assertEquals("test", cittaTester.getNome().toString());
 		assertEquals(giocoTester.getTabellone().getRegioni().get(2), cittaTester.getRegione());

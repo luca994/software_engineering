@@ -24,6 +24,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	private ObjectInputStream socketIn;
 	private ObjectOutputStream socketOut;
 	private Giocatore giocatore;
+	private String[] input;
 	
 	/**
 	 * builds a server socket view
@@ -45,15 +46,13 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	
 	/**
 	 * asks an input to the player
-	 * @param messaggioInformativo the message you want to show to the player
-	 * @return the input of the player
+	 * @param oggetto the object you want to send to the player
 	 */
-	public String[] ottieniStringa(Object oggetto){
+	public void ottieniStringa(Object oggetto){
 		try {
 			socketOut.writeObject(oggetto);
 			socketOut.flush();
-			return (String[])socketIn.readObject();
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -68,7 +67,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 			try {
 				Object object = socketIn.readObject();
 				if(object instanceof Bonus){
-					
+					input = (String[])socketIn.readObject();
 				}
 			}catch (ClassNotFoundException | IOException e){
 				throw new IllegalArgumentException();
@@ -96,8 +95,10 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	 */
 	@Override
 	public <Bonus> void update(Bonus cambiamento){
-		String[] attributo = ottieniStringa(cambiamento);
-		this.notificaObservers(cambiamento, attributo);
+		ottieniStringa(cambiamento);
+		while(input==null);
+		this.notificaObservers(cambiamento, input);
+		input=null;
 	}
 	
 	@Override

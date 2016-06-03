@@ -19,9 +19,11 @@ public class BonusTesseraPermesso implements Bonus {
 	private static final long serialVersionUID = -2996522240976825764L;
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
+	private boolean tesseraCorretta;
 
 	public BonusTesseraPermesso(Gioco gioco) {
 		this.gioco = gioco;
+		tesseraCorretta=false;
 	}
 
 	/**
@@ -38,10 +40,20 @@ public class BonusTesseraPermesso implements Bonus {
 	public void setTessera(TesseraCostruzione tessera) {
 		this.tessera = tessera;
 	}
+	
+	/**
+	 * set the boolean tesseraCorretta
+	 * @param tesseraCorretta the value of tesseraCorretta to set
+	 */
+	public void setTesseraCorretta(boolean tesseraCorretta) {
+		this.tesseraCorretta = tesseraCorretta;
+	}
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		gioco.notificaObservers(this);
+		while(!tesseraCorretta){
+			gioco.notificaObservers(this);
+		}
 		giocatore.getTessereValide().add(tessera);
 		tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
 		for (Bonus b : tessera.getBonus()) {
