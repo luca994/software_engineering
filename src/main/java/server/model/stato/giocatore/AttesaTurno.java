@@ -6,6 +6,11 @@ import server.model.azione.Azione;
 
 public class AttesaTurno extends StatoGiocatore {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3974356968762307853L;
+
 	public AttesaTurno(Giocatore giocatore) {
 		super(giocatore);
 	}

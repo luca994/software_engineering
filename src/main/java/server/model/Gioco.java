@@ -66,7 +66,8 @@ public class Gioco extends Observable {
 		/* Setup aggiuntivo per 2 giocatori */
 		if (giocatori.size() == 2)
 			inizializzazioneGiocatoreDummy();
-
+		
+		this.notificaObservers(tabellone);
 	}
 
 	/**

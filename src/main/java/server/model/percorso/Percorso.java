@@ -2,6 +2,7 @@ package server.model.percorso;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -26,8 +27,13 @@ import server.model.bonus.BonusCreator;
  * allow the program to use only this class to implement every kind of route.
  *
  */
-public class Percorso {
+public class Percorso implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1214238482188402647L;
+	
 	private List<Casella> caselle;
 
 	/**

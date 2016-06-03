@@ -8,6 +8,11 @@ import server.model.azione.Azione;
 
 public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8664434123655986775L;
+	
 	private Mercato mercato;
 
 	public TurnoMercatoAggiuntaOggetti(Giocatore giocatore, Mercato mercato) {

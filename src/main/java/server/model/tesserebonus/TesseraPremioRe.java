@@ -7,6 +7,11 @@ import server.model.bonus.Bonus;
 public class TesseraPremioRe extends TesseraBonus {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1121320870656126238L;
+
+	/**
 	 * build the king tile
 	 * @param bonus the set of bonus of the tile
 	 */

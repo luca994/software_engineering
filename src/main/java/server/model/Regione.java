@@ -2,6 +2,7 @@ package server.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,8 +21,13 @@ import server.model.bonus.BonusCreator;
  * @author Riccardo
  *
  */
-public class Regione {
+public class Regione implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1282686235365734913L;
+	
 	private Set<Citta> citta;
 	private Consiglio consiglio;
 	private String nome;

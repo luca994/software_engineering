@@ -8,6 +8,11 @@ import server.model.azione.AzioneRapida;
 
 public class TurnoNormale extends StatoGiocatore {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2774878766914139008L;
+	
 	private static final int AZIONI_PRINCIPALI_PER_TURNO = 1;
 	private static final int AZIONI_RAPIDE_PER_TURNO = 1;
 

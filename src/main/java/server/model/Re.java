@@ -1,5 +1,7 @@
 package server.model;
 
+import java.io.Serializable;
+
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -8,8 +10,13 @@ import org.jgrapht.graph.DefaultEdge;
  * @author Riccardo
  *
  */
-public class Re {
+public class Re implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6854976496303892844L;
+	
 	private Consiglio consiglio;
 	private Citta citta;
 	private Tabellone tabellone;

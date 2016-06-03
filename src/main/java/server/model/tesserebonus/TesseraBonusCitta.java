@@ -7,6 +7,11 @@ import server.model.bonus.Bonus;
 
 public class TesseraBonusCitta extends TesseraBonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1935703575003252450L;
+	
 	private Color colore;
 	
 	/**

@@ -7,6 +7,11 @@ import server.model.azione.Azione;
 
 public class TurnoMercatoCompraVendita extends TurnoMercato {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 895962931696841870L;
+
 	public TurnoMercatoCompraVendita(Giocatore giocatore) {
 		super(giocatore);
 	}

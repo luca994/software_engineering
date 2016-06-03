@@ -1,6 +1,7 @@
 package server.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,8 +12,13 @@ import java.util.Set;
  *
  */
 
-public class Citta extends OggettoConBonus {
+public class Citta extends OggettoConBonus implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7048245012061517818L;
+	
 	private final String nome;
 	private final Regione regione;
 	private Color colore;

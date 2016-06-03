@@ -1,6 +1,7 @@
 package server.model.percorso;
 
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +12,12 @@ import server.model.Giocatore;
  *in every route(Percorso)
  * @author Massimiliano Ventura
  */
-public abstract class Casella {
+public abstract class Casella implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 308568796479723516L;
 	
 	private Set<Giocatore> giocatori;
 

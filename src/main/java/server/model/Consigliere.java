@@ -1,14 +1,20 @@
 package server.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * 
  * @author Riccardo
  *
  */
-public class Consigliere {
+public class Consigliere implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3452516340892571431L;
+	
 	private final Color colore;
 
 	/**

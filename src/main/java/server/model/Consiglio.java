@@ -1,6 +1,7 @@
 package server.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +11,13 @@ import java.util.Queue;
  * @author Riccardo
  *
  */
-public class Consiglio {
+public class Consiglio implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7211912303877884155L;
+	
 	private static final int MIN_NUMERO_CONSIGLIERI_DA_SODDISFARE = 1;
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglieri;

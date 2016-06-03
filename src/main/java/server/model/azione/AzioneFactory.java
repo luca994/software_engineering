@@ -36,28 +36,28 @@ public class AzioneFactory {
 		if (tipoAzione == null) {
 			throw new IllegalStateException("l'azione non può essere nulla");
 		}
-		if ("ELEGGI CONSIGLIERE".equalsIgnoreCase(tipoAzione)) {
+		if ("ELEGGI CONSIGLIERE".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==2) {
 			return new EleggiConsigliere(gioco,consigliere, consiglio);
 		}
-		if ("ACQUISTA PERMESSO".equalsIgnoreCase(tipoAzione)) {
+		if ("ACQUISTA PERMESSO".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==0) {
 			return new AcquistaPermesso(gioco,tesseraCostruzione, cartePolitica, consiglio);
 		}
-		if ("AZIONE PRINCIPALE AGGIUNTIVA".equalsIgnoreCase(tipoAzione)) {
+		if ("AZIONE PRINCIPALE AGGIUNTIVA".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==7) {
 			return new AzionePrincipaleAggiuntiva();
 		}
-		if ("CAMBIO TESSERE COSTRUZIONE".equalsIgnoreCase(tipoAzione)) {
+		if ("CAMBIO TESSERE COSTRUZIONE".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==5) {
 			return new CambioTessereCostruzione(regione);
 		}
-		if ("COSTRUISCI EMPORIO CON RE".equalsIgnoreCase(tipoAzione)) {
+		if ("COSTRUISCI EMPORIO CON RE".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==1) {
 			return new CostruisciEmporioConRe(gioco, cartePolitica, citta);
 		}
-		if ("COSTRUISCI EMPORIO CON TESSERA".equalsIgnoreCase(tipoAzione)) {
+		if ("COSTRUISCI EMPORIO CON TESSERA".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==3) {
 			return new CostruisciEmporioConTessera(citta, tesseraCostruzione);
 		}
-		if ("ELEGGI CONSIGLIERE RAPIDO".equalsIgnoreCase(tipoAzione)) {
+		if ("ELEGGI CONSIGLIERE RAPIDO".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==6) {
 			return new EleggiConsigliereRapido(consigliere, consiglio);
 		}
-		if ("INGAGGIO AIUTANTE".equalsIgnoreCase(tipoAzione)) {
+		if ("INGAGGIO AIUTANTE".equalsIgnoreCase(tipoAzione) || Integer.parseInt(tipoAzione)==4) {
 			return new IngaggioAiutante(gioco);
 		}
 		throw new IllegalStateException("l'azione inserita non è corretta");

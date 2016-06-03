@@ -1,6 +1,7 @@
 package server.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,8 +17,13 @@ import server.model.stato.giocatore.StatoGiocatore;
  * @author Luca
  *
  */
-public class Giocatore {
+public class Giocatore implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6264310867945058171L;
+	
 	private final String nome;
 	private List<Assistente> assistenti;
 	private List<CartaPolitica> cartePolitica;

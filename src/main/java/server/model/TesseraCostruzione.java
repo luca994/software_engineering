@@ -1,12 +1,18 @@
 package server.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.bonus.Bonus;
 
-public class TesseraCostruzione extends OggettoVendibile {
+public class TesseraCostruzione extends OggettoVendibile implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5137085350436101703L;
+	
 	private Set<Citta> citta;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;

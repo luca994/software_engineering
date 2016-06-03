@@ -1,7 +1,9 @@
 package server.model;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,8 +31,13 @@ import server.model.tesserebonus.TesseraPremioRe;
  * @author Riccardo
  *
  */
-public class Tabellone {
+public class Tabellone implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6970346938035769588L;
+	
 	private static final int NUMERO_TOTALE_CONSIGLIERI = 24;
 	private static final int NUMERO_TOTALE_GETTONI = 14;
 
@@ -43,7 +50,7 @@ public class Tabellone {
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	private Re re;
-	private Gioco gioco;
+	private transient Gioco gioco;
 
 	/**
 	 * It builds the board by calling methods : creaPercorsi() ,
@@ -462,7 +469,7 @@ public class Tabellone {
 				return r;
 			}
 		}
-		throw new IllegalArgumentException("il nome della regione inserito non esiste");
+		return null;
 	}
 
 	/**
@@ -512,6 +519,18 @@ public class Tabellone {
 		return consiglieriDisponibili;
 	}
 
+	/**
+	 * searches a councillor in the list consiglieriDisponibili   
+	 * @param colore the color of the councillor you want to search
+	 * @return return the councillor or null if there isn't a councillor of color colore
+	 */
+	public Consigliere getConsigliereDaColore(Color colore){
+		for(Consigliere c: consiglieriDisponibili){
+			if(c.getColore().equals(colore))
+				return c;
+		}
+		return null;
+	}
 	/**
 	 * @return the percorsoNobiltà
 	 */

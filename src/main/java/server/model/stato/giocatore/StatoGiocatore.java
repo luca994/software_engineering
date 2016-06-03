@@ -1,13 +1,20 @@
 package server.model.stato.giocatore;
 
+import java.io.Serializable;
+
 import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.OggettoVendibile;
 import server.model.azione.Azione;
 import server.model.stato.Stato;
 
-public abstract class StatoGiocatore implements Stato {
+public abstract class StatoGiocatore implements Stato, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2019327985471094584L;
+	
 	protected final Giocatore giocatore;
 
 	public StatoGiocatore(Giocatore giocatore) {

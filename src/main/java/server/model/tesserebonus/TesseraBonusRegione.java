@@ -7,6 +7,11 @@ import server.model.bonus.Bonus;
 
 public class TesseraBonusRegione extends TesseraBonus {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -201930626017881614L;
+	
 	private Regione regione;
 	
 	/**

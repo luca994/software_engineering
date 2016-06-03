@@ -66,6 +66,7 @@ public class GestisciGioco implements Runnable{
 			}
 			controllersGiochi.add(controller);
 			gioco.inizializzaPartita();
+			gioco.notificaObservers(gioco);
 			giocatori.clear();
 		}
 	}

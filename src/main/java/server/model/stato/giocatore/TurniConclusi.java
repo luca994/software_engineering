@@ -6,6 +6,11 @@ import server.model.azione.Azione;
 
 public class TurniConclusi extends StatoGiocatore {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7294097463183734775L;
+
 	public TurniConclusi(Giocatore giocatore) {
 		super(giocatore);
 	}

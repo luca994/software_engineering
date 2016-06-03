@@ -10,6 +10,7 @@ import java.net.Socket;
 
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.observer.Observable;
 import server.observer.Observer;
@@ -25,6 +26,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	private ObjectOutputStream socketOut;
 	private Giocatore giocatore;
 	private String[] input;
+	private AzioneFactory azioneFactory;
 	
 	/**
 	 * builds a server socket view
@@ -68,6 +70,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 				Object object = socketIn.readObject();
 				if(object instanceof Bonus){
 					input = (String[])socketIn.readObject();
+					notify();
 				}
 			}catch (ClassNotFoundException | IOException e){
 				throw new IllegalArgumentException();
@@ -95,10 +98,18 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	 */
 	@Override
 	public <Bonus> void update(Bonus cambiamento){
-		ottieniStringa(cambiamento);
-		while(input==null);
-		this.notificaObservers(cambiamento, input);
-		input=null;
+		try{
+			ottieniStringa(cambiamento);
+			wait();
+			this.notificaObservers(cambiamento, input);
+		}
+		catch(InterruptedException e){
+			//da gestire
+		}
+	}
+	
+	public void update(Gioco gioco){
+		azioneFactory = new AzioneFactory(gioco);
 	}
 	
 	@Override

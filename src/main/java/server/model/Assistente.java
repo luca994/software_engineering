@@ -1,12 +1,19 @@
 package server.model;
 
+import java.io.Serializable;
+
 import eccezione.FuoriDalLimiteDelPercorso;
 
 /**
  * @author Luca
  *
  */
-public class Assistente extends OggettoVendibile {
+public class Assistente extends OggettoVendibile implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6011773694746511655L;
 
 	@Override
 	public void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso {
