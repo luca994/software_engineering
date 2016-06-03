@@ -110,10 +110,10 @@ public class TabelloneTest {
 	 * Test method for
 	 * {@link server.model.Tabellone#cercaCitta(java.lang.String)}.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCercaCittaInesistente() {
 		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
-		tabelloneTester.cercaCitta("pippo");
+		assertEquals(tabelloneTester.cercaCitta("pippo"),null);
 	}
 
 	/**
@@ -272,10 +272,10 @@ public class TabelloneTest {
 	 * Test method for
 	 * {@link server.model.Tabellone#getRegioneDaNome(java.lang.String)}.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetRegioneInesistenteDaNome() {
 		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester);
-		tabelloneTester.getRegioneDaNome("test");
+		assertEquals(tabelloneTester.getRegioneDaNome("test"),null);
 	}
 
 	/**

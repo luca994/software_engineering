@@ -347,6 +347,8 @@ public class Tabellone implements Serializable{
 	/**
 	 * searches for the city with the input name you entered and returns the
 	 * reference to this , if it exists.The name in input is not case sensitive.
+	 * This method has to be used only during the creation of the game, because
+	 * if the city isn't correct the game crashes.
 	 * 
 	 * @param nome
 	 *            the name of the city

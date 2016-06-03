@@ -105,4 +105,62 @@ public class AzioneFactory {
 		this.citta = citta;
 	}
 
+	/**
+	 * 
+	 * @return the council
+	 */
+	public Consiglio getConsiglio() {
+		return consiglio;
+	}
+
+	/**
+	 * 
+	 * @return the councillor
+	 */
+	public Consigliere getConsigliere() {
+		return consigliere;
+	}
+
+	/**
+	 * 
+	 * @return the buisness permit tile
+	 */
+	public TesseraCostruzione getTesseraCostruzione() {
+		return tesseraCostruzione;
+	}
+
+	/**
+	 * 
+	 * @return return the list of politics card
+	 */
+	public List<CartaPolitica> getCartePolitica() {
+		return cartePolitica;
+	}
+
+	/**
+	 * 
+	 * @return the region
+	 */
+	public Regione getRegione() {
+		return regione;
+	}
+
+	/**
+	 * 
+	 * @return the city
+	 */
+	public Citta getCitta() {
+		return citta;
+	}
+
+	/**
+	 * 
+	 * @return the game
+	 */
+	public Gioco getGioco() {
+		return gioco;
+	}
+
+	
+	
 }

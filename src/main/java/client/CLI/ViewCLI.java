@@ -127,8 +127,8 @@ public class ViewCLI extends View implements Runnable{
 						String scelta = input.nextLine();
 						AzioneFactory azioneFactory = new AzioneFactory(null);
 						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione(scelta));
-						Azione azioneCompleta = azioneFactory.createAzione(scelta);
-						this.getConnessione().inviaOggetto(azioneCompleta);
+						this.getConnessione().inviaOggetto(azioneFactory);
+						this.getConnessione().inviaOggetto(scelta);
 					}
 					catch(IOException e){
 						//da gestire
@@ -141,7 +141,7 @@ public class ViewCLI extends View implements Runnable{
 	public void inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione){
 		Scanner scanner = new Scanner(System.in);
 		if(azione instanceof EleggiConsigliere){
-			System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi soddisfare o 're' se vuoi soddisfare il consiglio del re");
+			System.out.println("Inserisci il nome della regione che ha il consiglio nel quale vuoi eleggere il consigliere");
 			String scelta = scanner.nextLine();
 			if(scelta.equalsIgnoreCase("re")){
 				azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());

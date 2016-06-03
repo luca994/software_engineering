@@ -7,9 +7,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
+import server.model.CartaPolitica;
+import server.model.Citta;
+import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.Regione;
+import server.model.TesseraCostruzione;
+import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.observer.Observable;
@@ -72,12 +80,60 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 					input = (String[])socketIn.readObject();
 					notify();
 				}
+				if(object instanceof AzioneFactory){
+					String tipoAzione = (String) socketIn.readObject();
+					completaAzioneFactory((AzioneFactory) object);
+					Azione azioneGiocatore = azioneFactory.createAzione(tipoAzione);
+					this.notificaObservers(azioneGiocatore);
+				}
 			}catch (ClassNotFoundException | IOException e){
 				throw new IllegalArgumentException();
 			}
 		}
 	}
 	
+	/**
+	 * sets all the parameters of azioneFactory based on the azioneFactory sent by the client
+	 * @param azioneFactoryCompleta the azioneFactory sent by the view
+	 */
+	public void completaAzioneFactory(AzioneFactory azioneFactoryCompleta){
+		if(azioneFactoryCompleta.getCartePolitica()!=null){
+			List<CartaPolitica> carteAzione = new ArrayList<>();
+			for(CartaPolitica carta: giocatore.getCartePolitica()){
+				if(azioneFactoryCompleta.getCartePolitica().contains(carta))
+					carteAzione.add(carta);
+				else{
+					//bisogna notificare l'errore
+				}
+			}
+			azioneFactory.setCartePolitica(carteAzione);
+		}
+		if(azioneFactoryCompleta.getCitta()!=null){
+			Citta cittaAzione = azioneFactory.getGioco().getTabellone().cercaCitta(azioneFactoryCompleta.getCitta().getNome());
+			azioneFactory.setCitta(cittaAzione);
+		}
+		if(azioneFactoryCompleta.getConsigliere()!=null){
+			Consigliere consigliereAzione = azioneFactory.getGioco().getTabellone().getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
+			azioneFactory.setConsigliere(consigliereAzione);
+		}
+		if(azioneFactoryCompleta.getConsiglio()!=null){
+			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			azioneFactory.setConsiglio(regioneAzione.getConsiglio());
+		}
+		if(azioneFactoryCompleta.getRegione()!=null){
+			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			azioneFactory.setRegione(regioneAzione);
+		}
+		if(azioneFactoryCompleta.getTesseraCostruzione()!=null){
+			TesseraCostruzione tesseraAzione = azioneFactoryCompleta.getTesseraCostruzione();
+			if(giocatore.getTessereValide().contains(tesseraAzione)){
+				azioneFactory.setTesseraCostruzione(tesseraAzione);
+			}
+			else{
+				//errore da gestire
+			}
+		}
+	}
 	/**
 	 * sends a string to the client
 	 * @param cambiamento the message to send
