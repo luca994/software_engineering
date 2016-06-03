@@ -79,11 +79,11 @@ public class ReTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Re#getCittà()}.
+	 * Test method for {@link server.model.Re#getCitta()}.
 	 */
 	@Test
 	public void testGetCittà() {
-		assertEquals(giocoTester.getTabellone().cercaCitta("juvelar"), giocoTester.getTabellone().getRe().getCittà());
+		assertEquals(giocoTester.getTabellone().cercaCitta("juvelar"), giocoTester.getTabellone().getRe().getCitta());
 	}
 
 }

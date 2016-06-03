@@ -22,8 +22,8 @@ public class TesseraCostruzione extends OggettoVendibile {
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
 	}
 
-	public boolean verifyCitta(Citta cittàDaVerificare) {
-		return this.citta.contains(cittàDaVerificare);
+	public boolean verifyCitta(Citta cittaDaVerificare) {
+		return this.citta.contains(cittaDaVerificare);
 	}
 
 	/**

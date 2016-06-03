@@ -68,7 +68,7 @@ public class Re {
 	/**
 	 * @return the città
 	 */
-	public Citta getCittà() {
+	public Citta getCitta() {
 		return citta;
 	}
 
