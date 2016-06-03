@@ -82,7 +82,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setTesseraCostruzione(tesseraTest);
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
-		assertNotNull(azioneTester = creaAzioniTester.createAzione("acquista permesso"));
+		assertNotNull(azioneTester = creaAzioniTester.createAzione("0"));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -176,7 +176,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -228,7 +228,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -281,7 +281,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -334,7 +334,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -385,7 +385,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -435,7 +435,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 
 		azioneTester.eseguiAzione(g1);
@@ -481,7 +481,7 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("acquista permesso");
+		azioneTester = creaAzioniTester.createAzione("0");
 		g1.getStatoGiocatore().prossimoStato();
 		azioneTester.eseguiAzione(g1);
 
