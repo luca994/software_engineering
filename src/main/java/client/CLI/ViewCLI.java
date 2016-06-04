@@ -138,174 +138,177 @@ public class ViewCLI extends View implements Runnable{
 		}
 	}
 	
-	public void inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione){
-		Scanner scanner = new Scanner(System.in);
+	/**
+	 * asks the input of the parameter to the user for create an action
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 * @param azione the action you want to do
+	 */
+	private void inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione){
 		if(azione instanceof EleggiConsigliere){
-			System.out.println("Inserisci il nome della regione che ha il consiglio nel quale vuoi eleggere il consigliere");
-			String scelta = scanner.nextLine();
-			if(scelta.equalsIgnoreCase("re")){
-				azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());
-			}
-			else{
-				if(tabellone.getRegioneDaNome(scelta)!=null)
-					azioneFactory.setConsiglio(tabellone.getRegioneDaNome(scelta).getConsiglio());
-				else{
-					System.out.println("La regione inserita non esiste");
-					inserimentoParametriAzione(azioneFactory, azione);
-				}
-			}
-			System.out.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink");
-			String colore = scanner.nextLine();
-			try{
-				if(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore))!=null){
-					azioneFactory.setConsigliere(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
-				}
-				else{
-					System.out.println("Non c'è un consigliere disponibile di quel colore");
-					inserimentoParametriAzione(azioneFactory, azione);
-				}
-			}
-			catch(NoSuchFieldException e){
-				System.out.println("Il colore inserito non è corretto");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
+			inserimentoConsiglio(azioneFactory);
+			inserimentoConsigliere(azioneFactory);
 		}
 		if(azione instanceof AcquistaPermesso){
-			System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi soddisfare o 're' se vuoi soddisfare il consiglio del re");
-			String scelta = scanner.nextLine();
-			if(scelta.equalsIgnoreCase("re")){
-				azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());
-			}
-			else{
-				if(tabellone.getRegioneDaNome(scelta)!=null)
-					azioneFactory.setConsiglio(tabellone.getRegioneDaNome(scelta).getConsiglio());
-				else{
-					System.out.println("La regione inserita non esiste");
-					inserimentoParametriAzione(azioneFactory, azione);
-				}
-			}
-			List<CartaPolitica> carteDaUsare = new ArrayList<>();
-			System.out.println("Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'");
-			for(int i=0;i<4;i++){
-				System.out.println("Inserisci la carta "+i+1+":");
-				String colore = scanner.nextLine();
-				if(colore.equalsIgnoreCase("jolly")){
-					carteDaUsare.add(new Jolly());
-				}
-				else{
-					try{
-						carteDaUsare.add(new CartaColorata(ParseColor.colorStringToColor(colore)));
-					}
-					catch(NoSuchFieldException e){
-						System.out.println("Il colore Inserito non è corretto");
-						i--;
-					}
-				}
-			}
-			azioneFactory.setCartePolitica(carteDaUsare);
-			System.out.println("Inserisci la tessera costruzione da acquistare (da 0 a 5)");
-			int numTessera = scanner.nextInt();
-			if(numTessera<6 && numTessera>=0){
-				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-				for(Regione r: tabellone.getRegioni()){
-					listaTessere.addAll(r.getTessereCostruzione());
-				}
-				azioneFactory.setTesseraCostruzione(listaTessere.get(numTessera));
-			}
-			else{
-				System.out.println("Numero tessera non corretto");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
+			inserimentoConsiglio(azioneFactory);
+			inserimentoCartePolitica(azioneFactory);
+			inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
 		}
 		if(azione instanceof CambioTessereCostruzione){
-			System.out.println("Inserisci il nome della regione in cui vuoi cambiare le tessere:");
-			String nomeRegione = scanner.nextLine();
-			if(tabellone.getRegioneDaNome(nomeRegione)!=null){
-				azioneFactory.setRegione(tabellone.getRegioneDaNome(nomeRegione));
-			}
-			else{
-				System.out.println("Nome regione non corretto");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
+			inserimentoRegione(azioneFactory);
 		}
 		if(azione instanceof CostruisciEmporioConRe){
-			List<CartaPolitica> carteDaUsare = new ArrayList<>();
-			System.out.println("Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'");
-			for(int i=0;i<4;i++){
-				System.out.println("Inserisci la carta "+i+1+":");
-				String colore = scanner.nextLine();
-				if(colore.equalsIgnoreCase("jolly")){
-					carteDaUsare.add(new Jolly());
-				}
-				else{
-					try{
-						carteDaUsare.add(new CartaColorata(ParseColor.colorStringToColor(colore)));
-					}
-					catch(NoSuchFieldException e){
-						System.out.println("Il colore Inserito non è corretto");
-						i--;
-					}
-				}
-			}
-			azioneFactory.setCartePolitica(carteDaUsare);
-			System.out.println("Inserisci la città di destinazione:");
-			String cittaDestinazione = scanner.nextLine();
-			if(tabellone.cercaCitta(cittaDestinazione)!=null){
-				azioneFactory.setCitta(tabellone.cercaCitta(cittaDestinazione));
-			}
-			else{
-				System.out.println("La città inserita non esiste");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
+			inserimentoCartePolitica(azioneFactory);
+			inserimentoCitta(azioneFactory);
 		}
 		if(azione instanceof CostruisciEmporioConTessera){
-			System.out.println("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "+giocatore.getTessereValide().size()+"):");
-			int numTessera = scanner.nextInt();
-			if(0<=numTessera && numTessera<giocatore.getTessereValide().size()){
-				azioneFactory.setTesseraCostruzione(giocatore.getTessereValide().get(numTessera));
-			}
-			else{
-				System.out.println("Numero tessera non corretto");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
-			System.out.println("Inserisci il nome della città dove vuoi costruire l'emporio");
-			String nomeCitta = scanner.nextLine();
-			if(tabellone.cercaCitta(nomeCitta)!=null){
-				azioneFactory.setCitta(tabellone.cercaCitta(nomeCitta));
-			}
-			else{
-				System.out.println("La città inserita non è corretta");
-				inserimentoParametriAzione(azioneFactory, azione);
-			}
+			inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
+			inserimentoCitta(azioneFactory);
 		}
 		if(azione instanceof EleggiConsigliereRapido){
-			System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi soddisfare o 're' se vuoi soddisfare il consiglio del re");
-			String scelta = scanner.nextLine();
-			if(scelta.equalsIgnoreCase("re")){
-				azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());
+			inserimentoConsiglio(azioneFactory);
+			inserimentoConsigliere(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the business permit tile that the user want to use to build, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "+giocatore.getTessereValide().size()+"):");
+		int numTessera = scanner.nextInt();
+		if(0<=numTessera && numTessera<giocatore.getTessereValide().size()){
+			azioneFactory.setTesseraCostruzione(giocatore.getTessereValide().get(numTessera));
+		}
+		else{
+			System.out.println("Numero tessera non corretto");
+			inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the city in which the user wants to move the king or build an emporium, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoCitta(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci la città di destinazione o dove vuoi costruire un emporio:");
+		String cittaDestinazione = scanner.nextLine();
+		if(tabellone.cercaCitta(cittaDestinazione)!=null){
+			azioneFactory.setCitta(tabellone.cercaCitta(cittaDestinazione));
+		}
+		else{
+			System.out.println("La città inserita non esiste");
+			inserimentoCitta(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the region that the user wants to use, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoRegione(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci il nome della regione in cui vuoi cambiare le tessere:");
+		String nomeRegione = scanner.nextLine();
+		if(tabellone.getRegioneDaNome(nomeRegione)!=null){
+			azioneFactory.setRegione(tabellone.getRegioneDaNome(nomeRegione));
+		}
+		else{
+			System.out.println("Nome regione non corretto");
+			inserimentoRegione(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the business permit tile that the user wants to buy, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci la tessera costruzione da acquistare (da 0 a 5)");
+		int numTessera = scanner.nextInt();
+		if(numTessera<6 && numTessera>=0){
+			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
+			for(Regione r: tabellone.getRegioni()){
+				listaTessere.addAll(r.getTessereCostruzione());
+			}
+			azioneFactory.setTesseraCostruzione(listaTessere.get(numTessera));
+		}
+		else{
+			System.out.println("Numero tessera non corretto");
+			inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the political card that the user wants to use, then add them to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoCartePolitica(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		List<CartaPolitica> carteDaUsare = new ArrayList<>();
+		System.out.println("Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'");
+		for(int i=0;i<4;i++){
+			System.out.println("Inserisci la carta "+i+1+":");
+			String colore = scanner.nextLine();
+			if(colore.equalsIgnoreCase("jolly")){
+				carteDaUsare.add(new Jolly());
 			}
 			else{
-				if(tabellone.getRegioneDaNome(scelta)!=null)
-					azioneFactory.setConsiglio(tabellone.getRegioneDaNome(scelta).getConsiglio());
-				else{
-					System.out.println("La regione inserita non esiste");
-					inserimentoParametriAzione(azioneFactory, azione);
+				try{
+					carteDaUsare.add(new CartaColorata(ParseColor.colorStringToColor(colore)));
+				}
+				catch(NoSuchFieldException e){
+					System.out.println("Il colore Inserito non è corretto");
+					i--;
 				}
 			}
-			System.out.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink");
-			String colore = scanner.nextLine();
-			try{
-				if(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore))!=null){
-					azioneFactory.setConsigliere(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
-				}
-				else{
-					System.out.println("Non c'è un consigliere disponibile di quel colore");
-					inserimentoParametriAzione(azioneFactory, azione);
-				}
+		}
+		azioneFactory.setCartePolitica(carteDaUsare);
+	}
+	
+	/**
+	 * asks the color of the councillor that the user wants to elect, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoConsigliere(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink");
+		String colore = scanner.nextLine();
+		try{
+			if(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore))!=null){
+				azioneFactory.setConsigliere(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
 			}
-			catch(NoSuchFieldException e){
-				System.out.println("Il colore inserito non è corretto");
-				inserimentoParametriAzione(azioneFactory, azione);
+			else{
+				System.out.println("Non c'è un consigliere disponibile di quel colore");
+				inserimentoConsigliere(azioneFactory);
+			}
+		}
+		catch(NoSuchFieldException e){
+			System.out.println("Il colore inserito non è corretto");
+			inserimentoConsigliere(azioneFactory);
+		}
+	}
+	
+	/**
+	 * asks the council that the user wants to use, then add it to the action factory
+	 * @param azioneFactory the action factory used by the cli to create the action
+	 */
+	private void inserimentoConsiglio(AzioneFactory azioneFactory){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi utilizzare");
+		String scelta = scanner.nextLine();
+		if(scelta.equalsIgnoreCase("re")){
+			azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());
+		}
+		else{
+			if(tabellone.getRegioneDaNome(scelta)!=null)
+				azioneFactory.setConsiglio(tabellone.getRegioneDaNome(scelta).getConsiglio());
+			else{
+				System.out.println("La regione inserita non esiste");
+				inserimentoConsiglio(azioneFactory);
 			}
 		}
 	}

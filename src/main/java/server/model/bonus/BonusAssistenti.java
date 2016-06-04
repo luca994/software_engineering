@@ -19,6 +19,8 @@ public class BonusAssistenti implements Bonus {
 	private int numeroAssistenti;
 
 	public BonusAssistenti(int numeroAssistenti) {
+		if(numeroAssistenti<0)
+			throw new IllegalStateException("Il numero di assistenti non può essere negativo");
 		this.numeroAssistenti = numeroAssistenti;
 	}
 

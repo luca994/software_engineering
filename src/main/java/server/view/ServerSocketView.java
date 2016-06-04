@@ -84,6 +84,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 					String tipoAzione = (String) socketIn.readObject();
 					completaAzioneFactory((AzioneFactory) object);
 					Azione azioneGiocatore = azioneFactory.createAzione(tipoAzione);
+					azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 					this.notificaObservers(azioneGiocatore);
 				}
 			}catch (ClassNotFoundException | IOException e){
