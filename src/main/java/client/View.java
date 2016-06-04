@@ -26,5 +26,9 @@ public abstract class View {
 		this.connessione = connessione;
 	}
 	
+	/**
+	 * starts the view of the client
+	 */
+	public abstract void startClient();
 	
 }

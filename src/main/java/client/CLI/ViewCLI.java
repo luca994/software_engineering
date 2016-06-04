@@ -3,6 +3,7 @@ package client.CLI;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
@@ -39,6 +40,7 @@ public class ViewCLI extends View implements Runnable{
 	private String inputString;
 	private Tabellone tabellone;
 	private boolean inserimentoBonus;
+	private boolean inserimentoAzione;
 	private Giocatore giocatore;
 	
 	/**
@@ -46,6 +48,8 @@ public class ViewCLI extends View implements Runnable{
 	 */
 	public ViewCLI(){
 		inserimentoBonus = false;
+		inserimentoAzione = true;
+		statoAttuale = new TurnoNormale(giocatore);
 	}
 	
 	/**
@@ -60,7 +64,7 @@ public class ViewCLI extends View implements Runnable{
 			System.out.println("Inserisci l'indirizzo dell'host");
 			String host = scanner.nextLine();
 			System.out.println("Inserisci il numero della porta");
-			int port = Integer.parseInt(scanner.nextLine());
+			int port = scanner.nextInt();
 			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port));
 		}
 		catch(DataFormatException e){
@@ -75,10 +79,14 @@ public class ViewCLI extends View implements Runnable{
 			System.out.println("C'è un problema nella connessione");
 			impostaConnessione();
 		}
+		catch(InputMismatchException e){
+			System.out.println("La porta deve essere un numero");
+			impostaConnessione();
+		}
 	}
 	
 	/**
-	 * asks the name and the color that the player wants, then starts impostaConnessione
+	 * asks the name that the player wants, then starts impostaConnessione
 	 */
 	public void inizializzazione(){
 		try{
@@ -96,6 +104,7 @@ public class ViewCLI extends View implements Runnable{
 	/**
 	 * starts the client
 	 */
+	@Override
 	public void startClient(){
 		inizializzazione();
 		ExecutorService executor = Executors.newCachedThreadPool();
@@ -115,9 +124,8 @@ public class ViewCLI extends View implements Runnable{
 				if(inserimentoBonus){
 					inputString = input.nextLine();
 					inserimentoBonus=false;
-					notify();
 				}
-				else{
+				else if(inserimentoAzione){
 					try{
 						System.out.println("Inserisci un azione:"+"\n"+"-Azione principale:"+"\n"+"0)Acquista permesso"+"\n"
 										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
@@ -129,6 +137,7 @@ public class ViewCLI extends View implements Runnable{
 						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione(scelta));
 						this.getConnessione().inviaOggetto(azioneFactory);
 						this.getConnessione().inviaOggetto(scelta);
+						inserimentoAzione=false;
 					}
 					catch(IOException e){
 						//da gestire
@@ -243,7 +252,7 @@ public class ViewCLI extends View implements Runnable{
 	}
 	
 	/**
-	 * asks the political card that the user wants to use, then add them to the action factory
+	 * asks the political cards that the user wants to use, then add them to the action factory
 	 * @param azioneFactory the action factory used by the cli to create the action
 	 */
 	private void inserimentoCartePolitica(AzioneFactory azioneFactory){
@@ -325,13 +334,15 @@ public class ViewCLI extends View implements Runnable{
 				this.giocatore=(Giocatore) oggetto;
 			if(oggetto instanceof Tabellone){
 				tabellone = (Tabellone) oggetto;
+				aggiornaGiocatore();
 				aggiornaStato();
+				inserimentoAzione=true;
 			}
 			if(oggetto instanceof BonusGettoneCitta){
 				System.out.println("Inserisci il nome di una città dove hai un emporio"
 													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus=true;
-				wait();
+				while(inserimentoBonus);
 				String[] prov = {inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(prov);
@@ -339,7 +350,7 @@ public class ViewCLI extends View implements Runnable{
 			if(oggetto instanceof BonusTesseraPermesso){
 				System.out.println("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus=true;
-				wait();
+				while(inserimentoBonus);
 				String[] prov = {inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(prov);
@@ -347,19 +358,31 @@ public class ViewCLI extends View implements Runnable{
 			if(oggetto instanceof BonusRiutilizzoCostruzione){
 				System.out.println("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				inserimentoBonus=true;
-				wait();
+				while(inserimentoBonus);
 				String prov = inputString;
 				System.out.println("inserisci il numero della tessera da riciclare");
-				wait();
+				inserimentoBonus=true;
+				while(inserimentoBonus);
 				String[] array = {prov, inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(array);
 			}
-		}catch(IOException | InterruptedException e){
+		}catch(IOException e){
 			//da gestire
 		}
 	}
 	
+	public void aggiornaGiocatore(){
+		for(Giocatore g: tabellone.getGioco().getGiocatori()){
+			if(g.getNome().equals(giocatore.getNome())){
+				giocatore=g;
+			}
+		}
+	}
+	
+	/**
+	 * takes the state of the player from the game
+	 */
 	public void aggiornaStato(){
 		for(Giocatore g: tabellone.getGioco().getGiocatori()){
 			if(this.giocatore.equals(g))

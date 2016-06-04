@@ -25,8 +25,9 @@ public class ViewFactory {
 	/**
 	 * creates the view of the player according to the input parameter
 	 * @param sceltaView 0 to create CLI_VIEW
+	 * @throws InvalidParameterException if the input isn't correct
 	 */
-	public View createView (int sceltaView){
+	public View createView (int sceltaView) throws InvalidParameterException{
 		switch (sceltaView){
 		
 		case VIEW_CLI : return new ViewCLI();

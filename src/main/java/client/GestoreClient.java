@@ -1,5 +1,6 @@
 package client;
 
+import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,13 +10,13 @@ import java.util.Scanner;
  */
 public class GestoreClient {
 	
-	private final View view;
+	private View view;
 	
 	/**
 	 * constructor for GestoreClient
 	 */
 	public GestoreClient(){
-		view = scegliView();
+		scegliView();
 	}
 	
 	/**
@@ -26,17 +27,32 @@ public class GestoreClient {
 	 * @throws InputMismatchException if the input value is not an integer, 
 	 * 		   the method terminates with an InputMismatchException
 	 */
-	public View scegliView(){
+	public void scegliView(){
+		try{
+			ViewFactory viewFactory = new ViewFactory();
+			Scanner scanner = new Scanner(System.in);
 		
-		View viewTemp=null;
-		ViewFactory viewFactory = new ViewFactory();
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.println("Scegli la view che vuoi utilizzare: "+ viewFactory.getListaView());	
-		viewTemp = viewFactory.createView(scanner.nextInt());
-		scanner.close();
-		return viewTemp;
+			System.out.println("Scegli la view che vuoi utilizzare: "+ viewFactory.getListaView());	
+			view = viewFactory.createView(scanner.nextInt());
+		}
+		catch(InvalidParameterException e){
+			System.out.println(e.getMessage());
+			scegliView();
+		}
+		catch(InputMismatchException e){
+			System.out.println("Devi inserire un numero");
+			scegliView();
+		}
 	}
+
+	/**
+	 * 
+	 * @return the view
+	 */
+	public View getView() {
+		return view;
+	}
+	
 	
 	
 }

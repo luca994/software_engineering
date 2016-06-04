@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,9 +41,8 @@ public class GestisciGioco implements Runnable{
 	 * When the timer expires, the method builds an other game.
 	 * @throws IOException if there is an error while the server is waiting the connection
 	 * @throws ClassNotFoundException if the class of the input object of the socket cannot be found
-	 * @throws JDOMException if there is a problem in the file reading of the game
 	 */
-	public void creaGiochi() throws IOException, JDOMException, ClassNotFoundException{
+	public void creaGiochi() throws ClassNotFoundException, IOException {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		executor.submit(this);
 		List<Giocatore> giocatori = new ArrayList<>();
@@ -51,19 +51,23 @@ public class GestisciGioco implements Runnable{
 			Gioco gioco=new Gioco();
 			Controller controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while(numGiocatori<2 || (numGiocatori>2 && (System.currentTimeMillis()-timer.get())<20000 )){
-				if(!giocatori.isEmpty()){
+			while(numGiocatori<2 || (numGiocatori>=2 && (System.currentTimeMillis()-timer.get())<20000 )){
+				if(!giocatoriAttesa.isEmpty()){
 					Socket socket = giocatoriAttesa.get(0);
 					giocatoriAttesa.remove(0);
 					ObjectInputStream streamIn=new ObjectInputStream(socket.getInputStream());
 					String nome=(String) streamIn.readObject();
 					Giocatore giocatore = new Giocatore(nome);
 					giocatori.add(giocatore);
+					ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
+					streamOut.writeObject(giocatore);
+					streamOut.flush();
 					ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
 					executor.submit(serverView);
 					numGiocatori++;
 				}
 			}
+			System.out.println("Gioco creato");
 			controllersGiochi.add(controller);
 			gioco.inizializzaPartita();
 			gioco.notificaObservers(gioco);
@@ -83,6 +87,7 @@ public class GestisciGioco implements Runnable{
 				socket=server.startSocket();
 				timer.set(System.currentTimeMillis());
 				giocatoriAttesa.add(socket);
+				System.out.println("Aggiunto Giocatore");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
