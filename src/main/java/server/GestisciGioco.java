@@ -53,9 +53,8 @@ public class GestisciGioco implements Runnable{
 			timer.set(System.currentTimeMillis());
 			while(numGiocatori<2 || (numGiocatori>=2 && (System.currentTimeMillis()-timer.get())<20000 )){
 				if(!giocatoriAttesa.isEmpty()){
-					Socket socket = giocatoriAttesa.get(0);
-					giocatoriAttesa.remove(0);
-					ObjectInputStream streamIn=new ObjectInputStream(socket.getInputStream());
+					Socket socket = giocatoriAttesa.remove(0);
+					ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
 					String nome=(String) streamIn.readObject();
 					Giocatore giocatore = new Giocatore(nome);
 					giocatori.add(giocatore);
@@ -82,9 +81,8 @@ public class GestisciGioco implements Runnable{
 	@Override
 	public void run() {
 		try {
-			Socket socket;
 			while(true){
-				socket=server.startSocket();
+				Socket socket = server.startSocket();
 				timer.set(System.currentTimeMillis());
 				giocatoriAttesa.add(socket);
 				System.out.println("Aggiunto Giocatore");
