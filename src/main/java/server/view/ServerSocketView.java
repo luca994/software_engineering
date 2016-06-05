@@ -16,6 +16,7 @@ import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Regione;
+import server.model.Tabellone;
 import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
@@ -30,11 +31,10 @@ import server.observer.Observer;
 public class ServerSocketView extends Observable implements Observer, Runnable{
 	
 	private Socket socket;
-	private ObjectInputStream socketIn;
-	private ObjectOutputStream socketOut;
 	private Giocatore giocatore;
 	private String[] input;
 	private AzioneFactory azioneFactory;
+	private boolean inputBonus;
 	
 	/**
 	 * builds a server socket view
@@ -46,24 +46,20 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 		gioco.registerObserver(this);
 		this.giocatore=nuovoGiocatore;
 		this.socket=socket;
-		try {
-			this.socketIn=new ObjectInputStream(socket.getInputStream());
-			this.socketOut=new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			throw new IllegalArgumentException();
-		}
+		inputBonus=false;
 	}
 	
 	/**
 	 * asks an input to the player
 	 * @param oggetto the object you want to send to the player
 	 */
-	public void ottieniStringa(Object oggetto){
+	public void inviaOggetto(Object oggetto){
 		try {
+			ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
 			socketOut.writeObject(oggetto);
 			socketOut.flush();
 		} catch (IOException e) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("socket non connesso o errore nella creazione dello stream");
 		}
 	}
 	
@@ -75,10 +71,11 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 		while(true)
 		{
 			try {
+				ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 				Object object = socketIn.readObject();
 				if(object instanceof Bonus){
 					input = (String[])socketIn.readObject();
-					notify();
+					inputBonus=true;
 				}
 				if(object instanceof AzioneFactory){
 					String tipoAzione = (String) socketIn.readObject();
@@ -135,39 +132,63 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 			}
 		}
 	}
+	
 	/**
 	 * sends a string to the client
 	 * @param cambiamento the message to send
 	 */
-	public void update(String cambiamento){
+	/*public void update(String cambiamento){
 		try{
+			socketOut = new ObjectOutputStream(socket.getOutputStream());
 			socketOut.writeObject(cambiamento);
 			socketOut.flush();
 		}
 		catch(IOException e){
 			//da gestire
 		}
-	}
+	}*/
 	
 	/**
 	 * sends a bonus to the client, waits for an attribute, 
 	 * then sends the attribute and the bonus to the controller
 	 */
 	@Override
-	public <Bonus> void update(Bonus cambiamento){
-		try{
-			ottieniStringa(cambiamento);
-			wait();
+	public void update(Object cambiamento){
+		if(cambiamento instanceof Bonus){
+			inviaOggetto(cambiamento);
+			while(!inputBonus);
 			this.notificaObservers(cambiamento, input);
 		}
-		catch(InterruptedException e){
-			//da gestire
+		if(cambiamento instanceof Gioco){
+			azioneFactory = new AzioneFactory((Gioco) cambiamento);
+		}
+		if(cambiamento instanceof Tabellone || cambiamento instanceof String){
+			inviaOggetto(cambiamento);
 		}
 	}
 	
-	public void update(Gioco gioco){
+	/**
+	 * sends the game board to the client
+	 * @param tabellone the game board
+	 */
+	/*public void update(Tabellone tabellone){
+		try{
+			socketOut = new ObjectOutputStream(socket.getOutputStream());
+			socketOut.writeObject(tabellone);
+			socketOut.flush();
+		}
+		catch(IOException e){
+			throw new IllegalStateException("problemi nel socket");
+		}
+	}*/
+	
+	/**
+	 * set the game in the action factory of this view
+	 * @param gioco the game to set
+	 */
+	/*public void update(Gioco gioco){
 		azioneFactory = new AzioneFactory(gioco);
-	}
+	}*/
 	
 	@Override
 	public void update(Object cambiamento, String[] input) {

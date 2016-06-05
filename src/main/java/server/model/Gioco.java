@@ -44,11 +44,11 @@ public class Gioco extends Observable {
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if the list of Giocatori is less than MIN_NUM_GIOCATORI
-	 * @throws IllegalStateException
+	 * @throws IllegalStateException if the game is already in execution
 	 */
 	public void inizializzaPartita() {
-
-		if (giocatori.size() < MIN_NUM_GIOCATORI)
+		
+		if (this.giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
 		if (statoGioco instanceof Esecuzione)
 			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
@@ -149,6 +149,14 @@ public class Gioco extends Observable {
 	 */
 	public StatoGioco getStato() {
 		return statoGioco;
+	}
+	
+	/**
+	 * set the list of players
+	 * @param giocatori the list of players to set
+	 */
+	public void setGiocatori(List<Giocatore> giocatori) {
+		this.giocatori = giocatori;
 	}
 
 	/**
