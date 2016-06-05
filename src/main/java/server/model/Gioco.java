@@ -14,7 +14,7 @@ import server.observer.Observable;
  * @author Luca
  *
  */
-public class Gioco extends Observable {
+public class Gioco extends Observable implements Runnable{
 
 	private static final int MIN_NUM_GIOCATORI = 2;
 	private static final int NUM_EMPORI_MASSIMO = 10;
@@ -68,6 +68,9 @@ public class Gioco extends Observable {
 			inizializzazioneGiocatoreDummy();
 		
 		this.notificaObservers(tabellone);
+		
+		Thread giocoAvviato = new Thread(this);
+		giocoAvviato.start();
 	}
 
 	/**
@@ -131,6 +134,14 @@ public class Gioco extends Observable {
 	}
 
 	/**
+	 * runs the method eseguiPartita in another thread
+	 */
+	@Override
+	public void run() {
+		eseguiPartita();
+	}
+	
+	/**
 	 * @return the tabellone
 	 */
 	public Tabellone getTabellone() {
@@ -166,5 +177,4 @@ public class Gioco extends Observable {
 	public void setStato(StatoGioco stato) {
 		this.statoGioco = stato;
 	}
-
 }
