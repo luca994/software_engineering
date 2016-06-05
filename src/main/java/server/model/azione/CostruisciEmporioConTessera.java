@@ -55,13 +55,14 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 		if (citta.getEmpori().size() > giocatore.getAssistenti().size())
 			throw new NumeroAiutantiIncorretto(
 					"Il giocatore non ha abbastanza aiutanti per costruire l'emporio in quella posizione");
-
+		for (int i = 0; i < citta.getEmpori().size(); i++)
+			giocatore.getAssistenti().remove(0);
+		
 		citta.getEmpori().add(giocatore);
 		giocatore.spostaTesseraValidaInTesseraUsata(tessera);
 		giocatore.decrementaEmporiRimasti();
 
-		for (int i = 0; i < citta.getEmpori().size(); i++)
-			giocatore.getAssistenti().remove(0);
+		
 
 		// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
 		if (giocatore.getEmporiRimasti() == 0) {
