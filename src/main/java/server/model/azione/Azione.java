@@ -13,7 +13,7 @@ import server.model.Gioco;
  */
 public abstract class Azione {
 
-	private Gioco gioco;
+	private transient Gioco gioco;
 
 	public Azione(Gioco gioco) {
 		this.gioco = gioco;

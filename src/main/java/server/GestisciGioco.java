@@ -68,6 +68,7 @@ public class GestisciGioco implements Runnable{
 			}
 			System.out.println("Gioco creato");
 			controllersGiochi.add(controller);
+			gioco.setGiocatori(giocatori);
 			gioco.inizializzaPartita();
 			gioco.notificaObservers(gioco);
 			giocatori.clear();

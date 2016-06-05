@@ -49,7 +49,6 @@ public class ViewCLI extends View implements Runnable{
 	public ViewCLI(){
 		inserimentoBonus = false;
 		inserimentoAzione = true;
-		statoAttuale = new TurnoNormale(giocatore);
 	}
 	
 	/**
@@ -110,7 +109,6 @@ public class ViewCLI extends View implements Runnable{
 		ExecutorService executor = Executors.newCachedThreadPool();
 		executor.submit(this.getConnessione());
 		executor.submit(this);
-
 	}
 	
 	/**

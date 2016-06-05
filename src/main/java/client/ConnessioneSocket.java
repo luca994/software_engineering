@@ -9,8 +9,6 @@ import java.net.UnknownHostException;
 public class ConnessioneSocket implements Connessione{
 
 	private Socket socket;
-	private ObjectInputStream streamIn;
-	private ObjectOutputStream streamOut;
 	private View view;
 	
 	/**
@@ -34,7 +32,7 @@ public class ConnessioneSocket implements Connessione{
 	public void run() {
 		while(true){
 			try {
-				streamIn=new ObjectInputStream(socket.getInputStream());
+				ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
 				Object oggetto = streamIn.readObject();
 				view.riceviOggetto(oggetto);
 			} catch (ClassNotFoundException e) {
@@ -52,7 +50,7 @@ public class ConnessioneSocket implements Connessione{
 	 */
 	@Override
 	public void inviaOggetto(Object oggetto) throws IOException {
-		streamOut=new ObjectOutputStream(socket.getOutputStream());
+		ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
 		streamOut.writeObject(oggetto);
 		streamOut.flush();
 	}

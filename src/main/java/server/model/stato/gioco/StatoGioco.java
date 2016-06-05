@@ -5,7 +5,7 @@ import server.model.stato.Stato;
 
 public abstract class StatoGioco implements Stato {
 
-	private final Gioco gioco;
+	private transient Gioco gioco;
 	
 	public StatoGioco(Gioco gioco){
 		this.gioco=gioco;
