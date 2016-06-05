@@ -8,6 +8,7 @@ import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Citta;
 import server.model.Giocatore;
+import server.model.Gioco;
 import server.model.TesseraCostruzione;
 
 /**
@@ -25,8 +26,8 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	 * @param citta
 	 * @param tessera
 	 */
-	public CostruisciEmporioConTessera(Citta citta, TesseraCostruzione tessera) {
-		super(null);
+	public CostruisciEmporioConTessera(Gioco gioco,Citta citta, TesseraCostruzione tessera) {
+		super(gioco);
 		this.citta = citta;
 		this.tessera = tessera;
 	}
@@ -55,13 +56,14 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 		if (citta.getEmpori().size() > giocatore.getAssistenti().size())
 			throw new NumeroAiutantiIncorretto(
 					"Il giocatore non ha abbastanza aiutanti per costruire l'emporio in quella posizione");
-
+		for (int i = 0; i < citta.getEmpori().size(); i++)
+			giocatore.getAssistenti().remove(0);
+		
 		citta.getEmpori().add(giocatore);
 		giocatore.spostaTesseraValidaInTesseraUsata(tessera);
 		giocatore.decrementaEmporiRimasti();
 
-		for (int i = 0; i < citta.getEmpori().size(); i++)
-			giocatore.getAssistenti().remove(0);
+		
 
 		// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
 		if (giocatore.getEmporiRimasti() == 0) {

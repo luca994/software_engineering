@@ -52,7 +52,7 @@ public class AzioneFactory {
 			return new CostruisciEmporioConRe(gioco, cartePolitica, citta);
 		}
 		if (Integer.parseInt(tipoAzione)==3) {
-			return new CostruisciEmporioConTessera(citta, tesseraCostruzione);
+			return new CostruisciEmporioConTessera(gioco,citta, tesseraCostruzione);
 		}
 		if (Integer.parseInt(tipoAzione)==6) {
 			return new EleggiConsigliereRapido(consigliere, consiglio);
