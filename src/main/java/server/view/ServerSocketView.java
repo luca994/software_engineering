@@ -82,7 +82,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 					completaAzioneFactory((AzioneFactory) object);
 					Azione azioneGiocatore = azioneFactory.createAzione(tipoAzione);
 					azioneFactory = new AzioneFactory(azioneFactory.getGioco());
-					this.notificaObservers(azioneGiocatore);
+					this.notificaObservers(azioneGiocatore, giocatore);
 				}
 			}catch (ClassNotFoundException | IOException e){
 				throw new IllegalArgumentException();
@@ -166,6 +166,19 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 			inviaOggetto(cambiamento);
 		}
 	}
+
+	@Override
+	public <T> void update(T cambiamento, String[] input) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public <T, S> void update(T cambiamento, S attributo) {
+		if(cambiamento instanceof Exception && attributo instanceof Giocatore && this.giocatore.equals(attributo)){
+			inviaOggetto(cambiamento);
+		}
+	}
 	
 	/**
 	 * sends the game board to the client
@@ -189,8 +202,4 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	/*public void update(Gioco gioco){
 		azioneFactory = new AzioneFactory(gioco);
 	}*/
-	
-	@Override
-	public void update(Object cambiamento, String[] input) {
-	}
 }

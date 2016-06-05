@@ -339,6 +339,9 @@ public class ViewCLI extends View implements Runnable{
 				aggiornaStato();
 				inserimentoAzione.set(true);
 			}
+			if(oggetto instanceof Exception){
+				System.out.println(((Exception) oggetto).getMessage());
+			}
 			if(oggetto instanceof BonusGettoneCitta){
 				System.out.println("Inserisci il nome di una città dove hai un emporio"
 													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");

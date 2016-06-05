@@ -1,6 +1,5 @@
 package server.observer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,12 @@ public abstract class Observable {
 	public <T> void notificaObservers(T cambiamento){
 		for(Observer o:observers){
 			o.update(cambiamento);
+		}
+	}
+	
+	public <T,S> void notificaObservers(T cambiamento, S attributo){
+		for(Observer o:observers){
+			o.update(cambiamento, attributo);
 		}
 	}
 	

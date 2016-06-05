@@ -104,7 +104,7 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	/**
 	 * @return the città
 	 */
-	public Citta getCittà() {
+	public Citta getCitta() {
 		return citta;
 	}
 
@@ -112,7 +112,7 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	 * @param citta
 	 *            the città to set
 	 */
-	public void setCittà(Citta citta) {
+	public void setCitta(Citta citta) {
 		this.citta = citta;
 	}
 
