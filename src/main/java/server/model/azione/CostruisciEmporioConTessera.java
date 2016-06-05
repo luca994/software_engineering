@@ -8,6 +8,7 @@ import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Citta;
 import server.model.Giocatore;
+import server.model.Gioco;
 import server.model.TesseraCostruzione;
 
 /**
@@ -25,8 +26,8 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	 * @param citta
 	 * @param tessera
 	 */
-	public CostruisciEmporioConTessera(Citta citta, TesseraCostruzione tessera) {
-		super(null);
+	public CostruisciEmporioConTessera(Gioco gioco,Citta citta, TesseraCostruzione tessera) {
+		super(gioco);
 		this.citta = citta;
 		this.tessera = tessera;
 	}
