@@ -59,7 +59,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 			socketOut.writeObject(oggetto);
 			socketOut.flush();
 		} catch (IOException e) {
-			throw new IllegalArgumentException("socket non connesso o errore nella creazione dello stream");
+			System.err.println("socket del giocatore" +giocatore.getNome()+ "non connesso o errore nella creazione dello stream");
 		}
 	}
 	

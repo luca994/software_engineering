@@ -26,7 +26,7 @@ public class AzioneFactory {
 	private Regione regione;
 	private Citta citta;
 
-	private final Gioco gioco;
+	private transient Gioco gioco;
 
 	public AzioneFactory(Gioco gioco) {
 		this.gioco = gioco;

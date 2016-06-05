@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
@@ -31,6 +32,7 @@ import server.model.azione.EleggiConsigliereRapido;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoNormale;
 
@@ -39,16 +41,17 @@ public class ViewCLI extends View implements Runnable{
 	private StatoGiocatore statoAttuale;
 	private String inputString;
 	private Tabellone tabellone;
-	private boolean inserimentoBonus;
-	private boolean inserimentoAzione;
+	private AtomicBoolean inserimentoBonus;
+	private AtomicBoolean inserimentoAzione;
 	private Giocatore giocatore;
 	
 	/**
 	 * builds a ViewCLI object
 	 */
 	public ViewCLI(){
-		inserimentoBonus = false;
-		inserimentoAzione = true;
+		inserimentoBonus = new AtomicBoolean(false);
+		inserimentoAzione = new AtomicBoolean(true);
+		statoAttuale = new AttesaTurno(giocatore);
 	}
 	
 	/**
@@ -119,11 +122,11 @@ public class ViewCLI extends View implements Runnable{
 		Scanner input = new Scanner(System.in);
 		while(true){
 			if(statoAttuale instanceof TurnoNormale){
-				if(inserimentoBonus){
+				if(inserimentoBonus.get()){
 					inputString = input.nextLine();
-					inserimentoBonus=false;
+					inserimentoBonus.set(false);
 				}
-				else if(inserimentoAzione){
+				else if(inserimentoAzione.get()){
 					try{
 						System.out.println("Inserisci un azione:"+"\n"+"-Azione principale:"+"\n"+"0)Acquista permesso"+"\n"
 										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
@@ -135,7 +138,7 @@ public class ViewCLI extends View implements Runnable{
 						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione(scelta));
 						this.getConnessione().inviaOggetto(azioneFactory);
 						this.getConnessione().inviaOggetto(scelta);
-						inserimentoAzione=false;
+						inserimentoAzione.set(false);
 					}
 					catch(IOException e){
 						//da gestire
@@ -334,33 +337,33 @@ public class ViewCLI extends View implements Runnable{
 				tabellone = (Tabellone) oggetto;
 				aggiornaGiocatore();
 				aggiornaStato();
-				inserimentoAzione=true;
+				inserimentoAzione.set(true);
 			}
 			if(oggetto instanceof BonusGettoneCitta){
 				System.out.println("Inserisci il nome di una città dove hai un emporio"
 													+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
-				inserimentoBonus=true;
-				while(inserimentoBonus);
+				inserimentoBonus.set(true);
+				while(inserimentoBonus.get());
 				String[] prov = {inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(prov);
 			}
 			if(oggetto instanceof BonusTesseraPermesso){
 				System.out.println("Inserisci il numero della tessera permesso che vuoi ottenere");
-				inserimentoBonus=true;
-				while(inserimentoBonus);
+				inserimentoBonus.set(true);
+				while(inserimentoBonus.get());
 				String[] prov = {inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(prov);
 			}
 			if(oggetto instanceof BonusRiutilizzoCostruzione){
 				System.out.println("inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
-				inserimentoBonus=true;
-				while(inserimentoBonus);
+				inserimentoBonus.set(true);
+				while(inserimentoBonus.get());
 				String prov = inputString;
 				System.out.println("inserisci il numero della tessera da riciclare");
-				inserimentoBonus=true;
-				while(inserimentoBonus);
+				inserimentoBonus.set(true);
+				while(inserimentoBonus.get());
 				String[] array = {prov, inputString};
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(array);
@@ -370,6 +373,9 @@ public class ViewCLI extends View implements Runnable{
 		}
 	}
 	
+	/**
+	 * takes the player from the game and puts its in the attribute giocatore
+	 */
 	public void aggiornaGiocatore(){
 		for(Giocatore g: tabellone.getGioco().getGiocatori()){
 			if(g.getNome().equals(giocatore.getNome())){
