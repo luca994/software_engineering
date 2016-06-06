@@ -85,4 +85,24 @@ public class CostruisciEmporioConTesseraTest {
 
 	}
 
+	@Test(expected = EmporioGiaCostruito.class)
+	public void testEseguiAzioneQuandoLEmporioEGiaCostruitoEIlGiocatorePossiedeLaTessera() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito{
+		//Aggiungo una tessera valida a g1
+		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		giocoTester.getTabellone().getRegioni().get(0).nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		//Setto il creatore dell'azione
+		List<Citta> temp =new ArrayList<>(g1.getTessereValide().get(0).getCitta());//Creata e convertita solo localmente perchè è più comoda del set
+		System.out.println(temp.size());
+		creaAzioniTester.setCitta(temp.get(0));
+		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
+		//Aggiungo emporio del giocatore
+		temp.get(0).getEmpori().add(g1);
+		//Creo l'azione
+		azioneTester=creaAzioniTester.createAzione("3");
+		//Sposto lo stato del giocatore a TurnoNormale
+		//g1.getStatoGiocatore().prossimoStato();
+		//Eseguo l'azione
+		azioneTester.eseguiAzione(g1);
+	}
+
 }
