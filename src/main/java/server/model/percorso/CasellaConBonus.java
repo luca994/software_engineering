@@ -15,6 +15,11 @@ import server.model.bonus.Bonus;
  */
 public class CasellaConBonus extends Casella {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3111208064884016769L;
+	
+	/**
 	 * giocatori: current set of players standing on this specific box(casella)
 	 * bouns: set of bonuses assigned to this box, it may be empty, with one or two bonuses
 	 */

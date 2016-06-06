@@ -7,6 +7,12 @@ package server.model.percorso;
  * of the routes(Percorsi)
  */
 public class CasellaSenzaBonus extends Casella {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 357152225550552329L;
+	
 	/**
 	 * giocatori: current set of players standing on this specific box(casella)
 	 */

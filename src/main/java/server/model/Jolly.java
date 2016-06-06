@@ -9,4 +9,9 @@ package server.model;
  */
 public class Jolly extends CartaPolitica {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2655637161326198916L;
+
 }

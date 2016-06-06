@@ -259,12 +259,16 @@ public class ViewCLI extends View implements Runnable{
 	private void inserimentoCartePolitica(AzioneFactory azioneFactory){
 		Scanner scanner = new Scanner(System.in);
 		List<CartaPolitica> carteDaUsare = new ArrayList<>();
-		System.out.println("Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'");
+		System.out.println("Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'."
+							+ "Inserisci 'fine' se non vuoi utilizzare altre carte");
 		for(int i=0;i<4;i++){
 			System.out.println("Inserisci la carta "+i+1+":");
 			String colore = scanner.nextLine();
 			if(colore.equalsIgnoreCase("jolly")){
 				carteDaUsare.add(new Jolly());
+			}
+			else if(colore.equals("fine")){
+				break;
 			}
 			else{
 				try{
@@ -332,7 +336,7 @@ public class ViewCLI extends View implements Runnable{
 			if(oggetto instanceof String)
 				System.out.println(oggetto);
 			if(oggetto instanceof Giocatore)
-				this.giocatore=(Giocatore) oggetto;
+				this.giocatore = (Giocatore) oggetto;
 			if(oggetto instanceof Tabellone){
 				tabellone = (Tabellone) oggetto;
 				aggiornaGiocatore();
@@ -377,7 +381,7 @@ public class ViewCLI extends View implements Runnable{
 	}
 	
 	/**
-	 * takes the player from the game and puts its in the attribute giocatore
+	 * takes the player from the game and puts it in the attribute giocatore
 	 */
 	public void aggiornaGiocatore(){
 		for(Giocatore g: tabellone.getGioco().getGiocatori()){

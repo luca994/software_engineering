@@ -3,6 +3,7 @@
  */
 package server.model.azione;
 
+import java.io.Serializable;
 import java.util.List;
 
 import server.model.CartaPolitica;
@@ -17,8 +18,13 @@ import server.model.TesseraCostruzione;
  * Factory class for actions, is used to instantiate a new action. 
  *
  */
-public class AzioneFactory {
+public class AzioneFactory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6546053698601351882L;
+	
 	private Consiglio consiglio;
 	private Consigliere consigliere;
 	private TesseraCostruzione tesseraCostruzione;

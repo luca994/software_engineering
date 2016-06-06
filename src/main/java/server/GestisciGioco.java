@@ -11,8 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.jdom2.JDOMException;
-
 import server.controller.Controller;
 import server.model.Giocatore;
 import server.model.Gioco;
