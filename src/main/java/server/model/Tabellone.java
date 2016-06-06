@@ -50,7 +50,7 @@ public class Tabellone implements Serializable{
 	private Percorso percorsoRicchezza;
 	private Percorso percorsoVittoria;
 	private Re re;
-	private transient Gioco gioco;
+	private Gioco gioco;
 
 	/**
 	 * It builds the board by calling methods : creaPercorsi() ,

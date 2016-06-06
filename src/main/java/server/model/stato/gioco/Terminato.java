@@ -10,6 +10,10 @@ import server.model.percorso.Casella;
 
 public class Terminato extends StatoGioco {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2639717549945418496L;
 	private static final int PUNTI_PRIMO_PERCORSO_NOBILTA = 5;
 	private static final int PUNTI_SECONDO_PERCORSO_NOBILTA = 2;
 	private static final int PUNTI_PIU_TESSERE_PERMESSO = 3;

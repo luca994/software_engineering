@@ -40,7 +40,7 @@ public class ViewCLI extends View implements Runnable{
 
 	private StatoGiocatore statoAttuale;
 	private String inputString;
-	private Tabellone tabellone;
+	private Tabellone tabelloneClient;
 	private AtomicBoolean inserimentoBonus;
 	private AtomicBoolean inserimentoAzione;
 	private Giocatore giocatore;
@@ -205,8 +205,8 @@ public class ViewCLI extends View implements Runnable{
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Inserisci la città di destinazione o dove vuoi costruire un emporio:");
 		String cittaDestinazione = scanner.nextLine();
-		if(tabellone.cercaCitta(cittaDestinazione)!=null){
-			azioneFactory.setCitta(tabellone.cercaCitta(cittaDestinazione));
+		if(tabelloneClient.cercaCitta(cittaDestinazione)!=null){
+			azioneFactory.setCitta(tabelloneClient.cercaCitta(cittaDestinazione));
 		}
 		else{
 			System.out.println("La città inserita non esiste");
@@ -222,8 +222,8 @@ public class ViewCLI extends View implements Runnable{
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Inserisci il nome della regione in cui vuoi cambiare le tessere:");
 		String nomeRegione = scanner.nextLine();
-		if(tabellone.getRegioneDaNome(nomeRegione)!=null){
-			azioneFactory.setRegione(tabellone.getRegioneDaNome(nomeRegione));
+		if(tabelloneClient.getRegioneDaNome(nomeRegione)!=null){
+			azioneFactory.setRegione(tabelloneClient.getRegioneDaNome(nomeRegione));
 		}
 		else{
 			System.out.println("Nome regione non corretto");
@@ -241,7 +241,7 @@ public class ViewCLI extends View implements Runnable{
 		int numTessera = scanner.nextInt();
 		if(numTessera<6 && numTessera>=0){
 			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-			for(Regione r: tabellone.getRegioni()){
+			for(Regione r: tabelloneClient.getRegioni()){
 				listaTessere.addAll(r.getTessereCostruzione());
 			}
 			azioneFactory.setTesseraCostruzione(listaTessere.get(numTessera));
@@ -292,8 +292,8 @@ public class ViewCLI extends View implements Runnable{
 		System.out.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink");
 		String colore = scanner.nextLine();
 		try{
-			if(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore))!=null){
-				azioneFactory.setConsigliere(tabellone.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
+			if(tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore))!=null){
+				azioneFactory.setConsigliere(tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
 			}
 			else{
 				System.out.println("Non c'è un consigliere disponibile di quel colore");
@@ -315,11 +315,11 @@ public class ViewCLI extends View implements Runnable{
 		System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi utilizzare");
 		String scelta = scanner.nextLine();
 		if(scelta.equalsIgnoreCase("re")){
-			azioneFactory.setConsiglio(tabellone.getRe().getConsiglio());
+			azioneFactory.setConsiglio(tabelloneClient.getRe().getConsiglio());
 		}
 		else{
-			if(tabellone.getRegioneDaNome(scelta)!=null)
-				azioneFactory.setConsiglio(tabellone.getRegioneDaNome(scelta).getConsiglio());
+			if(tabelloneClient.getRegioneDaNome(scelta)!=null)
+				azioneFactory.setConsiglio(tabelloneClient.getRegioneDaNome(scelta).getConsiglio());
 			else{
 				System.out.println("La regione inserita non esiste");
 				inserimentoConsiglio(azioneFactory);
@@ -338,7 +338,7 @@ public class ViewCLI extends View implements Runnable{
 			if(oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
 			if(oggetto instanceof Tabellone){
-				tabellone = (Tabellone) oggetto;
+				tabelloneClient = (Tabellone) oggetto;
 				aggiornaGiocatore();
 				aggiornaStato();
 				inserimentoAzione.set(true);
@@ -384,7 +384,7 @@ public class ViewCLI extends View implements Runnable{
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
 	public void aggiornaGiocatore(){
-		for(Giocatore g: tabellone.getGioco().getGiocatori()){
+		for(Giocatore g: tabelloneClient.getGioco().getGiocatori()){
 			if(g.getNome().equals(giocatore.getNome())){
 				giocatore=g;
 			}
@@ -395,8 +395,8 @@ public class ViewCLI extends View implements Runnable{
 	 * takes the state of the player from the game
 	 */
 	public void aggiornaStato(){
-		for(Giocatore g: tabellone.getGioco().getGiocatori()){
-			if(this.giocatore.equals(g))
+		for(Giocatore g: tabelloneClient.getGioco().getGiocatori()){
+			if(this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale=g.getStatoGiocatore();
 		}
 	}

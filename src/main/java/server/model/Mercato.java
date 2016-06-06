@@ -1,5 +1,6 @@
 package server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,13 @@ import server.model.percorso.Percorso;
  * @author Riccardo
  *
  */
-public class Mercato {
+public class Mercato implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4801537094662620814L;
+	
 	private List<OggettoVendibile> oggettiInVendita;
 	private Percorso percorsoRicchezza;
 

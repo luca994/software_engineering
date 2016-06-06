@@ -14,6 +14,10 @@ import server.model.Gioco;
  */
 public abstract class Esecuzione extends StatoGioco {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4925505216711534227L;
 	private final List<Giocatore> giocatori;
 	
 	public Esecuzione(Gioco gioco) {

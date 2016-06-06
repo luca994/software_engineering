@@ -8,6 +8,10 @@ import server.model.stato.giocatore.TurnoNormale;
 
 public class FaseTurnoSemplice extends Esecuzione {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8160577673952636015L;
 	private boolean ultimoTurno=false;
 	
 	public FaseTurnoSemplice(Gioco gioco) {
@@ -25,8 +29,9 @@ public class FaseTurnoSemplice extends Esecuzione {
 			if(giocat.getStatoGiocatore() instanceof TurniConclusi){
 				exit=true;
 				break;
-				}
+			}
 			giocat.getStatoGiocatore().prossimoStato();
+			getGioco().notificaObservers(getGioco().getTabellone());
 			while(giocat.getStatoGiocatore() instanceof TurnoNormale);
 			if(ultimoTurno)
 				giocat.setStatoGiocatore(new TurniConclusi(giocat));

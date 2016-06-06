@@ -51,13 +51,13 @@ public class GestisciGioco implements Runnable {
 	public void creaGiochi() throws ClassNotFoundException, IOException {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		executor.submit(this);
-		List<Giocatore> giocatori = new ArrayList<>();
 		while (true) {
+			List<Giocatore> giocatori = new ArrayList<>();
 			int numGiocatori = 0;
 			Gioco gioco = new Gioco();
 			Controller controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (numGiocatori < 2 || (numGiocatori >= 2 && (System.currentTimeMillis() - timer.get()) < 20000)) {
+			while (numGiocatori < 2 || (numGiocatori >= 2 && (System.currentTimeMillis() - timer.get()) < 2000)) {
 				if (!giocatoriAttesa.isEmpty()) {
 					Socket socket = giocatoriAttesa.remove(0);
 					ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
@@ -78,7 +78,6 @@ public class GestisciGioco implements Runnable {
 			gioco.inizializzaPartita();
 			executor.submit(gioco);
 			gioco.notificaObservers(gioco);
-			giocatori.clear();
 		}
 	}
 

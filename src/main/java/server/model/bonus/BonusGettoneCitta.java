@@ -22,7 +22,7 @@ public class BonusGettoneCitta implements Bonus {
 	private static final long serialVersionUID = 9062172546546184125L;
 	private int numeroCitta;
 	private Set<Citta> citta;
-	private transient Gioco gioco;
+	private Gioco gioco;
 	boolean cittaGiusta;
 
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {

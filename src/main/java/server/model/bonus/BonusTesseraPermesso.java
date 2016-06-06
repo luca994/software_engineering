@@ -18,7 +18,7 @@ public class BonusTesseraPermesso implements Bonus {
 	 */
 	private static final long serialVersionUID = -2996522240976825764L;
 	private TesseraCostruzione tessera;
-	private transient Gioco gioco;
+	private Gioco gioco;
 	private boolean tesseraCorretta;
 
 	public BonusTesseraPermesso(Gioco gioco) {

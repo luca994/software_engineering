@@ -7,6 +7,10 @@ import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 
 public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -540726560802672676L;
 	private Mercato mercato;
 
 	public FaseTurnoMercatoAggiuntaOggetti(Gioco gioco) {

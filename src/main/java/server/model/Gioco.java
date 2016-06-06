@@ -1,5 +1,6 @@
 package server.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +15,13 @@ import server.observer.Observable;
  * @author Luca
  *
  */
-public class Gioco extends Observable implements Runnable {
+public class Gioco extends Observable implements Runnable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3738439371299756375L;
+	
 	private static final int MIN_NUM_GIOCATORI = 2;
 	private static final int NUM_EMPORI_MASSIMO = 10;
 

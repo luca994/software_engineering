@@ -1,13 +1,20 @@
 package server.model;
 
+import java.io.Serializable;
+
 import eccezione.FuoriDalLimiteDelPercorso;
 
 /**
  * @author Riccardo
  *
  */
-public abstract class OggettoVendibile {
+public abstract class OggettoVendibile implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6493300649762552925L;
+	
 	private Mercato mercato;
 	private int prezzo;
 	private Giocatore proprietario;
