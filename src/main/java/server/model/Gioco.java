@@ -14,7 +14,7 @@ import server.observer.Observable;
  * @author Luca
  *
  */
-public class Gioco extends Observable implements Runnable{
+public class Gioco extends Observable implements Runnable {
 
 	private static final int MIN_NUM_GIOCATORI = 2;
 	private static final int NUM_EMPORI_MASSIMO = 10;
@@ -44,10 +44,11 @@ public class Gioco extends Observable implements Runnable{
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if the list of Giocatori is less than MIN_NUM_GIOCATORI
-	 * @throws IllegalStateException if the game is already in execution
+	 * @throws IllegalStateException
+	 *             if the game is already in execution
 	 */
 	public void inizializzaPartita() {
-		
+
 		if (this.giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
 		if (statoGioco instanceof Esecuzione)
@@ -66,11 +67,9 @@ public class Gioco extends Observable implements Runnable{
 		/* Setup aggiuntivo per 2 giocatori */
 		if (giocatori.size() == 2)
 			inizializzazioneGiocatoreDummy();
-		
+
 		this.notificaObservers(tabellone);
-		
-		Thread giocoAvviato = new Thread(this);
-		giocoAvviato.start();
+
 	}
 
 	/**
@@ -140,7 +139,7 @@ public class Gioco extends Observable implements Runnable{
 	public void run() {
 		eseguiPartita();
 	}
-	
+
 	/**
 	 * @return the tabellone
 	 */
@@ -161,10 +160,12 @@ public class Gioco extends Observable implements Runnable{
 	public StatoGioco getStato() {
 		return statoGioco;
 	}
-	
+
 	/**
 	 * set the list of players
-	 * @param giocatori the list of players to set
+	 * 
+	 * @param giocatori
+	 *            the list of players to set
 	 */
 	public void setGiocatori(List<Giocatore> giocatori) {
 		this.giocatori = giocatori;
