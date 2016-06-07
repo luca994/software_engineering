@@ -19,7 +19,6 @@ public class Consiglio implements Serializable {
 	 */
 	private static final long serialVersionUID = -7211912303877884155L;
 
-	private static final int MIN_NUMERO_CONSIGLIERI_DA_SODDISFARE = 1;
 	private Tabellone tabellone;
 	private Queue<Consigliere> consiglieri;
 	private Regione regione;

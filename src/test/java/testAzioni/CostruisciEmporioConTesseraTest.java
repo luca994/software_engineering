@@ -18,7 +18,6 @@ import eccezione.NumeroAiutantiIncorretto;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.stato.giocatore.AttesaTurno;
@@ -36,8 +35,6 @@ public class CostruisciEmporioConTesseraTest {
 	private Giocatore g3;
 	private AzioneFactory creaAzioniTester;
 	private Azione azioneTester;
-	private Citta citta;
-	private TesseraCostruzione tessera;
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,7 +70,8 @@ public class CostruisciEmporioConTesseraTest {
 		azioneTester.eseguiAzione(g1);
 		// Controllo presenza emporio
 		assertTrue(temp.get(0).getEmpori().contains(g1));
-		//Verifico turni, in teoria al giocatore 1 manca ancora l'azione rapida da fare
+		// Verifico turni, in teoria al giocatore 1 manca ancora l'azione rapida
+		// da fare
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g2.getStatoGiocatore() instanceof AttesaTurno);
 		assertTrue(g3.getStatoGiocatore() instanceof AttesaTurno);
@@ -81,40 +79,65 @@ public class CostruisciEmporioConTesseraTest {
 	}
 
 	@Test(expected = EmporioGiaCostruito.class)
-	public void testEseguiAzioneQuandoLEmporioEGiaCostruitoEIlGiocatorePossiedeLaTessera() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito{
-		//Aggiungo una tessera valida a g1
+	public void testEseguiAzioneQuandoLEmporioEGiaCostruitoEIlGiocatorePossiedeLaTessera()
+			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
-		giocoTester.getTabellone().getRegioni().get(0).nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
-		//Setto il creatore dell'azione
-		List<Citta> temp =new ArrayList<>(g1.getTessereValide().get(0).getCitta());//Creata e convertita solo localmente perchè è più comoda del set
+		giocoTester.getTabellone().getRegioni().get(0)
+				.nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		// Setto il creatore dell'azione
+		List<Citta> temp = new ArrayList<>(g1.getTessereValide().get(0).getCitta());// Creata
+																					// e
+																					// convertita
+																					// solo
+																					// localmente
+																					// perchè
+																					// è
+																					// più
+																					// comoda
+																					// del
+																					// set
 		creaAzioniTester.setCitta(temp.get(0));
 		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
-		//Aggiungo emporio del giocatore
+		// Aggiungo emporio del giocatore
 		temp.get(0).getEmpori().add(g1);
-		//Creo l'azione
-		azioneTester=creaAzioniTester.createAzione("3");
-		//Sposto lo stato del giocatore a TurnoNormale
+		// Creo l'azione
+		azioneTester = creaAzioniTester.createAzione("3");
+		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
-		//Eseguo l'azione
+		// Eseguo l'azione
 
 		azioneTester.eseguiAzione(g1);
 	}
+
 	@Test(expected = NullPointerException.class)
-	public void testEseguiAzioneConGiocatoreNullo() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito{
-		//Aggiungo una tessera valida a g1
+	public void testEseguiAzioneConGiocatoreNullo()
+			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
-		giocoTester.getTabellone().getRegioni().get(0).nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
-		//Setto il creatore dell'azione
-		List<Citta> temp =new ArrayList<>(g1.getTessereValide().get(0).getCitta());//Creata e convertita solo localmente perchè è più comoda del set
-		
+		giocoTester.getTabellone().getRegioni().get(0)
+				.nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		// Setto il creatore dell'azione
+		List<Citta> temp = new ArrayList<>(g1.getTessereValide().get(0).getCitta());// Creata
+																					// e
+																					// convertita
+																					// solo
+																					// localmente
+																					// perchè
+																					// è
+																					// più
+																					// comoda
+																					// del
+																					// set
+
 		creaAzioniTester.setCitta(temp.get(0));
 		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
-		//Creo l'azione
-		azioneTester=creaAzioniTester.createAzione("3");
-		//Sposto lo stato del giocatore a TurnoNormale
+		// Creo l'azione
+		azioneTester = creaAzioniTester.createAzione("3");
+		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
-		//Eseguo l'azione
+		// Eseguo l'azione
 		azioneTester.eseguiAzione(null);
 	}
-	
+
 }
