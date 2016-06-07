@@ -44,7 +44,8 @@ public class ViewCLI extends View implements Runnable {
 	private AtomicBoolean inserimentoBonus;
 	private AtomicBoolean inserimentoAzione;
 	private Giocatore giocatore;
-
+	private ExecutorService executor;
+	
 	/**
 	 * builds a ViewCLI object
 	 */
@@ -52,6 +53,7 @@ public class ViewCLI extends View implements Runnable {
 		inserimentoBonus = new AtomicBoolean(false);
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
+		executor = Executors.newCachedThreadPool();
 	}
 
 	/**
@@ -93,9 +95,11 @@ public class ViewCLI extends View implements Runnable {
 			System.out.println("Inserisci il nome:");
 			String nome = scanner.nextLine();
 			impostaConnessione();
+			executor.submit(getConnessione());
 			getConnessione().inviaOggetto(nome);
-		} catch (IOException e) {
-			// da gestire
+		}
+		catch(IOException e){
+			throw new IllegalStateException();
 		}
 	}
 
@@ -105,10 +109,6 @@ public class ViewCLI extends View implements Runnable {
 	@Override
 	public void startClient() {
 		inizializzazione();
-		ExecutorService executor = Executors.newCachedThreadPool();
-		System.out.println("aaa");
-		executor.submit(this.getConnessione());
-		System.out.println("ddd");
 		executor.submit(this);
 	}
 
@@ -127,22 +127,22 @@ public class ViewCLI extends View implements Runnable {
 				if (inserimentoBonus.get()) {
 					inputString = input.nextLine();
 					inserimentoBonus.set(false);
-				} else if (inserimentoAzione.get()) {
-					try {
-						System.out.println("Inserisci un azione:" + "\n" + "-Azione principale:" + "\n"
-								+ "0)Acquista permesso" + "\n" + "1)Costruisci emporio con re" + "\n"
-								+ "2)Eleggi consigliere" + "\n" + "3)Costruisci emporio con tessera costruzione" + "\n"
-								+ "-Azioni rapide:" + "\n" + "4)Ingaggia aiutante" + "\n"
-								+ "5)Cambia tessere costruzione in una regione" + "\n" + "6)Eleggi consigliere rapido"
-								+ "\n" + "7)Azione principale aggiutniva");
+				}
+				else if(inserimentoAzione.get()){
+					try{
+						System.out.println("Inserisci un azione:"+"\n"+"-Azione principale:"+"\n"+"0)Acquista permesso"+"\n"
+										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
+										+"3)Costruisci emporio con tessera costruzione"+"\n"+"-Azioni rapide:"+"\n"
+										+"4)Ingaggia aiutante"+"\n"+"5)Cambia tessere costruzione in una regione"+"\n"
+										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiuntiva");
 						String scelta = input.nextLine();
 						AzioneFactory azioneFactory = new AzioneFactory(null);
 						azioneFactory.setTipoAzione(scelta);
 						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione());
 						this.getConnessione().inviaOggetto(azioneFactory);
-						
-					} catch (IOException e) {
-						// da gestire
+					}
+					catch(IOException e){
+						throw new IllegalStateException();
 					}
 				}
 			}
@@ -401,8 +401,8 @@ public class ViewCLI extends View implements Runnable {
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(array);
 			}
-		} catch (IOException e) {
-			// da gestire
+		}catch(IOException e){
+			throw new IllegalStateException();
 		}
 	}
 

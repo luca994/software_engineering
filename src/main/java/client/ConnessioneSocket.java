@@ -6,7 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class ConnessioneSocket implements Connessione {
+
 
 	private Socket socket;
 	private View view;
