@@ -78,13 +78,14 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 					inputBonus=true;
 				}
 				if(object instanceof AzioneFactory){
-					String tipoAzione = (String) socketIn.readObject();
+					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					completaAzioneFactory((AzioneFactory) object);
-					Azione azioneGiocatore = azioneFactory.createAzione(tipoAzione);
+					Azione azioneGiocatore = azioneFactory.createAzione();
 					azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 					this.notificaObservers(azioneGiocatore, giocatore);
 				}
 			}catch (ClassNotFoundException | IOException e){
+				e.printStackTrace();
 				throw new IllegalArgumentException();
 			}
 		}
@@ -115,7 +116,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 			azioneFactory.setConsigliere(consigliereAzione);
 		}
 		if(azioneFactoryCompleta.getConsiglio()!=null){
-			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
 			azioneFactory.setConsiglio(regioneAzione.getConsiglio());
 		}
 		if(azioneFactoryCompleta.getRegione()!=null){

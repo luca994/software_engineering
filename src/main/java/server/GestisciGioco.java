@@ -68,6 +68,7 @@ public class GestisciGioco implements Runnable {
 					streamOut.writeObject(giocatore);
 					streamOut.flush();
 					ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
+					serverView.registerObserver(controller);
 					executor.submit(serverView);
 					numGiocatori++;
 				}

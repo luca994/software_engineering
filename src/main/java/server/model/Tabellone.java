@@ -435,6 +435,7 @@ public class Tabellone implements Serializable{
 					tessereBonusCitta.remove(t);
 				}
 			}
+			prendiLaTesseraBonus(giocatore);
 		}
 		if (verificaEmporioRegioneBonus(giocatore, citta)) {
 			for (TesseraBonusRegione t : tessereBonusRegione) {
@@ -443,7 +444,16 @@ public class Tabellone implements Serializable{
 					tessereBonusRegione.remove(t);
 				}
 			}
+			prendiLaTesseraBonus(giocatore);
 		}
+		
+	}
+	
+	/**
+	 * Assign a TesseraBonus to giocatore and execute the action of the bonus
+	 * @param giocatore
+	 */
+	public void prendiLaTesseraBonus(Giocatore giocatore){
 		if (!tesserePremioRe.isEmpty()) {
 			tesserePremioRe.get(0).eseguiBonus(giocatore);
 			tesserePremioRe.remove(0);

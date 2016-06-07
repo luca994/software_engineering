@@ -8,7 +8,7 @@ public abstract class Observable {
 	private List<Observer> observers;
 	
 	public Observable(){
-		observers=new ArrayList<Observer>();
+		observers=new ArrayList<>();
 	}
 	
 	public <T> void notificaObservers(T cambiamento,String[] input){
