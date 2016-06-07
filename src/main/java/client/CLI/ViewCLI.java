@@ -44,6 +44,7 @@ public class ViewCLI extends View implements Runnable{
 	private AtomicBoolean inserimentoBonus;
 	private AtomicBoolean inserimentoAzione;
 	private Giocatore giocatore;
+	private ExecutorService executor;
 	
 	/**
 	 * builds a ViewCLI object
@@ -52,6 +53,7 @@ public class ViewCLI extends View implements Runnable{
 		inserimentoBonus = new AtomicBoolean(false);
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
+		executor = Executors.newCachedThreadPool();
 	}
 	
 	/**
@@ -96,10 +98,11 @@ public class ViewCLI extends View implements Runnable{
 			System.out.println("Inserisci il nome:");
 			String nome = scanner.nextLine();
 			impostaConnessione();
+			executor.submit(getConnessione());
 			getConnessione().inviaOggetto(nome);
 		}
 		catch(IOException e){
-			//da gestire
+			throw new IllegalStateException();
 		}
 	}
 
@@ -109,8 +112,6 @@ public class ViewCLI extends View implements Runnable{
 	@Override
 	public void startClient(){
 		inizializzazione();
-		ExecutorService executor = Executors.newCachedThreadPool();
-		executor.submit(this.getConnessione());
 		executor.submit(this);
 	}
 	
@@ -132,7 +133,7 @@ public class ViewCLI extends View implements Runnable{
 										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
 										+"3)Costruisci emporio con tessera costruzione"+"\n"+"-Azioni rapide:"+"\n"
 										+"4)Ingaggia aiutante"+"\n"+"5)Cambia tessere costruzione in una regione"+"\n"
-										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiutniva");
+										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiuntiva");
 						String scelta = input.nextLine();
 						AzioneFactory azioneFactory = new AzioneFactory(null);
 						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione(scelta));
@@ -141,7 +142,7 @@ public class ViewCLI extends View implements Runnable{
 						inserimentoAzione.set(false);
 					}
 					catch(IOException e){
-						//da gestire
+						throw new IllegalStateException();
 					}
 				}
 			}
@@ -376,7 +377,7 @@ public class ViewCLI extends View implements Runnable{
 				this.getConnessione().inviaOggetto(array);
 			}
 		}catch(IOException e){
-			//da gestire
+			throw new IllegalStateException();
 		}
 	}
 	

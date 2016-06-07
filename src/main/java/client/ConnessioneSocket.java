@@ -6,8 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import server.model.Tabellone;
-
 public class ConnessioneSocket implements Connessione{
 
 	private Socket socket;

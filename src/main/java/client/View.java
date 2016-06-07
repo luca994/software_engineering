@@ -1,6 +1,6 @@
 package client;
 
-public abstract class View {
+public abstract class View implements Runnable{
 
 	private Connessione connessione;
 
