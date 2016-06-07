@@ -32,6 +32,8 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 	 */
 	public CostruisciEmporioConRe(Gioco gioco, List<CartaPolitica> cartePolitica, Citta destinazione) {
 		super(gioco);
+		if(destinazione == null || cartePolitica == null)
+			throw new NullPointerException();
 		this.destinazione = destinazione;
 		this.cartePolitica = cartePolitica;
 	}
