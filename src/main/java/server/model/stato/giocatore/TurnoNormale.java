@@ -81,4 +81,18 @@ public class TurnoNormale extends StatoGiocatore {
 		throw new IllegalStateException();
 	}
 
+	/**
+	 * @return the azioniPrincipaliEseguibili
+	 */
+	public int getAzioniPrincipaliEseguibili() {
+		return azioniPrincipaliEseguibili;
+	}
+
+	/**
+	 * @return the azioniRapideEseguibili
+	 */
+	public int getAzioniRapideEseguibili() {
+		return azioniRapideEseguibili;
+	}
+
 }
