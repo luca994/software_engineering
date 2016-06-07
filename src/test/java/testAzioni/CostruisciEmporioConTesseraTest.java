@@ -3,7 +3,7 @@
  */
 package testAzioni;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
+import server.model.bonus.BonusMoneta;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.TurnoNormale;
 
@@ -73,6 +74,8 @@ public class CostruisciEmporioConTesseraTest {
 		// Verifico turni, in teoria al giocatore 1 manca ancora l'azione rapida
 		// da fare
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
+		assertEquals(0, ((TurnoNormale) g1.getStatoGiocatore()).getAzioniPrincipaliEseguibili());
+		assertEquals(1, ((TurnoNormale) g1.getStatoGiocatore()).getAzioniRapideEseguibili());
 		assertTrue(g2.getStatoGiocatore() instanceof AttesaTurno);
 		assertTrue(g3.getStatoGiocatore() instanceof AttesaTurno);
 
@@ -138,6 +141,83 @@ public class CostruisciEmporioConTesseraTest {
 		g1.getStatoGiocatore().prossimoStato();
 		// Eseguo l'azione
 		azioneTester.eseguiAzione(null);
+	}
+
+	@Test(expected = NumeroAiutantiIncorretto.class)
+	public void testEseguiAzioneSenzaSufficientiAiutanti()
+			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+		// Aggiungo una tessera valida a g1
+		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		giocoTester.getTabellone().getRegioni().get(0)
+				.nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		// Setto il creatore dell'azione
+		List<Citta> temp = new ArrayList<>(g1.getTessereValide().get(0).getCitta());// Creata
+																					// e
+																					// convertita
+																					// solo
+																					// localmente
+																					// perchè
+																					// è
+																					// più
+																					// comoda
+																					// del
+																					// set
+		creaAzioniTester.setCitta(temp.get(0));
+		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
+		// Aggiungo altri giocatori alla città
+		temp.get(0).getEmpori().add(g2);
+		temp.get(0).getEmpori().add(g3);
+		// Creo l'azione
+		azioneTester = creaAzioniTester.createAzione("3");
+		// Sposto lo stato del giocatore a TurnoNormale
+		g1.getStatoGiocatore().prossimoStato();
+		// Levo aiutanti
+		g1.getAssistenti().clear();
+		// Eseguo l'azione
+		azioneTester.eseguiAzione(g1);
+	}
+
+	@Test
+	public void testAggiuntaPuntiQuandoGliEmporiSonoFiniti()
+			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+		// Aggiungo una tessera valida a g1 e sostituisco il bonus con uno che
+		// non modifica i punti vittoria
+		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		g1.getTessereValide().get(0).getBonus().clear();
+		g1.getTessereValide().get(0).getBonus()
+				.add(new BonusMoneta(giocoTester.getTabellone().getPercorsoRicchezza(), 1));
+		giocoTester.getTabellone().getRegioni().get(0)
+				.nuovaTessera(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+		// Setto il creatore dell'azione e modifico il bonus della citta che non
+		// modifica i punti vittoria
+		List<Citta> temp = new ArrayList<>(g1.getTessereValide().get(0).getCitta());// Creata
+																					// e
+																					// convertita
+																					// solo
+																					// localmente
+																					// perchè
+																					// è
+																					// più
+																					// comoda
+																					// del
+																					// set
+		creaAzioniTester.setCitta(temp.get(0));
+		temp.get(0).getBonus().clear();
+		temp.get(0).getBonus().add(new BonusMoneta(giocoTester.getTabellone().getPercorsoRicchezza(), 1));
+
+		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
+		// Aggiungo altri giocatori alla città
+		// Creo l'azione
+		azioneTester = creaAzioniTester.createAzione("3");
+		// Sposto lo stato del giocatore a TurnoNormale
+		g1.getStatoGiocatore().prossimoStato();
+		// Decremento empori
+		for (int i = 0; i < 9; i++)
+			g1.decrementaEmporiRimasti();
+		// Eseguo l'azione
+		azioneTester.eseguiAzione(g1);
+		assertEquals(3, giocoTester.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
+
 	}
 
 }
