@@ -64,7 +64,8 @@ public class CostruisciEmporioConTesseraTest {
 		creaAzioniTester.setCitta(temp.get(0));
 		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
 		// Creo l'azione
-		azioneTester = creaAzioniTester.createAzione("3");
+		creaAzioniTester.setTipoAzione("3");
+		azioneTester = creaAzioniTester.createAzione();
 		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
 		// Eseguo l'azione
@@ -105,7 +106,8 @@ public class CostruisciEmporioConTesseraTest {
 		// Aggiungo emporio del giocatore
 		temp.get(0).getEmpori().add(g1);
 		// Creo l'azione
-		azioneTester = creaAzioniTester.createAzione("3");
+		creaAzioniTester.setTipoAzione("3");
+		azioneTester = creaAzioniTester.createAzione();
 		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
 		// Eseguo l'azione
@@ -136,7 +138,8 @@ public class CostruisciEmporioConTesseraTest {
 		creaAzioniTester.setCitta(temp.get(0));
 		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
 		// Creo l'azione
-		azioneTester = creaAzioniTester.createAzione("3");
+		creaAzioniTester.setTipoAzione("3");
+		azioneTester = creaAzioniTester.createAzione();
 		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
 		// Eseguo l'azione
@@ -168,7 +171,8 @@ public class CostruisciEmporioConTesseraTest {
 		temp.get(0).getEmpori().add(g2);
 		temp.get(0).getEmpori().add(g3);
 		// Creo l'azione
-		azioneTester = creaAzioniTester.createAzione("3");
+		creaAzioniTester.setTipoAzione("3");
+		azioneTester = creaAzioniTester.createAzione();
 		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
 		// Levo aiutanti
@@ -208,7 +212,8 @@ public class CostruisciEmporioConTesseraTest {
 		creaAzioniTester.setTesseraCostruzione(g1.getTessereValide().get(0));
 		// Aggiungo altri giocatori alla città
 		// Creo l'azione
-		azioneTester = creaAzioniTester.createAzione("3");
+		creaAzioniTester.setTipoAzione("3");
+		azioneTester = creaAzioniTester.createAzione();
 		// Sposto lo stato del giocatore a TurnoNormale
 		g1.getStatoGiocatore().prossimoStato();
 		// Decremento empori

@@ -31,6 +31,7 @@ public class AzioneFactory implements Serializable{
 	private List<CartaPolitica> cartePolitica;
 	private Regione regione;
 	private Citta citta;
+	private String tipoAzione;
 
 	private transient Gioco gioco;
 
@@ -38,7 +39,7 @@ public class AzioneFactory implements Serializable{
 		this.gioco = gioco;
 	}
 
-	public Azione createAzione(String tipoAzione) {
+	public Azione createAzione() {
 		if (tipoAzione == null) {
 			throw new IllegalStateException("l'azione non può essere nulla");
 		}
@@ -67,6 +68,21 @@ public class AzioneFactory implements Serializable{
 			return new IngaggioAiutante(gioco);
 		}
 		throw new IllegalStateException("l'azione inserita non è corretta");
+	}
+
+	
+	/**
+	 * @return the tipoAzione
+	 */
+	public String getTipoAzione() {
+		return tipoAzione;
+	}
+
+	/**
+	 * @param tipoAzione the tipoAzione to set
+	 */
+	public void setTipoAzione(String tipoAzione) {
+		this.tipoAzione = tipoAzione;
 	}
 
 	/**

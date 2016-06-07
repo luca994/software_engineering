@@ -82,7 +82,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setTesseraCostruzione(tesseraTest);
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
-		assertNotNull(azioneTester = creaAzioniTester.createAzione("0"));
+		creaAzioniTester.setTipoAzione("0");
+		assertNotNull(azioneTester = creaAzioniTester.createAzione());
 	}
 
 	/**
@@ -125,7 +126,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -176,7 +178,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -228,7 +231,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -281,7 +285,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -334,7 +339,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -385,7 +391,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertTrue(g1.getTessereValide().isEmpty());
@@ -435,7 +442,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 
 		azioneTester.eseguiAzione(g1);
@@ -481,7 +489,8 @@ public class AcquistaPermessoTest {
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);
 
-		azioneTester = creaAzioniTester.createAzione("0");
+		creaAzioniTester.setTipoAzione("0");
+		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
 		azioneTester.eseguiAzione(g1);
 

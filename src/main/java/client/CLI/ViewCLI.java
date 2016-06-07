@@ -137,10 +137,10 @@ public class ViewCLI extends View implements Runnable {
 								+ "\n" + "7)Azione principale aggiutniva");
 						String scelta = input.nextLine();
 						AzioneFactory azioneFactory = new AzioneFactory(null);
-						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione(scelta));
+						azioneFactory.setTipoAzione(scelta);
+						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione());
 						this.getConnessione().inviaOggetto(azioneFactory);
-						this.getConnessione().inviaOggetto(scelta);
-
+						
 					} catch (IOException e) {
 						// da gestire
 					}
