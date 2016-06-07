@@ -73,12 +73,10 @@ public class CostruisciEmporioConTesseraTest {
 		azioneTester.eseguiAzione(g1);
 		// Controllo presenza emporio
 		assertTrue(temp.get(0).getEmpori().contains(g1));
-		//Verifico turni
-		System.out.println("Azione standard, l'emporio non era presente prima dell'azione e dopo si, quindi si è conclusa correttamente");
-		System.out.println("Teoricamente sarebbe il turno di g2 ma:");
-		System.out.println("Stato g1: "+g1.getStatoGiocatore());
-		System.out.println("Stato g2: "+g2.getStatoGiocatore());
-		System.out.println("Stato g3: "+g3.getStatoGiocatore());
+		//Verifico turni, in teoria al giocatore 1 manca ancora l'azione rapida da fare
+		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
+		assertTrue(g2.getStatoGiocatore() instanceof AttesaTurno);
+		assertTrue(g3.getStatoGiocatore() instanceof AttesaTurno);
 
 	}
 
