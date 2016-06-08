@@ -74,11 +74,9 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		while (!tesseraCostruzioneCorretta) {
 			gioco.notificaObservers(this);
 		}
-		if (tessera != null) {
-			for (Bonus b : tessera.getBonus()) {
+		if (tessera != null)
+			for (Bonus b : tessera.getBonus())
 				b.azioneBonus(giocatore);
-			}
-		}
 	}
 
 	@Override

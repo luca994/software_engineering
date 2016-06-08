@@ -52,7 +52,7 @@ public class BonusTesseraPermesso implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		while(!tesseraCorretta){
-			gioco.notificaObservers(this);
+			gioco.notificaObservers(this, giocatore);
 		}
 		giocatore.getTessereValide().add(tessera);
 		tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);

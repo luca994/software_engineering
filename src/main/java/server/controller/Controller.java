@@ -23,9 +23,11 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoNormale;
 import server.observer.Observer;
+
 
 /**
  * @author Massimiliano Ventura
@@ -111,10 +113,12 @@ public class Controller implements Observer<Object, Bonus> {
 					((Azione) oggetto).eseguiAzione(giocatore);
 					gioco.notificaObservers("Azione Eseguita!", giocatore);	
 				}
-				gioco.notificaObservers(gioco.getTabellone());
+				if(!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
+					gioco.notificaObservers(gioco.getTabellone());
 			} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
 					| EmporioGiaCostruito e) {
 				gioco.notificaObservers(e, giocatore);
+				gioco.notificaObservers(gioco.getTabellone(), giocatore);
 			}
 		}
 		else{

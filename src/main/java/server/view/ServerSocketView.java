@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import server.model.CartaPolitica;
 import server.model.Citta;
@@ -16,6 +17,7 @@ import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Regione;
+import server.model.Tabellone;
 import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
@@ -33,8 +35,9 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 	private Giocatore giocatore;
 	private String[] input;
 	private AzioneFactory azioneFactory;
-	private boolean inputBonus;
 
+	private Semaphore semBonus;
+	
 	/**
 	 * builds a server socket view
 	 * 
@@ -47,10 +50,9 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 	 */
 	public ServerSocketView(Gioco gioco, Socket socket, Giocatore nuovoGiocatore) {
 		gioco.registerObserver(this);
-		this.giocatore = nuovoGiocatore;
-		this.socket = socket;
-		this.azioneFactory = new AzioneFactory(gioco);
-		inputBonus = false;
+		this.giocatore=nuovoGiocatore;
+		this.socket=socket;
+		semBonus = new Semaphore(0);
 	}
 
 	/**
@@ -79,20 +81,27 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 			try {
 				ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 				Object object = socketIn.readObject();
-				if (object instanceof Bonus) {
-					input = (String[]) socketIn.readObject();
-					inputBonus = true;
+
+				if(object instanceof Bonus){
+					input = (String[])socketIn.readObject();
+					semBonus.release();
 				}
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
-					completaAzioneFactory((AzioneFactory) object);
-					Azione azioneGiocatore = azioneFactory.createAzione();
-					azioneFactory = new AzioneFactory(azioneFactory.getGioco());
-					this.notificaObservers(azioneGiocatore, giocatore);
+					if(completaAzioneFactory((AzioneFactory) object)){
+						Azione azioneGiocatore = azioneFactory.createAzione();
+						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+						this.notificaObservers(azioneGiocatore, giocatore);
+					}
+					else{
+						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
+					}
 				}
-			} catch (ClassNotFoundException | IOException e) {
+
+			}catch (IOException e){
 				e.printStackTrace();
-				throw new IllegalArgumentException();
+			}catch (ClassNotFoundException e){
+				throw new IllegalStateException(e.getMessage());
 			}
 		}
 	}
@@ -104,36 +113,50 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 	 * @param azioneFactoryCompleta
 	 *            the azioneFactory sent by the view
 	 */
-	public void completaAzioneFactory(AzioneFactory azioneFactoryCompleta) {
-		if (azioneFactoryCompleta.getCartePolitica() != null) {
+
+	public boolean completaAzioneFactory(AzioneFactory azioneFactoryCompleta){
+		if(azioneFactoryCompleta.getCartePolitica()!=null){
 			List<CartaPolitica> carteAzione = new ArrayList<>();
 			for (CartaPolitica carta : giocatore.getCartePolitica()) {
 				if (azioneFactoryCompleta.getCartePolitica().contains(carta))
 					carteAzione.add(carta);
-				else {
-					// bisogna notificare l'errore
+
+				else{
+					return false;
+
 				}
 			}
 			azioneFactory.setCartePolitica(carteAzione);
 		}
-		if (azioneFactoryCompleta.getCitta() != null) {
-			Citta cittaAzione = azioneFactory.getGioco().getTabellone()
-					.cercaCitta(azioneFactoryCompleta.getCitta().getNome());
+
+		if(azioneFactoryCompleta.getCitta()!=null){
+			Citta cittaAzione = azioneFactory.getGioco().getTabellone().cercaCitta(azioneFactoryCompleta.getCitta().getNome());
+			if(cittaAzione == null)
+				return false;
 			azioneFactory.setCitta(cittaAzione);
 		}
-		if (azioneFactoryCompleta.getConsigliere() != null) {
-			Consigliere consigliereAzione = azioneFactory.getGioco().getTabellone()
-					.getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
+
+		if(azioneFactoryCompleta.getConsigliere()!=null){
+			Consigliere consigliereAzione = azioneFactory.getGioco().getTabellone().getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
+			if(consigliereAzione==null)
+				return false;
+
 			azioneFactory.setConsigliere(consigliereAzione);
 		}
-		if (azioneFactoryCompleta.getConsiglio() != null) {
-			Regione regioneAzione = azioneFactory.getGioco().getTabellone()
-					.getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
+
+		if(azioneFactoryCompleta.getConsiglio()!=null){
+			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
+			if(regioneAzione==null)
+				return false;
+
 			azioneFactory.setConsiglio(regioneAzione.getConsiglio());
 		}
-		if (azioneFactoryCompleta.getRegione() != null) {
-			Regione regioneAzione = azioneFactory.getGioco().getTabellone()
-					.getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+
+		if(azioneFactoryCompleta.getRegione()!=null){
+			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			if(regioneAzione==null)
+				return false;
+
 			azioneFactory.setRegione(regioneAzione);
 		}
 		if (azioneFactoryCompleta.getTesseraCostruzione() != null) {
@@ -143,25 +166,44 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 			} else {
 				// errore da gestire
 			}
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * sends an object to the client
+	 */
+	@Override
+	public void update(Object cambiamento){
+		if(cambiamento instanceof Gioco){
+			azioneFactory = new AzioneFactory((Gioco) cambiamento);
+		}
+		if(cambiamento instanceof Tabellone || cambiamento instanceof String){
+			inviaOggetto(cambiamento);
 		}
 	}
 
-	/**
-	 * sends a bonus to the client, waits for an attribute, then sends the
-	 * attribute and the bonus to the controller
+	/**	 * if cambiamento is a bonus, the method sends it to the client (only if this is the view of the player attributo), 
+	 * waits for an attribute, then sends the attribute and the bonus to the controller.
+	 * if cambiamento is another type of object the method sends the object to the client only if this
+	 * is the view of the player attributo
 	 */
-	@Override
-	public void update(Object cambiamento) {
-		inviaOggetto(cambiamento);
-		if (cambiamento instanceof Bonus)
-			while (!inputBonus)
-				;
-		this.notificaObservers((Bonus) cambiamento, input);
-	}
 
 	@Override
 	public void update(Object cambiamento, Giocatore attributo) {
-		if (this.giocatore.equals(attributo)) {
+
+		if(cambiamento instanceof Bonus && this.giocatore.equals(attributo)){
+			inviaOggetto(cambiamento);
+			try{
+				semBonus.acquire();
+				this.notificaObservers((Bonus) cambiamento, input);
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}else if(this.giocatore.equals(attributo)){
 			inviaOggetto(cambiamento);
 		}
 	}

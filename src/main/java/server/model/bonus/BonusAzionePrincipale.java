@@ -26,6 +26,7 @@ public class BonusAzionePrincipale implements Bonus {
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
 
+
 	}
 
 	@Override
