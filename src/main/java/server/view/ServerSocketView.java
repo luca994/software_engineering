@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import server.model.CartaPolitica;
 import server.model.Citta;
@@ -34,7 +35,7 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 	private Giocatore giocatore;
 	private String[] input;
 	private AzioneFactory azioneFactory;
-	private boolean inputBonus;
+	private Semaphore semBonus;
 	
 	/**
 	 * builds a server socket view
@@ -46,7 +47,7 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 		gioco.registerObserver(this);
 		this.giocatore=nuovoGiocatore;
 		this.socket=socket;
-		inputBonus=false;
+		semBonus = new Semaphore(0);
 	}
 	
 	/**
@@ -75,7 +76,7 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 				Object object = socketIn.readObject();
 				if(object instanceof Bonus){
 					input = (String[])socketIn.readObject();
-					inputBonus=true;
+					semBonus.release();
 				}
 				if(object instanceof AzioneFactory){
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
@@ -149,23 +150,7 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 	}
 	
 	/**
-	 * sends a string to the client
-	 * @param cambiamento the message to send
-	 */
-	/*public void update(String cambiamento){
-		try{
-			socketOut = new ObjectOutputStream(socket.getOutputStream());
-			socketOut.writeObject(cambiamento);
-			socketOut.flush();
-		}
-		catch(IOException e){
-			//da gestire
-		}
-	}*/
-	
-	/**
-	 * sends a bonus to the client, waits for an attribute, 
-	 * then sends the attribute and the bonus to the controller
+	 * sends an object to the client
 	 */
 	@Override
 	public void update(Object cambiamento){
@@ -177,45 +162,28 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 		}
 	}
 
-	public void update(Bonus cambiamento){
-		inviaOggetto(cambiamento);
-		while(!inputBonus);
-		this.notificaObservers(cambiamento, input);
-	}
-	
+	/**
+	 * if cambiamento is a bonus, the method sends it to the client (only if this is the view of the player attributo), 
+	 * waits for an attribute, then sends the attribute and the bonus to the controller.
+	 * if cambiamento is another type of object the method sends the object to the client only if this
+	 * is the view of the player attributo
+	 */
 	@Override
 	public void update(Object cambiamento, Giocatore attributo) {
-		if(this.giocatore.equals(attributo)){
+		if(cambiamento instanceof Bonus && this.giocatore.equals(attributo)){
+			inviaOggetto(cambiamento);
+			try{
+				semBonus.acquire();
+				this.notificaObservers((Bonus) cambiamento, input);
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}else if(this.giocatore.equals(attributo)){
 			inviaOggetto(cambiamento);
 		}
 	}
 
 	@Override
 	public void update(Bonus cambiamento, String[] input) {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	/**
-	 * sends the game board to the client
-	 * @param tabellone the game board
-	 */
-	/*public void update(Tabellone tabellone){
-		try{
-			socketOut = new ObjectOutputStream(socket.getOutputStream());
-			socketOut.writeObject(tabellone);
-			socketOut.flush();
-		}
-		catch(IOException e){
-			throw new IllegalStateException("problemi nel socket");
-		}
-	}*/
-	
-	/**
-	 * set the game in the action factory of this view
-	 * @param gioco the game to set
-	 */
-	/*public void update(Gioco gioco){
-		azioneFactory = new AzioneFactory(gioco);
-	}*/
 }

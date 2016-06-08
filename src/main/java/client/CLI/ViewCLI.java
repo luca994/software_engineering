@@ -149,7 +149,7 @@ public class ViewCLI extends View implements Runnable {
 						this.getConnessione().inviaOggetto(azioneFactory);
 					}
 					catch(IOException e){
-						throw new IllegalStateException();
+						throw new IllegalStateException(e.getMessage());
 					}
 				}
 			}

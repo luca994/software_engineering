@@ -62,19 +62,19 @@ public class BonusGettoneCitta implements Bonus {
 		for (int i = 0; i < numeroCitta; i++) {
 			do {
 				cittaGiusta = true;
-				gioco.notificaObservers(this);
+				gioco.notificaObservers(this, giocatore);
 				for (Citta c : citta) {
 					for (Bonus b : c.getBonus()) {
 						if (b instanceof BonusPercorsoNobilta) {
 							cittaGiusta = false;
 							citta.remove(c);
-							gioco.notificaObservers("C'è un bonus percorso nobiltà");
+							gioco.notificaObservers("C'è un bonus percorso nobiltà", giocatore);
 						}
 					}
 					if (!c.getEmpori().contains(giocatore) && citta.contains(c)) {
 						cittaGiusta = false;
 						citta.remove(c);
-						gioco.notificaObservers("Non hai un'emporio nella città");
+						gioco.notificaObservers("Non hai un'emporio nella città", giocatore);
 					}
 				}
 			} while (!cittaGiusta);

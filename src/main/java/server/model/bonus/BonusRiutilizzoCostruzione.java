@@ -67,7 +67,7 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 			if(giocatore==null)
 				throw new NullPointerException("Il giocatore non può essere nullo");		
 			while(!tesseraCostruzioneCorretta){
-				gioco.notificaObservers(this);
+				gioco.notificaObservers(this, giocatore);
 			}
 			if(tessera!=null){
 				for(Bonus b: tessera.getBonus()){
