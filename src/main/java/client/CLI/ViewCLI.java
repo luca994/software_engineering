@@ -16,6 +16,7 @@ import client.ConnessioneFactory;
 import client.View;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
+import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Jolly;
 import server.model.ParseColor;
@@ -33,6 +34,7 @@ import server.model.azione.EleggiConsigliereRapido;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.percorso.Casella;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoNormale;
@@ -140,14 +142,26 @@ public class ViewCLI extends View implements Runnable {
 										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
 										+"3)Costruisci emporio con tessera costruzione"+"\n"+"-Azioni rapide:"+"\n"
 										+"4)Ingaggia aiutante"+"\n"+"5)Cambia tessere costruzione in una regione"+"\n"
-										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiuntiva");
+										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiuntiva"+"\n"
+										+"7)Scegli cosa stampare dello stato attuale del gioco");
 						String scelta = input.nextLine();
-						AzioneFactory azioneFactory = new AzioneFactory(null);
-						azioneFactory.setTipoAzione(scelta);
-						if(inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())){
-							this.getConnessione().inviaOggetto(azioneFactory);}
-						else{
-							semaforo.release();
+						if(Integer.parseInt(scelta)<7){
+							AzioneFactory azioneFactory = new AzioneFactory(null);
+							azioneFactory.setTipoAzione(scelta);
+							if(inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())){
+								this.getConnessione().inviaOggetto(azioneFactory);}
+							else{
+								if(semaforo.availablePermits()==0)
+									semaforo.release();
+							}
+						}
+						else if(Integer.parseInt(scelta)==7)
+							stampeTabellone(input);
+						else
+						{
+							System.out.println("Input non valido");
+							if(semaforo.availablePermits()==0)
+								semaforo.release();
 						}
 					}
 					catch(IOException e){
@@ -155,6 +169,8 @@ public class ViewCLI extends View implements Runnable {
 					}
 				}
 			}
+			else
+				stampeTabellone(input);
 		}
 	}
 
@@ -205,7 +221,61 @@ public class ViewCLI extends View implements Runnable {
 		}
 		return true;
 	}
-
+	
+	private  void stampeTabellone(Scanner input){
+		synchronized(this.tabelloneClient){
+		System.out.println("Scegli cosa visualizzare:\n"+
+							"1) Stato generale del tabellone\n"+
+							"2) Stato dei giocatori nei vari percorsi\n"+
+							"3) Stato della specifica città\n"+
+							"4) Stato dei consigli e carte disponibili\n"+
+							"5) Elenco dei consiglieri disponibili ad essere eletti\n"+
+							"6) Nomi degli altri giocatori\n"+
+							"7) Stato dello specifico giocatore\n"+
+							"8) Proprie Carte Politica\n"+
+							"9) Proprie Tessere-Permesso Valide\n"+
+							"10) Proprie Tessere-Permesso Usate\n"+
+							"11) Dettaglio del Percorso Nobiltà (con vari bonus)\n"+
+							"12) Aggiorna tabellone"
+							);
+		int scelta =Integer.parseInt(input.nextLine());
+		switch(scelta){
+			case 1:
+				for(Regione regione:tabelloneClient.getRegioni()){
+					System.out.println("Regione: "+regione.getNome()+"\n"+"Città:");
+					for(Citta citta:regione.getCitta()){
+						System.out.print(citta.getNome()+", collegata con: ");
+						for(Citta collegamento:citta.getCittaVicina())
+							System.out.print(collegamento.getNome()+" ");
+						System.out.print("\n");
+					}
+					
+				}
+				break;
+			case 2:
+				//Stampo stato percorso vittoria: i giocatori e la loro posizione
+				System.out.println("Percorso Vittoria:");
+				for(Casella casella:tabelloneClient.getPercorsoVittoria().getCaselle())
+					if(!casella.getGiocatori().isEmpty())
+						for(Giocatore giocatore: casella.getGiocatori())
+							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(giocatore));
+				break;
+			
+				
+		}
+		if(semaforo.availablePermits()==0)
+			semaforo.release();
+		}
+	}
+	private void stampaTesseraPermesso(TesseraCostruzione tessera){
+		
+	}
+	private void stampaStatoGiocatore(Giocatore giocatore){
+		
+	}
+	private void stampaStatoPercorsoNobiltà(){
+		
+	}
 	/**
 	 * asks the business permit tile that the user want to use to build, then
 	 * add it to the action factory
