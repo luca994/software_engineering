@@ -1,18 +1,20 @@
 package server.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.bonus.Bonus;
 
-public class TesseraCostruzione extends OggettoVendibile implements Serializable{
+public class TesseraCostruzione extends OggettoVendibile implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5137085350436101703L;
-	
+
 	private Set<Citta> citta;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;
@@ -97,8 +99,33 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 				+ bonus + "]";
 	}
 
+	public boolean isUguale(TesseraCostruzione tesseraDaConfrontare) {
+		if (!tesseraDaConfrontare.regioneDiAppartenenza.getNome().equals(regioneDiAppartenenza.getNome()))
+			return false;
+		List<Citta> copiaCitta = new ArrayList<>();
+		copiaCitta.addAll(citta);
+		for (Citta c1 : citta)
+			for (Citta c : tesseraDaConfrontare.getCitta())
+				if (c.isUguale(c1)) {
+					copiaCitta.remove(c1);
+					break;
+				}
+		if (!copiaCitta.isEmpty())
+			return false;
+		List<Bonus> copiaBonus = new ArrayList<>();
+		copiaBonus.addAll(bonus);
+		for (Bonus b1 : bonus)
+			for (Bonus b : tesseraDaConfrontare.getBonus())
+				if (b.isUguale(b1)) {
+					copiaBonus.remove(b1);
+					break;
+				}
+		return (copiaBonus.isEmpty());
+	}
+
 	/**
-	 * @param bonus the bonus to set
+	 * @param bonus
+	 *            the bonus to set
 	 */
 	public void setBonus(Set<Bonus> bonus) {
 		this.bonus = bonus;

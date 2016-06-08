@@ -22,13 +22,19 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 	public void eseguiFase() {
 		for (Giocatore giocat : getGiocatori()) {
 			giocat.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(giocat, mercato));
-			while (giocat.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti);
+			while (true) {
+				synchronized (giocat.getStatoGiocatore()) {
+
+					if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti))
+						break;
+				}
+			}
 		}
 	}
 
 	@Override
 	public void prossimoStato() {
-		getGioco().setStato(new FaseTurnoMercatoCompraVendita(getGioco(),mercato));
+		getGioco().setStato(new FaseTurnoMercatoCompraVendita(getGioco(), mercato));
 	}
 
 }

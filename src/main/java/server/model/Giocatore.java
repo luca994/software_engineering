@@ -17,13 +17,13 @@ import server.model.stato.giocatore.StatoGiocatore;
  * @author Luca
  *
  */
-public class Giocatore implements Serializable{
+public class Giocatore implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6264310867945058171L;
-	
+
 	private final String nome;
 	private List<Assistente> assistenti;
 	private List<CartaPolitica> cartePolitica;
@@ -34,25 +34,28 @@ public class Giocatore implements Serializable{
 	private StatoGiocatore statoGiocatore;
 
 	/**
-	 * Constructor for the class Giocatore, creates a giocatore,
-	 *  and sets nome,colore and StatoGiocatore to AttesaTurno.
+	 * Constructor for the class Giocatore, creates a giocatore, and sets
+	 * nome,colore and StatoGiocatore to AttesaTurno.
 	 * 
-	 * @param nome to set
-	 * @param colore to set
-	 * @throws IllegalArgumentException if nome or colore are null
+	 * @param nome
+	 *            to set
+	 * @param colore
+	 *            to set
+	 * @throws IllegalArgumentException
+	 *             if nome or colore are null
 	 */
 	public Giocatore(String nome) {
-		if(nome==null)
+		if (nome == null)
 			throw new IllegalArgumentException();
 		this.nome = nome;
-		
-		//creo il colore casualmente
+
+		// creo il colore casualmente
 		Random random = new Random();
 		final float hue = random.nextFloat();
-		final float saturation = 0.9f;//1.0 for brilliant, 0.0 for dull
-		final float luminance = 1.0f; //1.0 for brighter, 0.0 for black
+		final float saturation = 0.9f;// 1.0 for brilliant, 0.0 for dull
+		final float luminance = 1.0f; // 1.0 for brighter, 0.0 for black
 		this.colore = Color.getHSBColor(hue, saturation, luminance);
-		
+
 		this.assistenti = new ArrayList<>();
 		this.cartePolitica = new ArrayList<>();
 		this.tessereUsate = new ArrayList<>();
@@ -62,10 +65,11 @@ public class Giocatore implements Serializable{
 
 	/**
 	 * @return decrement of one unit integer EmporiRimasti
-	 * @throws IllegalArgumentException if emporiRimasti is equal or less than 0.
+	 * @throws IllegalArgumentException
+	 *             if emporiRimasti is equal or less than 0.
 	 */
 	public void decrementaEmporiRimasti() {
-		if(emporiRimasti<=0)
+		if (emporiRimasti <= 0)
 			throw new IllegalArgumentException();
 		emporiRimasti--;
 	}
@@ -84,20 +88,55 @@ public class Giocatore implements Serializable{
 		tessereValide.remove(tesseraToMove);
 		tessereUsate.add(tesseraToMove);
 	}
-	
+
 	/**
-	 * calculate and return the total number
-	 * of tessereCostruzione of the player
+	 * searches for a politic card with the same parameters in the list of cards
+	 * owned by the player, if the player hasn't got the card,it returns null.
+	 * 
+	 * @param cartaCercata
+	 *            is the card to search
+	 * @return the reference to the similar card owned by the player
+	 */
+	public CartaPolitica cercaCarta(CartaPolitica cartaCercata) {
+		for (CartaPolitica c : cartePolitica)
+			if (c.isUguale(cartaCercata))
+				return c;
+		return null;
+	}
+
+	/**
+	 * searches for a tesseraCostruzione with the same parameters in the list of
+	 * tessereValide owned by the player, if the player hasn't got the
+	 * tessera,it returns null.
+	 * 
+	 * @param tesseraCercata
+	 *            is the tessera to search
+	 * @return the reference to the similar tessera owned by the player
+	 */
+	public TesseraCostruzione cercaTesseraCostruzione(TesseraCostruzione tesseraCercata) {
+		for (TesseraCostruzione t : tessereValide)
+			if (t.isUguale(tesseraCercata))
+				return t;
+		return null;
+	}
+
+	/**
+	 * calculate and return the total number of tessereCostruzione of the player
+	 * 
 	 * @return the number of numeroPermessiTotali
 	 */
-	public int numeroPermessiTotali(){
-		return tessereUsate.size()+tessereValide.size();
+	public int numeroPermessiTotali() {
+		return tessereUsate.size() + tessereValide.size();
 	}
-	
-	public int numeroAiutantiECartePolitica(){
-		return assistenti.size()+cartePolitica.size();
+
+	/**
+	 * calculate and return the sum of aiutanti and cartePolitica of the player
+	 * 
+	 * @return the number of numeroPermessiTotali
+	 */
+	public int numeroAiutantiECartePolitica() {
+		return assistenti.size() + cartePolitica.size();
 	}
-	
 
 	/**
 	 * @return the nome
@@ -113,14 +152,12 @@ public class Giocatore implements Serializable{
 		return assistenti;
 	}
 
-
 	/**
 	 * @return the cartePolitica
 	 */
 	public List<CartaPolitica> getCartePolitica() {
 		return cartePolitica;
 	}
-
 
 	/**
 	 * @return the colore
@@ -177,10 +214,11 @@ public class Giocatore implements Serializable{
 	/**
 	 * @param emporiRimasti
 	 *            the emporiRimasti to set
-	 * @throws IllegalArgumentException if you try to set emporiRimasti to a negative value
+	 * @throws IllegalArgumentException
+	 *             if you try to set emporiRimasti to a negative value
 	 */
 	public void setEmporiRimasti(int emporiRimasti) {
-		if(emporiRimasti<0)
+		if (emporiRimasti < 0)
 			throw new IllegalArgumentException();
 		this.emporiRimasti = emporiRimasti;
 	}
@@ -201,14 +239,16 @@ public class Giocatore implements Serializable{
 	}
 
 	/**
-	 * @param assistenti the assistenti to set
+	 * @param assistenti
+	 *            the assistenti to set
 	 */
 	public void setAssistenti(List<Assistente> assistenti) {
 		this.assistenti = assistenti;
 	}
 
 	/**
-	 * @param cartePolitica the cartePolitica to set
+	 * @param cartePolitica
+	 *            the cartePolitica to set
 	 */
 	public void setCartePolitica(List<CartaPolitica> cartePolitica) {
 		this.cartePolitica = cartePolitica;

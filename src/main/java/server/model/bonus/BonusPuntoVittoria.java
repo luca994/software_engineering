@@ -35,4 +35,17 @@ public class BonusPuntoVittoria implements Bonus {
 			throw new IndexOutOfBoundsException();
 		}
 	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusPuntoVittoria
+				&& ((BonusPuntoVittoria) bonusDaConfrontare).getSteps() == steps;
+	}
+
+	/**
+	 * @return the steps
+	 */
+	public int getSteps() {
+		return steps;
+	}
 }

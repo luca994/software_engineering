@@ -30,7 +30,12 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 		Collections.shuffle(listaTurniMercatoGiocatori);
 		for (Giocatore giocat : listaTurniMercatoGiocatori) {
 			giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
-			while (giocat.getStatoGiocatore() instanceof TurnoMercatoCompraVendita);
+			while (true) {
+				synchronized (giocat.getStatoGiocatore()) {
+					if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoCompraVendita))
+						break;
+				}
+			}
 		}
 		/*
 		 * Ora che il mercato è finito, posso svuotarlo e resettare gli

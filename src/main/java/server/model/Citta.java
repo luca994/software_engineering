@@ -12,13 +12,13 @@ import java.util.Set;
  *
  */
 
-public class Citta extends OggettoConBonus implements Serializable{
+public class Citta extends OggettoConBonus implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7048245012061517818L;
-	
+
 	private final String nome;
 	private final Regione regione;
 	private Color colore;
@@ -28,8 +28,11 @@ public class Citta extends OggettoConBonus implements Serializable{
 
 	/**
 	 * Constructor for citta, initializes nome,regione,empori,cittaVicina.
-	 * @param nome the nome for the inizialization
-	 * @param regione the regione for the inizialization
+	 * 
+	 * @param nome
+	 *            the nome for the inizialization
+	 * @param regione
+	 *            the regione for the inizialization
 	 * 
 	 */
 	public Citta(String nome, Regione regione) {
@@ -45,14 +48,16 @@ public class Citta extends OggettoConBonus implements Serializable{
 	 * 
 	 * @param giocatore
 	 *            the owner of the emporium
-	 *            
-	 * @param cittaVicineConEmpori an empty list.
+	 * 
+	 * @param cittaVicineConEmpori
+	 *            an empty list.
 	 * @return return a list of near cities which have the player's emporium
-	 * @throws NullPointerException if giocatore or cittaVicineConEmpori are null
+	 * @throws NullPointerException
+	 *             if giocatore or cittaVicineConEmpori are null
 	 */
 	/* cittàVicineConEmpori inizialmente vuota si riempe con la ricorsione */
 	public List<Citta> cittaVicinaConEmporio(Giocatore giocatore, List<Citta> cittaVicineConEmpori) {
-		if (giocatore == null || cittaVicineConEmpori==null)
+		if (giocatore == null || cittaVicineConEmpori == null)
 			throw new NullPointerException();
 		for (Citta c : cittaVicina) {
 			if (c.getEmpori().contains(giocatore) && !cittaVicineConEmpori.contains(c)) {
@@ -61,6 +66,10 @@ public class Citta extends OggettoConBonus implements Serializable{
 			}
 		}
 		return cittaVicineConEmpori;
+	}
+
+	public boolean isUguale(Citta cittaDaControllare) {
+		return cittaDaControllare.getNome().equals(nome);
 	}
 
 	/**

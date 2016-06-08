@@ -62,4 +62,9 @@ public class BonusTesseraPermesso implements Bonus {
 
 	}
 
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusTesseraPermesso
+				&& ((BonusTesseraPermesso) bonusDaConfrontare).getTessera().isUguale(tessera);
+	}
 }

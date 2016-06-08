@@ -18,7 +18,7 @@ public class BonusCartaPolitica implements Bonus {
 	private int numeroCarte;
 
 	public BonusCartaPolitica(int numeroCarte) {
-		if(numeroCarte<0)
+		if (numeroCarte < 0)
 			throw new IllegalStateException("Il numero di carte non può essere negativo");
 		this.numeroCarte = numeroCarte;
 	}
@@ -29,6 +29,19 @@ public class BonusCartaPolitica implements Bonus {
 			throw new NullPointerException();
 		for (int i = 0; i < this.numeroCarte; i++)
 			giocatore.getCartePolitica().add(new CartePoliticaFactory().creaCartaPolitica());
+	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusCartaPolitica
+				&& ((BonusCartaPolitica) bonusDaConfrontare).getNumeroCarte() == numeroCarte;
+	}
+
+	/**
+	 * @return the numeroCarte
+	 */
+	public int getNumeroCarte() {
+		return numeroCarte;
 	}
 
 }

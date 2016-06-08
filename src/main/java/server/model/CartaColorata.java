@@ -32,4 +32,12 @@ public class CartaColorata extends CartaPolitica {
 		return colore;
 	}
 
+	@Override
+	public boolean isUguale(CartaPolitica carta) {
+		return carta instanceof CartaColorata && ((CartaColorata) carta).getColore().equals(colore);
+		
+	}
+
+
+	
 }
