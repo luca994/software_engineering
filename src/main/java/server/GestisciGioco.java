@@ -78,7 +78,6 @@ public class GestisciGioco implements Runnable {
 			gioco.setGiocatori(giocatori);
 			gioco.inizializzaPartita();
 			executor.submit(gioco);
-			gioco.notificaObservers(gioco);
 		}
 	}
 

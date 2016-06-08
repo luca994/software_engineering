@@ -25,5 +25,12 @@ public class BonusAzionePrincipale implements Bonus {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
+
+
+	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusAzionePrincipale;
 	}
 }

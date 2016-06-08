@@ -21,6 +21,8 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 	}
 
 	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
+		if(prezzo<=0)
+			throw new IllegalArgumentException("Il prezzo deve essere un numero positivo");
 		oggettoDaAggiungere.setMercato(mercato);
 		oggettoDaAggiungere.setPrezzo(prezzo);
 		oggettoDaAggiungere.setGiocatore(giocatore);

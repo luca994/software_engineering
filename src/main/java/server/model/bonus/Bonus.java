@@ -20,4 +20,6 @@ public interface Bonus extends Serializable{
 	 * 
 	 */
 	public abstract void azioneBonus(Giocatore giocatore);
+	
+	public abstract boolean isUguale(Bonus bonusDaConfrontare);
 }

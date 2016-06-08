@@ -13,6 +13,7 @@ import eccezione.NumeroAiutantiIncorretto;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.OggettoVendibile;
 import server.model.Regione;
 import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
@@ -23,94 +24,93 @@ import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.model.stato.giocatore.AttesaTurno;
+import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoNormale;
 import server.observer.Observer;
+
 
 /**
  * @author Massimiliano Ventura
  *
  */
-public class Controller implements Observer<Azione,Bonus>{
-	
+public class Controller implements Observer<Object, Bonus> {
+
 	private Gioco gioco;
-	public Controller(Gioco gioco)
-	{
-		this.gioco=gioco;
+
+	public Controller(Gioco gioco) {
+		this.gioco = gioco;
 	}
-	
+
 	@Override
 	public void update(Bonus cambiamento, String[] input) {
-		if(cambiamento instanceof BonusGettoneCitta){
-			try{	
-				if(!input[0].equals("passa")){
+		if (cambiamento instanceof BonusGettoneCitta) {
+			try {
+				if (!input[0].equals("passa")) {
 					Citta citta = this.gioco.getTabellone().cercaCitta(input[0]);
-					if(!((BonusGettoneCitta) cambiamento).getCitta().add(citta)){
+					if (!((BonusGettoneCitta) cambiamento).getCitta().add(citta)) {
 						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 						gioco.notificaObservers("la città inserita è già stata scelta");
-					}
-					else return;
+					} else
+						return;
 				}
-			}
-			catch(IllegalArgumentException e){
+			} catch (IllegalArgumentException e) {
 				gioco.notificaObservers(e.getMessage());
 			}
 		}
-		if(cambiamento instanceof BonusTesseraPermesso){
-			if(Integer.parseInt(input[0])<6 && Integer.parseInt(input[0])>=0){
+		if (cambiamento instanceof BonusTesseraPermesso) {
+			if (Integer.parseInt(input[0]) < 6 && Integer.parseInt(input[0]) >= 0) {
 				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-				for(Regione r:gioco.getTabellone().getRegioni()){
+				for (Regione r : gioco.getTabellone().getRegioni()) {
 					listaTessere.addAll(r.getTessereCostruzione());
 				}
 				((BonusTesseraPermesso) cambiamento).setTessera(listaTessere.get(Integer.parseInt(input[0])));
-				for(Regione r:gioco.getTabellone().getRegioni()){
+				for (Regione r : gioco.getTabellone().getRegioni()) {
 					r.nuovaTessera(listaTessere.get(Integer.parseInt(input[0])));
 				}
 				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
-			}
-			else{
+			} else {
 				gioco.notificaObservers("tessera inserita non valida");
 			}
 		}
-		if(cambiamento instanceof BonusRiutilizzoCostruzione){
-			Giocatore gio=((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
-			if(input[0].equals("passa")){
+		if (cambiamento instanceof BonusRiutilizzoCostruzione) {
+			Giocatore gio = ((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
+			if (input[0].equals("passa")) {
 				((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				return;
 			}
-			if(Integer.parseInt(input[0])==0){//sto usando la lista di tessere valide
-				if(Integer.parseInt(input[0])<gio.getTessereValide().size() && Integer.parseInt(input[0])>=0){
-					TesseraCostruzione tessera= gio.getTessereValide().get(Integer.parseInt(input[0]));
+			if (Integer.parseInt(input[0]) == 0) {// sto usando la lista di
+													// tessere valide
+				if (Integer.parseInt(input[0]) < gio.getTessereValide().size() && Integer.parseInt(input[0]) >= 0) {
+					TesseraCostruzione tessera = gio.getTessereValide().get(Integer.parseInt(input[0]));
 					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
 					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
-				}
-				else{
+				} else {
 					gioco.notificaObservers("input incoerente");
 				}
-			}
-			else if(Integer.parseInt(input[0])==1){
-				if(Integer.parseInt(input[0])<gio.getTessereUsate().size() && Integer.parseInt(input[0])>=0){
-					TesseraCostruzione tessera= gio.getTessereUsate().get(Integer.parseInt(input[0]));
+			} else if (Integer.parseInt(input[0]) == 1) {
+				if (Integer.parseInt(input[0]) < gio.getTessereUsate().size() && Integer.parseInt(input[0]) >= 0) {
+					TesseraCostruzione tessera = gio.getTessereUsate().get(Integer.parseInt(input[0]));
 					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
 					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
-				}
-				else{
+				} else {
 					gioco.notificaObservers("input incoerente");
 				}
-			}
-			else
+			} else
 				gioco.notificaObservers("lista sbagliata");
 		}
 	}
 
-	public void update(Azione azione, Giocatore giocatore) {
+	@Override
+	public void update(Object oggetto, Giocatore giocatore) {
+		if(oggetto instanceof Azione){
 		if(giocatore.getStatoGiocatore() instanceof TurnoNormale){
 			try {
-				if(azione instanceof AzionePrincipale && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili()<=0)
+				if(oggetto instanceof AzionePrincipale && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili()<=0)
 					gioco.notificaObservers("Non hai più azioni principali", giocatore);
-				else if(azione instanceof AzioneRapida && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili()<=0)
+				else if(oggetto instanceof AzioneRapida && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili()<=0)
 					gioco.notificaObservers("Non hai più azioni rapide", giocatore);
 				else{
-					azione.eseguiAzione(giocatore);
+					((Azione) oggetto).eseguiAzione(giocatore);
 					gioco.notificaObservers("Azione Eseguita!", giocatore);	
 				}
 				if(!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
@@ -123,15 +123,14 @@ public class Controller implements Observer<Azione,Bonus>{
 		}
 		else{
 			gioco.notificaObservers("Non è il tuo turno", giocatore);
-		}
-	}
-
+		}}
+		if(oggetto instanceof OggettoVendibile && giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
+			
+				
+	}}
 
 	@Override
-	public void update(Azione cambiamento) {
-		// TODO Auto-generated method stub
-		
+	public void update(Object cambiamento) {
+		throw new IllegalArgumentException("Non è stato inserito il giocatore che chiama il controller");
 	}
 }
-
-

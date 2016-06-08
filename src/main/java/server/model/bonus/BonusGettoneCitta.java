@@ -1,6 +1,8 @@
 package server.model.bonus;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import server.model.Citta;
@@ -84,5 +86,29 @@ public class BonusGettoneCitta implements Bonus {
 			cit.eseguiBonus(giocatore);
 		}
 
+	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		if (bonusDaConfrontare instanceof BonusGettoneCitta
+				&& ((BonusGettoneCitta) bonusDaConfrontare).getNumeroCitta() == numeroCitta) {
+			List<Citta> copiaCitta = new ArrayList<>();
+			copiaCitta.addAll(citta);
+			for (Citta c1 : citta)
+				for (Citta c : ((BonusGettoneCitta) bonusDaConfrontare).getCitta())
+					if (c.isUguale(c1)){
+						copiaCitta.remove(c1);
+						break;
+					}
+			return copiaCitta.isEmpty();
+		}
+		return false;
+	}
+
+	/**
+	 * @return the gioco
+	 */
+	public Gioco getGioco() {
+		return gioco;
 	}
 }

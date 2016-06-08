@@ -25,5 +25,10 @@ public abstract class CartaPolitica extends OggettoVendibile implements Serializ
 		resettaAttributiOggettoVendibile(nuovoProprietario);
 		getMercato().getOggettiInVendita().remove(this);
 	}
-
+	/**
+	 * checks if the card in input has the same parameter of this card
+	 * @param carta the card to compare
+	 * @return returns true if the card in input has the same parameters of this card, else return false
+	 */
+	public abstract boolean isUguale(CartaPolitica carta);
 }

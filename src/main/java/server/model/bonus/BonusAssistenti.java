@@ -16,11 +16,11 @@ public class BonusAssistenti implements Bonus {
 	 * 
 	 */
 	private static final long serialVersionUID = 4956022062307571028L;
-	
+
 	private int numeroAssistenti;
 
 	public BonusAssistenti(int numeroAssistenti) {
-		if(numeroAssistenti<0)
+		if (numeroAssistenti < 0)
 			throw new IllegalStateException("Il numero di assistenti non può essere negativo");
 		this.numeroAssistenti = numeroAssistenti;
 	}
@@ -39,4 +39,16 @@ public class BonusAssistenti implements Bonus {
 			giocatore.getAssistenti().add(new Assistente());
 	}
 
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusAssistenti
+				&& ((BonusAssistenti) bonusDaConfrontare).getNumeroAssistenti() == numeroAssistenti;
+	}
+
+	/**
+	 * @return the numeroAssistenti
+	 */
+	public int getNumeroAssistenti() {
+		return numeroAssistenti;
+	}
 }

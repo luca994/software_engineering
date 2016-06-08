@@ -20,12 +20,11 @@ public class BonusPercorsoNobilta implements Bonus {
 	private final Percorso percorsoNobilta;
 
 	public BonusPercorsoNobilta(Percorso percorsoNobilta, int steps) {
-		if(steps<0||percorsoNobilta==null)
+		if (steps < 0 || percorsoNobilta == null)
 			throw new IllegalStateException("Il percorso non può essere nullo e i passi non possono essere negativi");
 		this.percorsoNobilta = percorsoNobilta;
 		this.steps = steps;
 	}
-
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
@@ -36,6 +35,19 @@ public class BonusPercorsoNobilta implements Bonus {
 		} catch (FuoriDalLimiteDelPercorso e) {
 			throw new IndexOutOfBoundsException();
 		}
+	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusPercorsoNobilta
+				&& ((BonusPercorsoNobilta) bonusDaConfrontare).getSteps() == steps;
+	}
+
+	/**
+	 * @return the steps
+	 */
+	public int getSteps() {
+		return steps;
 	}
 
 }

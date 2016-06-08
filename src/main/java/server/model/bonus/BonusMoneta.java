@@ -17,7 +17,7 @@ public class BonusMoneta implements Bonus {
 	private final Percorso percorsoRicchezza;
 
 	public BonusMoneta(Percorso percorsoRicchezza, int steps) {
-		if(steps<0||percorsoRicchezza==null)
+		if (steps < 0 || percorsoRicchezza == null)
 			throw new IllegalStateException("Il percorso non può essere nullo e le monete non possono essere negative");
 		this.steps = steps;
 		this.percorsoRicchezza = percorsoRicchezza;
@@ -32,6 +32,18 @@ public class BonusMoneta implements Bonus {
 		} catch (Exception e) {
 			throw new IndexOutOfBoundsException();
 		}
+	}
+
+	@Override
+	public boolean isUguale(Bonus bonusDaConfrontare) {
+		return bonusDaConfrontare instanceof BonusMoneta && ((BonusMoneta) bonusDaConfrontare).getSteps() == steps;
+	}
+
+	/**
+	 * @return the steps
+	 */
+	public int getSteps() {
+		return steps;
 	}
 
 }
