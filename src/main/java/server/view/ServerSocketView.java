@@ -86,7 +86,7 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 						this.notificaObservers(azioneGiocatore, giocatore);
 					}
 					else{
-						inviaOggetto("Parametri dell'azione errati");
+						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 					}
 				}
 			}catch (IOException e){

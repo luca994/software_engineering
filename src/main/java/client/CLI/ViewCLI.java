@@ -123,7 +123,6 @@ public class ViewCLI extends View implements Runnable {
 	@Override
 	public void run() {
 		Scanner input = new Scanner(System.in);
-	
 		while (true) {
 			try {
 				semaforo.acquire();
@@ -145,8 +144,11 @@ public class ViewCLI extends View implements Runnable {
 						String scelta = input.nextLine();
 						AzioneFactory azioneFactory = new AzioneFactory(null);
 						azioneFactory.setTipoAzione(scelta);
-						inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione());
-						this.getConnessione().inviaOggetto(azioneFactory);
+						if(inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())){
+							this.getConnessione().inviaOggetto(azioneFactory);}
+						else{
+							semaforo.release();
+						}
 					}
 					catch(IOException e){
 						throw new IllegalStateException(e.getMessage());
@@ -164,31 +166,44 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azione
 	 *            the action you want to do
 	 */
-	private void inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione) {
+	private boolean inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione) {
 		if (azione instanceof EleggiConsigliere) {
-			inserimentoConsiglio(azioneFactory);
-			inserimentoConsigliere(azioneFactory);
+			if(!inserimentoConsiglio(azioneFactory)) 
+				return false;
+			if(!inserimentoConsigliere(azioneFactory)) 
+				return false;
 		}
-		if (azione instanceof AcquistaPermesso) {
-			inserimentoConsiglio(azioneFactory);
-			inserimentoCartePolitica(azioneFactory);
-			inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
+		else if (azione instanceof AcquistaPermesso) {
+			if(!inserimentoConsiglio(azioneFactory)) 
+				return false;
+			if(!inserimentoCartePolitica(azioneFactory)) 
+				return false;
+			if(!inserimentoTesseraCostruzioneDaAcquistare(azioneFactory))
+				return false;
 		}
-		if (azione instanceof CambioTessereCostruzione) {
-			inserimentoRegione(azioneFactory);
+		else if (azione instanceof CambioTessereCostruzione) {
+			if(!inserimentoRegione(azioneFactory)) 
+				return false;
 		}
-		if (azione instanceof CostruisciEmporioConRe) {
-			inserimentoCartePolitica(azioneFactory);
-			inserimentoCitta(azioneFactory);
+		else if (azione instanceof CostruisciEmporioConRe) {
+			if(!inserimentoCartePolitica(azioneFactory)) 
+				return false;
+			if(!inserimentoCitta(azioneFactory)) 
+				return false;
 		}
-		if (azione instanceof CostruisciEmporioConTessera) {
-			inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
-			inserimentoCitta(azioneFactory);
+		else if (azione instanceof CostruisciEmporioConTessera) {
+			if(!inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory)) 
+				return false;
+			if(!inserimentoCitta(azioneFactory)) 
+				return false;
 		}
-		if (azione instanceof EleggiConsigliereRapido) {
-			inserimentoConsiglio(azioneFactory);
-			inserimentoConsigliere(azioneFactory);
+		else if (azione instanceof EleggiConsigliereRapido) {
+			if(!inserimentoConsiglio(azioneFactory)) 
+				return false;
+			if(!inserimentoConsigliere(azioneFactory))
+				return false;
 		}
+		return true;
 	}
 
 	/**
@@ -198,17 +213,26 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
+	private boolean inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
-				+ giocatore.getTessereValide().size() + "):");
-		int numTessera = scanner.nextInt();
-		if (0 <= numTessera && numTessera < giocatore.getTessereValide().size()) {
-			azioneFactory.setTesseraCostruzione(giocatore.getTessereValide().get(numTessera));
-		} else {
-			System.out.println("Numero tessera non corretto");
-			inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
+				+ giocatore.getTessereValide().size() + ") oppure inserisci 'annulla' per annullare");
+		String numTessera = scanner.nextLine();
+		if(numTessera.equalsIgnoreCase("annulla")){
+			return false;
 		}
+		try{
+			azioneFactory.setTesseraCostruzione(giocatore.getTessereValide().get(Integer.parseInt(numTessera)));
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println("Numero tessera non corretto");
+			//inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
+			return false;
+		}
+		catch(NumberFormatException e){
+			System.out.println("L'input deve essere un numero o 'annulla'");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -218,16 +242,20 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoCitta(AzioneFactory azioneFactory) {
+	private boolean inserimentoCitta(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Inserisci la città di destinazione o dove vuoi costruire un emporio:");
+		System.out.println("Inserisci la città di destinazione o dove vuoi costruire un emporio oppure inserisci 'annulla' per annullare");
 		String cittaDestinazione = scanner.nextLine();
+		if(cittaDestinazione.equalsIgnoreCase("annulla"))
+			return false;
 		if (tabelloneClient.cercaCitta(cittaDestinazione) != null) {
 			azioneFactory.setCitta(tabelloneClient.cercaCitta(cittaDestinazione));
 		} else {
 			System.out.println("La città inserita non esiste");
-			inserimentoCitta(azioneFactory);
+			//inserimentoCitta(azioneFactory);
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -237,16 +265,20 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoRegione(AzioneFactory azioneFactory) {
+	private boolean inserimentoRegione(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Inserisci il nome della regione in cui vuoi cambiare le tessere:");
+		System.out.println("Inserisci il nome della regione in cui vuoi cambiare le tessere oppure 'annulla' per annullare");
 		String nomeRegione = scanner.nextLine();
+		if(nomeRegione.equalsIgnoreCase("annulla"))
+			return false;
 		if (tabelloneClient.getRegioneDaNome(nomeRegione) != null) {
 			azioneFactory.setRegione(tabelloneClient.getRegioneDaNome(nomeRegione));
 		} else {
 			System.out.println("Nome regione non corretto");
-			inserimentoRegione(azioneFactory);
+			//inserimentoRegione(azioneFactory);
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -256,20 +288,28 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory) {
+	private boolean inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Inserisci la tessera costruzione da acquistare (da 0 a 5)");
-		int numTessera = scanner.nextInt();
-		if (numTessera < 6 && numTessera >= 0) {
-			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-			for (Regione r : tabelloneClient.getRegioni()) {
-				listaTessere.addAll(r.getTessereCostruzione());
+		System.out.println("Inserisci la tessera costruzione da acquistare (da 0 a 5) oppure 'annulla' per annullare");
+		String numTessera = scanner.nextLine();
+		try{
+			if (Integer.parseInt(numTessera) < 6 && Integer.parseInt(numTessera) >= 0) {
+				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
+				for (Regione r : tabelloneClient.getRegioni()) {
+					listaTessere.addAll(r.getTessereCostruzione());
+				}
+				azioneFactory.setTesseraCostruzione(listaTessere.get(Integer.parseInt(numTessera)));
+			} else {
+				System.out.println("Numero tessera non corretto");
+				//inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
+				return false;
 			}
-			azioneFactory.setTesseraCostruzione(listaTessere.get(numTessera));
-		} else {
-			System.out.println("Numero tessera non corretto");
-			inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
 		}
+		catch(NumberFormatException e){
+			System.out.println("L'input deve essere un numero o annulla");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -279,16 +319,18 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoCartePolitica(AzioneFactory azioneFactory) {
+	private boolean inserimentoCartePolitica(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
 		List<CartaPolitica> carteDaUsare = new ArrayList<>();
 		System.out.println(
 				"Inserici il colore delle carte politica che vuoi utilizzare: black, white, orange, magenta, pink, cyan o 'jolly'."
-						+ "Inserisci 'fine' se non vuoi utilizzare altre carte");
+						+ "Inserisci 'fine' se non vuoi utilizzare altre carte o 'annulla' per annullare");
 		for (int i = 0; i < 4; i++) {
 			System.out.println("Inserisci la carta " + ((int)(i + 1)) + ":");
 			String colore = scanner.nextLine();
-			if (colore.equalsIgnoreCase("jolly")) {
+			if(colore.equalsIgnoreCase("annulla"))
+				return false;
+			if (colore.equalsIgnoreCase("jolly")){
 				carteDaUsare.add(new Jolly());
 			} else if (colore.equals("fine")) {
 				break;
@@ -301,7 +343,12 @@ public class ViewCLI extends View implements Runnable {
 				}
 			}
 		}
+		if(!giocatore.getCartePolitica().containsAll(carteDaUsare)){
+			System.out.println("Le carte inserite non sono corrette");
+			return false;
+		}
 		azioneFactory.setCartePolitica(carteDaUsare);
+		return true;
 	}
 
 	/**
@@ -311,23 +358,26 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoConsigliere(AzioneFactory azioneFactory) {
+	private boolean inserimentoConsigliere(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
-		System.out
-				.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink");
+		System.out.println("Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink oppure 'annulla' per annullare");
 		String colore = scanner.nextLine();
+		if(colore.equalsIgnoreCase("annulla"))
+			return false;
 		try {
 			if (tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore)) != null) {
-				azioneFactory
-						.setConsigliere(tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
+				azioneFactory.setConsigliere(tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
 			} else {
 				System.out.println("Non c'è un consigliere disponibile di quel colore");
-				inserimentoConsigliere(azioneFactory);
+				//inserimentoConsigliere(azioneFactory);
+				return false;
 			}
 		} catch (NoSuchFieldException e) {
 			System.out.println("Il colore inserito non è corretto");
-			inserimentoConsigliere(azioneFactory);
+			//inserimentoConsigliere(azioneFactory);
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -337,10 +387,12 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azioneFactory
 	 *            the action factory used by the cli to create the action
 	 */
-	private void inserimentoConsiglio(AzioneFactory azioneFactory) {
+	private boolean inserimentoConsiglio(AzioneFactory azioneFactory) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi utilizzare");
+		System.out.println("Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure 'annulla' per annullare");
 		String scelta = scanner.nextLine();
+		if(scelta.equalsIgnoreCase("annulla"))
+			return false;
 		if (scelta.equalsIgnoreCase("re")) {
 			azioneFactory.setConsiglio(tabelloneClient.getRe().getConsiglio());
 		} else {
@@ -348,9 +400,11 @@ public class ViewCLI extends View implements Runnable {
 				azioneFactory.setConsiglio(tabelloneClient.getRegioneDaNome(scelta).getConsiglio());
 			else {
 				System.out.println("La regione inserita non esiste");
-				inserimentoConsiglio(azioneFactory);
+				//inserimentoConsiglio(azioneFactory);
+				return false;
 			}
 		}
+		return true;
 	}
 
 	/**
