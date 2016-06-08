@@ -381,8 +381,7 @@ public class ViewCLI extends View implements Runnable {
 				System.out.println("Inserisci il nome di una città dove hai un emporio"
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
-				while (inserimentoBonus.get())
-					;
+				while (inserimentoBonus.get());
 				String[] prov = { inputString };
 				this.getConnessione().inviaOggetto(oggetto);
 				this.getConnessione().inviaOggetto(prov);

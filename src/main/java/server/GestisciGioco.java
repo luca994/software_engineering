@@ -57,7 +57,7 @@ public class GestisciGioco implements Runnable {
 			Gioco gioco = new Gioco();
 			Controller controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (numGiocatori < 2 || (numGiocatori >= 2 && (System.currentTimeMillis() - timer.get()) < 2000)) {
+			while (numGiocatori < 3 || (numGiocatori >= 3 && (System.currentTimeMillis() - timer.get()) < 2000)) {
 				if (!giocatoriAttesa.isEmpty()) {
 					Socket socket = giocatoriAttesa.remove(0);
 					ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());

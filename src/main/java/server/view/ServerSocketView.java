@@ -79,14 +79,19 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 				}
 				if(object instanceof AzioneFactory){
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
-					completaAzioneFactory((AzioneFactory) object);
-					Azione azioneGiocatore = azioneFactory.createAzione();
-					azioneFactory = new AzioneFactory(azioneFactory.getGioco());
-					this.notificaObservers(azioneGiocatore, giocatore);
+					if(completaAzioneFactory((AzioneFactory) object)){
+						Azione azioneGiocatore = azioneFactory.createAzione();
+						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+						this.notificaObservers(azioneGiocatore, giocatore);
+					}
+					else{
+						inviaOggetto("Parametri dell'azione errati");
+					}
 				}
-			}catch (ClassNotFoundException | IOException e){
+			}catch (IOException e){
 				e.printStackTrace();
-				throw new IllegalArgumentException();
+			}catch (ClassNotFoundException e){
+				throw new IllegalStateException(e.getMessage());
 			}
 		}
 	}
@@ -95,32 +100,40 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 	 * sets all the parameters of azioneFactory based on the azioneFactory sent by the client
 	 * @param azioneFactoryCompleta the azioneFactory sent by the view
 	 */
-	public void completaAzioneFactory(AzioneFactory azioneFactoryCompleta){
+	public boolean completaAzioneFactory(AzioneFactory azioneFactoryCompleta){
 		if(azioneFactoryCompleta.getCartePolitica()!=null){
 			List<CartaPolitica> carteAzione = new ArrayList<>();
 			for(CartaPolitica carta: giocatore.getCartePolitica()){
 				if(azioneFactoryCompleta.getCartePolitica().contains(carta))
 					carteAzione.add(carta);
 				else{
-					//bisogna notificare l'errore
+					return false;
 				}
 			}
 			azioneFactory.setCartePolitica(carteAzione);
 		}
 		if(azioneFactoryCompleta.getCitta()!=null){
 			Citta cittaAzione = azioneFactory.getGioco().getTabellone().cercaCitta(azioneFactoryCompleta.getCitta().getNome());
+			if(cittaAzione == null)
+				return false;
 			azioneFactory.setCitta(cittaAzione);
 		}
 		if(azioneFactoryCompleta.getConsigliere()!=null){
 			Consigliere consigliereAzione = azioneFactory.getGioco().getTabellone().getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
+			if(consigliereAzione==null)
+				return false;
 			azioneFactory.setConsigliere(consigliereAzione);
 		}
 		if(azioneFactoryCompleta.getConsiglio()!=null){
 			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
+			if(regioneAzione==null)
+				return false;
 			azioneFactory.setConsiglio(regioneAzione.getConsiglio());
 		}
 		if(azioneFactoryCompleta.getRegione()!=null){
 			Regione regioneAzione = azioneFactory.getGioco().getTabellone().getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			if(regioneAzione==null)
+				return false;
 			azioneFactory.setRegione(regioneAzione);
 		}
 		if(azioneFactoryCompleta.getTesseraCostruzione()!=null){
@@ -129,9 +142,10 @@ public class ServerSocketView extends Observable<Azione, Bonus> implements Obser
 				azioneFactory.setTesseraCostruzione(tesseraAzione);
 			}
 			else{
-				//errore da gestire
+				return false;
 			}
 		}
+		return true;
 	}
 	
 	/**

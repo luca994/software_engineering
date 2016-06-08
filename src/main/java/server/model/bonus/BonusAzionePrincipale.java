@@ -3,9 +3,6 @@
  */
 package server.model.bonus;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import server.model.Giocatore;
 
 /**
@@ -17,7 +14,6 @@ public class BonusAzionePrincipale implements Bonus {
 	 * 
 	 */
 	private static final long serialVersionUID = -6309046785344410844L;
-	private static final Logger log = Logger.getLogger(BonusAzionePrincipale.class.getName());
 
 	/*
 	 * (non-Javadoc)
@@ -26,13 +22,8 @@ public class BonusAzionePrincipale implements Bonus {
 	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		try {
-			if (giocatore == null)
-				throw new NullPointerException("Il giocatore non può essere nullo");
-			// giocatore.setAzionePrincipale(false);
-		} catch (Exception e) {
-			log.log(Level.WARNING, e.getLocalizedMessage(), e);
-			throw e;
-		}
+		if (giocatore == null)
+			throw new NullPointerException("Il giocatore non può essere nullo");
+		giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
 	}
 }
