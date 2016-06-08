@@ -33,7 +33,7 @@ public class AzioneFactory implements Serializable{
 	private Citta citta;
 	private String tipoAzione;
 
-	private transient Gioco gioco;
+	private Gioco gioco;
 
 	public AzioneFactory(Gioco gioco) {
 		this.gioco = gioco;

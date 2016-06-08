@@ -28,7 +28,7 @@ import server.observer.Observer;
  * @author Massimiliano Ventura
  *
  */
-public class ServerSocketView extends Observable implements Observer, Runnable{
+public class ServerSocketView extends Observable<Azione, Bonus> implements Observer<Object, Bonus>, Runnable{
 	
 	private Socket socket;
 	private Giocatore giocatore;
@@ -53,7 +53,7 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	 * asks an input to the player
 	 * @param oggetto the object you want to send to the player
 	 */
-	public void inviaOggetto(Object oggetto){
+	public synchronized void inviaOggetto(Object oggetto){
 		try {
 			ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
 			socketOut.writeObject(oggetto);
@@ -155,11 +155,6 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 	 */
 	@Override
 	public void update(Object cambiamento){
-		if(cambiamento instanceof Bonus){
-			inviaOggetto(cambiamento);
-			while(!inputBonus);
-			this.notificaObservers(cambiamento, input);
-		}
 		if(cambiamento instanceof Gioco){
 			azioneFactory = new AzioneFactory((Gioco) cambiamento);
 		}
@@ -168,17 +163,23 @@ public class ServerSocketView extends Observable implements Observer, Runnable{
 		}
 	}
 
+	public void update(Bonus cambiamento){
+		inviaOggetto(cambiamento);
+		while(!inputBonus);
+		this.notificaObservers(cambiamento, input);
+	}
+	
 	@Override
-	public <T> void update(T cambiamento, String[] input) {
-		// TODO Auto-generated method stub
-		
+	public void update(Object cambiamento, Giocatore attributo) {
+		if(this.giocatore.equals(attributo)){
+			inviaOggetto(cambiamento);
+		}
 	}
 
 	@Override
-	public <T, S> void update(T cambiamento, S attributo) {
-		if(cambiamento instanceof Exception && attributo instanceof Giocatore && this.giocatore.equals(attributo)){
-			inviaOggetto(cambiamento);
-		}
+	public void update(Bonus cambiamento, String[] input) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**

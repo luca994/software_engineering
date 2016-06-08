@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import server.model.bonus.Bonus;
 import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.Esecuzione;
 import server.model.stato.gioco.StatoGioco;
@@ -15,7 +16,7 @@ import server.observer.Observable;
  * @author Luca
  *
  */
-public class Gioco extends Observable implements Runnable, Serializable {
+public class Gioco extends Observable<Object, Bonus> implements Runnable, Serializable {
 
 	/**
 	 * 

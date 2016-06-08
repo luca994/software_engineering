@@ -32,7 +32,12 @@ public class FaseTurnoSemplice extends Esecuzione {
 			}
 			giocat.getStatoGiocatore().prossimoStato();
 			getGioco().notificaObservers(getGioco().getTabellone());
-			while(giocat.getStatoGiocatore() instanceof TurnoNormale);
+			while(true){
+				synchronized(giocat.getStatoGiocatore()){
+					if(!(giocat.getStatoGiocatore() instanceof TurnoNormale))
+						break;
+				}
+			}
 			if(ultimoTurno)
 				giocat.setStatoGiocatore(new TurniConclusi(giocat));
 			if(giocat.getStatoGiocatore() instanceof TurniConclusi){

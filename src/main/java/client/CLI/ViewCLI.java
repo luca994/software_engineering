@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.DataFormatException;
 
@@ -45,11 +46,13 @@ public class ViewCLI extends View implements Runnable {
 	private AtomicBoolean inserimentoAzione;
 	private Giocatore giocatore;
 	private ExecutorService executor;
+	private Semaphore semaforo;
 	
 	/**
 	 * builds a ViewCLI object
 	 */
 	public ViewCLI() {
+		semaforo = new Semaphore(0);
 		inserimentoBonus = new AtomicBoolean(false);
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
@@ -65,11 +68,13 @@ public class ViewCLI extends View implements Runnable {
 		Scanner scanner = new Scanner(System.in);
 		try {
 			System.out.println("Inserisci il tipo di connessione" + "\n" + "0) Socket" + "\n" + "1) RMI");
-			int scelta = Integer.parseInt(scanner.nextLine());
+			int scelta = 0;//Integer.parseInt(scanner.nextLine());
 			System.out.println("Inserisci l'indirizzo dell'host");
 			String host = scanner.nextLine();
+			if(host.equals(""))
+				host = new String("127.0.0.1");
 			System.out.println("Inserisci il numero della porta");
-			int port = scanner.nextInt();
+			int port = 29999; //scanner.nextInt();
 			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port));
 		} catch (DataFormatException e) {
 			System.out.println(e.getMessage());
@@ -120,9 +125,11 @@ public class ViewCLI extends View implements Runnable {
 		Scanner input = new Scanner(System.in);
 	
 		while (true) {
-			
-			System.err.print("");
-			
+			try {
+				semaforo.acquire();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			if (statoAttuale instanceof TurnoNormale) {
 				if (inserimentoBonus.get()) {
 					inputString = input.nextLine();
@@ -362,6 +369,9 @@ public class ViewCLI extends View implements Runnable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaGiocatore();
 				aggiornaStato();
+				if(semaforo.availablePermits()==0){
+					semaforo.release();
+				}
 				inserimentoAzione.set(true);
 			}
 			if (oggetto instanceof Exception) {

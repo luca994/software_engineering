@@ -43,7 +43,9 @@ public class TurnoNormale extends StatoGiocatore {
 		if(azione instanceof AzioneRapida)
 			azioniRapideEseguibili--;
 		if (azioniPrincipaliEseguibili == 0 && azioniRapideEseguibili == 0) {
-			prossimoStato();
+			synchronized(this.giocatore.getStatoGiocatore()){
+				prossimoStato();
+			}
 		}
 	}
 
