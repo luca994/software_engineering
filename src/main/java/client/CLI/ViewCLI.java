@@ -521,9 +521,21 @@ public class ViewCLI extends View implements Runnable {
 				}
 			}
 		}
-		if(!giocatore.getCartePolitica().containsAll(carteDaUsare)){
-			System.out.println("Le carte inserite non sono corrette");
-			return false;
+		List<CartaPolitica> carteGiocatore = new ArrayList<>(giocatore.getCartePolitica());
+		boolean noCarte = false;
+		for(CartaPolitica c: carteDaUsare){
+			noCarte=true;
+			for(CartaPolitica cg: carteGiocatore){
+				if(c.isUguale(cg)){
+					carteGiocatore.remove(cg);
+					noCarte=false;
+					break;
+				}
+			}
+			if(noCarte==true){
+				System.out.println("Non hai una carta di quel colore");
+				return false;
+			}
 		}
 		azioneFactory.setCartePolitica(carteDaUsare);
 		return true;
