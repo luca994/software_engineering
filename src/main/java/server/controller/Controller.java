@@ -131,6 +131,6 @@ public class Controller implements Observer<Object, Bonus> {
 
 	@Override
 	public void update(Object cambiamento) {
-		throw new IllegalArgumentException("Non è stato inserito il giocatore che chiama il controller");
+		
 	}
 }

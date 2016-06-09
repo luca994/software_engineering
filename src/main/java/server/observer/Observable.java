@@ -5,37 +5,37 @@ import java.util.List;
 
 import server.model.Giocatore;
 
-public abstract class Observable <A,B>{
+public abstract class Observable <O,B>{
 
-	private List<Observer<A,B>> observers;
+	private List<Observer<O,B>> observers;
 	
 	public Observable(){
 		observers=new ArrayList<>();
 	}
 	
 	public void notificaObservers(B cambiamento,String[] input){
-		for(Observer<A,B> o:observers){
+		for(Observer<O,B> o:observers){
 			o.update(cambiamento,input);
 		}
 	}
 	
-	public void notificaObservers(A cambiamento){
-		for(Observer<A,B> o:observers){
+	public void notificaObservers(O cambiamento){
+		for(Observer<O,B> o:observers){
 			o.update(cambiamento);
 		}
 	}
 	
-	public void notificaObservers(A cambiamento, Giocatore attributo){
-		for(Observer<A,B> o:observers){
+	public void notificaObservers(O cambiamento, Giocatore attributo){
+		for(Observer<O,B> o:observers){
 			o.update(cambiamento, attributo);
 		}
 	}
 	
-	public void registerObserver(Observer<A,B> osservatore){
+	public void registerObserver(Observer<O,B> osservatore){
 		observers.add(osservatore);
 	}
 	
-	public void removeObserver(Observer<A,B> osservatore){
+	public void removeObserver(Observer<O,B> osservatore){
 		observers.remove(osservatore);
 	}	
 }
