@@ -127,8 +127,10 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 		cittaConBonusDaOttenere.add(destinazione);
 		destinazione.cittaVicinaConEmporio(giocatore, cittaConBonusDaOttenere);
 
-		for (Citta citt : cittaConBonusDaOttenere)
-			citt.eseguiBonus(giocatore);
+		for (Citta citt : cittaConBonusDaOttenere) {
+			if (citt.getBonus()!=null)
+				citt.eseguiBonus(giocatore);
+		}
 		/*
 		 * controllo se ho gli empori in tutte le città di un colore o di una
 		 * regione e prendo la tessera bonus se mi spetta
