@@ -5,13 +5,13 @@ import java.util.Set;
 
 import server.model.bonus.Bonus;
 
-public abstract class OggettoConBonus implements Serializable{
+public abstract class OggettoConBonus implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6874157692673843025L;
-	
+
 	private Set<Bonus> bonus;
 
 	/**
