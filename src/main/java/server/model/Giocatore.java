@@ -119,6 +119,14 @@ public class Giocatore implements Serializable {
 				return t;
 		return null;
 	}
+	
+	public List<OggettoVendibile> generaListaOggettiVendibili(){
+		List<OggettoVendibile> oggetti=new ArrayList<>();
+		oggetti.addAll(cartePolitica);
+		oggetti.addAll(assistenti);
+		oggetti.addAll(tessereValide);
+		return oggetti;
+	}
 
 	/**
 	 * calculate and return the total number of tessereCostruzione of the player

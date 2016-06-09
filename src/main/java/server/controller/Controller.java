@@ -126,7 +126,7 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("fine")
+		if (oggetto instanceof String && ((String) oggetto).equals("-")
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato)
 			giocatore.getStatoGiocatore().prossimoStato();
 		if (oggetto instanceof OggettoVendibile) {
