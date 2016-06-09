@@ -31,7 +31,7 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 	 *
 	 */
 	public CostruisciEmporioConRe(Gioco gioco, List<CartaPolitica> cartePolitica, Citta destinazione) {
-		
+
 		super(gioco);
 		this.destinazione = destinazione;
 		this.cartePolitica = cartePolitica;
@@ -70,8 +70,9 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 		for (CartaPolitica c : cartePolitica)
 			if (c instanceof Jolly) {
 				carteJollyUtilizzate.add((Jolly) c);
-				cartePolitica.remove(c);
 			}
+		cartePolitica.removeAll(carteJollyUtilizzate);
+
 		List<CartaColorata> carteColorateUtilizzate = getGioco().getTabellone().getRe().getConsiglio()
 				.soddisfaConsiglio(cartePolitica);
 		if (destinazione.getEmpori().contains(giocatore))
