@@ -17,6 +17,14 @@ public class BonusCartaPolitica implements Bonus {
 	private static final long serialVersionUID = -2539790215830619005L;
 	private int numeroCarte;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusCartaPolitica [numeroCarte=" + numeroCarte + "]";
+	}
+
 	public BonusCartaPolitica(int numeroCarte) {
 		if (numeroCarte < 0)
 			throw new IllegalStateException("Il numero di carte non può essere negativo");

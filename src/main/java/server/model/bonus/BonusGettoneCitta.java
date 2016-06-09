@@ -27,6 +27,14 @@ public class BonusGettoneCitta implements Bonus {
 	private Gioco gioco;
 	boolean cittaGiusta;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusGettoneCitta [numeroCitta=" + numeroCitta + "]";
+	}
+
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {
 		this.gioco = gioco;
 		this.numeroCitta = numeroCitta;

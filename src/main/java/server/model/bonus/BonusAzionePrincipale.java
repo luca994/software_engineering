@@ -20,6 +20,7 @@ public class BonusAzionePrincipale implements Bonus {
 	 * 
 	 * @see model.Bonus#azioneBonus(model.Giocatore)
 	 */
+	
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)
@@ -27,6 +28,11 @@ public class BonusAzionePrincipale implements Bonus {
 		giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
 
 
+	}
+
+	@Override
+	public String toString() {
+		return "BonusAzionePrincipale";
 	}
 
 	@Override

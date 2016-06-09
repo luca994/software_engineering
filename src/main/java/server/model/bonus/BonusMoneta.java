@@ -16,6 +16,14 @@ public class BonusMoneta implements Bonus {
 	private final int steps;
 	private final Percorso percorsoRicchezza;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusMoneta [Monete=" + steps + "]";
+	}
+
 	public BonusMoneta(Percorso percorsoRicchezza, int steps) {
 		if (steps < 0 || percorsoRicchezza == null)
 			throw new IllegalStateException("Il percorso non può essere nullo e le monete non possono essere negative");

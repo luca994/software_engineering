@@ -27,6 +27,14 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	private Giocatore giocatore;
 	private boolean tesseraCostruzioneCorretta;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusRiutilizzoCostruzione";
+	}
+
 	public BonusRiutilizzoCostruzione(Gioco gioco) {
 		this.gioco = gioco;
 		tesseraCostruzioneCorretta = false;
