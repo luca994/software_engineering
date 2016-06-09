@@ -59,6 +59,8 @@ public class BonusTesseraPermesso implements Bonus {
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
+		if(giocatore==null)
+			throw new NullPointerException();
 		while(!tesseraCorretta){
 			gioco.notificaObservers(this, giocatore);
 		}

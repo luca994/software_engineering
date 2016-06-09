@@ -2,11 +2,11 @@ package server.observer;
 
 import server.model.Giocatore;
 
-public interface Observer <A,B>{
+public interface Observer <O,B>{
 
-	public void update(A cambiamento);
+	public void update(O cambiamento);
 	
 	public void update(B cambiamento, String[] input);
 	
-	public void update(A cambiamento, Giocatore attributo);
+	public void update(O cambiamento, Giocatore attributo);
 }
