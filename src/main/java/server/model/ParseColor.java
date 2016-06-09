@@ -13,20 +13,40 @@ public class ParseColor {
 	 */
 	public static String colorIntToString(int color) {
 		switch (color) {
+		case -8355712:
+			return "GRAY";
+		case -256:
+			return "YELLOW";
+		case -16776961:
+			return "BLUE";
+		case -65536:
+			return "RED";
+		case -14336:
+			return "ORANGE";
 		case 16711935:
+			return "MAGENTA";
+		case -65281:
 			return "MAGENTA";
 		case 0:
 			return "BLACK";
+		case -16777216:
+			return "BLACK";			
 		case 16767215:
+			return "WHITE";
+		case -1:
 			return "WHITE";
 		case 16762880:
 			return "ORANGE";
 		case 65535:
 			return "CYAN";
+		case -16711681:
+			return "CYAN";
+		case -20561:
+			return "PINK";
 		case 16756655:
 			return "PINK";
 		default:
-			throw new IllegalStateException("il colore inserito non è corretto");
+			return new String("Non definito nel parser: "+Integer.toString(color));
 		}
 	}
 

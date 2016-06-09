@@ -353,12 +353,14 @@ public class ViewCLI extends View implements Runnable {
 	 * Print the CartePolitica currently owned by the player
 	 */
 	private void stampaProprieCartePolitica() {
+
 		InputOutput.stampa("Carte Politica possedute:");
 		for (Giocatore gioPol : tabelloneClient.getGioco().getGiocatori())
 			if (gioPol.getNome().equals(giocatore.getNome()))
 				for (CartaPolitica cPol : gioPol.getCartePolitica())
 					if (cPol instanceof CartaColorata)
-						InputOutput.stampa(((CartaColorata) cPol).getColore().toString());
+						InputOutput.stampa(ParseColor.colorIntToString(((CartaColorata) cPol).getColore().getRGB()));
+
 					else
 						InputOutput.stampa("Jolly");
 
@@ -410,26 +412,27 @@ public class ViewCLI extends View implements Runnable {
 	private void stampaConsiglieriDisponibili() {
 		InputOutput.stampa("Consiglieri disponibili:");
 		for (Consigliere consD : tabelloneClient.getConsiglieriDisponibili())
-			InputOutput.stampa("- " + consD.getColore().toString());
-
+			InputOutput.stampa("- "+ParseColor.colorIntToString(consD.getColore().getRGB()));
 	}
 
 	/**
 	 * Print the state of all Consigli and relative Regione
 	 */
 	private void stampaStatoConsigli() {
+
 		for (Regione regi : tabelloneClient.getRegioni()) {
 			InputOutput.stampa("Regione: " + regi.getNome() + "\n" + "Stato Consiglio:");
 			for (Consigliere con : regi.getConsiglio().getConsiglieri())
-				InputOutput.stampa("- " + con.getColore().toString());
+				InputOutput.stampa("- "+ParseColor.colorIntToString(con.getColore().getRGB()));
 			InputOutput.stampa("Tessere disponibi all'acquisto:");
 			for (TesseraCostruzione tess : regi.getTessereCostruzione())
 				stampaTesseraPermesso(tess);
+
 		}
+
 		InputOutput.stampa("Consiglio del Re: vale per " + tabelloneClient.getRe().getCitta().getNome());
 		for (Consigliere reCon : tabelloneClient.getRe().getConsiglio().getConsiglieri())
-			InputOutput.stampa("- " + reCon.getColore().toString());
-
+			InputOutput.stampa("- "+ParseColor.colorIntToString(reCon.getColore().getRGB()));
 	}
 
 	/**
@@ -445,10 +448,11 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("La città cercata non esiste");
 		else {
 			InputOutput.stampa("Regione: " + objCitta.getRegione().getNome());
-			InputOutput.stampa("Colore: " + objCitta.getColore().toString());
+			InputOutput.stampa("Colore: "+ParseColor.colorIntToString(objCitta.getColore().getRGB()));
 			if (!objCitta.getEmpori().isEmpty()) {
 				for (Giocatore gio : objCitta.getEmpori())
 					InputOutput.stampa("- " + gio.getNome());
+
 			}
 		}
 
@@ -553,7 +557,7 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa(
 				"Inserisci la città di destinazione o dove vuoi costruire un emporio oppure inserisci 'annulla' per annullare");
 		String cittaDestinazione = InputOutput.leggiStringa();
-		if (cittaDestinazione.equalsIgnoreCase("annulla"))
+		if ("annulla".equalsIgnoreCase(cittaDestinazione))
 			return false;
 		if (tabelloneClient.cercaCitta(cittaDestinazione) != null) {
 			azioneFactory.setCitta(tabelloneClient.cercaCitta(cittaDestinazione));
@@ -576,7 +580,7 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa(
 				"Inserisci il nome della regione in cui vuoi cambiare le tessere oppure 'annulla' per annullare");
 		String nomeRegione = InputOutput.leggiStringa();
-		if (nomeRegione.equalsIgnoreCase("annulla"))
+		if ("annulla".equalsIgnoreCase(nomeRegione))
 			return false;
 		if (tabelloneClient.getRegioneDaNome(nomeRegione) != null) {
 			azioneFactory.setRegione(tabelloneClient.getRegioneDaNome(nomeRegione));
@@ -600,7 +604,7 @@ public class ViewCLI extends View implements Runnable {
 		String numTessera = InputOutput.leggiStringa();
 		try {
 			if (Integer.parseInt(numTessera) < 6 && Integer.parseInt(numTessera) >= 0) {
-				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
+				List<TesseraCostruzione> listaTessere = new ArrayList<>();
 				for (Regione r : tabelloneClient.getRegioni()) {
 					listaTessere.addAll(r.getTessereCostruzione());
 				}
@@ -632,11 +636,11 @@ public class ViewCLI extends View implements Runnable {
 		for (int i = 0; i < 4; i++) {
 			InputOutput.stampa("Inserisci la carta " + ((int) (i + 1)) + ":");
 			String colore = InputOutput.leggiStringa();
-			if (colore.equalsIgnoreCase("annulla"))
+			if ("annulla".equalsIgnoreCase(colore))
 				return false;
-			if (colore.equalsIgnoreCase("jolly")) {
+			if (("jolly").equalsIgnoreCase(colore)) {
 				carteDaUsare.add(new Jolly());
-			} else if (colore.equals("fine")) {
+			} else if ("fine".equals(colore)) {
 				break;
 			} else {
 				try {
@@ -708,9 +712,9 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa(
 				"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure 'annulla' per annullare");
 		String scelta = InputOutput.leggiStringa();
-		if (scelta.equalsIgnoreCase("annulla"))
+		if ("annulla".equalsIgnoreCase(scelta))
 			return false;
-		if (scelta.equalsIgnoreCase("re")) {
+		if (("re").equalsIgnoreCase(scelta)) {
 			azioneFactory.setConsiglio(tabelloneClient.getRe().getConsiglio());
 		} else {
 			if (tabelloneClient.getRegioneDaNome(scelta) != null)
