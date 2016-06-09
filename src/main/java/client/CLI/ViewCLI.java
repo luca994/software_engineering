@@ -270,20 +270,20 @@ public class ViewCLI extends View implements Runnable {
 				System.out.println("Percorso Vittoria:");
 				for(Casella casella:tabelloneClient.getPercorsoVittoria().getCaselle())
 					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore giocatore: casella.getGiocatori())
-							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(giocatore));
+						for(Giocatore gioca: casella.getGiocatori())
+							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(gioca));
 				//Nobiltà
 				System.out.println("Percorso Nobiltà");
 				for(Casella casella:tabelloneClient.getPercorsoNobilta().getCaselle())
 					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore giocatore: casella.getGiocatori())
-							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(giocatore));
+						for(Giocatore gioca: casella.getGiocatori())
+							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(gioca));
 				//Ricchezza
 				System.out.println("Percorso Ricchezza:");
 				for(Casella casella:tabelloneClient.getPercorsoRicchezza().getCaselle())
 					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore giocatore: casella.getGiocatori())
-							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(giocatore));
+						for(Giocatore gioca: casella.getGiocatori())
+							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(gioca));
 				break;
 			case 3:
 				System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");

@@ -52,7 +52,7 @@ public class TestBonusPercorsoNobilta {
 	@Test
 	public void testAzioneBonusConValoriInRange() {
 		int posizioneIniziale=giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1);
-		int incremento=6;
+		int incremento=5;
 		bonusNobilta=new BonusPercorsoNobilta(giocoTester.getTabellone().getPercorsoNobilta(), incremento);
 		bonusNobilta.azioneBonus(g1);
 		assertEquals(posizioneIniziale+incremento,giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1));

@@ -336,7 +336,7 @@ public class Tabellone implements Serializable{
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Regione regione : this.regioni) {
 			for (Citta cit : regione.getCitta()) {
-				if (cit.getNome().toLowerCase().equals(nome.toLowerCase())) {
+				if (cit.getNome().toLowerCase().equalsIgnoreCase(nome)) {
 					return cit;
 				}
 			}
@@ -364,7 +364,7 @@ public class Tabellone implements Serializable{
 		if (nome == null || regione == null)
 			throw new NullPointerException("il nome della città non può essere nullo");
 		for (Citta cit : regione.getCitta()) {
-			if (cit.getNome().toLowerCase().equals(nome.toLowerCase())) {
+			if (cit.getNome().toLowerCase().equalsIgnoreCase(nome)) {
 				return cit;
 			}
 		}
@@ -483,7 +483,7 @@ public class Tabellone implements Serializable{
 			throw new NullPointerException("nomeRegione non può essere nullo");
 		}
 		for (Regione r : regioni) {
-			if (r.getNome().toLowerCase().equals(nomeRegione.toLowerCase())) {
+			if (r.getNome().toLowerCase().equalsIgnoreCase(nomeRegione)) {
 				return r;
 			}
 		}
