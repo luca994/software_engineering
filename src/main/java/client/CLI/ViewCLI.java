@@ -254,124 +254,37 @@ public class ViewCLI extends View implements Runnable {
 		int scelta =Integer.parseInt(input.nextLine());
 		switch(scelta){
 			case 1:
-				for(Regione regione:tabelloneClient.getRegioni()){
-					System.out.println("Regione: "+regione.getNome()+"\n"+"Città:");
-					for(Citta citta:regione.getCitta()){
-						System.out.print(citta.getNome()+", collegata con: ");
-						for(Citta collegamento:citta.getCittaVicina())
-							System.out.print(collegamento.getNome()+" ");
-						System.out.print("\n");
-					}
-					
-				}
+				stampaGeneraleTabellone();
 				break;
 			case 2:
-				//Stampo stato percorso vittoria: i giocatori e la loro posizione
-				System.out.println("Percorso Vittoria:");
-				for(Casella casella:tabelloneClient.getPercorsoVittoria().getCaselle())
-					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore gioca: casella.getGiocatori())
-							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(gioca));
-				//Nobiltà
-				System.out.println("Percorso Nobiltà");
-				for(Casella casella:tabelloneClient.getPercorsoNobilta().getCaselle())
-					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore gioca: casella.getGiocatori())
-							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(gioca));
-				//Ricchezza
-				System.out.println("Percorso Ricchezza:");
-				for(Casella casella:tabelloneClient.getPercorsoRicchezza().getCaselle())
-					if(!casella.getGiocatori().isEmpty())
-						for(Giocatore gioca: casella.getGiocatori())
-							System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(gioca));
+				stampaGeneralePercorsi();
 				break;
 			case 3:
-				System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");
-				String nomeCitta=input.nextLine();
-				Citta objCitta=tabelloneClient.cercaCitta(nomeCitta);
-				if(objCitta==null)
-					System.out.println("La città cercata non esiste");
-				else{
-					System.out.println("Regione: "+objCitta.getRegione().getNome());
-					System.out.println("Colore: "+objCitta.getColore().toString());
-					if(!objCitta.getEmpori().isEmpty()){
-						for(Giocatore gio:objCitta.getEmpori())
-							System.out.println("- "+gio.getNome());
-					}
-				}
+				stampaSpecificaCittà(input);
 				break;
 			case 4:
-				for(Regione regi: tabelloneClient.getRegioni()){
-					System.out.println("Regione: "+regi.getNome()+"\n"+"Stato Consiglio:");
-					for(Consigliere con:regi.getConsiglio().getConsiglieri())
-						System.out.println("- "+con.getColore().toString());
-					System.out.println("Tessere disponibi all'acquisto:");
-					for(TesseraCostruzione tess: regi.getTessereCostruzione())
-						stampaTesseraPermesso(tess);					
-				}
-				System.out.println("Consiglio del Re: vale per "+tabelloneClient.getRe().getCitta().getNome());
-				for(Consigliere reCon:tabelloneClient.getRe().getConsiglio().getConsiglieri())
-					System.out.println("- "+reCon.getColore().toString());
+				stampaStatoConsigli();
 				break;
 			case 5:
-				System.out.println("Consiglieri disponibili:");
-				for(Consigliere consD: tabelloneClient.getConsiglieriDisponibili())
-					System.out.println("- "+consD.getColore().toString());
+				stampaConsiglieriDisponibili();
 				break;
 			case 6:
-				System.out.println("Nomi avversari:");
-				for(Giocatore avversario: tabelloneClient.getGioco().getGiocatori())
-					System.out.println("- "+avversario.getNome());
+				stampaNomiAvversari();
 				break;
 			case 7:
-				System.out.println("Inserisci il nome dell'avversario di cui vuoi conoscere i dettagli");
-				String nomeAvv=input.nextLine();
-				for(Giocatore avvDettaglio:tabelloneClient.getGioco().getGiocatori())
-					if(avvDettaglio.getNome().equals(nomeAvv)){
-						System.out.println("Punti Vittoria: "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(avvDettaglio));
-						System.out.println("Punti Nobiltà: "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(avvDettaglio));
-						System.out.println("Punti Ricchezza: "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(avvDettaglio));
-						System.out.println("Colore: "+avvDettaglio.getColore().toString());
-						System.out.println("Numero di Assistenti: "+avvDettaglio.getAssistenti().size());
-						System.out.println("Numero empori rimasti da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
-						System.out.print("Empori costruiti in: ");
-						for(Regione regioneE: tabelloneClient.getRegioni())
-							for(Citta cittaE: regioneE.getCitta())
-								if(cittaE.getEmpori().contains(avvDettaglio))
-									System.out.print(cittaE.getNome()+", ");
-						System.out.print("\n");
-					}
+				stampaAvversarioDettagliato(input);
 				break;
 			case 8:
-				System.out.println("Carte Politica possedute:");
-				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
-					if(gioPol.getNome().equals(giocatore.getNome()))
-						for(CartaPolitica cPol:gioPol.getCartePolitica())
-							if(cPol instanceof CartaColorata)
-								System.out.println(((CartaColorata) cPol).getColore().toString());
-							else
-								System.out.println("Jolly");
+				stampaProprieCartePolitica();
 				break;
 			case 9:
-				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
-					if(gioPol.getNome().equals(giocatore.getNome()))
-						for(TesseraCostruzione tesseraC:gioPol.getTessereValide())
-							stampaTesseraPermesso(tesseraC);
+				stampaProprieTesserePermessoValide();
 				break;
 			case 10:
-				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
-					if(gioPol.getNome().equals(giocatore.getNome()))
-						for(TesseraCostruzione tesseraC:gioPol.getTessereUsate())
-							stampaTesseraPermesso(tesseraC);
+				stampaProprieTesserePermessoUsate();
 				break;
 			case 11:
-				for(Casella caseNobi: tabelloneClient.getPercorsoNobilta().getCaselle())
-					if(caseNobi instanceof CasellaConBonus){
-						System.out.print("Casella Numero: "+tabelloneClient.getPercorsoNobilta().getCaselle().indexOf(caseNobi)+"\t");
-						for(Bonus bonNobi: ((CasellaConBonus) caseNobi).getBonus())
-							System.out.print(bonNobi.toString()+", ");
-						System.out.print("\n");
-					}
+				stampaPercorsoNobiltaDettagliato();
 				break;
 			default:
 				System.out.println("Aggiornamento...");
@@ -384,6 +297,186 @@ public class ViewCLI extends View implements Runnable {
 			semaforo.release();
 	}
 
+	/**
+	 * Print the Caselle with relatives bonus of Percorso Nobiltà
+	 */
+	private void stampaPercorsoNobiltaDettagliato() {
+		for(Casella caseNobi: tabelloneClient.getPercorsoNobilta().getCaselle())
+			if(caseNobi instanceof CasellaConBonus){
+				System.out.print("Casella Numero: "+tabelloneClient.getPercorsoNobilta().getCaselle().indexOf(caseNobi)+"\t");
+				for(Bonus bonNobi: ((CasellaConBonus) caseNobi).getBonus())
+					System.out.print(bonNobi.toString()+", ");
+				System.out.print("\n");
+			}
+		
+	}
+
+	/**
+	 * Print the used TesserePermessoDiCostruzione of the player in detail
+	 */
+	private void stampaProprieTesserePermessoUsate() {
+		for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+			if(gioPol.getNome().equals(giocatore.getNome()))
+				for(TesseraCostruzione tesseraC:gioPol.getTessereUsate())
+					stampaTesseraPermesso(tesseraC);
+		
+	}
+
+	/**
+	 * Print the unsused TesserePermessoDiCostruzione of the player in detail
+	 */
+	private void stampaProprieTesserePermessoValide() {
+		for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+			if(gioPol.getNome().equals(giocatore.getNome()))
+				for(TesseraCostruzione tesseraC:gioPol.getTessereValide())
+					stampaTesseraPermesso(tesseraC);
+		
+	}
+
+	/**
+	 * Print the CartePolitica currently owned by the player
+	 */
+	private void stampaProprieCartePolitica() {
+		System.out.println("Carte Politica possedute:");
+		for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+			if(gioPol.getNome().equals(giocatore.getNome()))
+				for(CartaPolitica cPol:gioPol.getCartePolitica())
+					if(cPol instanceof CartaColorata)
+						System.out.println(((CartaColorata) cPol).getColore().toString());
+					else
+						System.out.println("Jolly");
+		
+	}
+
+	/**
+	 * Print the state of the player in input
+	 * @param input
+	 */
+	private void stampaAvversarioDettagliato(Scanner input) {
+		System.out.println("Inserisci il nome dell'avversario di cui vuoi conoscere i dettagli");
+		String nomeAvv=input.nextLine();
+		for(Giocatore avvDettaglio:tabelloneClient.getGioco().getGiocatori())
+			if(avvDettaglio.getNome().equals(nomeAvv)){
+				System.out.println("Punti Vittoria: "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(avvDettaglio));
+				System.out.println("Punti Nobiltà: "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(avvDettaglio));
+				System.out.println("Punti Ricchezza: "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(avvDettaglio));
+				System.out.println("Colore: "+avvDettaglio.getColore().toString());
+				System.out.println("Numero di Assistenti: "+avvDettaglio.getAssistenti().size());
+				System.out.println("Numero empori rimasti da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
+				System.out.print("Empori costruiti in: ");
+				for(Regione regioneE: tabelloneClient.getRegioni())
+					for(Citta cittaE: regioneE.getCitta())
+						if(cittaE.getEmpori().contains(avvDettaglio))
+							System.out.print(cittaE.getNome()+", ");
+				System.out.print("\n");
+			}
+		
+	}
+
+	/**
+	 * Print the name of all the players
+	 */
+	private void stampaNomiAvversari() {
+		System.out.println("Nomi avversari:");
+		for(Giocatore avversario: tabelloneClient.getGioco().getGiocatori())
+			System.out.println("- "+avversario.getNome());
+		
+	}
+
+	/**
+	 * Print the available Consiglieri for the election in a Consiglio
+	 */
+	private void stampaConsiglieriDisponibili() {
+		System.out.println("Consiglieri disponibili:");
+		for(Consigliere consD: tabelloneClient.getConsiglieriDisponibili())
+			System.out.println("- "+consD.getColore().toString());
+		
+	}
+
+	/**
+	 * Print the state of all Consigli and relative Regione
+	 */
+	private void stampaStatoConsigli() {
+		for(Regione regi: tabelloneClient.getRegioni()){
+			System.out.println("Regione: "+regi.getNome()+"\n"+"Stato Consiglio:");
+			for(Consigliere con:regi.getConsiglio().getConsiglieri())
+				System.out.println("- "+con.getColore().toString());
+			System.out.println("Tessere disponibi all'acquisto:");
+			for(TesseraCostruzione tess: regi.getTessereCostruzione())
+				stampaTesseraPermesso(tess);					
+		}
+		System.out.println("Consiglio del Re: vale per "+tabelloneClient.getRe().getCitta().getNome());
+		for(Consigliere reCon:tabelloneClient.getRe().getConsiglio().getConsiglieri())
+			System.out.println("- "+reCon.getColore().toString());
+		
+	}
+
+	/**
+	 * Print on console the state of the city asked to input
+	 * @param input
+	 */
+	private void stampaSpecificaCittà(Scanner input) {
+		System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");
+		String nomeCitta=input.nextLine();
+		Citta objCitta=tabelloneClient.cercaCitta(nomeCitta);
+		if(objCitta==null)
+			System.out.println("La città cercata non esiste");
+		else{
+			System.out.println("Regione: "+objCitta.getRegione().getNome());
+			System.out.println("Colore: "+objCitta.getColore().toString());
+			if(!objCitta.getEmpori().isEmpty()){
+				for(Giocatore gio:objCitta.getEmpori())
+					System.out.println("- "+gio.getNome());
+			}
+		}
+		
+	}
+
+	/**
+	 * Print the position on every Percorso of every Giocatore
+	 */
+	private void stampaGeneralePercorsi() {
+		//Stampo stato percorso vittoria: i giocatori e la loro posizione
+		System.out.println("Percorso Vittoria:");
+		for(Casella casella:tabelloneClient.getPercorsoVittoria().getCaselle())
+			if(!casella.getGiocatori().isEmpty())
+				for(Giocatore gioca: casella.getGiocatori())
+					System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(gioca));
+		//Nobiltà
+		System.out.println("Percorso Nobiltà");
+		for(Casella casella:tabelloneClient.getPercorsoNobilta().getCaselle())
+			if(!casella.getGiocatori().isEmpty())
+				for(Giocatore gioca: casella.getGiocatori())
+					System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(gioca));
+		//Ricchezza
+		System.out.println("Percorso Ricchezza:");
+		for(Casella casella:tabelloneClient.getPercorsoRicchezza().getCaselle())
+			if(!casella.getGiocatori().isEmpty())
+				for(Giocatore gioca: casella.getGiocatori())
+					System.out.println(" "+gioca.getNome() +": "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(gioca));
+		
+	}
+
+	/**
+	 * prints the general state of tabellone on the console
+	 */
+	private void stampaGeneraleTabellone() {
+		for(Regione regione:tabelloneClient.getRegioni()){
+			System.out.println("Regione: "+regione.getNome()+"\n"+"Città:");
+			for(Citta citta:regione.getCitta()){
+				System.out.print(citta.getNome()+", collegata con: ");
+				for(Citta collegamento:citta.getCittaVicina())
+					System.out.print(collegamento.getNome()+" ");
+				System.out.print("\n");
+			}
+		
+	}
+		
+	}
+	/**
+	 * Print the details of tessera
+	 * @param tessera
+	 */
 	private void stampaTesseraPermesso(TesseraCostruzione tessera){
 		System.out.print("Città tessera: ");
 		for(Citta cit:tessera.getCitta())
