@@ -371,6 +371,16 @@ public class Tabellone implements Serializable{
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
 
+	public TesseraCostruzione cercaTesseraCostruzioneInTabellone(TesseraCostruzione tessera){
+		for(Regione r:this.getRegioni()){
+			for(TesseraCostruzione t: r.getTessereCostruzione()){
+				if(t.isUguale(tessera))
+					return t;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * checks if a player who has just built an emporium in every city of a
 	 * color

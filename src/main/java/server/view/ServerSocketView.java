@@ -99,10 +99,7 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 					}
 				}
 				if(object instanceof OggettoVendibile)
-					this.notificaObservers(cercaOggettoVendibile((OggettoVendibile) object),giocatore);
-				else 
-					inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
-					
+					this.notificaObservers(cercaOggettoVendibile((OggettoVendibile) object),giocatore);	
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
@@ -182,11 +179,18 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 			azioneFactory.setRegione(regioneAzione);
 		}
 		if (azioneFactoryCompleta.getTesseraCostruzione() != null) {
-			if (giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()) != null)
-				azioneFactory.setTesseraCostruzione(
-						giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()));
-			else
-				return false;
+			if(azioneFactoryCompleta.getTipoAzione()=="0"){
+				if (giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()) != null)
+					azioneFactory.setTesseraCostruzione(giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()));
+				else
+					return false;
+			}
+			else if(azioneFactoryCompleta.getTipoAzione()=="3"){
+				if (azioneFactoryCompleta.getGioco().getTabellone().cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()) != null)
+					azioneFactory.setTesseraCostruzione(azioneFactoryCompleta.getGioco().getTabellone().cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()));
+				else
+					return false;
+			}
 		}
 		return true;
 	}
