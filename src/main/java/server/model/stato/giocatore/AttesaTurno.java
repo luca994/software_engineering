@@ -42,7 +42,7 @@ public class AttesaTurno extends StatoGiocatore {
 	}
 
 	@Override
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
 		throw new IllegalStateException();
 	}
 

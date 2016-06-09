@@ -43,7 +43,7 @@ public class TurnoMercatoCompraVendita extends TurnoMercato {
 	}
 
 	@Override
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
 		throw new IllegalStateException("Il giocatore" + giocatore
 				+ " ha eseguito un metodo per aggiungere un oggetto al mercato" + "durante la fase di compravendita");
 	}

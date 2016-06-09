@@ -22,7 +22,7 @@ public abstract class CartaPolitica extends OggettoVendibile implements Serializ
 		transazioneDenaro(nuovoProprietario);
 		nuovoProprietario.getCartePolitica().add(this);
 		getGiocatore().getCartePolitica().remove(this);
-		resettaAttributiOggettoVendibile(nuovoProprietario);
+		resettaAttributiOggettoVendibile();
 		getMercato().getOggettiInVendita().remove(this);
 	}
 	/**

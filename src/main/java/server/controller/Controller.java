@@ -24,10 +24,12 @@ import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.model.stato.giocatore.AttesaTurno;
+import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
+import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
+import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 import server.observer.Observer;
-
 
 /**
  * @author Massimiliano Ventura
@@ -102,35 +104,47 @@ public class Controller implements Observer<Object, Bonus> {
 
 	@Override
 	public void update(Object oggetto, Giocatore giocatore) {
-		if(oggetto instanceof Azione){
-		if(giocatore.getStatoGiocatore() instanceof TurnoNormale){
-			try {
-				if(oggetto instanceof AzionePrincipale && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili()<=0)
-					gioco.notificaObservers("Non hai più azioni principali", giocatore);
-				else if(oggetto instanceof AzioneRapida && ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili()<=0)
-					gioco.notificaObservers("Non hai più azioni rapide", giocatore);
-				else{
-					((Azione) oggetto).eseguiAzione(giocatore);
-					gioco.notificaObservers("Azione Eseguita!", giocatore);	
+		if (oggetto instanceof Azione) {
+			if (giocatore.getStatoGiocatore() instanceof TurnoNormale) {
+				try {
+					if (oggetto instanceof AzionePrincipale
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili() <= 0)
+						gioco.notificaObservers("Non hai più azioni principali", giocatore);
+					else if (oggetto instanceof AzioneRapida
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili() <= 0)
+						gioco.notificaObservers("Non hai più azioni rapide", giocatore);
+					else {
+						((Azione) oggetto).eseguiAzione(giocatore);
+						gioco.notificaObservers("Azione Eseguita!", giocatore);
+					}
+				} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
+						| EmporioGiaCostruito e) {
+					gioco.notificaObservers(e, giocatore);
+					gioco.notificaObservers(gioco.getTabellone(), giocatore);
 				}
-				if(!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
-					gioco.notificaObservers(gioco.getTabellone());
-			} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
-					| EmporioGiaCostruito e) {
-				gioco.notificaObservers(e, giocatore);
-				gioco.notificaObservers(gioco.getTabellone(), giocatore);
+			} else {
+				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		else{
-			gioco.notificaObservers("Non è il tuo turno", giocatore);
-		}}
-		if(oggetto instanceof OggettoVendibile && giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
-			
-				
-	}}
+		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("fine")
+				&& giocatore.getStatoGiocatore() instanceof TurnoMercato)
+			giocatore.getStatoGiocatore().prossimoStato();
+		if (oggetto instanceof OggettoVendibile) {
+			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti)
+				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
+			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita)
+				try {
+					giocatore.getStatoGiocatore().compraOggetto(((FaseTurnoMercatoCompraVendita) gioco.getStato())
+							.getMercato().cercaOggetto((OggettoVendibile) oggetto));
+				} catch (FuoriDalLimiteDelPercorso e) {
+					gioco.notificaObservers("Non hai abbastanza soldi per acquistare questo oggetto", giocatore);
+				}
+		}
+		if (!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
+			gioco.notificaObservers(gioco.getTabellone());
+	}
 
 	@Override
 	public void update(Object cambiamento) {
-		
 	}
 }

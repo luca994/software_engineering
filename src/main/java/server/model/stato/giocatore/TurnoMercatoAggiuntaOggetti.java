@@ -20,11 +20,10 @@ public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 		this.mercato = mercato;
 	}
 
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
-		if(prezzo<=0)
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
+		if(oggettoDaAggiungere.getPrezzo()<=0)
 			throw new IllegalArgumentException("Il prezzo deve essere un numero positivo");
 		oggettoDaAggiungere.setMercato(mercato);
-		oggettoDaAggiungere.setPrezzo(prezzo);
 		oggettoDaAggiungere.setGiocatore(giocatore);
 		oggettoDaAggiungere.aggiungiOggetto(mercato);
 	}

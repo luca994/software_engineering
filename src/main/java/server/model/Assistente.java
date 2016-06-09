@@ -8,7 +8,7 @@ import eccezione.FuoriDalLimiteDelPercorso;
  * @author Luca
  *
  */
-public class Assistente extends OggettoVendibile implements Serializable{
+public class Assistente extends OggettoVendibile implements Serializable {
 
 	/**
 	 * 
@@ -22,8 +22,15 @@ public class Assistente extends OggettoVendibile implements Serializable{
 		transazioneDenaro(nuovoProprietario);
 		nuovoProprietario.getAssistenti().add(this);
 		getGiocatore().getAssistenti().remove(this);
-		resettaAttributiOggettoVendibile(nuovoProprietario);
+		resettaAttributiOggettoVendibile();
 		getMercato().getOggettiInVendita().remove(this);
+	}
+
+	public boolean isUguale(Assistente assistente) {
+		if (assistente != null)
+			return true;
+		else
+			throw new NullPointerException();
 	}
 
 }

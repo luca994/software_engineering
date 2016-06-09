@@ -89,7 +89,7 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 		transazioneDenaro(nuovoProprietario);
 		nuovoProprietario.getTessereValide().add(this);
 		getGiocatore().getTessereValide().remove(this);
-		resettaAttributiOggettoVendibile(nuovoProprietario);
+		resettaAttributiOggettoVendibile();
 		getMercato().getOggettiInVendita().remove(this);
 	}
 

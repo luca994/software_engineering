@@ -12,7 +12,7 @@ public class TurnoNormale extends StatoGiocatore {
 	 * 
 	 */
 	private static final long serialVersionUID = -2774878766914139008L;
-	
+
 	private static final int AZIONI_PRINCIPALI_PER_TURNO = 1;
 	private static final int AZIONI_RAPIDE_PER_TURNO = 1;
 
@@ -35,15 +35,15 @@ public class TurnoNormale extends StatoGiocatore {
 	 *             negative number
 	 */
 	public void azioneEseguita(Azione azione) {
-		if (azioniPrincipaliEseguibili < 0 || azioniRapideEseguibili<0) {
+		if (azioniPrincipaliEseguibili < 0 || azioniRapideEseguibili < 0) {
 			throw new IllegalStateException("Errore nel conteggio delle azioni eseguite");
 		}
-		if(azione instanceof AzionePrincipale)
+		if (azione instanceof AzionePrincipale)
 			azioniPrincipaliEseguibili--;
-		if(azione instanceof AzioneRapida)
+		if (azione instanceof AzioneRapida)
 			azioniRapideEseguibili--;
 		if (azioniPrincipaliEseguibili == 0 && azioniRapideEseguibili == 0) {
-			synchronized(this.giocatore.getStatoGiocatore()){
+			synchronized (this.giocatore.getStatoGiocatore()) {
 				prossimoStato();
 			}
 		}
@@ -74,7 +74,7 @@ public class TurnoNormale extends StatoGiocatore {
 	}
 
 	@Override
-	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo) {
+	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
 		throw new IllegalStateException();
 	}
 
