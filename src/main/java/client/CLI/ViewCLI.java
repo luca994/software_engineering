@@ -342,9 +342,9 @@ public class ViewCLI extends View implements Runnable {
 			if(gioPol.getNome().equals(giocatore.getNome()))
 				for(CartaPolitica cPol:gioPol.getCartePolitica())
 					if(cPol instanceof CartaColorata)
-						System.out.println(((CartaColorata) cPol).getColore().toString());
+						System.out.println(ParseColor.colorIntToString(((CartaColorata) cPol).getColore().getRGB()));
 					else
-						System.out.println("Jolly");
+						System.out.println("JOLLY");
 		
 	}
 
@@ -360,7 +360,7 @@ public class ViewCLI extends View implements Runnable {
 				System.out.println("Punti Vittoria: "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(avvDettaglio));
 				System.out.println("Punti Nobiltà: "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(avvDettaglio));
 				System.out.println("Punti Ricchezza: "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(avvDettaglio));
-				System.out.println("Colore: "+avvDettaglio.getColore().toString());
+				System.out.println("Colore: "+ParseColor.colorIntToString(avvDettaglio.getColore().getRGB()));
 				System.out.println("Numero di Assistenti: "+avvDettaglio.getAssistenti().size());
 				System.out.println("Numero empori rimasti da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
 				System.out.print("Empori costruiti in: ");
@@ -389,7 +389,7 @@ public class ViewCLI extends View implements Runnable {
 	private void stampaConsiglieriDisponibili() {
 		System.out.println("Consiglieri disponibili:");
 		for(Consigliere consD: tabelloneClient.getConsiglieriDisponibili())
-			System.out.println("- "+consD.getColore().toString());
+			System.out.println("- "+ParseColor.colorIntToString(consD.getColore().getRGB()));
 		
 	}
 
@@ -400,14 +400,14 @@ public class ViewCLI extends View implements Runnable {
 		for(Regione regi: tabelloneClient.getRegioni()){
 			System.out.println("Regione: "+regi.getNome()+"\n"+"Stato Consiglio:");
 			for(Consigliere con:regi.getConsiglio().getConsiglieri())
-				System.out.println("- "+con.getColore().toString());
+				System.out.println("- "+ParseColor.colorIntToString(con.getColore().getRGB()));
 			System.out.println("Tessere disponibi all'acquisto:");
 			for(TesseraCostruzione tess: regi.getTessereCostruzione())
 				stampaTesseraPermesso(tess);					
 		}
 		System.out.println("Consiglio del Re: vale per "+tabelloneClient.getRe().getCitta().getNome());
 		for(Consigliere reCon:tabelloneClient.getRe().getConsiglio().getConsiglieri())
-			System.out.println("- "+reCon.getColore().toString());
+			System.out.println("- "+ParseColor.colorIntToString(reCon.getColore().getRGB()));
 		
 	}
 
@@ -423,7 +423,7 @@ public class ViewCLI extends View implements Runnable {
 			System.out.println("La città cercata non esiste");
 		else{
 			System.out.println("Regione: "+objCitta.getRegione().getNome());
-			System.out.println("Colore: "+objCitta.getColore().toString());
+			System.out.println("Colore: "+ParseColor.colorIntToString(objCitta.getColore().getRGB()));
 			if(!objCitta.getEmpori().isEmpty()){
 				for(Giocatore gio:objCitta.getEmpori())
 					System.out.println("- "+gio.getNome());
