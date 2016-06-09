@@ -293,7 +293,7 @@ public class CostruisciEmporioConReTest {
 	 * {@link server.model.azione.CostruisciEmporioConRe#CostruisciEmporioConRe(server.model.Gioco, java.util.List, server.model.Citta)}
 	 * .
 	 */
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testCostruisciEmporioConReInputNull() {
 		creaAzioniTester.setTipoAzione("1");
 		assertNotNull(azioneTester = creaAzioniTester.createAzione());
