@@ -17,6 +17,7 @@ import client.View;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Citta;
+import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Jolly;
 import server.model.ParseColor;
@@ -37,6 +38,7 @@ import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
 import server.model.percorso.Casella;
+import server.model.percorso.CasellaConBonus;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoNormale;
@@ -261,6 +263,18 @@ public class ViewCLI extends View implements Runnable {
 					if(!casella.getGiocatori().isEmpty())
 						for(Giocatore giocatore: casella.getGiocatori())
 							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(giocatore));
+				//Nobiltà
+				System.out.println("Percorso Nobiltà");
+				for(Casella casella:tabelloneClient.getPercorsoNobilta().getCaselle())
+					if(!casella.getGiocatori().isEmpty())
+						for(Giocatore giocatore: casella.getGiocatori())
+							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(giocatore));
+				//Ricchezza
+				System.out.println("Percorso Ricchezza:");
+				for(Casella casella:tabelloneClient.getPercorsoRicchezza().getCaselle())
+					if(!casella.getGiocatori().isEmpty())
+						for(Giocatore giocatore: casella.getGiocatori())
+							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(giocatore));
 				break;
 			case 3:
 				System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");
@@ -278,7 +292,80 @@ public class ViewCLI extends View implements Runnable {
 				}
 				break;
 			case 4:
-				
+				for(Regione regi: tabelloneClient.getRegioni()){
+					System.out.println("Regione: "+regi.getNome()+"\n"+"Stato Consiglio:");
+					for(Consigliere con:regi.getConsiglio().getConsiglieri())
+						System.out.println("- "+con.getColore().toString());
+					System.out.println("Tessere disponibi all'acquisto:");
+					for(TesseraCostruzione tess: regi.getTessereCostruzione())
+						stampaTesseraPermesso(tess);					
+				}
+				System.out.println("Consiglio del Re: vale per "+tabelloneClient.getRe().getCitta().getNome());
+				for(Consigliere reCon:tabelloneClient.getRe().getConsiglio().getConsiglieri())
+					System.out.println("- "+reCon.getColore().toString());
+				break;
+			case 5:
+				System.out.println("Consiglieri disponibili:");
+				for(Consigliere consD: tabelloneClient.getConsiglieriDisponibili())
+					System.out.println("- "+consD.getColore().toString());
+				break;
+			case 6:
+				System.out.println("Nomi avversari:");
+				for(Giocatore avversario: tabelloneClient.getGioco().getGiocatori())
+					System.out.println("- "+avversario.getNome());
+				break;
+			case 7:
+				System.out.println("Inserisci il nome dell'avversario di cui vuoi conoscere i dettagli");
+				String nomeAvv=input.nextLine();
+				for(Giocatore avvDettaglio:tabelloneClient.getGioco().getGiocatori())
+					if(avvDettaglio.getNome().equals(nomeAvv)){
+						System.out.println("Punti Vittoria: "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(avvDettaglio));
+						System.out.println("Punti Nobiltà: "+tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(avvDettaglio));
+						System.out.println("Punti Ricchezza: "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(avvDettaglio));
+						System.out.println("Colore: "+avvDettaglio.getColore().toString());
+						System.out.println("Numero di Assistenti: "+avvDettaglio.getAssistenti().size());
+						System.out.println("Numero empori rimast da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
+						System.out.print("Empori costruiti in: ");
+						for(Regione regioneE: tabelloneClient.getRegioni())
+							for(Citta cittaE: regioneE.getCitta())
+								if(cittaE.getEmpori().contains(avvDettaglio))
+									System.out.print(cittaE.getNome()+", ");
+						System.out.print("\n");
+					}
+				break;
+			case 8:
+				System.out.println("Carte Politica possedute:");
+				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+					if(gioPol.getNome().equals(giocatore.getNome()))
+						for(CartaPolitica cPol:gioPol.getCartePolitica())
+							if(cPol instanceof CartaColorata)
+								System.out.println(((CartaColorata) cPol).getColore().toString());
+							else
+								System.out.println("Jolly");
+				break;
+			case 9:
+				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+					if(gioPol.getNome().equals(giocatore.getNome()))
+						for(TesseraCostruzione tesseraC:gioPol.getTessereValide())
+							stampaTesseraPermesso(tesseraC);
+				break;
+			case 10:
+				for(Giocatore gioPol: tabelloneClient.getGioco().getGiocatori())
+					if(gioPol.getNome().equals(giocatore.getNome()))
+						for(TesseraCostruzione tesseraC:gioPol.getTessereUsate())
+							stampaTesseraPermesso(tesseraC);
+				break;
+			case 11:
+				for(Casella caseNobi: tabelloneClient.getPercorsoNobilta().getCaselle())
+					if(caseNobi instanceof CasellaConBonus){
+						System.out.print("Casella Numero: "+tabelloneClient.getPercorsoNobilta().getCaselle().indexOf(caseNobi));
+						for(Bonus bonNobi: ((CasellaConBonus) caseNobi).getBonus())
+							System.out.println(bonNobi.toString());
+					}
+				break;
+			default:
+				System.out.println("Aggiornamento...");
+						
 			}
 			
 				
@@ -296,12 +383,6 @@ public class ViewCLI extends View implements Runnable {
 		for(Bonus bon: tessera.getBonus())
 			System.out.print(bon.toString()+", ");
 		System.out.print("\n");
-	}
-	private void stampaStatoGiocatore(Giocatore giocatore){
-		
-	}
-	private void stampaStatoPercorsoNobilta(){
-		
 	}
 	/**
 	 * asks the business permit tile that the user want to use to build, then
