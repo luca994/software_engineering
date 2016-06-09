@@ -33,7 +33,6 @@ import server.model.azione.CostruisciEmporioConTessera;
 import server.model.azione.EleggiConsigliere;
 import server.model.azione.EleggiConsigliereRapido;
 import server.model.bonus.Bonus;
-import server.model.bonus.BonusAssistenti;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
@@ -53,6 +52,7 @@ public class ViewCLI extends View implements Runnable {
 	private Giocatore giocatore;
 	private ExecutorService executor;
 	private Semaphore semaforo;
+	private int primoGiro;
 	
 	/**
 	 * builds a ViewCLI object
@@ -63,6 +63,7 @@ public class ViewCLI extends View implements Runnable {
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
 		executor = Executors.newCachedThreadPool();
+		primoGiro=0;
 	}
 
 	/**
@@ -132,10 +133,13 @@ public class ViewCLI extends View implements Runnable {
 		while (true) {
 			try {
 				semaforo.acquire();
+				primoGiro++;
+				
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 			if (statoAttuale instanceof TurnoNormale) {
+				primoGiro=2;
 				if (inserimentoBonus.get()) {
 					inputString = input.nextLine();
 					inserimentoBonus.set(false);
@@ -146,8 +150,9 @@ public class ViewCLI extends View implements Runnable {
 										+"1)Costruisci emporio con re"+"\n"+"2)Eleggi consigliere"+"\n"
 										+"3)Costruisci emporio con tessera costruzione"+"\n"+"-Azioni rapide:"+"\n"
 										+"4)Ingaggia aiutante"+"\n"+"5)Cambia tessere costruzione in una regione"+"\n"
-										+"6)Eleggi consigliere rapido"+"\n"+"7)Azione principale aggiuntiva"+"\n"
-										+"7)Scegli cosa stampare dello stato attuale del gioco");
+										+"6)Eleggi consigliere rapido"+"\n"
+										+"7)Azione principale aggiuntiva"+"\n"
+										+"8)Scegli cosa stampare dello stato attuale del gioco");
 						String scelta = input.nextLine();
 						if(Integer.parseInt(scelta)<7){
 							AzioneFactory azioneFactory = new AzioneFactory(null);
@@ -159,7 +164,7 @@ public class ViewCLI extends View implements Runnable {
 									semaforo.release();
 							}
 						}
-						else if(Integer.parseInt(scelta)==7)
+						else if(Integer.parseInt(scelta)==8)
 							stampeTabellone(input);
 						else
 						{
@@ -173,8 +178,11 @@ public class ViewCLI extends View implements Runnable {
 					}
 				}
 			}
+			else if(!(statoAttuale instanceof TurnoNormale)&&primoGiro<2)
+				primoGiro=2;
 			else
 				stampeTabellone(input);
+				primoGiro=2;
 		}
 	}
 
@@ -324,7 +332,7 @@ public class ViewCLI extends View implements Runnable {
 						System.out.println("Punti Ricchezza: "+tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(avvDettaglio));
 						System.out.println("Colore: "+avvDettaglio.getColore().toString());
 						System.out.println("Numero di Assistenti: "+avvDettaglio.getAssistenti().size());
-						System.out.println("Numero empori rimast da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
+						System.out.println("Numero empori rimasti da costruire per terminare: "+avvDettaglio.getEmporiRimasti());
 						System.out.print("Empori costruiti in: ");
 						for(Regione regioneE: tabelloneClient.getRegioni())
 							for(Citta cittaE: regioneE.getCitta())
@@ -358,9 +366,10 @@ public class ViewCLI extends View implements Runnable {
 			case 11:
 				for(Casella caseNobi: tabelloneClient.getPercorsoNobilta().getCaselle())
 					if(caseNobi instanceof CasellaConBonus){
-						System.out.print("Casella Numero: "+tabelloneClient.getPercorsoNobilta().getCaselle().indexOf(caseNobi));
+						System.out.print("Casella Numero: "+tabelloneClient.getPercorsoNobilta().getCaselle().indexOf(caseNobi)+"\t");
 						for(Bonus bonNobi: ((CasellaConBonus) caseNobi).getBonus())
-							System.out.println(bonNobi.toString());
+							System.out.print(bonNobi.toString()+", ");
+						System.out.print("\n");
 					}
 				break;
 			default:
