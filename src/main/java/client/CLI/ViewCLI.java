@@ -180,9 +180,10 @@ public class ViewCLI extends View implements Runnable {
 			}
 			else if(!(statoAttuale instanceof TurnoNormale)&&primoGiro<2)
 				primoGiro=2;
-			else
+			else{
 				stampeTabellone(input);
 				primoGiro=2;
+			}
 		}
 	}
 
