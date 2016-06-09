@@ -14,6 +14,14 @@ public class BonusPuntoVittoria implements Bonus {
 	private final Percorso percorsoVittoria;
 	private final int steps;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusPuntoVittoria [Punti=" + steps + "]";
+	}
+
 	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
 		if (steps < 0 || percorsoVittoria == null)
 			throw new IllegalStateException("Il percorso non può essere nullo e i passi non possono essere negativi");

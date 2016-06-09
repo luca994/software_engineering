@@ -21,6 +21,14 @@ public class BonusTesseraPermesso implements Bonus {
 	private Gioco gioco;
 	private boolean tesseraCorretta;
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusTesseraPermesso";
+	}
+
 	public BonusTesseraPermesso(Gioco gioco) {
 		this.gioco = gioco;
 		tesseraCorretta=false;

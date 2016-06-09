@@ -12,6 +12,14 @@ import server.model.Giocatore;
  */
 public class BonusAssistenti implements Bonus {
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusAssistenti [numeroAssistenti=" + numeroAssistenti + "]";
+	}
+
 	/**
 	 * 
 	 */

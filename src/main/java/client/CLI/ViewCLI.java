@@ -31,6 +31,8 @@ import server.model.azione.CostruisciEmporioConRe;
 import server.model.azione.CostruisciEmporioConTessera;
 import server.model.azione.EleggiConsigliere;
 import server.model.azione.EleggiConsigliereRapido;
+import server.model.bonus.Bonus;
+import server.model.bonus.BonusAssistenti;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
@@ -260,20 +262,45 @@ public class ViewCLI extends View implements Runnable {
 						for(Giocatore giocatore: casella.getGiocatori())
 							System.out.println(" "+giocatore.getNome() +": "+tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(giocatore));
 				break;
+			case 3:
+				System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");
+				String nomeCitta=input.nextLine();
+				Citta objCitta=tabelloneClient.cercaCitta(nomeCitta);
+				if(objCitta==null)
+					System.out.println("La città cercata non esiste");
+				else{
+					System.out.println("Regione: "+objCitta.getRegione().getNome());
+					System.out.println("Colore: "+objCitta.getColore().toString());
+					if(!objCitta.getEmpori().isEmpty()){
+						for(Giocatore gio:objCitta.getEmpori())
+							System.out.println("- "+gio.getNome());
+					}
+				}
+				break;
+			case 4:
+				
+			}
 			
 				
 		}
 		if(semaforo.availablePermits()==0)
 			semaforo.release();
-		}
 	}
+
 	private void stampaTesseraPermesso(TesseraCostruzione tessera){
-		
+		System.out.print("Città tessera: ");
+		for(Citta cit:tessera.getCitta())
+			System.out.print(cit.getNome()+", ");
+		System.out.print("\n");
+		System.out.print("Bonus tessera: ");
+		for(Bonus bon: tessera.getBonus())
+			System.out.print(bon.toString()+", ");
+		System.out.print("\n");
 	}
 	private void stampaStatoGiocatore(Giocatore giocatore){
 		
 	}
-	private void stampaStatoPercorsoNobiltà(){
+	private void stampaStatoPercorsoNobilta(){
 		
 	}
 	/**
