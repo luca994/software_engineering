@@ -76,7 +76,8 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 
 	/**
 	 * reads the socket and does an action when receives an object
-	 * @param Temp 
+	 * 
+	 * @param Temp
 	 */
 	@Override
 	public void run() {
@@ -98,11 +99,12 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 					}
 				}
-				if(object instanceof OggettoVendibile)
-					this.notificaObservers(cercaOggettoVendibile((OggettoVendibile) object),giocatore);
-				else 
+				if (object instanceof OggettoVendibile)
+					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)),
+							giocatore);
+				else
 					inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
-					
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
@@ -111,22 +113,30 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 		}
 	}
 
-	public OggettoVendibile cercaOggettoVendibile(OggettoVendibile oggettoVendibileDaCercare){
-		if(oggettoVendibileDaCercare instanceof CartaPolitica){
-			return giocatore.cercaCarta((CartaPolitica)oggettoVendibileDaCercare);
-		}
-		if(oggettoVendibileDaCercare instanceof TesseraCostruzione){
-			return giocatore.cercaTesseraCostruzione((TesseraCostruzione) oggettoVendibileDaCercare);
-		}
-		if(oggettoVendibileDaCercare instanceof Assistente && !giocatore.getAssistenti().isEmpty()){
+	public OggettoVendibile cercaOggettoVendibile(OggettoVendibile oggettoVendibileDaCercare) {
+		if (oggettoVendibileDaCercare.getGiocatore() == null && oggettoVendibileDaCercare.getMercato() == null
+				&& oggettoVendibileDaCercare.getPrezzo() > 0) {
+			if (oggettoVendibileDaCercare instanceof CartaPolitica) {
+				giocatore.cercaCarta((CartaPolitica) oggettoVendibileDaCercare)
+						.setPrezzo(oggettoVendibileDaCercare.getPrezzo());
+				return giocatore.cercaCarta((CartaPolitica) oggettoVendibileDaCercare);
+			}
+			if (oggettoVendibileDaCercare instanceof TesseraCostruzione) {
+				giocatore.cercaTesseraCostruzione((TesseraCostruzione) oggettoVendibileDaCercare)
+						.setPrezzo(oggettoVendibileDaCercare.getPrezzo());
+				return giocatore.cercaTesseraCostruzione((TesseraCostruzione) oggettoVendibileDaCercare);
+			}
+			if (oggettoVendibileDaCercare instanceof Assistente && !giocatore.getAssistenti().isEmpty()) {
+				giocatore.getAssistenti().get(0).setPrezzo(oggettoVendibileDaCercare.getPrezzo());
 				return giocatore.getAssistenti().get(0);
+			}
 		}
+		if (oggettoVendibileDaCercare.getGiocatore() != null && oggettoVendibileDaCercare.getMercato() != null
+				&& oggettoVendibileDaCercare.getPrezzo() > 0)
+			return oggettoVendibileDaCercare;
 		return null;
 	}
-	
-	
-	
-	
+
 	/**
 	 * sets all the parameters of azioneFactory based on the azioneFactory sent
 	 * by the client

@@ -138,13 +138,24 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 			statoGioco.eseguiFase();
 		}
 	}
-
+	
 	/**
 	 * runs the method eseguiPartita in another thread
 	 */
 	@Override
 	public void run() {
 		eseguiPartita();
+	}
+	/**
+	 * searches a player in the game from his name.
+	 * @param nomeGiocatore the name of the player to search.
+	 * @return the reference to the searched player if it exists, else return null.
+	 */
+	public Giocatore cercaGiocatoreDaNome(String nomeGiocatore){
+		for(Giocatore g:giocatori)
+			if(g.getNome().equals(nomeGiocatore))
+				return g;
+		return null;
 	}
 
 	/**

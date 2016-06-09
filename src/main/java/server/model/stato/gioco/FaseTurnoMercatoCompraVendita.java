@@ -46,7 +46,7 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 		 * GarbageCollector
 		 */
 		for (OggettoVendibile ogg : mercato.getOggettiInVendita()) {
-			ogg.resettaAttributiOggettoVendibile(ogg.getGiocatore());
+			ogg.resettaAttributiOggettoVendibile();
 			mercato.getOggettiInVendita().remove(ogg);
 		}
 
@@ -55,5 +55,12 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 	@Override
 	public void prossimoStato() {
 		getGioco().setStato(new FaseTurnoSemplice(getGioco()));
+	}
+
+	/**
+	 * @return the mercato
+	 */
+	public Mercato getMercato() {
+		return mercato;
 	}
 }

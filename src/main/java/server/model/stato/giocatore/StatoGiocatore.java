@@ -31,7 +31,7 @@ public abstract class StatoGiocatore implements Stato, Serializable{
 
 	public abstract void prossimoStato();
 
-	public abstract void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere, int prezzo);
+	public abstract void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere);
 
 	public abstract void compraOggetto(OggettoVendibile oggettoDaAcquistare) throws FuoriDalLimiteDelPercorso;
 }

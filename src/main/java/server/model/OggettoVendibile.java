@@ -8,15 +8,15 @@ import eccezione.FuoriDalLimiteDelPercorso;
  * @author Riccardo
  *
  */
-public abstract class OggettoVendibile implements Serializable{
+public abstract class OggettoVendibile implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6493300649762552925L;
-	
+
 	private Mercato mercato;
-	private int prezzo;
+	private int prezzo = 0;
 	private Giocatore proprietario;
 
 	/**
@@ -26,14 +26,19 @@ public abstract class OggettoVendibile implements Serializable{
 	 * @param nuovoProprietario
 	 *            the player who wants to buy the object
 	 */
-	public abstract void compra(Giocatore nuovoProprietario)throws FuoriDalLimiteDelPercorso;
+	public abstract void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso;
+
+	public boolean confrontaParametri(OggettoVendibile oggettoDaConfrontare) {
+		return proprietario.getNome().equals(oggettoDaConfrontare.getGiocatore().getNome())
+				&& prezzo == oggettoDaConfrontare.getPrezzo();
+	}
 
 	/**
-	 * this method should be called by transazione, to reset the parameters of
-	 * the purchased item.
+	 * this method should be called by compra, to reset the parameters of the
+	 * purchased item.
 	 */
-	public void resettaAttributiOggettoVendibile(Giocatore nuovoProprietario) {
-		proprietario = nuovoProprietario;
+	public void resettaAttributiOggettoVendibile() {
+		proprietario = null;
 		prezzo = 0;
 		mercato = null;
 	}
