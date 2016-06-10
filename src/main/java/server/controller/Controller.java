@@ -128,12 +128,16 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("fine")
-				&& giocatore.getStatoGiocatore() instanceof TurnoMercato)
+		if (oggetto instanceof String && ((String) oggetto).equals("-")
+				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {
 			giocatore.getStatoGiocatore().prossimoStato();
+			gioco.notificaObservers(gioco.getTabellone());
+		}
 		if (oggetto instanceof OggettoVendibile) {
-			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti)
+			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
+				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
+			}
 			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita)
 				try {
 					giocatore.getStatoGiocatore().compraOggetto(((FaseTurnoMercatoCompraVendita) gioco.getStato())

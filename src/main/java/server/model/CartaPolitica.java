@@ -31,4 +31,5 @@ public abstract class CartaPolitica extends OggettoVendibile implements Serializ
 	 * @return returns true if the card in input has the same parameters of this card, else return false
 	 */
 	public abstract boolean isUguale(CartaPolitica carta);
+
 }

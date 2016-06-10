@@ -121,6 +121,30 @@ public class Giocatore implements Serializable {
 	}
 
 	/**
+	 * generates a list of all OggettiVendibili of a player that are not in the
+	 * market list (assuming that an object is in sale only if it has a valid
+	 * price)
+	 * 
+	 * @return the list of oggettiVendibili generated
+	 */
+	public List<OggettoVendibile> generaListaOggettiVendibiliNonInVendita() {
+		List<OggettoVendibile> oggetti = new ArrayList<>();
+		for (CartaPolitica c : cartePolitica) {
+			if (c.getPrezzo() == 0)
+				oggetti.add(c);
+		}
+		for (Assistente a : assistenti) {
+			if (a.getPrezzo() == 0)
+				oggetti.add(a);
+		}
+		for (TesseraCostruzione t : tessereValide) {
+			if (t.getPrezzo() == 0)
+				oggetti.add(t);
+		}
+		return oggetti;
+	}
+
+	/**
 	 * calculate and return the total number of tessereCostruzione of the player
 	 * 
 	 * @return the number of numeroPermessiTotali

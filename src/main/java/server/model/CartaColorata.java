@@ -38,6 +38,11 @@ public class CartaColorata extends CartaPolitica {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Carta Politica "+"colore: "+ParseColor.colorIntToString(colore.getRGB());
+	}
+
 
 	
 }

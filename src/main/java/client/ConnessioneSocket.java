@@ -64,7 +64,7 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 *             if there is a problem with the connection
 	 */
 	@Override
-	public void inviaOggetto(Object oggetto) throws IOException {
+	public synchronized void inviaOggetto(Object oggetto) throws IOException {
 		ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
 		streamOut.writeObject(oggetto);
 		streamOut.flush();

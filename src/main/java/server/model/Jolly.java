@@ -18,4 +18,9 @@ public class Jolly extends CartaPolitica {
 	public boolean isUguale(CartaPolitica carta) {
 		return carta instanceof Jolly;
 	}
+
+	@Override
+	public String toString() {
+		return "Carta Politica "+"Jolly";
+	}
 }

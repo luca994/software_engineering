@@ -113,8 +113,12 @@ public class ServerSocketView extends ServerView implements Runnable {
 					}
 				}
 
-				if (object instanceof OggettoVendibile)
+				if (object instanceof OggettoVendibile){
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), giocatore);
+				}
+				if (object instanceof String){
+					this.notificaObservers(object, giocatore);
+				}
 			} catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
