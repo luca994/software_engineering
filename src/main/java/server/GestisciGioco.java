@@ -125,7 +125,7 @@ public class GestisciGioco implements Runnable {
 		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, PORT);
 		((ServerRMIView) viewRMI).registerObserver(controller);
 		try {
-			client.impostaGiocatore(giocatore);
+			client.passaOggetto(giocatore);
 			timer.set(System.currentTimeMillis());
 			System.out.println("Aggiunto giocatore RMI");
 		} catch (RemoteException e) {
@@ -161,7 +161,8 @@ public class GestisciGioco implements Runnable {
 	public void startRMI() throws RemoteException, AlreadyBoundException {
 		registry = LocateRegistry.createRegistry(PORT);
 		ServerRMIInterface serverRMI = new ServerRMI(this);
-		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, 0);
+		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, PORT);
 		registry.bind(NAME, serverRMIRemote);
+		System.out.println("RMI registry on port: "+PORT);
 	}
 }

@@ -77,13 +77,13 @@ public class ViewCLI extends View implements Runnable {
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(this);
 		try {
 			InputOutput.stampa("Inserisci il tipo di connessione" + "\n" + "0) Socket" + "\n" + "1) RMI");
-			int scelta = 0;// Integer.parseInt(scanner.nextLine());
+			int scelta = Integer.parseInt(InputOutput.leggiStringa(false));
 			InputOutput.stampa("Inserisci l'indirizzo dell'host");
 			String host = InputOutput.leggiStringa(false);
 			if (host.equals(""))
 				host = new String("127.0.0.1");
 			InputOutput.stampa("Inserisci il numero della porta");
-			int port = 29999; //scanner.nextInt();
+			int port = Integer.parseInt(InputOutput.leggiStringa(false));
 			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome));
 		} catch (DataFormatException e) {
 			InputOutput.stampa(e.getMessage());

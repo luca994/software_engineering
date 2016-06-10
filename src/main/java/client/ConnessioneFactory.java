@@ -28,7 +28,7 @@ public class ConnessioneFactory {
  	 * @throws UnknownHostException if the host isn't correct or is unreachable
 	 * @throws DataFormatException if the type of connection (tipoConnessione) isn't correct
 	 * @throws IOException if there is a problem in the socket connection
-	 * @throws NotBoundException 
+	 * @throws NotBoundException if the name of the reference in the RMI registry is not currently bound
 	 */
 	public Connessione createConnessione(int tipoConnessione, String host, int port, String nome) throws UnknownHostException, DataFormatException, IOException, NotBoundException{	
 		switch(tipoConnessione){

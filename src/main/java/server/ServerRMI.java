@@ -12,6 +12,9 @@ public class ServerRMI implements ServerRMIInterface {
 		this.gestisciGioco = gestisciGioco;
 	}
 	
+	/**
+	 * adds a player to the game
+	 */
 	@Override
 	public ServerRMIViewInterface register(String nome, ConnessioneRMIInterface client) {
 		return gestisciGioco.aggiungiGiocatoreRMI(new Giocatore(nome), client);

@@ -4,12 +4,14 @@
 package server.model.azione;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import server.model.CartaPolitica;
 import server.model.Citta;
 import server.model.Consigliere;
 import server.model.Consiglio;
+import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.Regione;
 import server.model.TesseraCostruzione;
@@ -70,6 +72,78 @@ public class AzioneFactory implements Serializable{
 		throw new IllegalStateException("l'azione inserita non è corretta");
 	}
 
+	/**
+	 * sets all the parameters of azioneFactory based on the azioneFactory sent
+	 * by the client
+	 * 
+	 * @param azioneFactoryCompleta
+	 *            the azioneFactory sent by the view
+	 */
+	public boolean completaAzioneFactory(AzioneFactory azioneFactoryCompleta, AzioneFactory azioneFactorySenzaParametri, Giocatore giocatore) {
+		if (azioneFactoryCompleta.getCartePolitica() != null) {
+			List<CartaPolitica> carteAzione = new ArrayList<>();
+			for (CartaPolitica c : azioneFactoryCompleta.getCartePolitica()) {
+				if (giocatore.cercaCarta(c) != null) {
+					carteAzione.add(giocatore.cercaCarta(c));
+				} else {
+					return false;
+				}
+			}
+			azioneFactorySenzaParametri.setCartePolitica(carteAzione);
+		}
+
+		if (azioneFactoryCompleta.getCitta() != null) {
+			Citta cittaAzione = azioneFactorySenzaParametri.getGioco().getTabellone()
+					.cercaCitta(azioneFactoryCompleta.getCitta().getNome());
+			if (cittaAzione == null)
+				return false;
+			azioneFactorySenzaParametri.setCitta(cittaAzione);
+		}
+
+		if (azioneFactoryCompleta.getConsigliere() != null) {
+			Consigliere consigliereAzione = azioneFactorySenzaParametri.getGioco().getTabellone()
+					.getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
+			if (consigliereAzione == null)
+				return false;
+
+			azioneFactorySenzaParametri.setConsigliere(consigliereAzione);
+		}
+
+		if (azioneFactoryCompleta.getConsiglio() != null) {
+			Regione regioneAzione = azioneFactorySenzaParametri.getGioco().getTabellone()
+					.getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
+			if (regioneAzione == null)
+				return false;
+
+			azioneFactorySenzaParametri.setConsiglio(regioneAzione.getConsiglio());
+		}
+
+		if (azioneFactoryCompleta.getRegione() != null) {
+			Regione regioneAzione = azioneFactorySenzaParametri.getGioco().getTabellone()
+					.getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
+			if (regioneAzione == null)
+				return false;
+
+			azioneFactorySenzaParametri.setRegione(regioneAzione);
+		}
+		if (azioneFactoryCompleta.getTesseraCostruzione() != null) {
+			if (azioneFactoryCompleta.getTipoAzione() == "0") {
+				if (giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()) != null)
+					azioneFactorySenzaParametri.setTesseraCostruzione(
+							giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()));
+				else
+					return false;
+			} else if (azioneFactoryCompleta.getTipoAzione() == "3") {
+				if (azioneFactoryCompleta.getGioco().getTabellone()
+						.cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()) != null)
+					azioneFactorySenzaParametri.setTesseraCostruzione(azioneFactoryCompleta.getGioco().getTabellone()
+							.cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()));
+				else
+					return false;
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * @return the tipoAzione
