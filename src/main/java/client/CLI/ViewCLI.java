@@ -75,7 +75,7 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("Inserisci il tipo di connessione" + "\n" + "0) Socket" + "\n" + "1) RMI");
 			int scelta = 0;// Integer.parseInt(scanner.nextLine());
 			InputOutput.stampa("Inserisci l'indirizzo dell'host");
-			String host = InputOutput.leggiStringa();
+			String host = InputOutput.leggiStringa(false);
 			if (host.equals(""))
 				host = new String("127.0.0.1");
 			InputOutput.stampa("Inserisci il numero della porta");
@@ -103,7 +103,7 @@ public class ViewCLI extends View implements Runnable {
 		try {
 
 			InputOutput.stampa("Inserisci il nome:");
-			String nome = InputOutput.leggiStringa();
+			String nome = InputOutput.leggiStringa(false);
 			impostaConnessione();
 			executor.submit(getConnessione());
 			getConnessione().inviaOggetto(nome);
@@ -126,32 +126,29 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	@Override
 	public void run() {
-		int primoGiro = 0;
 		while (true) {
 			try {
 				semaforo.acquire();
-				primoGiro++;
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 			if (statoAttuale instanceof TurnoNormale) {
-				primoGiro = 2;
 				if (inserimentoBonus.get()) {
-					inputString = InputOutput.leggiStringa();
+					inputString = InputOutput.leggiStringa(false);
 					inserimentoBonus.set(false);
-				} else if (inserimentoAzione.get()) {
+				}
+				if (inserimentoAzione.get()) {
 					try {
 						faseAzione();
 					} catch (IOException e) {
 						throw new IllegalStateException(e.getMessage());
 					}
-				} else if (!(statoAttuale instanceof TurnoNormale) && primoGiro < 2)
-					primoGiro = 2;
-				else {
-					stampeTabellone();
-					primoGiro = 2;
 				}
 			}
+			if (statoAttuale instanceof AttesaTurno) {
+				stampeTabellone();
+			}
+
 			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 				InputOutput.stampa("Turno mercato:");
 				faseAggiuntaOggetti();
@@ -272,6 +269,7 @@ public class ViewCLI extends View implements Runnable {
 	private OggettoVendibile aggiungiOggettiAlMercato() {
 		Integer indice = 0;
 		Integer prezzo;
+		OggettoVendibile temp;
 		for (OggettoVendibile o : giocatore.generaListaOggettiVendibiliNonInVendita()) {
 			InputOutput.stampa(indice + ") " + o.toString());
 			indice++;
@@ -280,15 +278,17 @@ public class ViewCLI extends View implements Runnable {
 		if (indice == null)
 			return null;
 		if (indice >= 0 && indice < giocatore.generaListaOggettiVendibiliNonInVendita().size()) {
+			InputOutput.stampa("Scegli un prezzo");
 			prezzo = chiediPrezzo();
 			if (prezzo == null)
 				return aggiungiOggettiAlMercato();
-			giocatore.generaListaOggettiVendibiliNonInVendita().get(indice).setPrezzo(prezzo);
+			temp = giocatore.generaListaOggettiVendibiliNonInVendita().get(indice);
+			temp.setPrezzo(prezzo);
 		} else {
 			InputOutput.stampa("Scelta non valida");
 			return aggiungiOggettiAlMercato();
 		}
-		return giocatore.generaListaOggettiVendibiliNonInVendita().get(indice);
+		return temp;
 	}
 
 	/**
@@ -322,7 +322,7 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("10) Proprie Tessere-Permesso Usate");
 			InputOutput.stampa("11) Dettaglio del Percorso Nobiltà (con vari bonus)");
 			InputOutput.stampa("12) Aggiorna tabellone");
-			int scelta = Integer.parseInt(InputOutput.leggiStringa());
+			int scelta = InputOutput.leggiIntero(false);
 			switch (scelta) {
 			case 1:
 				stampaGeneraleTabellone();
@@ -428,7 +428,7 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	private void stampaAvversarioDettagliato() {
 		InputOutput.stampa("Inserisci il nome dell'avversario di cui vuoi conoscere i dettagli");
-		String nomeAvv = InputOutput.leggiStringa();
+		String nomeAvv = InputOutput.leggiStringa(false);
 		for (Giocatore avvDettaglio : tabelloneClient.getGioco().getGiocatori())
 			if (avvDettaglio.getNome().equals(nomeAvv)) {
 				InputOutput.stampa("Punti Vittoria: "
@@ -497,7 +497,7 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	private void stampaSpecificaCitta() {
 		InputOutput.stampa("Inserisci il nome della città di cui vuoi conoscere lo stato");
-		String nomeCitta = InputOutput.leggiStringa();
+		String nomeCitta = InputOutput.leggiStringa(false);
 		Citta objCitta = tabelloneClient.cercaCitta(nomeCitta);
 		if (objCitta == null)
 			InputOutput.stampa("La città cercata non esiste");
@@ -584,7 +584,7 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
 		InputOutput.stampa("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
 				+ giocatore.getTessereValide().size() + ") oppure inserisci 'annulla' per annullare");
-		String numTessera = InputOutput.leggiStringa();
+		String numTessera = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(numTessera)) {
 			return false;
 		}
@@ -611,7 +611,7 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoCitta(AzioneFactory azioneFactory) {
 		InputOutput.stampa(
 				"Inserisci la città di destinazione o dove vuoi costruire un emporio oppure inserisci 'annulla' per annullare");
-		String cittaDestinazione = InputOutput.leggiStringa();
+		String cittaDestinazione = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(cittaDestinazione))
 			return false;
 		if (tabelloneClient.cercaCitta(cittaDestinazione) != null) {
@@ -634,7 +634,7 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoRegione(AzioneFactory azioneFactory) {
 		InputOutput.stampa(
 				"Inserisci il nome della regione in cui vuoi cambiare le tessere oppure 'annulla' per annullare");
-		String nomeRegione = InputOutput.leggiStringa();
+		String nomeRegione = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(nomeRegione))
 			return false;
 		if (tabelloneClient.getRegioneDaNome(nomeRegione) != null) {
@@ -656,7 +656,7 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	private boolean inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory) {
 		InputOutput.stampa("Inserisci la tessera costruzione da acquistare (da 0 a 5) oppure 'annulla' per annullare");
-		String numTessera = InputOutput.leggiStringa();
+		String numTessera = InputOutput.leggiStringa(false);
 		try {
 			if (Integer.parseInt(numTessera) < 6 && Integer.parseInt(numTessera) >= 0) {
 				List<TesseraCostruzione> listaTessere = new ArrayList<>();
@@ -690,7 +690,7 @@ public class ViewCLI extends View implements Runnable {
 						+ "Inserisci 'fine' se non vuoi utilizzare altre carte o 'annulla' per annullare");
 		for (int i = 0; i < 4; i++) {
 			InputOutput.stampa("Inserisci la carta " + ((int) (i + 1)) + ":");
-			String colore = InputOutput.leggiStringa();
+			String colore = InputOutput.leggiStringa(false);
 			if ("annulla".equalsIgnoreCase(colore))
 				return false;
 			if (("jolly").equalsIgnoreCase(colore)) {
@@ -736,7 +736,7 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoConsigliere(AzioneFactory azioneFactory) {
 		InputOutput.stampa(
 				"Inserisci il colore del consigliere da eleggere: magenta, black, white, orange, cyan, pink oppure 'annulla' per annullare");
-		String colore = InputOutput.leggiStringa();
+		String colore = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(colore))
 			return false;
 		try {
@@ -766,7 +766,7 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoConsiglio(AzioneFactory azioneFactory) {
 		InputOutput.stampa(
 				"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure 'annulla' per annullare");
-		String scelta = InputOutput.leggiStringa();
+		String scelta = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(scelta))
 			return false;
 		if (("re").equalsIgnoreCase(scelta)) {

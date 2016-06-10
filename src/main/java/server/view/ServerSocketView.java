@@ -100,8 +100,12 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 					}
 				}
 
-				if (object instanceof OggettoVendibile)
+				if (object instanceof OggettoVendibile){
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), giocatore);
+				}
+				if (object instanceof String){
+					this.notificaObservers(object, giocatore);
+				}
 
 			} catch (IOException e) {
 				e.printStackTrace();

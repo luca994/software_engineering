@@ -22,6 +22,7 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 	public void eseguiFase() {
 		for (Giocatore giocat : getGiocatori()) {
 			giocat.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(giocat, mercato));
+			getGioco().notificaObservers(getGioco().getTabellone());
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {
 

@@ -24,10 +24,16 @@ public class InputOutput {
 		System.out.print(i);
 	}
 
-	public static String leggiStringa() {
+	public static String leggiStringa(boolean tornaIndietroDisponibile) {
+		String in;
 		System.out.print("-> ");
 		System.out.flush();
-		return input.nextLine();
+		if(tornaIndietroDisponibile)
+			InputOutput.stampa("\nPremi - per tornare indietro\n");
+		in = input.nextLine();
+		if (in.equals("-") && tornaIndietroDisponibile)
+			return null;
+		return in;
 	}
 
 	/**
@@ -42,10 +48,12 @@ public class InputOutput {
 	public static Integer leggiIntero(boolean tornaIndietroDisponibile) {
 		String in;
 		Integer scelta;
+		if(tornaIndietroDisponibile)
+			InputOutput.stampa("\nPremi - per tornare indietro\n");
 		System.out.print("--> ");
 		System.out.flush();
 		in = input.nextLine();
-		if (in == ".." && tornaIndietroDisponibile)
+		if (in.equals("-") && tornaIndietroDisponibile)
 			return null;
 		try {
 			scelta = Integer.parseInt(in);
