@@ -14,11 +14,9 @@ import java.util.concurrent.Semaphore;
 import server.model.Assistente;
 import server.model.CartaPolitica;
 import server.model.Citta;
-import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.OggettoVendibile;
-import server.model.Regione;
 import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
@@ -104,7 +102,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 				}
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
-					if (completaAzioneFactory((AzioneFactory) object)) {
+					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), azioneFactory, giocatore)) {
 						Azione azioneGiocatore = azioneFactory.createAzione();
 						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 						this.notificaObservers(azioneGiocatore, giocatore);
@@ -147,79 +145,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 				&& oggettoVendibileDaCercare.getPrezzo() > 0)
 			return oggettoVendibileDaCercare;
 		return null;
-	}
-
-	/**
-	 * sets all the parameters of azioneFactory based on the azioneFactory sent
-	 * by the client
-	 * 
-	 * @param azioneFactoryCompleta
-	 *            the azioneFactory sent by the view
-	 */
-	public boolean completaAzioneFactory(AzioneFactory azioneFactoryCompleta) {
-		if (azioneFactoryCompleta.getCartePolitica() != null) {
-			List<CartaPolitica> carteAzione = new ArrayList<>();
-			for (CartaPolitica c : azioneFactoryCompleta.getCartePolitica()) {
-				if (giocatore.cercaCarta(c) != null) {
-					carteAzione.add(giocatore.cercaCarta(c));
-				} else {
-					return false;
-				}
-			}
-			azioneFactory.setCartePolitica(carteAzione);
-		}
-
-		if (azioneFactoryCompleta.getCitta() != null) {
-			Citta cittaAzione = azioneFactory.getGioco().getTabellone()
-					.cercaCitta(azioneFactoryCompleta.getCitta().getNome());
-			if (cittaAzione == null)
-				return false;
-			azioneFactory.setCitta(cittaAzione);
-		}
-
-		if (azioneFactoryCompleta.getConsigliere() != null) {
-			Consigliere consigliereAzione = azioneFactory.getGioco().getTabellone()
-					.getConsigliereDaColore(azioneFactoryCompleta.getConsigliere().getColore());
-			if (consigliereAzione == null)
-				return false;
-
-			azioneFactory.setConsigliere(consigliereAzione);
-		}
-
-		if (azioneFactoryCompleta.getConsiglio() != null) {
-			Regione regioneAzione = azioneFactory.getGioco().getTabellone()
-					.getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
-			if (regioneAzione == null)
-				return false;
-
-			azioneFactory.setConsiglio(regioneAzione.getConsiglio());
-		}
-
-		if (azioneFactoryCompleta.getRegione() != null) {
-			Regione regioneAzione = azioneFactory.getGioco().getTabellone()
-					.getRegioneDaNome(azioneFactoryCompleta.getRegione().getNome());
-			if (regioneAzione == null)
-				return false;
-
-			azioneFactory.setRegione(regioneAzione);
-		}
-		if (azioneFactoryCompleta.getTesseraCostruzione() != null) {
-			if (azioneFactoryCompleta.getTipoAzione() == "0") {
-				if (giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()) != null)
-					azioneFactory.setTesseraCostruzione(
-							giocatore.cercaTesseraCostruzione(azioneFactoryCompleta.getTesseraCostruzione()));
-				else
-					return false;
-			} else if (azioneFactoryCompleta.getTipoAzione() == "3") {
-				if (azioneFactoryCompleta.getGioco().getTabellone()
-						.cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()) != null)
-					azioneFactory.setTesseraCostruzione(azioneFactoryCompleta.getGioco().getTabellone()
-							.cercaTesseraCostruzioneInTabellone(azioneFactoryCompleta.getTesseraCostruzione()));
-				else
-					return false;
-			}
-		}
-		return true;
 	}
 
 	/**
