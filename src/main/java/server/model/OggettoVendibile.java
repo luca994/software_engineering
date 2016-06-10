@@ -27,6 +27,15 @@ public abstract class OggettoVendibile implements Serializable {
 	 *            the player who wants to buy the object
 	 */
 	public abstract void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso;
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public abstract String toString();
+	
+
 
 	public boolean confrontaParametri(OggettoVendibile oggettoDaConfrontare) {
 		return proprietario.getNome().equals(oggettoDaConfrontare.getGiocatore().getNome())
@@ -110,4 +119,5 @@ public abstract class OggettoVendibile implements Serializable {
 	public void setMercato(Mercato mercato) {
 		this.mercato = mercato;
 	}
+
 }

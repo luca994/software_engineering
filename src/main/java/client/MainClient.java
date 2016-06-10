@@ -1,14 +1,19 @@
 package client;
 
 public class MainClient {
- 
-	public static void main(String[] args){
+
+	/**
+	 * private constructor for MainClient, it can not be instantiated.
+	 */
+	private MainClient() {}
+
+	
+	public static void main(String[] args) {
 		GestoreClient gestoreClient = new GestoreClient();
-		if(gestoreClient.getView()!=null){
+		if (gestoreClient.getView() != null) {
 			View view = gestoreClient.getView();
 			view.startClient();
-		}
-		else{
+		} else {
 			System.out.println("Errore nella creazione della view");
 		}
 	}

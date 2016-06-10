@@ -33,4 +33,9 @@ public class Assistente extends OggettoVendibile implements Serializable {
 			throw new NullPointerException();
 	}
 
+	@Override
+	public String toString() {
+		return "Assistente";
+	}
+
 }

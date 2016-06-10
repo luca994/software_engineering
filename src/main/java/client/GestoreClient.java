@@ -2,7 +2,8 @@ package client;
 
 import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
-import java.util.Scanner;
+
+import client.CLI.InputOutput;
 
 /**
  * this class handles the choice of view and the choice of the type of
@@ -34,15 +35,13 @@ public class GestoreClient {
 	public void scegliView() {
 		try {
 			ViewFactory viewFactory = new ViewFactory();
-			Scanner scanner = new Scanner(System.in);
-
-			System.out.println("Scegli la view che vuoi utilizzare: " + viewFactory.getListaView());
-			view = viewFactory.createView(scanner.nextInt());
+			InputOutput.stampa("Scegli la view che vuoi utilizzare: " + viewFactory.getListaView());
+			view = viewFactory.createView(InputOutput.leggiIntero(false));
 		} catch (InvalidParameterException e) {
-			System.out.println(e.getMessage());
+			InputOutput.stampa(e.getMessage());
 			scegliView();
 		} catch (InputMismatchException e) {
-			System.out.println("Devi inserire un numero");
+			InputOutput.stampa("Devi inserire un numero");
 			scegliView();
 		}
 	}

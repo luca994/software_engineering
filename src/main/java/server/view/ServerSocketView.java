@@ -102,8 +102,6 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 
 				if (object instanceof OggettoVendibile)
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), giocatore);
-				else
-					inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 
 			} catch (IOException e) {
 				e.printStackTrace();

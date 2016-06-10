@@ -120,11 +120,24 @@ public class Giocatore implements Serializable {
 		return null;
 	}
 	
-	public List<OggettoVendibile> generaListaOggettiVendibili(){
+	/**
+	 * generates a list of all OggettiVendibili of a player
+	 * @return
+	 */
+	public List<OggettoVendibile> generaListaOggettiVendibiliNonInVendita(){
 		List<OggettoVendibile> oggetti=new ArrayList<>();
-		oggetti.addAll(cartePolitica);
-		oggetti.addAll(assistenti);
-		oggetti.addAll(tessereValide);
+		for(CartaPolitica c:cartePolitica){
+			if(c.getPrezzo()==0)
+			oggetti.add(c);
+		}
+		for(Assistente a:assistenti){
+			if(a.getPrezzo()==0)
+			oggetti.add(a);
+		}
+		for(TesseraCostruzione t:tessereValide){
+			if(t.getPrezzo()==0)
+			oggetti.add(t);
+		}
 		return oggetti;
 	}
 

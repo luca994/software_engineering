@@ -19,6 +19,7 @@ import server.model.Citta;
 import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Jolly;
+import server.model.OggettoVendibile;
 import server.model.ParseColor;
 import server.model.Regione;
 import server.model.Tabellone;
@@ -52,7 +53,6 @@ public class ViewCLI extends View implements Runnable {
 	private Giocatore giocatore;
 	private ExecutorService executor;
 	private Semaphore semaforo;
-	private int primoGiro;
 
 	/**
 	 * builds a ViewCLI object
@@ -63,7 +63,6 @@ public class ViewCLI extends View implements Runnable {
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
 		executor = Executors.newCachedThreadPool();
-		primoGiro = 0;
 	}
 
 	/**
@@ -127,11 +126,11 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	@Override
 	public void run() {
+		int primoGiro = 0;
 		while (true) {
 			try {
 				semaforo.acquire();
 				primoGiro++;
-
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -142,67 +141,82 @@ public class ViewCLI extends View implements Runnable {
 					inserimentoBonus.set(false);
 				} else if (inserimentoAzione.get()) {
 					try {
-						InputOutput.stampa("Inserisci un azione:\n");
-						InputOutput.stampa("- Azione principale:\n");
-						InputOutput.stampa("0) Acquista permesso");
-						InputOutput.stampa("1) Costruisci emporio con re");
-						InputOutput.stampa("2) Eleggi consigliere");
-						InputOutput.stampa("3) Costruisci emporio con tessera costruzione");
-						InputOutput.stampa("- Azioni rapide:\n");
-						InputOutput.stampa("4) Ingaggia aiutante");
-						InputOutput.stampa("5) Cambia tessere costruzione in una regione");
-						InputOutput.stampa("6)Eleggi consigliere rapido");
-						InputOutput.stampa("7) Azione principale aggiuntiva");
-						InputOutput.stampa("- Informazioni:\n");
-						InputOutput.stampa("8) Scegli cosa stampare dello stato attuale del gioco\n");
-						String scelta = InputOutput.leggiStringa();
-						if (Integer.parseInt(scelta) < 7) {
-							AzioneFactory azioneFactory = new AzioneFactory(null);
-							azioneFactory.setTipoAzione(scelta);
-							if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
-								this.getConnessione().inviaOggetto(azioneFactory);
-							} else {
-								if (semaforo.availablePermits() == 0)
-									semaforo.release();
-							}
-						} else if (Integer.parseInt(scelta) == 8)
-							stampeTabellone();
-						else {
-							InputOutput.stampa("Input non valido");
-							if (semaforo.availablePermits() == 0)
-								semaforo.release();
-						}
+						faseAzione();
 					} catch (IOException e) {
 						throw new IllegalStateException(e.getMessage());
 					}
+				} else if (!(statoAttuale instanceof TurnoNormale) && primoGiro < 2)
+					primoGiro = 2;
+				else {
+					stampeTabellone();
+					primoGiro = 2;
 				}
-			} else if (!(statoAttuale instanceof TurnoNormale) && primoGiro < 2)
-				primoGiro = 2;
-			else {
-				stampeTabellone();
-				primoGiro = 2;
 			}
 			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
-				InputOutput.stampa("Mercato:");
-				InputOutput.stampa("0) Metti in vendita un oggetto");
-				InputOutput.stampa("1) Passa il turno");
-				String scelta = InputOutput.leggiStringa();
-				switch (Integer.parseInt(scelta)) {
-				case 0:
-					stampaOggettiVendibili();
-					break;
-				case 1:
-					try {
-						getConnessione().inviaOggetto("-");
-					} catch (IOException e) {
-						throw new IllegalStateException(e.getMessage());
-					}
-					break;
-				default:
-
-				}
+				InputOutput.stampa("Turno mercato:");
+				faseAggiuntaOggetti();
 			}
+		}
+	}
 
+	private void faseAzione() throws IOException {
+		Integer scelta;
+		InputOutput.stampa("Inserisci un azione:\n");
+		InputOutput.stampa("- Azione principale:\n");
+		InputOutput.stampa("0) Acquista permesso");
+		InputOutput.stampa("1) Costruisci emporio con re");
+		InputOutput.stampa("2) Eleggi consigliere");
+		InputOutput.stampa("3) Costruisci emporio con tessera costruzione");
+		InputOutput.stampa("- Azioni rapide:\n");
+		InputOutput.stampa("4) Ingaggia aiutante");
+		InputOutput.stampa("5) Cambia tessere costruzione in una regione");
+		InputOutput.stampa("6)Eleggi consigliere rapido");
+		InputOutput.stampa("7) Azione principale aggiuntiva");
+		InputOutput.stampa("- Informazioni:\n");
+		InputOutput.stampa("8) Scegli cosa stampare dello stato attuale del gioco\n");
+		scelta = InputOutput.leggiIntero(false);
+		if (scelta < 8) {
+			AzioneFactory azioneFactory = new AzioneFactory(null);
+			azioneFactory.setTipoAzione(Integer.toString(scelta));
+			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione()))
+				this.getConnessione().inviaOggetto(azioneFactory);
+			else
+				faseAzione();
+		} else if (scelta == 8)
+			stampeTabellone();
+		else {
+			InputOutput.stampa("");
+			InputOutput.stampa("Input non valido");
+			faseAzione();
+		}
+	}
+
+	private void faseAggiuntaOggetti() {
+		InputOutput.stampa("1) Per aggiungere oggetti al mercato");
+		InputOutput.stampa("2) Per passare il turno");
+		OggettoVendibile oggettoDaAggiungere;
+		Integer scelta = InputOutput.leggiIntero(false);
+		switch (scelta) {
+		case 1:
+			oggettoDaAggiungere = aggiungiOggettiAlMercato();
+			if (oggettoDaAggiungere == null)
+				faseAggiuntaOggetti();
+			else
+				try {
+					getConnessione().inviaOggetto(oggettoDaAggiungere);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+		case 2:
+			try {
+				getConnessione().inviaOggetto("-");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		default:
+			InputOutput.stampa("Scelta non valida");
+			faseAggiuntaOggetti();
 		}
 	}
 
@@ -249,7 +263,48 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
-	private void stampaOggettiVendibili() {
+	/**
+	 * Asks the user inputs an object to be added to the sale.if the user wants
+	 * to go back returns null
+	 * 
+	 * @return null to get it back , or the object to be added to the market
+	 */
+	private OggettoVendibile aggiungiOggettiAlMercato() {
+		Integer indice = 0;
+		Integer prezzo;
+		for (OggettoVendibile o : giocatore.generaListaOggettiVendibiliNonInVendita()) {
+			InputOutput.stampa(indice + ") " + o.toString());
+			indice++;
+		}
+		indice = InputOutput.leggiIntero(true);
+		if (indice == null)
+			return null;
+		if (indice >= 0 && indice < giocatore.generaListaOggettiVendibiliNonInVendita().size()) {
+			prezzo = chiediPrezzo();
+			if (prezzo == null)
+				return aggiungiOggettiAlMercato();
+			giocatore.generaListaOggettiVendibiliNonInVendita().get(indice).setPrezzo(prezzo);
+		} else {
+			InputOutput.stampa("Scelta non valida");
+			return aggiungiOggettiAlMercato();
+		}
+		return giocatore.generaListaOggettiVendibiliNonInVendita().get(indice);
+	}
+
+	/**
+	 * Asks the user to input a price
+	 * 
+	 * @return returns a valid value , or null if the user wants to go back
+	 */
+	private Integer chiediPrezzo() {
+		Integer prezzo = InputOutput.leggiIntero(true);
+		if (prezzo == null)
+			return null;
+		if (prezzo <= 0) {
+			InputOutput.stampa("Prezzo non valido");
+			return chiediPrezzo();
+		}
+		return prezzo;
 	}
 
 	private void stampeTabellone() {
@@ -339,7 +394,7 @@ public class ViewCLI extends View implements Runnable {
 	}
 
 	/**
-	 * Print the unsused TesserePermessoDiCostruzione of the player in detail
+	 * Print the unused TesserePermessoDiCostruzione of the player in detail
 	 */
 	private void stampaProprieTesserePermessoValide() {
 		for (Giocatore gioPol : tabelloneClient.getGioco().getGiocatori())
@@ -412,7 +467,7 @@ public class ViewCLI extends View implements Runnable {
 	private void stampaConsiglieriDisponibili() {
 		InputOutput.stampa("Consiglieri disponibili:");
 		for (Consigliere consD : tabelloneClient.getConsiglieriDisponibili())
-			InputOutput.stampa("- "+ParseColor.colorIntToString(consD.getColore().getRGB()));
+			InputOutput.stampa("- " + ParseColor.colorIntToString(consD.getColore().getRGB()));
 	}
 
 	/**
@@ -423,7 +478,7 @@ public class ViewCLI extends View implements Runnable {
 		for (Regione regi : tabelloneClient.getRegioni()) {
 			InputOutput.stampa("Regione: " + regi.getNome() + "\n" + "Stato Consiglio:");
 			for (Consigliere con : regi.getConsiglio().getConsiglieri())
-				InputOutput.stampa("- "+ParseColor.colorIntToString(con.getColore().getRGB()));
+				InputOutput.stampa("- " + ParseColor.colorIntToString(con.getColore().getRGB()));
 			InputOutput.stampa("Tessere disponibi all'acquisto:");
 			for (TesseraCostruzione tess : regi.getTessereCostruzione())
 				stampaTesseraPermesso(tess);
@@ -432,7 +487,7 @@ public class ViewCLI extends View implements Runnable {
 
 		InputOutput.stampa("Consiglio del Re: vale per " + tabelloneClient.getRe().getCitta().getNome());
 		for (Consigliere reCon : tabelloneClient.getRe().getConsiglio().getConsiglieri())
-			InputOutput.stampa("- "+ParseColor.colorIntToString(reCon.getColore().getRGB()));
+			InputOutput.stampa("- " + ParseColor.colorIntToString(reCon.getColore().getRGB()));
 	}
 
 	/**
@@ -448,7 +503,7 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("La città cercata non esiste");
 		else {
 			InputOutput.stampa("Regione: " + objCitta.getRegione().getNome());
-			InputOutput.stampa("Colore: "+ParseColor.colorIntToString(objCitta.getColore().getRGB()));
+			InputOutput.stampa("Colore: " + ParseColor.colorIntToString(objCitta.getColore().getRGB()));
 			if (!objCitta.getEmpori().isEmpty()) {
 				for (Giocatore gio : objCitta.getEmpori())
 					InputOutput.stampa("- " + gio.getNome());
