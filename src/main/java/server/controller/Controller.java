@@ -130,7 +130,9 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 		if (oggetto instanceof String && ((String) oggetto).equals("-")
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {
-			giocatore.getStatoGiocatore().prossimoStato();
+			synchronized (giocatore.getStatoGiocatore()) {
+				giocatore.getStatoGiocatore().prossimoStato();
+			}
 			gioco.notificaObservers(gioco.getTabellone());
 		}
 		if (oggetto instanceof OggettoVendibile) {
@@ -138,13 +140,14 @@ public class Controller implements Observer<Object, Bonus> {
 				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
 				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
 			}
-			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita)
+			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita){
 				try {
 					giocatore.getStatoGiocatore().compraOggetto(((FaseTurnoMercatoCompraVendita) gioco.getStato())
 							.getMercato().cercaOggetto((OggettoVendibile) oggetto));
+					gioco.notificaObservers("Oggetto acquistato", giocatore);
 				} catch (FuoriDalLimiteDelPercorso e) {
 					gioco.notificaObservers("Non hai abbastanza soldi per acquistare questo oggetto", giocatore);
-				}
+				}}
 		}
 		if (!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
 			gioco.notificaObservers(gioco.getTabellone());

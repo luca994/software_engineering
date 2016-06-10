@@ -3,7 +3,7 @@ package client;
 import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 
-import client.CLI.InputOutput;
+import client.cli.InputOutput;
 
 /**
  * this class handles the choice of view and the choice of the type of

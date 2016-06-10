@@ -26,10 +26,11 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 	@Override
 	public void eseguiFase() {
 		List<Giocatore> listaTurniMercatoGiocatori = new ArrayList<>();
-		Collections.copy(listaTurniMercatoGiocatori, getGiocatori());
+		listaTurniMercatoGiocatori.addAll(getGiocatori());
 		Collections.shuffle(listaTurniMercatoGiocatori);
 		for (Giocatore giocat : listaTurniMercatoGiocatori) {
 			giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
+			getGioco().notificaObservers(getGioco().getTabellone());
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {
 					if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoCompraVendita))

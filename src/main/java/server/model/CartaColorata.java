@@ -40,7 +40,10 @@ public class CartaColorata extends CartaPolitica {
 
 	@Override
 	public String toString() {
-		return "Carta Politica "+"colore: "+ParseColor.colorIntToString(colore.getRGB());
+		if(getPrezzo()==0)
+			return "Carta Politica "+"Colore: "+ParseColor.colorIntToString(colore.getRGB());
+		else
+			return "Carta Politica "+"colore: "+ParseColor.colorIntToString(colore.getRGB())+" prezzo:"+getPrezzo()+" proprietario: "+getGiocatore().getNome();
 	}
 
 

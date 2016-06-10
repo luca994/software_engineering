@@ -1,4 +1,4 @@
-package client.CLI;
+package client.cli;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -42,7 +42,9 @@ import server.model.percorso.CasellaConBonus;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
+import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
+import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 
 public class ViewCLI extends View implements Runnable {
 
@@ -55,7 +57,6 @@ public class ViewCLI extends View implements Runnable {
 	private ExecutorService executor;
 	private Semaphore semaforo;
 	private Semaphore semBonus;
-	private int primoGiro;
 	
 	/**
 	 * builds a ViewCLI object
@@ -147,13 +148,13 @@ public class ViewCLI extends View implements Runnable {
 					}
 				}
 			}
-			if (statoAttuale instanceof AttesaTurno) {
-				stampeTabellone();
-			}
-
 			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 				InputOutput.stampa("Turno mercato:");
 				faseAggiuntaOggetti();
+			}
+			if (statoAttuale instanceof TurnoMercatoCompraVendita) {
+				InputOutput.stampa("Turno mercato:");
+				faseCompraVendita();
 			}
 		}
 	}
@@ -161,7 +162,7 @@ public class ViewCLI extends View implements Runnable {
 	private void faseAzione() throws IOException {
 		Integer scelta;
 		InputOutput.stampa("Inserisci un azione:\n");
-		InputOutput.stampa("- Azione principale:\n");
+		InputOutput.stampa("- Azioni principali:\n");
 		InputOutput.stampa("0) Acquista permesso");
 		InputOutput.stampa("1) Costruisci emporio con re");
 		InputOutput.stampa("2) Eleggi consigliere");
@@ -169,7 +170,7 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa("- Azioni rapide:\n");
 		InputOutput.stampa("4) Ingaggia aiutante");
 		InputOutput.stampa("5) Cambia tessere costruzione in una regione");
-		InputOutput.stampa("6)Eleggi consigliere rapido");
+		InputOutput.stampa("6) Eleggi consigliere rapido");
 		InputOutput.stampa("7) Azione principale aggiuntiva");
 		InputOutput.stampa("- Informazioni:\n");
 		InputOutput.stampa("8) Scegli cosa stampare dello stato attuale del gioco\n");
@@ -190,6 +191,35 @@ public class ViewCLI extends View implements Runnable {
 		}
 	}
 
+	private void faseCompraVendita(){
+		InputOutput.stampa("1) Per acquistare oggetti dal mercato");
+		InputOutput.stampa("2) Per passare il turno");
+		OggettoVendibile oggettoDaAcquistare;
+		Integer scelta = InputOutput.leggiIntero(false);
+		switch (scelta) {
+		case 1:
+			oggettoDaAcquistare = compraOggetto();
+			if (oggettoDaAcquistare == null)
+				faseCompraVendita();
+			else
+				try {
+					getConnessione().inviaOggetto(oggettoDaAcquistare);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+		case 2:
+			try {
+				getConnessione().inviaOggetto("-");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		default:
+			InputOutput.stampa("Scelta non valida");
+			faseCompraVendita();
+		}
+	}
+	
 	private void faseAggiuntaOggetti() {
 		InputOutput.stampa("1) Per aggiungere oggetti al mercato");
 		InputOutput.stampa("2) Per passare il turno");
@@ -262,6 +292,24 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
+	private OggettoVendibile compraOggetto(){
+		Integer indice = 0;
+		List<OggettoVendibile> mercato = ((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato().getOggettiInVendita();
+		for (OggettoVendibile o : mercato) {
+			InputOutput.stampa(indice + ") " + o.toString());
+			indice++;
+		}
+		indice = InputOutput.leggiIntero(true);
+		if (indice == null)
+			return null;
+		if (indice >= 0 && indice < mercato.size()) {
+			return mercato.get(indice);
+		} else {
+			InputOutput.stampa("Scelta non valida");
+			return compraOggetto();
+		}
+	}
+	
 	/**
 	 * Asks the user inputs an object to be added to the sale.if the user wants
 	 * to go back returns null
@@ -419,7 +467,7 @@ public class ViewCLI extends View implements Runnable {
 						InputOutput.stampa(ParseColor.colorIntToString(((CartaColorata) cPol).getColore().getRGB()));
 
 					else
-						InputOutput.stampa("Jolly");
+						InputOutput.stampa("JOLLY");
 
 	}
 
@@ -887,5 +935,5 @@ public class ViewCLI extends View implements Runnable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-	}	
+	}
 }

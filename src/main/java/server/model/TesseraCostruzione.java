@@ -95,8 +95,12 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 
 	@Override
 	public String toString() {
-		return "TesseraCostruzione [città=" + citta + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
+		if(getPrezzo()==0)
+			return "TesseraCostruzione [città=" + citta + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
 				+ bonus + "]";
+		else
+			return "TesseraCostruzione [città=" + citta + ", regioneDiAppartenenza=" + regioneDiAppartenenza + ", bonus="
+			+ bonus + "]"+" prezzo: "+getPrezzo()+" proprietario: "+getGiocatore().getNome();
 	}
 
 	public boolean isUguale(TesseraCostruzione tesseraDaConfrontare) {

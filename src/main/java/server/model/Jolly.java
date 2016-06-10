@@ -21,6 +21,9 @@ public class Jolly extends CartaPolitica {
 
 	@Override
 	public String toString() {
-		return "Carta Politica "+"Jolly";
+		if(getPrezzo()==0)
+			return "Carta Politica "+"JOLLY";
+		else
+			return "Carta Politica "+"JOLLY"+" prezzo:"+getPrezzo()+" proprietario: "+getGiocatore().getNome();
 	}
 }

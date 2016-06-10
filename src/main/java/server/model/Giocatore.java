@@ -250,7 +250,7 @@ public class Giocatore implements Serializable {
 	/**
 	 * @return the statoGiocatore
 	 */
-	public StatoGiocatore getStatoGiocatore() {
+	public synchronized StatoGiocatore getStatoGiocatore() {
 		return statoGiocatore;
 	}
 
@@ -258,7 +258,7 @@ public class Giocatore implements Serializable {
 	 * @param statoGiocatore
 	 *            the statoGiocatore to set
 	 */
-	public void setStatoGiocatore(StatoGiocatore statoGiocatore) {
+	public synchronized void setStatoGiocatore(StatoGiocatore statoGiocatore) {
 		this.statoGiocatore = statoGiocatore;
 	}
 

@@ -4,7 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Set;
 
-import client.CLI.ViewCLI;
+import client.cli.ViewCLI;
 
 public class ViewFactory {
 

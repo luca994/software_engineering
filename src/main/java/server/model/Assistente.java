@@ -35,7 +35,10 @@ public class Assistente extends OggettoVendibile implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Assistente";
+		if(getPrezzo()==0)
+			return "Assistente";
+		else
+			return "Assistente"+" prezzo: "+getPrezzo()+" proprietario: "+getGiocatore().getNome();
 	}
 
 }

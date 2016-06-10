@@ -25,7 +25,6 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 			getGioco().notificaObservers(getGioco().getTabellone());
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {
-
 					if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti))
 						break;
 				}
