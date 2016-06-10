@@ -13,7 +13,7 @@ public abstract class Observable <O,B>{
 		observers=new ArrayList<>();
 	}
 	
-	public void notificaObservers(B cambiamento,String[] input){
+	public void notificaObservers(B cambiamento,List<String> input){
 		for(Observer<O,B> o:observers){
 			o.update(cambiamento,input);
 		}

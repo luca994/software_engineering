@@ -23,19 +23,21 @@ import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
-import server.observer.Observable;
-import server.observer.Observer;
+import server.model.bonus.BonusGettoneCitta;
+import server.model.bonus.BonusRiutilizzoCostruzione;
+import server.model.bonus.BonusTesseraPermesso;
 
 /**
  * @author Massimiliano Ventura
  *
  */
-public class ServerSocketView extends Observable<Object, Bonus> implements Observer<Object, Bonus>, Runnable {
+public class ServerSocketView extends ServerView implements Runnable {
 
 	private Socket socket;
 	private Giocatore giocatore;
-	private String[] input;
+	private List<String> input;
 	private AzioneFactory azioneFactory;
+	private Bonus bonusDaCompletare;
 
 	private Semaphore semBonus;
 
@@ -55,6 +57,7 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 		this.socket = socket;
 		azioneFactory = new AzioneFactory(gioco);
 		semBonus = new Semaphore(0);
+		input = new ArrayList<>(2);
 	}
 
 	/**
@@ -85,8 +88,18 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 			try {
 				ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 				Object object = socketIn.readObject();
-				if (object instanceof Bonus) {
-					input = (String[]) socketIn.readObject();
+				if (object instanceof BonusGettoneCitta) {
+					List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) object).getCitta());
+					if(!tmp.get(0).getNome().equals("passa"))
+						((BonusGettoneCitta) bonusDaCompletare).getCitta().add(tmp.get(0));
+					semBonus.release();
+				}
+				if (object instanceof BonusTesseraPermesso){
+					((BonusTesseraPermesso) bonusDaCompletare).setTessera(((BonusTesseraPermesso) object).getTessera());
+					semBonus.release();
+				}
+				if(object instanceof BonusRiutilizzoCostruzione){
+					((BonusRiutilizzoCostruzione) bonusDaCompletare).setTessera(((BonusRiutilizzoCostruzione) object).getTessera());
 					semBonus.release();
 				}
 				if (object instanceof AzioneFactory) {
@@ -102,13 +115,8 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 
 				if (object instanceof OggettoVendibile)
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), giocatore);
-				else
-					inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
-
-			} catch (IOException e) {
+			} catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				throw new IllegalStateException(e.getMessage());
 			}
 		}
 	}
@@ -230,6 +238,7 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 	public void update(Object cambiamento, Giocatore attributo) {
 
 		if (cambiamento instanceof Bonus && this.giocatore.equals(attributo)) {
+			bonusDaCompletare = (Bonus) cambiamento;
 			inviaOggetto(cambiamento);
 			try {
 				semBonus.acquire();
@@ -243,7 +252,7 @@ public class ServerSocketView extends Observable<Object, Bonus> implements Obser
 	}
 
 	@Override
-	public void update(Bonus cambiamento, String[] input) {
+	public void update(Bonus cambiamento, List<String> input) {
 		throw new IllegalArgumentException();
 	}
 }

@@ -2,6 +2,7 @@ package client;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.rmi.NotBoundException;
 import java.util.zip.DataFormatException;
 
 public class ConnessioneFactory {
@@ -27,11 +28,12 @@ public class ConnessioneFactory {
  	 * @throws UnknownHostException if the host isn't correct or is unreachable
 	 * @throws DataFormatException if the type of connection (tipoConnessione) isn't correct
 	 * @throws IOException if there is a problem in the socket connection
+	 * @throws NotBoundException 
 	 */
-	public Connessione createConnessione(int tipoConnessione, String host, int port) throws UnknownHostException, DataFormatException, IOException{	
+	public Connessione createConnessione(int tipoConnessione, String host, int port, String nome) throws UnknownHostException, DataFormatException, IOException, NotBoundException{	
 		switch(tipoConnessione){
-		case CONNESSIONE_SOCKET : return new ConnessioneSocket(view, host, port);
-		case CONNESSIONE_RMI : return new ConnessioneRMI();
+		case CONNESSIONE_SOCKET : return new ConnessioneSocket(view, host, port, nome);
+		case CONNESSIONE_RMI : return new ConnessioneRMI(view, host, port, nome);
 		default : throw new DataFormatException("il tipo di connessione inserito non è corretto");
 		}
 	}

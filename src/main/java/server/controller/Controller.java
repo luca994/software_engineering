@@ -43,62 +43,64 @@ public class Controller implements Observer<Object, Bonus> {
 		this.gioco = gioco;
 	}
 
-	@Override
-	public void update(Bonus cambiamento, String[] input) {
+	public void updateBonus(Bonus cambiamento, Giocatore giocatore) {
 		if (cambiamento instanceof BonusGettoneCitta) {
 			try {
-				if (!input[0].equals("passa")) {
-					Citta citta = this.gioco.getTabellone().cercaCitta(input[0]);
+				List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) cambiamento).getCitta());
+				if (!tmp.isEmpty()) {
+					Citta citta = this.gioco.getTabellone().cercaCitta(tmp.get(0).getNome());
+					if(citta==null){
+						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
+						gioco.notificaObservers("nome città non corretto", giocatore);
+						return;
+					}
 					if (!((BonusGettoneCitta) cambiamento).getCitta().add(citta)) {
 						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
-						gioco.notificaObservers("la città inserita è già stata scelta");
+						gioco.notificaObservers("la città inserita è già stata scelta", giocatore);
 					} else
 						return;
+				}
+				else{
+					return;
 				}
 			} catch (IllegalArgumentException e) {
 				gioco.notificaObservers(e.getMessage());
 			}
 		}
 		if (cambiamento instanceof BonusTesseraPermesso) {
-			if (Integer.parseInt(input[0]) < 6 && Integer.parseInt(input[0]) >= 0) {
-				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-				for (Regione r : gioco.getTabellone().getRegioni()) {
-					listaTessere.addAll(r.getTessereCostruzione());
+			boolean tesseraTrovata = false;
+			for(Regione r:gioco.getTabellone().getRegioni()){
+				for(TesseraCostruzione t: r.getTessereCostruzione()){
+					if(t.isUguale(((BonusTesseraPermesso) cambiamento).getTessera())){
+						((BonusTesseraPermesso) cambiamento).setTessera(t);
+						tesseraTrovata=true;
+						((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
+					}
 				}
-				((BonusTesseraPermesso) cambiamento).setTessera(listaTessere.get(Integer.parseInt(input[0])));
-				for (Regione r : gioco.getTabellone().getRegioni()) {
-					r.nuovaTessera(listaTessere.get(Integer.parseInt(input[0])));
-				}
-				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
-			} else {
-				gioco.notificaObservers("tessera inserita non valida");
+			}
+			if(!tesseraTrovata){
+				gioco.notificaObservers("tessera inserita non corretta", giocatore);
+				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(false);
 			}
 		}
 		if (cambiamento instanceof BonusRiutilizzoCostruzione) {
-			Giocatore gio = ((BonusRiutilizzoCostruzione) cambiamento).getGiocatore();
-			if (input[0].equals("passa")) {
+			if(((BonusRiutilizzoCostruzione) cambiamento).getTessera()==null){
 				((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				return;
 			}
-			if (Integer.parseInt(input[0]) == 0) {// sto usando la lista di
-													// tessere valide
-				if (Integer.parseInt(input[0]) < gio.getTessereValide().size() && Integer.parseInt(input[0]) >= 0) {
-					TesseraCostruzione tessera = gio.getTessereValide().get(Integer.parseInt(input[0]));
-					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
+			List<TesseraCostruzione> tmp = new ArrayList<>(giocatore.getTessereValide());
+			tmp.addAll(giocatore.getTessereUsate());
+			boolean tesseraCorretta = false;
+			for(TesseraCostruzione t:tmp){
+				if(((BonusRiutilizzoCostruzione) cambiamento).getTessera().isUguale(t)){
+					((BonusRiutilizzoCostruzione) cambiamento).setTessera(t);
 					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
-				} else {
-					gioco.notificaObservers("input incoerente");
+					tesseraCorretta=true;
 				}
-			} else if (Integer.parseInt(input[0]) == 1) {
-				if (Integer.parseInt(input[0]) < gio.getTessereUsate().size() && Integer.parseInt(input[0]) >= 0) {
-					TesseraCostruzione tessera = gio.getTessereUsate().get(Integer.parseInt(input[0]));
-					((BonusRiutilizzoCostruzione) cambiamento).setTessera(tessera);
-					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
-				} else {
-					gioco.notificaObservers("input incoerente");
-				}
-			} else
-				gioco.notificaObservers("lista sbagliata");
+			}
+			if(!tesseraCorretta){
+				gioco.notificaObservers("tessera non corretta", giocatore);
+			}
 		}
 	}
 
@@ -142,9 +144,18 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 		if (!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
 			gioco.notificaObservers(gioco.getTabellone());
+		if(oggetto instanceof Bonus){
+			updateBonus((Bonus) oggetto,giocatore);
+		}
 	}
 
 	@Override
 	public void update(Object cambiamento) {
+	}
+
+	@Override
+	public void update(Bonus cambiamento, List<String> input) {
+		// TODO Auto-generated method stub
+		
 	}
 }

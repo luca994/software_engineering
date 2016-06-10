@@ -3,13 +3,12 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import org.jdom2.JDOMException;
 
 /**
  * @author Luca
  *
  */
-public class Server {
+public class SocketServer {
 
 	private static final int PORT = 29999;
 	private final ServerSocket serverSocket;
@@ -20,7 +19,7 @@ public class Server {
 	 * @throws IOException
 	 *             if an I/O error occurs when opening the socket
 	 */
-	public Server() throws IOException {
+	public SocketServer() throws IOException {
 		serverSocket = new ServerSocket(PORT);
 	}
 
@@ -30,8 +29,6 @@ public class Server {
 	 * @return the socket of the connection
 	 * @throws IOException
 	 *             if an I/O error occurs when opening the socket
-	 * @throws ClassNotFoundException
-	 * @throws JDOMException
 	 */
 	public Socket startSocket() throws IOException {
 		System.out.println("SERVER SOCKET READY ON PORT: " + PORT);

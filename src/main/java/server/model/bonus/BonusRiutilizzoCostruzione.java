@@ -24,7 +24,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	private static final long serialVersionUID = 1470256807943263026L;
 	private TesseraCostruzione tessera;
 	private Gioco gioco;
-	private Giocatore giocatore;
 	private boolean tesseraCostruzioneCorretta;
 
 	/* (non-Javadoc)
@@ -55,13 +54,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		this.tessera = tessera;
 	}
 
-	/**
-	 * 
-	 * @return the player
-	 */
-	public Giocatore getGiocatore() {
-		return giocatore;
-	}
 
 	/**
 	 * set the value of tesseraCostruzioneCorretta
@@ -76,7 +68,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 
-		this.giocatore = giocatore;
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		while (!tesseraCostruzioneCorretta) {

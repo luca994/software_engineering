@@ -2,6 +2,7 @@ package client.CLI;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.rmi.NotBoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -52,6 +53,7 @@ public class ViewCLI extends View implements Runnable {
 	private Giocatore giocatore;
 	private ExecutorService executor;
 	private Semaphore semaforo;
+	private Semaphore semBonus;
 	private int primoGiro;
 	
 	/**
@@ -59,6 +61,7 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	public ViewCLI() {
 		semaforo = new Semaphore(0);
+		semBonus = new Semaphore(0);
 		inserimentoBonus = new AtomicBoolean(false);
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
@@ -70,7 +73,7 @@ public class ViewCLI extends View implements Runnable {
 	 * ask a connection type, the host and the port, then creates a connection
 	 * with the server
 	 */
-	public void impostaConnessione() {
+	public void impostaConnessione(String nome) {
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(this);
 		Scanner scanner = new Scanner(System.in);
 		try {
@@ -82,19 +85,22 @@ public class ViewCLI extends View implements Runnable {
 				host = new String("127.0.0.1");
 			System.out.println("Inserisci il numero della porta");
 			int port = 29999; //scanner.nextInt();
-			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port));
+			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome));
 		} catch (DataFormatException e) {
 			System.out.println(e.getMessage());
-			impostaConnessione();
+			impostaConnessione(nome);
 		} catch (UnknownHostException e) {
 			System.out.println("Indirizzo ip non corretto o non raggiungibile");
-			impostaConnessione();
+			impostaConnessione(nome);
 		} catch (IOException e) {
 			System.out.println("C'è un problema nella connessione");
-			impostaConnessione();
+			impostaConnessione(nome);
 		} catch (InputMismatchException e) {
 			System.out.println("La porta deve essere un numero");
-			impostaConnessione();
+			impostaConnessione(nome);
+		} catch (NotBoundException e){
+			System.out.println("il nome del registro non è corretto");
+			impostaConnessione(nome);
 		}
 	}
 
@@ -102,17 +108,10 @@ public class ViewCLI extends View implements Runnable {
 	 * asks the name that the player wants, then starts impostaConnessione
 	 */
 	public void inizializzazione() {
-		try {
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("Inserisci il nome:");
-			String nome = scanner.nextLine();
-			impostaConnessione();
-			executor.submit(getConnessione());
-			getConnessione().inviaOggetto(nome);
-		}
-		catch(IOException e){
-			throw new IllegalStateException();
-		}
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Inserisci il nome:");
+		String nome = scanner.nextLine();
+		impostaConnessione(nome);
 	}
 
 	/**
@@ -143,6 +142,8 @@ public class ViewCLI extends View implements Runnable {
 				if (inserimentoBonus.get()) {
 					inputString = input.nextLine();
 					inserimentoBonus.set(false);
+					if(semBonus.availablePermits()==0)
+						semBonus.release();
 				}
 				else if(inserimentoAzione.get()){
 					try{
@@ -260,7 +261,7 @@ public class ViewCLI extends View implements Runnable {
 				stampaGeneralePercorsi();
 				break;
 			case 3:
-				stampaSpecificaCittà(input);
+				stampaSpecificaCitta(input);
 				break;
 			case 4:
 				stampaStatoConsigli();
@@ -415,7 +416,7 @@ public class ViewCLI extends View implements Runnable {
 	 * Print on console the state of the city asked to input
 	 * @param input
 	 */
-	private void stampaSpecificaCittà(Scanner input) {
+	private void stampaSpecificaCitta(Scanner input) {
 		System.out.println("Inserisci il nome della città di cui vuoi conoscere lo stato");
 		String nomeCitta=input.nextLine();
 		Citta objCitta=tabelloneClient.cercaCitta(nomeCitta);
@@ -506,7 +507,6 @@ public class ViewCLI extends View implements Runnable {
 			azioneFactory.setTesseraCostruzione(giocatore.getTessereValide().get(Integer.parseInt(numTessera)));
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Numero tessera non corretto");
-			//inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory);
 			return false;
 		}
 		catch(NumberFormatException e){
@@ -533,7 +533,6 @@ public class ViewCLI extends View implements Runnable {
 			azioneFactory.setCitta(tabelloneClient.cercaCitta(cittaDestinazione));
 		} else {
 			System.out.println("La città inserita non esiste");
-			//inserimentoCitta(azioneFactory);
 			return false;
 		}
 		return true;
@@ -556,7 +555,6 @@ public class ViewCLI extends View implements Runnable {
 			azioneFactory.setRegione(tabelloneClient.getRegioneDaNome(nomeRegione));
 		} else {
 			System.out.println("Nome regione non corretto");
-			//inserimentoRegione(azioneFactory);
 			return false;
 		}
 		return true;
@@ -574,15 +572,10 @@ public class ViewCLI extends View implements Runnable {
 		System.out.println("Inserisci la tessera costruzione da acquistare (da 0 a 5) oppure 'annulla' per annullare");
 		String numTessera = scanner.nextLine();
 		try{
-			if (Integer.parseInt(numTessera) < 6 && Integer.parseInt(numTessera) >= 0) {
-				List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
-				for (Regione r : tabelloneClient.getRegioni()) {
-					listaTessere.addAll(r.getTessereCostruzione());
-				}
-				azioneFactory.setTesseraCostruzione(listaTessere.get(Integer.parseInt(numTessera)));
-			} else {
-				System.out.println("Numero tessera non corretto");
-				//inserimentoTesseraCostruzioneDaAcquistare(azioneFactory);
+			if(selezionaTesseraDaTabellone(Integer.parseInt(numTessera))!=null)
+				azioneFactory.setTesseraCostruzione(selezionaTesseraDaTabellone(Integer.parseInt(numTessera)));
+			else{
+				System.out.println("Tessera non corretta");
 				return false;
 			}
 		}
@@ -593,6 +586,23 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
+	/**
+	 * searches the business permit tile
+	 * @param numTessera the number of the tile
+	 * @return return the business permit tile
+	 */
+	public TesseraCostruzione selezionaTesseraDaTabellone(int numTessera){
+		if (numTessera < 6 && numTessera >= 0) {
+			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
+			for (Regione r : tabelloneClient.getRegioni()) {
+				listaTessere.addAll(r.getTessereCostruzione());
+			}
+			return (listaTessere.get(numTessera));
+		} else {
+			System.out.println("Numero tessera non corretto");
+			return null;
+		}
+	}
 	/**
 	 * asks the political cards that the user wants to use, then add them to the
 	 * action factory
@@ -662,12 +672,10 @@ public class ViewCLI extends View implements Runnable {
 				azioneFactory.setConsigliere(tabelloneClient.getConsigliereDaColore(ParseColor.colorStringToColor(colore)));
 			} else {
 				System.out.println("Non c'è un consigliere disponibile di quel colore");
-				//inserimentoConsigliere(azioneFactory);
 				return false;
 			}
 		} catch (NoSuchFieldException e) {
 			System.out.println("Il colore inserito non è corretto");
-			//inserimentoConsigliere(azioneFactory);
 			return false;
 		}
 		return true;
@@ -693,7 +701,6 @@ public class ViewCLI extends View implements Runnable {
 				azioneFactory.setConsiglio(tabelloneClient.getRegioneDaNome(scelta).getConsiglio());
 			else {
 				System.out.println("La regione inserita non esiste");
-				//inserimentoConsiglio(azioneFactory);
 				return false;
 			}
 		}
@@ -728,36 +735,52 @@ public class ViewCLI extends View implements Runnable {
 				System.out.println("Inserisci il nome di una città dove hai un emporio"
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
-				while (inserimentoBonus.get());
-				String[] prov = { inputString };
+				semBonus.acquire();
+				if(inputString.equals("passa"))
+					((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
 				this.getConnessione().inviaOggetto(oggetto);
-				this.getConnessione().inviaOggetto(prov);
 			}
 			if (oggetto instanceof BonusTesseraPermesso) {
 				System.out.println("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus.set(true);
-				while (inserimentoBonus.get())
-					;
-				String[] prov = { inputString };
+				semBonus.acquire();
+				try{
+					TesseraCostruzione tmp = selezionaTesseraDaTabellone(Integer.parseInt(inputString));
+					if(tmp!=null)
+						((BonusTesseraPermesso) oggetto).setTessera(tmp);
+					else{
+						System.out.println("Il numero inserito non è corretto");
+						riceviOggetto(oggetto);
+					}
+				}catch(NumberFormatException e){
+					System.out.println("la stringa deve essere un numero");
+					riceviOggetto(oggetto);
+				}
 				this.getConnessione().inviaOggetto(oggetto);
-				this.getConnessione().inviaOggetto(prov);
 			}
 			if (oggetto instanceof BonusRiutilizzoCostruzione) {
 				System.out.println(
 						"inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				inserimentoBonus.set(true);
-				while (inserimentoBonus.get())
-					;
+				semBonus.acquire();
 				String prov = inputString;
 				System.out.println("inserisci il numero della tessera da riciclare");
 				inserimentoBonus.set(true);
-				while (inserimentoBonus.get())
-					;
-				String[] array = { prov, inputString };
-				this.getConnessione().inviaOggetto(oggetto);
-				this.getConnessione().inviaOggetto(array);
+				semBonus.acquire();
+				try{
+					if(prov.equals("0")){
+						((BonusRiutilizzoCostruzione) oggetto).setTessera(giocatore.getTessereValide().get(Integer.parseInt(inputString)));
+					}else if(prov.equals("1")){
+						((BonusRiutilizzoCostruzione) oggetto).setTessera(giocatore.getTessereUsate().get(Integer.parseInt(inputString)));
+					}else if(prov.equals("passa"))
+						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
+					this.getConnessione().inviaOggetto(oggetto);
+				}catch(IndexOutOfBoundsException | NumberFormatException e){
+					System.out.println("numero tessera non corretto");
+					riceviOggetto(oggetto);
+				}
 			}
-		}catch(IOException e){
+		}catch(IOException | InterruptedException e){
 			throw new IllegalStateException();
 		}
 	}
@@ -781,5 +804,5 @@ public class ViewCLI extends View implements Runnable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-	}
+	}	
 }

@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,17 +16,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
+import client.ConnessioneRMIInterface;
 import server.controller.Controller;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.view.ServerRMIView;
+import server.view.ServerRMIViewInterface;
 import server.view.ServerSocketView;
 
 public class GestisciGioco implements Runnable {
 
-	private final Server server;
+	private final SocketServer server;
 	private List<Socket> giocatoriAttesa;
 	private List<Controller> controllersGiochi;
 	private AtomicLong timer;
+	private ExecutorService executor;
+	private Gioco gioco;
+	private Controller controller;
+	private List<Giocatore> giocatori;
+	private static final int PORT = 1099;
+	private Registry registry;
+	private static final String NAME = "consiglioDeiQuattroRegistro";
 
 	/**
 	 * builds an object GestisciGioco
@@ -31,10 +46,12 @@ public class GestisciGioco implements Runnable {
 	 *             connection
 	 */
 	public GestisciGioco() throws IOException {
-		this.server = new Server();
+		this.server = new SocketServer();
 		giocatoriAttesa = Collections.synchronizedList(new ArrayList<>());
 		controllersGiochi = new ArrayList<>();
 		timer = new AtomicLong();
+		executor = Executors.newCachedThreadPool();
+		giocatori = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	/**
@@ -44,41 +61,78 @@ public class GestisciGioco implements Runnable {
 	 * @throws IOException
 	 *             if there is an error while the server is waiting the
 	 *             connection
-	 * @throws ClassNotFoundException
-	 *             if the class of the input object of the socket cannot be
-	 *             found
 	 */
-	public void creaGiochi() throws ClassNotFoundException, IOException {
-		ExecutorService executor = Executors.newCachedThreadPool();
+	public void creaGiochi() throws IOException {
 		executor.submit(this);
 		while (true) {
-			List<Giocatore> giocatori = new ArrayList<>();
-			int numGiocatori = 0;
-			Gioco gioco = new Gioco();
-			Controller controller = new Controller(gioco);
+			gioco = new Gioco();
+			controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (numGiocatori < 2 || (numGiocatori >= 2 && (System.currentTimeMillis() - timer.get()) < 2000)) {
+			while (giocatori.size() < 2 || (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 2000)) {
 				if (!giocatoriAttesa.isEmpty()) {
-					Socket socket = giocatoriAttesa.remove(0);
-					ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
-					String nome = (String) streamIn.readObject();
-					Giocatore giocatore = new Giocatore(nome);
-					giocatori.add(giocatore);
-					ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
-					streamOut.writeObject(giocatore);
-					streamOut.flush();
-					ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
-					serverView.registerObserver(controller);
-					executor.submit(serverView);
-					numGiocatori++;
+					aggiungiGiocatoreSocket();
 				}
 			}
 			System.out.println("Gioco creato");
 			controllersGiochi.add(controller);
 			gioco.setGiocatori(giocatori);
+			giocatori = Collections.synchronizedList(new ArrayList<>());
 			gioco.inizializzaPartita();
 			executor.submit(gioco);
 		}
+	}
+
+	/**
+	 * takes the first player from the list of sockets giocatoriAttesa, then add
+	 * it to the list of players of the game
+	 * 
+	 * @throws IOException
+	 *             if there is an error while the server is waiting the
+	 *             connection
+	 * @throws ClassNotFoundException
+	 *             if the class of the input object of the socket cannot be
+	 *             found
+	 */
+	public void aggiungiGiocatoreSocket() throws IOException {
+		try {
+			Socket socket = giocatoriAttesa.remove(0);
+			ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
+			String nome = (String) streamIn.readObject();
+			Giocatore giocatore = new Giocatore(nome);
+			ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
+			streamOut.writeObject(giocatore);
+			streamOut.flush();
+			ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
+			serverView.registerObserver(controller);
+			executor.submit(serverView);
+			giocatori.add(giocatore);
+		} catch (ClassNotFoundException e) {
+			System.out.println("Oggetto ricevuto non valido, giocatore non aggiunto");
+		}
+	}
+
+	/**
+	 * add a player connected through RMI to the game
+	 * 
+	 * @param giocatore
+	 *            the player connected
+	 * @param client
+	 *            the client of the player
+	 * @return return a new ServerRMIView
+	 */
+	public ServerRMIViewInterface aggiungiGiocatoreRMI(Giocatore giocatore, ConnessioneRMIInterface client) {
+		giocatori.add(giocatore);
+		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, PORT);
+		((ServerRMIView) viewRMI).registerObserver(controller);
+		try {
+			client.impostaGiocatore(giocatore);
+			timer.set(System.currentTimeMillis());
+			System.out.println("Aggiunto giocatore RMI");
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			System.out.println("giocatore RMI non aggiunto");
+		}
+		return viewRMI;
 	}
 
 	/**
@@ -92,11 +146,22 @@ public class GestisciGioco implements Runnable {
 				Socket socket = server.startSocket();
 				timer.set(System.currentTimeMillis());
 				giocatoriAttesa.add(socket);
-				System.out.println("Aggiunto Giocatore");
+				System.out.println("Aggiunto giocatore socket");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * starts the RMI server and create a registry with a ServerRMIInterface
+	 * @throws RemoteException
+	 * @throws AlreadyBoundException
+	 */
+	public void startRMI() throws RemoteException, AlreadyBoundException {
+		registry = LocateRegistry.createRegistry(PORT);
+		ServerRMIInterface serverRMI = new ServerRMI(this);
+		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, 0);
+		registry.bind(NAME, serverRMIRemote);
+	}
 }

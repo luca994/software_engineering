@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
-public class ConnessioneSocket implements Connessione {
+public class ConnessioneSocket implements Connessione, Runnable {
 
 
 	private Socket socket;
@@ -28,9 +28,12 @@ public class ConnessioneSocket implements Connessione {
 	 * @throws IOException
 	 *             if there is a problem in the socket connection
 	 */
-	public ConnessioneSocket(View view, String host, int port) throws IOException {
+	public ConnessioneSocket(View view, String host, int port, String nome) throws IOException {
 		this.view = view;
 		socket = new Socket(host, port);
+		Thread threadConnessione = new Thread(this);
+		threadConnessione.start();
+		inviaOggetto(nome);
 	}
 
 	/**
