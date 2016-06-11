@@ -31,10 +31,10 @@ public class ConnessioneFactory {
 	 * @throws NotBoundException if the name of the reference in the RMI registry is not currently bound
 	 * @throws NomeGiaScelto if the name of the player is already taken
 	 */
-	public Connessione createConnessione(int tipoConnessione, String host, int port, String nome) throws DataFormatException, IOException, NotBoundException, NomeGiaScelto{	
+	public Connessione createConnessione(int tipoConnessione, String host, int port, String nome, String mappa) throws DataFormatException, IOException, NotBoundException, NomeGiaScelto{	
 		switch(tipoConnessione){
-		case CONNESSIONE_SOCKET : return new ConnessioneSocket(view, host, port, nome);
-		case CONNESSIONE_RMI : return new ConnessioneRMI(view, host, port, nome);
+		case CONNESSIONE_SOCKET : return new ConnessioneSocket(view, host, port, nome, mappa);
+		case CONNESSIONE_RMI : return new ConnessioneRMI(view, host, port, nome, mappa);
 		default : throw new DataFormatException("il tipo di connessione inserito non è corretto");
 		}
 	}

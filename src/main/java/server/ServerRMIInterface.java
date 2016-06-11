@@ -7,5 +7,5 @@ import client.ConnessioneRMIInterface;
 import server.view.ServerRMIViewInterface;
 
 public interface ServerRMIInterface extends Remote {
-	public ServerRMIViewInterface register(String nome, ConnessioneRMIInterface client) throws RemoteException;
+	public ServerRMIViewInterface register(String nome, String mappa, ConnessioneRMIInterface client) throws RemoteException;
 }

@@ -47,7 +47,7 @@ public class CostruisciEmporioConTesseraTest {
 		gioco.getGiocatori().add(g2);
 		gioco.getGiocatori().add(g3);
 		giocoTester = gioco;
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		creaAzioniTester = new AzioneFactory(giocoTester);
 
 	}

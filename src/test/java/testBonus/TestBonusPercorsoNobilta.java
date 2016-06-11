@@ -31,7 +31,7 @@ public class TestBonusPercorsoNobilta {
 		g2= new Giocatore("radobaldo");
 		giocoTester.getGiocatori().add(g1);
 		giocoTester.getGiocatori().add(g2);
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 	@Test(expected = IllegalStateException.class)

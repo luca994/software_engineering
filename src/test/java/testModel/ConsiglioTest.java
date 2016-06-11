@@ -32,7 +32,7 @@ public class ConsiglioTest {
 		gioco.getGiocatori().add(g1);
 		gioco.getGiocatori().add(g2);
 		giocoTester = gioco;
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 	/**

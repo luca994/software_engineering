@@ -28,12 +28,13 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 * @throws IOException
 	 *             if there is a problem in the socket connection
 	 */
-	public ConnessioneSocket(View view, String host, int port, String nome) throws IOException {
+	public ConnessioneSocket(View view, String host, int port, String nome, String mappa) throws IOException {
 		this.view = view;
 		socket = new Socket(host, port);
 		Thread threadConnessione = new Thread(this);
 		threadConnessione.start();
 		inviaOggetto(nome);
+		inviaOggetto(mappa);
 	}
 
 	/**

@@ -33,11 +33,11 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 	 * @throws NotBoundException  if the name of the reference in the RMI registry is not currently bound
 	 * @throws NomeGiaScelto if the name of the player is already taken
 	 */
-	public ConnessioneRMI(View view, String host, int port, String nome) throws RemoteException, NotBoundException, NomeGiaScelto {
+	public ConnessioneRMI(View view, String host, int port, String nome, String mappa) throws RemoteException, NotBoundException, NomeGiaScelto {
 		this.view=view;
 		Registry registry = LocateRegistry.getRegistry(host, port);
 		ServerRMIInterface serverRMI = (ServerRMIInterface) registry.lookup(NAME);
-		serverView = serverRMI.register(nome, this);
+		serverView = serverRMI.register(nome, mappa, this);
 		if(serverView==null){
 			passaOggetto("il nome è già stato preso");
 			throw new NomeGiaScelto("Il nome è già stato scelto");

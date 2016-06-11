@@ -16,7 +16,7 @@ public class ServerRMI implements ServerRMIInterface {
 	 * adds a player to the game
 	 */
 	@Override
-	public ServerRMIViewInterface register(String nome, ConnessioneRMIInterface client) {
-		return gestisciGioco.aggiungiGiocatoreRMI(new Giocatore(nome), client);
+	public ServerRMIViewInterface register(String nome, String mappa, ConnessioneRMIInterface client) {
+		return gestisciGioco.aggiungiGiocatoreRMI(new Giocatore(nome), mappa, client);
 	}
 }

@@ -76,7 +76,7 @@ public class ViewCLI extends View implements Runnable {
 	 * ask a connection type, the host and the port, then creates a connection
 	 * with the server
 	 */
-	public void impostaConnessione(String nome) {
+	public void impostaConnessione(String nome, String mappa) {
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(this);
 		try {
 			InputOutput.stampa("Inserisci il tipo di connessione" + "\n" + "0) Socket" + "\n" + "1) RMI");
@@ -87,22 +87,22 @@ public class ViewCLI extends View implements Runnable {
 				host = new String("127.0.0.1");
 			InputOutput.stampa("Inserisci il numero della porta");
 			int port = InputOutput.leggiIntero(false);
-			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome));
+			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome, mappa));
 		} catch (DataFormatException e) {
 			InputOutput.stampa(e.getMessage());
-			impostaConnessione(nome);
+			impostaConnessione(nome, mappa);
 		} catch (UnknownHostException e) {
 			InputOutput.stampa("Indirizzo ip non corretto o non raggiungibile");
-			impostaConnessione(nome);
+			impostaConnessione(nome, mappa);
 		} catch (IOException e) {
 			InputOutput.stampa("C'è un problema nella connessione");
-			impostaConnessione(nome);
+			impostaConnessione(nome, mappa);
 		} catch (InputMismatchException e) {
 			InputOutput.stampa("La porta deve essere un numero");
-			impostaConnessione(nome);
+			impostaConnessione(nome, mappa);
 		} catch (NotBoundException e){
 			InputOutput.stampa("il nome del registro non è corretto");
-			impostaConnessione(nome);
+			impostaConnessione(nome, mappa);
 		} catch (NomeGiaScelto e) {
 			InputOutput.stampa(e.getMessage());
 			inizializzazione();
@@ -115,9 +115,25 @@ public class ViewCLI extends View implements Runnable {
 	public void inizializzazione() {
 		InputOutput.stampa("Inserisci il nome:");
 		String nome = InputOutput.leggiStringa(false);
-		impostaConnessione(nome);
+		impostaConnessione(nome, inserisciMappa());
 	}
 
+	public String inserisciMappa(){
+		InputOutput.stampa("Inserisci un numero da 0 a 7 per la mappa, oppure 8 per casuale");
+		String mappa = InputOutput.leggiStringa(false);
+		try{
+			if(Integer.parseInt(mappa)<=8 && Integer.parseInt(mappa)>=0)
+				return mappa;
+			else{
+				InputOutput.stampa("Numero non corretto");
+				return inserisciMappa();
+			}
+		}catch(NumberFormatException e){
+			InputOutput.stampa("L'input deve essere un numero");
+			return inserisciMappa();
+		}
+	}
+	
 	/**
 	 * starts the client
 	 */
@@ -857,8 +873,14 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	public void riceviOggetto(Object oggetto) {
 		try {
-			if (oggetto instanceof String)
+			if (oggetto instanceof String){
 				InputOutput.stampa((String) oggetto);
+				if("scegli mappa".equalsIgnoreCase((String) oggetto)){
+					InputOutput.stampa("Inserisci un numero da 0 a 7:");
+					String input = InputOutput.leggiStringa(false);
+					this.getConnessione().inviaOggetto(input);
+				}
+			}
 			if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
 			if (oggetto instanceof Tabellone) {

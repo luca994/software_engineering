@@ -38,6 +38,7 @@ public class GestisciGioco implements Runnable {
 	private static final int PORT = 1099;
 	private Registry registry;
 	private static final String NAME = "consiglioDeiQuattroRegistro";
+	private String mappa;
 
 	/**
 	 * builds an object GestisciGioco
@@ -78,7 +79,7 @@ public class GestisciGioco implements Runnable {
 			controllersGiochi.add(controller);
 			gioco.setGiocatori(giocatori);
 			giocatori = Collections.synchronizedList(new ArrayList<>());
-			gioco.inizializzaPartita();
+			gioco.inizializzaPartita(mappa);
 			executor.submit(gioco);
 		}
 	}
@@ -99,6 +100,11 @@ public class GestisciGioco implements Runnable {
 			Socket socket = giocatoriAttesa.remove(0);
 			ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
 			String nome = (String) streamIn.readObject();
+			streamIn = new ObjectInputStream(socket.getInputStream());
+			String mappaTemp = (String) streamIn.readObject();
+			if(giocatori.isEmpty()){
+				this.mappa=mappaTemp;
+			}
 			if(!controllaNome(nome)){
 				ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
 				streamOut.writeObject(new NomeGiaScelto("Il nome è già stato scelto"));
@@ -140,9 +146,11 @@ public class GestisciGioco implements Runnable {
 	 *            the client of the player
 	 * @return return a new ServerRMIView
 	 */
-	public ServerRMIViewInterface aggiungiGiocatoreRMI(Giocatore giocatore, ConnessioneRMIInterface client) {
+	public ServerRMIViewInterface aggiungiGiocatoreRMI(Giocatore giocatore, String mappa,ConnessioneRMIInterface client) {
 		if(!controllaNome(giocatore.getNome()))
 			return null;
+		if(giocatori.isEmpty())
+			this.mappa=mappa;
 		giocatori.add(giocatore);
 		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, PORT);
 		((ServerRMIView) viewRMI).registerObserver(controller);

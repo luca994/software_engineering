@@ -50,7 +50,7 @@ public class GiocoTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testInizializzaPartita0Giocatori() {
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class GiocoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInizializzaPartita1Giocatore() {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class GiocoTest {
 		int i = 0;
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		for (Giocatore giocat : giocoTester.getGiocatori()) {
 			if(giocat.getNome()!="dummy"){
 			assertEquals(10, giocat.getEmporiRimasti());
@@ -96,7 +96,7 @@ public class GiocoTest {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
 		giocoTester.getGiocatori().add(new Giocatore("pluto"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		for (Giocatore giocat : giocoTester.getGiocatori()) {
 			assertEquals(10, giocat.getEmporiRimasti());
 			assertTrue(giocoTester.getTabellone().getPercorsoRicchezza().getCaselle().get(10 + i).getGiocatori()
@@ -118,7 +118,7 @@ public class GiocoTest {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
 		giocoTester.setStato(new FaseTurnoSemplice(giocoTester));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 
@@ -131,7 +131,7 @@ public class GiocoTest {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
 		giocoTester.setStato(new FaseTurnoMercatoCompraVendita(giocoTester, null));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class GiocoTest {
 	public void testEseguiPartita2GiocatoriGiaInEsecuzione() {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		giocoTester.setStato(new FaseTurnoSemplice(giocoTester));
 		giocoTester.eseguiPartita();
 	}
@@ -152,7 +152,7 @@ public class GiocoTest {
 	public void testEseguiPartita2GiocatoriConStatoInizialeTerminata() {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		giocoTester.setStato(new Terminato(giocoTester));
 		giocoTester.eseguiPartita();
 	}
@@ -172,7 +172,7 @@ public class GiocoTest {
 	public void testGetNotNullTabellone() {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		assertTrue(giocoTester.getTabellone()!=null);
 	}
 
@@ -202,7 +202,7 @@ public class GiocoTest {
 	public void testSetStato() {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		StatoGioco statoDaSettare = new FaseTurnoSemplice(giocoTester);
 		giocoTester.setStato(statoDaSettare);
 		assertTrue(giocoTester.getStato()==statoDaSettare);

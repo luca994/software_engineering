@@ -54,18 +54,16 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 * @throws IllegalStateException
 	 *             if the game is already in execution
 	 */
-	public void inizializzaPartita() {
+	public void inizializzaPartita(String numMappa) {
 
 		if (this.giocatori.size() < MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
 		if (statoGioco instanceof Esecuzione)
 			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
 
-		String nomeMappaScelta = "src/main/resources/mappacollegamenti0.xml"; /*
-																				 * Ottenuta
-																				 * dal
-																				 * controller
-																				 */
+		if("8".equals(numMappa))
+			numMappa = Integer.toString((int) Math.random()*7);
+		String nomeMappaScelta = new String("src/main/resources/mappacollegamenti"+numMappa+".xml");
 
 		this.tabellone = new Tabellone(nomeMappaScelta, this);
 
