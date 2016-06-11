@@ -48,7 +48,7 @@ public class Controller implements Observer<Object, Bonus> {
 				List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) cambiamento).getCitta());
 				if (!tmp.isEmpty()) {
 					Citta citta = this.gioco.getTabellone().cercaCitta(tmp.get(0).getNome());
-					if(citta==null){
+					if (citta == null) {
 						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 						gioco.notificaObservers("nome città non corretto", giocatore);
 						return;
@@ -58,8 +58,7 @@ public class Controller implements Observer<Object, Bonus> {
 						gioco.notificaObservers("la città inserita è già stata scelta", giocatore);
 					} else
 						return;
-				}
-				else{
+				} else {
 					return;
 				}
 			} catch (IllegalArgumentException e) {
@@ -68,36 +67,36 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 		if (cambiamento instanceof BonusTesseraPermesso) {
 			boolean tesseraTrovata = false;
-			for(Regione r:gioco.getTabellone().getRegioni()){
-				for(TesseraCostruzione t: r.getTessereCostruzione()){
-					if(t.isUguale(((BonusTesseraPermesso) cambiamento).getTessera())){
+			for (Regione r : gioco.getTabellone().getRegioni()) {
+				for (TesseraCostruzione t : r.getTessereCostruzione()) {
+					if (t.isUguale(((BonusTesseraPermesso) cambiamento).getTessera())) {
 						((BonusTesseraPermesso) cambiamento).setTessera(t);
-						tesseraTrovata=true;
+						tesseraTrovata = true;
 						((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
 					}
 				}
 			}
-			if(!tesseraTrovata){
+			if (!tesseraTrovata) {
 				gioco.notificaObservers("tessera inserita non corretta", giocatore);
 				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(false);
 			}
 		}
 		if (cambiamento instanceof BonusRiutilizzoCostruzione) {
-			if(((BonusRiutilizzoCostruzione) cambiamento).getTessera()==null){
+			if (((BonusRiutilizzoCostruzione) cambiamento).getTessera() == null) {
 				((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
 				return;
 			}
 			List<TesseraCostruzione> tmp = new ArrayList<>(giocatore.getTessereValide());
 			tmp.addAll(giocatore.getTessereUsate());
 			boolean tesseraCorretta = false;
-			for(TesseraCostruzione t:tmp){
-				if(((BonusRiutilizzoCostruzione) cambiamento).getTessera().isUguale(t)){
+			for (TesseraCostruzione t : tmp) {
+				if (((BonusRiutilizzoCostruzione) cambiamento).getTessera().isUguale(t)) {
 					((BonusRiutilizzoCostruzione) cambiamento).setTessera(t);
 					((BonusRiutilizzoCostruzione) cambiamento).setTesseraCostruzioneCorretta(true);
-					tesseraCorretta=true;
+					tesseraCorretta = true;
 				}
 			}
-			if(!tesseraCorretta){
+			if (!tesseraCorretta) {
 				gioco.notificaObservers("tessera non corretta", giocatore);
 			}
 		}
@@ -109,17 +108,17 @@ public class Controller implements Observer<Object, Bonus> {
 			if (giocatore.getStatoGiocatore() instanceof TurnoNormale) {
 				try {
 					if (oggetto instanceof AzionePrincipale
-							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili() <= 0){
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili() <= 0) {
 						gioco.notificaObservers("Non hai più azioni principali", giocatore);
-					    gioco.notificaObservers(gioco.getTabellone(),giocatore);}
-					else if (oggetto instanceof AzioneRapida
-							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili() <= 0){
+						gioco.notificaObservers(gioco.getTabellone(), giocatore);
+					} else if (oggetto instanceof AzioneRapida
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili() <= 0) {
 						gioco.notificaObservers("Non hai più azioni rapide", giocatore);
-						gioco.notificaObservers(gioco.getTabellone(),giocatore);}
-					else {
+						gioco.notificaObservers(gioco.getTabellone(), giocatore);
+					} else {
 						((Azione) oggetto).eseguiAzione(giocatore);
 						gioco.notificaObservers("Azione Eseguita!", giocatore);
-						if(giocatore.getStatoGiocatore() instanceof TurnoNormale)
+						if (giocatore.getStatoGiocatore() instanceof TurnoNormale)
 							gioco.notificaObservers(gioco.getTabellone(), giocatore);
 					}
 				} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
@@ -143,19 +142,20 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
 				gioco.notificaObservers(gioco.getTabellone(), giocatore);
 			}
-			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita){
+			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita) {
 				try {
 					giocatore.getStatoGiocatore().compraOggetto(((FaseTurnoMercatoCompraVendita) gioco.getStato())
 							.getMercato().cercaOggetto((OggettoVendibile) oggetto));
 					gioco.notificaObservers("Oggetto acquistato", giocatore);
 				} catch (FuoriDalLimiteDelPercorso e) {
 					gioco.notificaObservers("Non hai abbastanza soldi per acquistare questo oggetto", giocatore);
-				}finally{
+				} finally {
 					gioco.notificaObservers(gioco.getTabellone(), giocatore);
-				}}
+				}
+			}
 		}
-		if(oggetto instanceof Bonus){
-			updateBonus((Bonus) oggetto,giocatore);
+		if (oggetto instanceof Bonus) {
+			updateBonus((Bonus) oggetto, giocatore);
 		}
 	}
 
@@ -166,6 +166,6 @@ public class Controller implements Observer<Object, Bonus> {
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

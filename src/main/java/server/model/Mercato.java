@@ -24,10 +24,21 @@ public class Mercato implements Serializable {
 	 * build the object
 	 */
 	public Mercato(Percorso percorsoRicchezza) {
+		if (percorsoRicchezza == null)
+			throw new NullPointerException();
 		oggettiInVendita = new ArrayList<>();
 		this.percorsoRicchezza = percorsoRicchezza;
 	}
 
+	/**
+	 * Looking into the market for an object with the same price , the same
+	 * type, and an owner with the same name as the one that is passed in input.
+	 * If there isn't, returns null.
+	 * 
+	 * @param oggettoDaCercare
+	 *            is the object to search.
+	 * @return the reference to the object searched.
+	 */
 	public OggettoVendibile cercaOggetto(OggettoVendibile oggettoDaCercare) {
 		for (OggettoVendibile o : oggettiInVendita) {
 			if (oggettoDaCercare instanceof CartaPolitica && o instanceof CartaPolitica) {
