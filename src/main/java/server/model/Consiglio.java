@@ -89,7 +89,7 @@ public class Consiglio implements Serializable {
 
 	public List<CartaColorata> soddisfaConsiglio(List<CartaPolitica> carte) {
 		if (carte == null)
-			throw new NullPointerException("In input è stato passato un giocatore null");
+			throw new NullPointerException("In input è stata passata una lista nulla di carte");
 		List<CartaColorata> carteUtilizzate = new ArrayList<>();
 		List<Color> coloriConsiglio = acquisisciColoriConsiglio();
 		for (CartaPolitica cp : carte)

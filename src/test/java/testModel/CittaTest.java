@@ -32,7 +32,7 @@ public class CittaTest {
 		gioco.getGiocatori().add(g1);
 		gioco.getGiocatori().add(g2);
 		giocoTester = gioco;
-		gioco.inizializzaPartita();
+		gioco.inizializzaPartita("0");
 	}
 
 	/**

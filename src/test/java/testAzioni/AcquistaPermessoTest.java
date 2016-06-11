@@ -54,7 +54,7 @@ public class AcquistaPermessoTest {
 		gioco.getGiocatori().add(g1);
 		gioco.getGiocatori().add(g2);
 		giocoTester = gioco;
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("0");
 		creaAzioniTester = new AzioneFactory(giocoTester);
 	}
 

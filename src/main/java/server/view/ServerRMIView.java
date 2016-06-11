@@ -92,7 +92,7 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 		this.azioneFactory.setTipoAzione(azioneFactory.getTipoAzione());
 		if (this.azioneFactory.completaAzioneFactory(azioneFactory, giocatore)) {
 			Azione azione = this.azioneFactory.createAzione();
-			this.azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+			this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
 			this.notificaObservers(azione, giocatore);
 		} else {
 			client.passaOggetto("Parametri dell'azione errati");

@@ -29,12 +29,19 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 		listaTurniMercatoGiocatori.addAll(getGiocatori());
 		Collections.shuffle(listaTurniMercatoGiocatori);
 		for (Giocatore giocat : listaTurniMercatoGiocatori) {
-			giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
-			getGioco().notificaObservers(getGioco().getTabellone());
-			while (true) {
-				synchronized (giocat.getStatoGiocatore()) {
-					if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoCompraVendita))
-						break;
+			if(giocat.isConnesso()){
+				giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
+				getGioco().notificaObservers(getGioco().getTabellone());
+				while (true) {
+					synchronized (giocat.getStatoGiocatore()) {
+						if (!(giocat.getStatoGiocatore() instanceof TurnoMercatoCompraVendita))
+							break;
+					}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
