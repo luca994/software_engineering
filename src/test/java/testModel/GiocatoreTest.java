@@ -98,7 +98,7 @@ public class GiocatoreTest {
 		Giocatore g2 = new Giocatore("paolo");
 		giocoTester.getGiocatori().add(giocatoreTester);
 		giocoTester.getGiocatori().add(g2);
-		giocoTester.inizializzaPartita();
+		giocoTester.inizializzaPartita("1");
 		List<OggettoVendibile> listaOggetti = giocatoreTester.generaListaOggettiVendibiliNonInVendita();
 		assertTrue(listaOggetti.size() == 7);
 		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().size() == 8);
