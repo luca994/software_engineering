@@ -15,6 +15,7 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import client.View;
+import eccezione.NomeGiaScelto;
 import server.model.CartaColorata;
 import server.model.CartaPolitica;
 import server.model.Citta;
@@ -97,11 +98,14 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("C'è un problema nella connessione");
 			impostaConnessione(nome);
 		} catch (InputMismatchException e) {
-			System.out.println("La porta deve essere un numero");
+			InputOutput.stampa("La porta deve essere un numero");
 			impostaConnessione(nome);
 		} catch (NotBoundException e){
-			System.out.println("il nome del registro non è corretto");
+			InputOutput.stampa("il nome del registro non è corretto");
 			impostaConnessione(nome);
+		} catch (NomeGiaScelto e) {
+			InputOutput.stampa(e.getMessage());
+			inizializzazione();
 		}
 	}
 
@@ -868,6 +872,8 @@ public class ViewCLI extends View implements Runnable {
 			}
 			if (oggetto instanceof Exception) {
 				InputOutput.stampa(((Exception) oggetto).getMessage());
+				if(oggetto instanceof NomeGiaScelto)
+					inizializzazione();
 			}
 			if (oggetto instanceof BonusGettoneCitta) {
 				InputOutput.stampa("Inserisci il nome di una città dove hai un emporio"

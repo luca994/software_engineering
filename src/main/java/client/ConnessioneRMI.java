@@ -7,6 +7,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import eccezione.NomeGiaScelto;
 import server.ServerRMIInterface;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
@@ -30,12 +31,17 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 	 * @param nome the name of the player
 	 * @throws RemoteException if there is a problem in the connection with the registry
 	 * @throws NotBoundException  if the name of the reference in the RMI registry is not currently bound
+	 * @throws NomeGiaScelto if the name of the player is already taken
 	 */
-	public ConnessioneRMI(View view, String host, int port, String nome) throws RemoteException, NotBoundException {
+	public ConnessioneRMI(View view, String host, int port, String nome) throws RemoteException, NotBoundException, NomeGiaScelto {
 		this.view=view;
 		Registry registry = LocateRegistry.getRegistry(host, port);
 		ServerRMIInterface serverRMI = (ServerRMIInterface) registry.lookup(NAME);
 		serverView = serverRMI.register(nome, this);
+		if(serverView==null){
+			passaOggetto("il nome è già stato preso");
+			throw new NomeGiaScelto("Il nome è già stato scelto");
+		}	
 	}
 
 	/**
@@ -57,6 +63,14 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 	@Override
 	public void passaOggetto(Object oggetto) throws RemoteException {
 		view.riceviOggetto(oggetto);
+	}
+
+	/**
+	 * 
+	 * @return the serverView
+	 */
+	public ServerRMIViewInterface getServerView() {
+		return serverView;
 	}
 	
 	
