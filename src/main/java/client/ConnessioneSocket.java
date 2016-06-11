@@ -51,7 +51,8 @@ public class ConnessioneSocket implements Connessione, Runnable {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("server disconnesso");
+				break;
 			}
 		}
 	}

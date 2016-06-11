@@ -5,7 +5,7 @@ import server.model.Gioco;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
 
-public class FaseTurnoSemplice extends Esecuzione {
+public class FaseTurnoSemplice extends Esecuzione{
 
 	/**
 	 * 
@@ -27,22 +27,29 @@ public class FaseTurnoSemplice extends Esecuzione {
 	public void eseguiFase() {
 		boolean exit = false;
 		for (Giocatore giocat : getGiocatori()) {
-			if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
-				exit = true;
-				break;
-			}
-			giocat.getStatoGiocatore().prossimoStato();
-			getGioco().notificaObservers(getGioco().getTabellone());
-			while (true) {
-				synchronized (giocat.getStatoGiocatore()) {
-					if (!(giocat.getStatoGiocatore() instanceof TurnoNormale))
-						break;
+			if(giocat.isConnesso()){
+				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
+					exit = true;
+					break;
 				}
-			}
-			if (ultimoTurno)
-				giocat.setStatoGiocatore(new TurniConclusi(giocat));
-			if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
-				ultimoTurno = true;
+				giocat.getStatoGiocatore().prossimoStato();
+				getGioco().notificaObservers(getGioco().getTabellone());
+				while (true) {
+					synchronized (giocat.getStatoGiocatore()) {
+						if (!(giocat.getStatoGiocatore() instanceof TurnoNormale))
+							break;
+					}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				if (ultimoTurno)
+					giocat.setStatoGiocatore(new TurniConclusi(giocat));
+				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
+					ultimoTurno = true;
+				}
 			}
 		}
 		if (ultimoTurno && !exit)
@@ -56,5 +63,4 @@ public class FaseTurnoSemplice extends Esecuzione {
 		else
 			getGioco().setStato(new FaseTurnoMercatoAggiuntaOggetti(getGioco()));
 	}
-
 }

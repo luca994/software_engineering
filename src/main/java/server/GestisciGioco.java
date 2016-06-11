@@ -70,9 +70,14 @@ public class GestisciGioco implements Runnable {
 			gioco = new Gioco();
 			controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (giocatori.size() < 2 || (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 2000)) {
+			while (giocatori.size() < 2 || (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 5000)) {
 				if (!giocatoriAttesa.isEmpty()) {
 					aggiungiGiocatoreSocket();
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 			System.out.println("Gioco creato");

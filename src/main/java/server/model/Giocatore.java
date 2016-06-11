@@ -32,6 +32,7 @@ public class Giocatore implements Serializable {
 	private List<TesseraCostruzione> tessereValide;
 	private int emporiRimasti;
 	private StatoGiocatore statoGiocatore;
+	private boolean connesso;
 
 	/**
 	 * Constructor for the class Giocatore, creates a giocatore, and sets
@@ -48,6 +49,7 @@ public class Giocatore implements Serializable {
 		if (nome == null)
 			throw new IllegalArgumentException();
 		this.nome = nome;
+		connesso = true;
 
 		// creo il colore casualmente
 		Random random = new Random();
@@ -278,4 +280,21 @@ public class Giocatore implements Serializable {
 		this.cartePolitica = cartePolitica;
 	}
 
+	/**
+	 * 
+	 * @return true if the player is connected, otherwise false
+	 */
+	public boolean isConnesso() {
+		return connesso;
+	}
+
+	/**
+	 * sets the parameter connesso
+	 * @param connesso the value of parameter to set
+	 */
+	public void setConnesso(boolean connesso) {
+		this.connesso = connesso;
+	}
+
+	
 }

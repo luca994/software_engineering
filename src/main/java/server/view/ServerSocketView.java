@@ -117,7 +117,10 @@ public class ServerSocketView extends ServerView implements Runnable {
 				if (object instanceof String){
 					this.notificaObservers(object, giocatore);
 				}
-			} catch (IOException | ClassNotFoundException e) {
+			} catch (IOException e) {
+				System.err.println("Il giocatore "+giocatore.getNome()+" si è disconnesso");
+				break;
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
