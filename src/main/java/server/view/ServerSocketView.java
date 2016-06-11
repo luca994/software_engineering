@@ -102,7 +102,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 				}
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
-					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), azioneFactory, giocatore)) {
+					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), giocatore)) {
 						Azione azioneGiocatore = azioneFactory.createAzione();
 						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 						this.notificaObservers(azioneGiocatore, giocatore);

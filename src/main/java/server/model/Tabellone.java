@@ -371,6 +371,11 @@ public class Tabellone implements Serializable{
 		throw new IllegalArgumentException("la città inserita non è corretta");
 	}
 
+	/**
+	 * searches a business permit tile in the game board that is the same of tessera
+	 * @param tessera the tile to search
+	 * @return the business permit tile
+	 */
 	public TesseraCostruzione cercaTesseraCostruzioneInTabellone(TesseraCostruzione tessera){
 		for(Regione r:this.getRegioni()){
 			for(TesseraCostruzione t: r.getTessereCostruzione()){

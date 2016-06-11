@@ -143,7 +143,8 @@ public class ViewCLI extends View implements Runnable {
 				}
 				if (inserimentoAzione.get()) {
 					try {
-						faseAzione();
+						if(!faseAzione())
+							semaforo.release();
 					} catch (IOException e) {
 						throw new IllegalStateException(e.getMessage());
 					}
@@ -160,7 +161,7 @@ public class ViewCLI extends View implements Runnable {
 		}
 	}
 
-	private void faseAzione() throws IOException {
+	private boolean faseAzione() throws IOException {
 		Integer scelta;
 		InputOutput.stampa("Inserisci un azione:\n");
 		InputOutput.stampa("- Azioni principali:\n");
@@ -179,17 +180,19 @@ public class ViewCLI extends View implements Runnable {
 		if (scelta < 8) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
-			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione()))
+			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())){
 				this.getConnessione().inviaOggetto(azioneFactory);
+			}
 			else
-				faseAzione();
+				return false;
 		} else if (scelta == 8)
 			stampeTabellone();
 		else {
 			InputOutput.stampa("");
 			InputOutput.stampa("Input non valido");
-			faseAzione();
+			return false;
 		}
+		return true;
 	}
 
 	private void faseCompraVendita(){
@@ -702,17 +705,16 @@ public class ViewCLI extends View implements Runnable {
 	 *            the action factory used by the cli to create the action
 	 */
 	private boolean inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory) {
-		InputOutput.stampa("Inserisci la tessera costruzione da acquistare (da 0 a 5) oppure 'annulla' per annullare");
+		InputOutput.stampa("Inserisci la tessera costruzione da acquistare (da 0 a 1) oppure 'annulla' per annullare");
 		String numTessera = InputOutput.leggiStringa(false);
 		try{
-			if(selezionaTesseraDaTabellone(Integer.parseInt(numTessera))!=null)
-				azioneFactory.setTesseraCostruzione(selezionaTesseraDaTabellone(Integer.parseInt(numTessera)));
-			else{
-				InputOutput.stampa("Tessera non corretta");
-				return false;
-			}
+			TesseraCostruzione tesseraTemp = azioneFactory.getConsiglio().getRegione().getTessereCostruzione().get(Integer.parseInt(numTessera));
+			azioneFactory.setTesseraCostruzione(tesseraTemp);
 		} catch (NumberFormatException e) {
 			InputOutput.stampa("L'input deve essere un numero o annulla");
+			return false;
+		} catch(IndexOutOfBoundsException e){
+			InputOutput.stampa("Il numero inserito non è corretto");
 			return false;
 		}
 		return true;
