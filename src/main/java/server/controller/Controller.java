@@ -10,6 +10,7 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
+import server.GestisciGioco;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -110,14 +111,18 @@ public class Controller implements Observer<Object, Bonus> {
 			if (giocatore.getStatoGiocatore() instanceof TurnoNormale) {
 				try {
 					if (oggetto instanceof AzionePrincipale
-							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili() <= 0)
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniPrincipaliEseguibili() <= 0){
 						gioco.notificaObservers("Non hai più azioni principali", giocatore);
+					    gioco.notificaObservers(gioco.getTabellone(),giocatore);}
 					else if (oggetto instanceof AzioneRapida
-							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili() <= 0)
+							&& ((TurnoNormale) giocatore.getStatoGiocatore()).getAzioniRapideEseguibili() <= 0){
 						gioco.notificaObservers("Non hai più azioni rapide", giocatore);
+						gioco.notificaObservers(gioco.getTabellone(),giocatore);}
 					else {
 						((Azione) oggetto).eseguiAzione(giocatore);
 						gioco.notificaObservers("Azione Eseguita!", giocatore);
+						if(giocatore.getStatoGiocatore() instanceof TurnoNormale)
+							gioco.notificaObservers(gioco.getTabellone(), giocatore);
 					}
 				} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
 						| EmporioGiaCostruito e) {
@@ -133,12 +138,12 @@ public class Controller implements Observer<Object, Bonus> {
 			synchronized (giocatore.getStatoGiocatore()) {
 				giocatore.getStatoGiocatore().prossimoStato();
 			}
-			gioco.notificaObservers(gioco.getTabellone());
 		}
 		if (oggetto instanceof OggettoVendibile) {
 			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
 				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
+				gioco.notificaObservers(gioco.getTabellone(), giocatore);
 			}
 			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoCompraVendita){
 				try {
@@ -147,10 +152,10 @@ public class Controller implements Observer<Object, Bonus> {
 					gioco.notificaObservers("Oggetto acquistato", giocatore);
 				} catch (FuoriDalLimiteDelPercorso e) {
 					gioco.notificaObservers("Non hai abbastanza soldi per acquistare questo oggetto", giocatore);
+				}finally{
+					gioco.notificaObservers(gioco.getTabellone(), giocatore);
 				}}
 		}
-		if (!(giocatore.getStatoGiocatore() instanceof AttesaTurno))
-			gioco.notificaObservers(gioco.getTabellone());
 		if(oggetto instanceof Bonus){
 			updateBonus((Bonus) oggetto,giocatore);
 		}

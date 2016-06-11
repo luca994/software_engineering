@@ -193,10 +193,11 @@ public class ViewCLI extends View implements Runnable {
 	}
 
 	private void faseCompraVendita(){
+		Integer scelta;
 		InputOutput.stampa("1) Per acquistare oggetti dal mercato");
 		InputOutput.stampa("2) Per passare il turno");
 		OggettoVendibile oggettoDaAcquistare;
-		Integer scelta = InputOutput.leggiIntero(false);
+		scelta = InputOutput.leggiIntero(false);
 		switch (scelta) {
 		case 1:
 			oggettoDaAcquistare = compraOggetto();
@@ -208,6 +209,7 @@ public class ViewCLI extends View implements Runnable {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			break;
 		case 2:
 			try {
 				getConnessione().inviaOggetto("-");
@@ -222,10 +224,11 @@ public class ViewCLI extends View implements Runnable {
 	}
 	
 	private void faseAggiuntaOggetti() {
+		Integer scelta;
 		InputOutput.stampa("1) Per aggiungere oggetti al mercato");
 		InputOutput.stampa("2) Per passare il turno");
 		OggettoVendibile oggettoDaAggiungere;
-		Integer scelta = InputOutput.leggiIntero(false);
+		scelta = InputOutput.leggiIntero(false);
 		switch (scelta) {
 		case 1:
 			oggettoDaAggiungere = aggiungiOggettiAlMercato();
@@ -237,6 +240,7 @@ public class ViewCLI extends View implements Runnable {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			break;
 		case 2:
 			try {
 				getConnessione().inviaOggetto("-");

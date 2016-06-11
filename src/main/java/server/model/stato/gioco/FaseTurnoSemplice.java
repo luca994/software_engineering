@@ -11,10 +11,11 @@ public class FaseTurnoSemplice extends Esecuzione {
 	 * 
 	 */
 	private static final long serialVersionUID = -8160577673952636015L;
-	private boolean ultimoTurno = false;
+	private boolean ultimoTurno;
 
 	public FaseTurnoSemplice(Gioco gioco) {
 		super(gioco);
+		ultimoTurno=false;
 	}
 
 	/**

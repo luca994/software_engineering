@@ -175,7 +175,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	/**
 	 * @return the stato
 	 */
-	public StatoGioco getStato() {
+	public synchronized StatoGioco getStato() {
 		return statoGioco;
 	}
 
@@ -193,7 +193,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 * @param stato
 	 *            the stato to set
 	 */
-	public void setStato(StatoGioco stato) {
+	public synchronized void setStato(StatoGioco stato) {
 		this.statoGioco = stato;
 	}
 }
