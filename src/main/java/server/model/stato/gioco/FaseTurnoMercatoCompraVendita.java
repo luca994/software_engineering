@@ -50,7 +50,7 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 			ogg.resettaAttributiOggettoVendibile();
 			mercato.getOggettiInVendita().remove(ogg);
 		}
-
+		mercato.getOggettiInVendita().clear();
 	}
 
 	@Override

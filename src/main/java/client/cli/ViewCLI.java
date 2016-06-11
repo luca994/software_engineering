@@ -302,11 +302,13 @@ public class ViewCLI extends View implements Runnable {
 
 	private OggettoVendibile compraOggetto(){
 		Integer indice = 0;
-		List<OggettoVendibile> mercato = ((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato().getOggettiInVendita();
-		for (OggettoVendibile o : mercato) {
-			InputOutput.stampa(indice + ") " + o.toString());
-			indice++;
-		}
+		List<OggettoVendibile> mercato = new ArrayList<>();
+		for (OggettoVendibile o : ((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato().getOggettiInVendita()) {
+			if(!o.getGiocatore().equals(giocatore)){
+				mercato.add(o);
+				InputOutput.stampa(indice + ") " + o.toString());
+				indice++;
+		}}
 		indice = InputOutput.leggiIntero(true);
 		if (indice == null)
 			return null;
@@ -861,7 +863,8 @@ public class ViewCLI extends View implements Runnable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaGiocatore();
 				aggiornaStato();
-				if (semaforo.availablePermits() == 0) {
+				synchronized (semaforo) {
+				if (semaforo.availablePermits() == 0) 
 					semaforo.release();
 				}
 				inserimentoAzione.set(true);

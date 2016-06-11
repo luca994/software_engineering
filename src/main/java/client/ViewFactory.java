@@ -9,32 +9,35 @@ import client.cli.ViewCLI;
 public class ViewFactory {
 
 	private static final int VIEW_CLI = 0;
-	
+
 	private Set<String> listaView;
-	
-	public ViewFactory(){
+
+	public ViewFactory() {
 		listaView = new HashSet<>();
-		listaView.add("VIEW_CLI");
+		listaView.add("CommandLineInterface-CLI");
 	}
-	
-	public Set<String> getListaView(){
+
+	public Set<String> getListaView() {
 		return listaView;
 	}
 
-	
 	/**
 	 * creates the view of the player according to the input parameter
-	 * @param sceltaView 0 to create CLI_VIEW
-	 * @throws InvalidParameterException if the input isn't correct
+	 * 
+	 * @param sceltaView
+	 *            0 to create CLI_VIEW
+	 * @throws InvalidParameterException
+	 *             if the input isn't correct
 	 */
-	public View createView (int sceltaView) throws InvalidParameterException{
-		switch (sceltaView){
-		
-		case VIEW_CLI : return new ViewCLI();
-		
-		default:	throw new InvalidParameterException("La view selezionata non è valida!");
-		
+	public View createView(int sceltaView) throws InvalidParameterException {
+		switch (sceltaView) {
+
+		case VIEW_CLI:
+			return new ViewCLI();
+
+		default:
+			throw new InvalidParameterException("La view selezionata non è valida!");
+
 		}
-		
 	}
 }

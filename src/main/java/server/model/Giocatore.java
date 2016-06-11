@@ -90,7 +90,7 @@ public class Giocatore implements Serializable {
 	}
 
 	/**
-	 * searches for a politic card with the same parameters in the list of cards
+	 * searches for the first occurrence of a politic card with the same parameters in the list of cards
 	 * owned by the player, if the player hasn't got the card,it returns null.
 	 * 
 	 * @param cartaCercata
@@ -105,9 +105,9 @@ public class Giocatore implements Serializable {
 	}
 
 	/**
-	 * searches for a tesseraCostruzione with the same parameters in the list of
-	 * tessereValide owned by the player, if the player hasn't got the
-	 * tessera,it returns null.
+	 * searches for the first occurrence of a tesseraCostruzione with the same
+	 * parameters in the list of tessereValide owned by the player, if the
+	 * player hasn't got the tessera,it returns null.
 	 * 
 	 * @param tesseraCercata
 	 *            is the tessera to search
@@ -125,7 +125,8 @@ public class Giocatore implements Serializable {
 	 * market list (assuming that an object is in sale only if it has a valid
 	 * price)
 	 * 
-	 * @return the list of oggettiVendibili generated
+	 * @return the list of oggettiVendibili generated , an empty list if there
+	 *         aren't object available.
 	 */
 	public List<OggettoVendibile> generaListaOggettiVendibiliNonInVendita() {
 		List<OggettoVendibile> oggetti = new ArrayList<>();

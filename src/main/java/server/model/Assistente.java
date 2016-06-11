@@ -22,8 +22,8 @@ public class Assistente extends OggettoVendibile implements Serializable {
 		transazioneDenaro(nuovoProprietario);
 		nuovoProprietario.getAssistenti().add(this);
 		getGiocatore().getAssistenti().remove(this);
-		resettaAttributiOggettoVendibile();
 		getMercato().getOggettiInVendita().remove(this);
+		resettaAttributiOggettoVendibile();
 	}
 
 	public boolean isUguale(Assistente assistente) {
