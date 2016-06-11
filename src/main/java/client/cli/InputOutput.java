@@ -26,7 +26,7 @@ public class InputOutput {
 
 	public static String leggiStringa(boolean tornaIndietroDisponibile) {
 		String in;
-		System.out.print("-> ");
+		System.out.print("--> ");
 		System.out.flush();
 		if(tornaIndietroDisponibile)
 			InputOutput.stampa("\nPremi - per tornare indietro\n");
