@@ -90,7 +90,7 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	@Override
 	public void riceviAzione(AzioneFactory azioneFactory) throws RemoteException {
 		this.azioneFactory.setTipoAzione(azioneFactory.getTipoAzione());
-		if (this.azioneFactory.completaAzioneFactory(azioneFactory, this.azioneFactory, giocatore)) {
+		if (this.azioneFactory.completaAzioneFactory(azioneFactory, giocatore)) {
 			Azione azione = this.azioneFactory.createAzione();
 			this.azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 			this.notificaObservers(azione, giocatore);
