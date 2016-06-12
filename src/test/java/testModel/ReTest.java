@@ -82,7 +82,7 @@ public class ReTest {
 	 * Test method for {@link server.model.Re#getCitta()}.
 	 */
 	@Test
-	public void testGetCittà() {
+	public void testGetCitta() {
 		assertEquals(giocoTester.getTabellone().cercaCitta("juvelar"), giocoTester.getTabellone().getRe().getCitta());
 	}
 
