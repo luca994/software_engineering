@@ -36,6 +36,8 @@ public class BonusGettoneCitta implements Bonus {
 	}
 
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {
+		if(numeroCitta<0)
+			throw new IllegalArgumentException("Il numero di città non può essere minore di 0");
 		this.gioco = gioco;
 		this.numeroCitta = numeroCitta;
 		this.citta = new HashSet<>();
