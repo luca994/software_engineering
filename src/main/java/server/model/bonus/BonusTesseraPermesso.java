@@ -56,6 +56,20 @@ public class BonusTesseraPermesso implements Bonus {
 	public void setTesseraCorretta(boolean tesseraCorretta) {
 		this.tesseraCorretta = tesseraCorretta;
 	}
+	
+	/**
+	 * @return the tesseraCorretta
+	 */
+	public boolean isTesseraCorretta() {
+		return tesseraCorretta;
+	}
+
+	/**
+	 * @return the gioco
+	 */
+	public Gioco getGioco() {
+		return gioco;
+	}
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
@@ -64,12 +78,15 @@ public class BonusTesseraPermesso implements Bonus {
 		while(!tesseraCorretta){
 			gioco.notificaObservers(this, giocatore);
 		}
-		giocatore.getTessereValide().add(tessera);
-		tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
-		for (Bonus b : tessera.getBonus()) {
-			b.azioneBonus(giocatore);
+		if(tessera!=null){
+			giocatore.getTessereValide().add(tessera);
+			tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
+			for (Bonus b : tessera.getBonus()) {
+				b.azioneBonus(giocatore);
+			}
 		}
-
+		tessera=null;
+		tesseraCorretta=false;
 	}
 
 	@Override

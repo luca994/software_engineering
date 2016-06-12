@@ -9,10 +9,6 @@ import java.net.UnknownHostException;
 
 public class ConnessioneSocket implements Connessione, Runnable {
 
-	private String host;
-	
-	private int port;
-	
 	private Socket socket;
 	
 	private View view;

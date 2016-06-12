@@ -46,6 +46,14 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		return tessera;
 	}
 
+	
+	/**
+	 * @return the gioco
+	 */
+	public Gioco getGioco() {
+		return gioco;
+	}
+
 	/**
 	 * @param tessera
 	 *            the tessera to set
@@ -54,6 +62,13 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		this.tessera = tessera;
 	}
 
+	
+	/**
+	 * @return the value of tesseraCostruzioneCorretta
+	 */
+	public boolean isTesseraCostruzioneCorretta() {
+		return tesseraCostruzioneCorretta;
+	}
 
 	/**
 	 * set the value of tesseraCostruzioneCorretta
@@ -78,6 +93,8 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 				b.azioneBonus(giocatore);
 			}
 		}
+		tessera=null;
+		tesseraCostruzioneCorretta=false;
 	}
 
 	@Override
