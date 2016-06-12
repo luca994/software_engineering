@@ -9,6 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import eccezione.NomeGiaScelto;
 import server.ServerRMIInterface;
+import server.model.OggettoVendibile;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.view.ServerRMIViewInterface;
@@ -54,6 +55,12 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 		}
 		if(oggetto instanceof AzioneFactory){
 			serverView.riceviAzione((AzioneFactory) oggetto);
+		}
+		if(oggetto instanceof OggettoVendibile){
+			serverView.riceviOggettoVendibile((OggettoVendibile) oggetto);
+		}
+		if(oggetto instanceof String){
+			serverView.riceviStringa((String) oggetto);
 		}
 	}
 

@@ -10,6 +10,7 @@ import client.ConnessioneRMIInterface;
 import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.OggettoVendibile;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
@@ -19,7 +20,6 @@ import server.model.bonus.BonusTesseraPermesso;
 
 public class ServerRMIView extends ServerView implements ServerRMIViewInterface {
 
-	private Giocatore giocatore;
 	private ConnessioneRMIInterface client;
 	private AzioneFactory azioneFactory;
 	private Bonus bonusDaCompletare;
@@ -28,7 +28,7 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	public ServerRMIView(Gioco gioco, Giocatore giocatore, ConnessioneRMIInterface client, int port) {
 		try {
 			UnicastRemoteObject.exportObject(this, port);
-			this.giocatore = giocatore;
+			setGiocatore(giocatore);
 			this.client = client;
 			gioco.registerObserver(this);
 			azioneFactory = new AzioneFactory(gioco);
@@ -55,12 +55,12 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	@Override
 	public void update(Object cambiamento, Giocatore attributo) {
 		try {
-			if (cambiamento instanceof Bonus && this.giocatore.equals(attributo)) {
+			if (cambiamento instanceof Bonus && getGiocatore().equals(attributo)) {
 				bonusDaCompletare = (Bonus) cambiamento;
 				client.passaOggetto((Bonus) cambiamento);
 				this.notificaObservers(cambiamento, attributo);
 				semBonus.acquire();
-			} else if (this.giocatore.equals(attributo)) {
+			} else if (getGiocatore().equals(attributo)) {
 				client.passaOggetto(cambiamento);
 			}
 		} catch (RemoteException | InterruptedException e) {
@@ -90,12 +90,23 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	@Override
 	public void riceviAzione(AzioneFactory azioneFactory) throws RemoteException {
 		this.azioneFactory.setTipoAzione(azioneFactory.getTipoAzione());
-		if (this.azioneFactory.completaAzioneFactory(azioneFactory, giocatore)) {
+		if (this.azioneFactory.completaAzioneFactory(azioneFactory, getGiocatore())) {
 			Azione azione = this.azioneFactory.createAzione();
 			this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
-			this.notificaObservers(azione, giocatore);
+			this.notificaObservers(azione, getGiocatore());
 		} else {
 			client.passaOggetto("Parametri dell'azione errati");
 		}
 	}
+
+	@Override
+	public void riceviOggettoVendibile(OggettoVendibile oggettoVendibile) throws RemoteException {
+		this.notificaObservers(cercaOggettoVendibile(oggettoVendibile), getGiocatore());
+	}
+	
+	@Override
+	public void riceviStringa(String messaggio) throws RemoteException {
+		this.notificaObservers(messaggio, getGiocatore());
+	}
+	
 }

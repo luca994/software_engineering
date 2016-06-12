@@ -1,6 +1,5 @@
 package client.cli;
 
-
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -59,7 +58,7 @@ public class ViewCLI extends View implements Runnable {
 	private ExecutorService executor;
 	private Semaphore semaforo;
 	private Semaphore semBonus;
-	
+
 	/**
 	 * builds a ViewCLI object
 	 */
@@ -100,7 +99,7 @@ public class ViewCLI extends View implements Runnable {
 		} catch (InputMismatchException e) {
 			InputOutput.stampa("La porta deve essere un numero");
 			impostaConnessione(nome, mappa);
-		} catch (NotBoundException e){
+		} catch (NotBoundException e) {
 			InputOutput.stampa("il nome del registro non è corretto");
 			impostaConnessione(nome, mappa);
 		} catch (NomeGiaScelto e) {
@@ -118,22 +117,22 @@ public class ViewCLI extends View implements Runnable {
 		impostaConnessione(nome, inserisciMappa());
 	}
 
-	public String inserisciMappa(){
+	public String inserisciMappa() {
 		InputOutput.stampa("Inserisci un numero da 0 a 7 per la mappa, oppure 8 per casuale");
 		String mappa = InputOutput.leggiStringa(false);
-		try{
-			if(Integer.parseInt(mappa)<=8 && Integer.parseInt(mappa)>=0)
+		try {
+			if (Integer.parseInt(mappa) <= 8 && Integer.parseInt(mappa) >= 0)
 				return mappa;
-			else{
+			else {
 				InputOutput.stampa("Numero non corretto");
 				return inserisciMappa();
 			}
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			InputOutput.stampa("L'input deve essere un numero");
 			return inserisciMappa();
 		}
 	}
-	
+
 	/**
 	 * starts the client
 	 */
@@ -158,12 +157,12 @@ public class ViewCLI extends View implements Runnable {
 				if (inserimentoBonus.get()) {
 					inputString = InputOutput.leggiStringa(false);
 					inserimentoBonus.set(false);
-					if(semBonus.availablePermits()==0)
+					if (semBonus.availablePermits() == 0)
 						semBonus.release();
 				}
 				if (inserimentoAzione.get()) {
 					try {
-						if(!faseAzione())
+						if (!faseAzione())
 							semaforo.release();
 					} catch (IOException e) {
 						throw new IllegalStateException(e.getMessage());
@@ -200,10 +199,9 @@ public class ViewCLI extends View implements Runnable {
 		if (scelta < 8) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
-			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())){
+			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
 				this.getConnessione().inviaOggetto(azioneFactory);
-			}
-			else
+			} else
 				return false;
 		} else if (scelta == 8)
 			stampeTabellone();
@@ -215,7 +213,7 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
-	private void faseCompraVendita(){
+	private void faseCompraVendita() {
 		Integer scelta;
 		InputOutput.stampa("1) Per acquistare oggetti dal mercato");
 		InputOutput.stampa("2) Per passare il turno");
@@ -245,7 +243,7 @@ public class ViewCLI extends View implements Runnable {
 			faseCompraVendita();
 		}
 	}
-	
+
 	private void faseAggiuntaOggetti() {
 		Integer scelta;
 		InputOutput.stampa("1) Per aggiungere oggetti al mercato");
@@ -320,15 +318,17 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
-	private OggettoVendibile compraOggetto(){
+	private OggettoVendibile compraOggetto() {
 		Integer indice = 0;
 		List<OggettoVendibile> mercato = new ArrayList<>();
-		for (OggettoVendibile o : ((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato().getOggettiInVendita()) {
-			if(!o.getGiocatore().equals(giocatore)){
+		for (OggettoVendibile o : ((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato()
+				.getOggettiInVendita()) {
+			if (!o.getGiocatore().equals(giocatore)) {
 				mercato.add(o);
 				InputOutput.stampa(indice + ") " + o.toString());
 				indice++;
-		}}
+			}
+		}
 		indice = InputOutput.leggiIntero(true);
 		if (indice == null)
 			return null;
@@ -339,7 +339,7 @@ public class ViewCLI extends View implements Runnable {
 			return compraOggetto();
 		}
 	}
-	
+
 	/**
 	 * Asks the user inputs an object to be added to the sale.if the user wants
 	 * to go back returns null
@@ -733,13 +733,14 @@ public class ViewCLI extends View implements Runnable {
 	private boolean inserimentoTesseraCostruzioneDaAcquistare(AzioneFactory azioneFactory) {
 		InputOutput.stampa("Inserisci la tessera costruzione da acquistare (da 0 a 1) oppure 'annulla' per annullare");
 		String numTessera = InputOutput.leggiStringa(false);
-		try{
-			TesseraCostruzione tesseraTemp = azioneFactory.getConsiglio().getRegione().getTessereCostruzione().get(Integer.parseInt(numTessera));
+		try {
+			TesseraCostruzione tesseraTemp = azioneFactory.getConsiglio().getRegione().getTessereCostruzione()
+					.get(Integer.parseInt(numTessera));
 			azioneFactory.setTesseraCostruzione(tesseraTemp);
 		} catch (NumberFormatException e) {
 			InputOutput.stampa("L'input deve essere un numero o annulla");
 			return false;
-		} catch(IndexOutOfBoundsException e){
+		} catch (IndexOutOfBoundsException e) {
 			InputOutput.stampa("Il numero inserito non è corretto");
 			return false;
 		}
@@ -748,10 +749,12 @@ public class ViewCLI extends View implements Runnable {
 
 	/**
 	 * searches the business permit tile
-	 * @param numTessera the number of the tile
+	 * 
+	 * @param numTessera
+	 *            the number of the tile
 	 * @return return the business permit tile
 	 */
-	public TesseraCostruzione selezionaTesseraDaTabellone(int numTessera){
+	public TesseraCostruzione selezionaTesseraDaTabellone(int numTessera) {
 		if (numTessera < 6 && numTessera >= 0) {
 			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
 			for (Regione r : tabelloneClient.getRegioni()) {
@@ -763,6 +766,7 @@ public class ViewCLI extends View implements Runnable {
 			return null;
 		}
 	}
+
 	/**
 	 * asks the political cards that the user wants to use, then add them to the
 	 * action factory
@@ -873,11 +877,11 @@ public class ViewCLI extends View implements Runnable {
 	 * @param oggetto
 	 *            the object passed by the connection
 	 */
-	public void riceviOggetto(Object oggetto) {
+	public synchronized void riceviOggetto(Object oggetto) {
 		try {
-			if (oggetto instanceof String){
+			if (oggetto instanceof String) {
 				InputOutput.stampa((String) oggetto);
-				if("scegli mappa".equalsIgnoreCase((String) oggetto)){
+				if ("scegli mappa".equalsIgnoreCase((String) oggetto)) {
 					InputOutput.stampa("Inserisci un numero da 0 a 7:");
 					String input = InputOutput.leggiStringa(false);
 					this.getConnessione().inviaOggetto(input);
@@ -889,15 +893,12 @@ public class ViewCLI extends View implements Runnable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaGiocatore();
 				aggiornaStato();
-				synchronized (semaforo) {
-				if (semaforo.availablePermits() == 0) 
-					semaforo.release();
-				}
+				semaforo.release();
 				inserimentoAzione.set(true);
 			}
 			if (oggetto instanceof Exception) {
 				InputOutput.stampa(((Exception) oggetto).getMessage());
-				if(oggetto instanceof NomeGiaScelto)
+				if (oggetto instanceof NomeGiaScelto)
 					inizializzazione();
 			}
 			if (oggetto instanceof BonusGettoneCitta) {
@@ -905,7 +906,7 @@ public class ViewCLI extends View implements Runnable {
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
 				semBonus.acquire();
-				if(inputString.equals("passa"))
+				if (inputString.equals("passa"))
 					((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
 				this.getConnessione().inviaOggetto(oggetto);
 			}
@@ -913,15 +914,15 @@ public class ViewCLI extends View implements Runnable {
 				InputOutput.stampa("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus.set(true);
 				semBonus.acquire();
-				try{
+				try {
 					TesseraCostruzione tmp = selezionaTesseraDaTabellone(Integer.parseInt(inputString));
-					if(tmp!=null)
+					if (tmp != null)
 						((BonusTesseraPermesso) oggetto).setTessera(tmp);
-					else{
+					else {
 						System.out.println("Il numero inserito non è corretto");
 						riceviOggetto(oggetto);
 					}
-				}catch(NumberFormatException e){
+				} catch (NumberFormatException e) {
 					System.out.println("la stringa deve essere un numero");
 					riceviOggetto(oggetto);
 				}
@@ -936,20 +937,22 @@ public class ViewCLI extends View implements Runnable {
 				InputOutput.stampa("inserisci il numero della tessera da riciclare");
 				inserimentoBonus.set(true);
 				semBonus.acquire();
-				try{
-					if(prov.equals("0")){
-						((BonusRiutilizzoCostruzione) oggetto).setTessera(giocatore.getTessereValide().get(Integer.parseInt(inputString)));
-					}else if(prov.equals("1")){
-						((BonusRiutilizzoCostruzione) oggetto).setTessera(giocatore.getTessereUsate().get(Integer.parseInt(inputString)));
-					}else if(prov.equals("passa"))
+				try {
+					if (prov.equals("0")) {
+						((BonusRiutilizzoCostruzione) oggetto)
+								.setTessera(giocatore.getTessereValide().get(Integer.parseInt(inputString)));
+					} else if (prov.equals("1")) {
+						((BonusRiutilizzoCostruzione) oggetto)
+								.setTessera(giocatore.getTessereUsate().get(Integer.parseInt(inputString)));
+					} else if (prov.equals("passa"))
 						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
 					this.getConnessione().inviaOggetto(oggetto);
-				}catch(IndexOutOfBoundsException | NumberFormatException e){
+				} catch (IndexOutOfBoundsException | NumberFormatException e) {
 					System.out.println("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}
 			}
-		}catch(IOException | InterruptedException e){
+		} catch (IOException | InterruptedException e) {
 			throw new IllegalStateException();
 		}
 	}
