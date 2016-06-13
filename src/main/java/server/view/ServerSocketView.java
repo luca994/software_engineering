@@ -151,8 +151,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 			}
 		} else if (getGiocatore().equals(attributo)) {
 			inviaOggetto(cambiamento);
-		}
-	}
+		}	}
 
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {

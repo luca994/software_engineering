@@ -661,8 +661,11 @@ public class ViewCLI extends View implements Runnable {
 	 *            the action factory used by the cli to create the action
 	 */
 	private boolean inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
-		InputOutput.stampa("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
-				+ giocatore.getTessereValide().size() + ") oppure inserisci 'annulla' per annullare");
+		if(giocatore.getTessereValide().size()>0)
+			InputOutput.stampa("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
+						+ ((int)giocatore.getTessereValide().size()-1) + ") oppure inserisci 'annulla' per annullare");
+		else
+			InputOutput.stampa("Non hai tessere, inserisci 'annulla'");
 		String numTessera = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(numTessera)) {
 			return false;
@@ -932,16 +935,17 @@ public class ViewCLI extends View implements Runnable {
 				inserimentoBonus.set(true);
 				semBonus.acquire();
 				try {
-					if (prov.equals("0")) {
+					if ("0".equals(prov)) {
 						((BonusRiutilizzoCostruzione) oggetto)
 								.setTessera(giocatore.getTessereValide().get(Integer.parseInt(inputString)));
-					} else if (prov.equals("1")) {
+					} else if ("1".equals(prov)) {
 						((BonusRiutilizzoCostruzione) oggetto)
 								.setTessera(giocatore.getTessereUsate().get(Integer.parseInt(inputString)));
-					} else if (prov.equals("passa"))
+					} else if ("passa".equals(prov))
 						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
 					this.getConnessione().inviaOggetto(oggetto);
-				} catch (IndexOutOfBoundsException | NumberFormatException e) {
+				} catch (IndexOutOfBoundsException | NumberFormatException e){
+					e.printStackTrace();
 					System.out.println("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}

@@ -33,7 +33,7 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="10">
-		<Bonus id="BonusRiutilizzoCostruzione"/>
+		<Bonus id="BonusTesseraPermesso"/>
 	</Casella>
 	<Casella numero="11">
 		<Bonus id="NessunBonus"/>
@@ -46,7 +46,7 @@
 		<Bonus id="NessunBonus"/>
 	</Casella>
 	<Casella numero="14">
-		<Bonus id="BonusTesseraPermesso"/>
+		<Bonus id="BonusRiutilizzoCostruzione"/>
 	</Casella>
 	<Casella numero="15">
 		<Bonus id="NessunBonus"/>

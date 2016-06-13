@@ -72,8 +72,8 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	public void impostaParametriBonus(Bonus bonus) throws RemoteException {
 		if (bonus instanceof BonusGettoneCitta) {
 			List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) bonus).getCitta());
-			if (!tmp.get(0).getNome().equals("passa"))
-				((BonusGettoneCitta) bonusDaCompletare).getCitta().add(tmp.get(0));
+			if (!"passa".equals(tmp.get(0).getNome()))
+				((BonusGettoneCitta) bonusDaCompletare).setCittaPerCompletamentoBonus(tmp.get(0));
 			semBonus.release();
 		}
 		if (bonus instanceof BonusTesseraPermesso) {
