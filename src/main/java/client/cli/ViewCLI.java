@@ -798,7 +798,7 @@ public class ViewCLI extends View implements Runnable {
 			}
 		}
 		List<CartaPolitica> carteGiocatore = new ArrayList<>(giocatore.getCartePolitica());
-		boolean noCarte = false;
+		boolean noCarte;
 		for (CartaPolitica c : carteDaUsare) {
 			noCarte = true;
 			for (CartaPolitica cg : carteGiocatore) {
@@ -881,11 +881,6 @@ public class ViewCLI extends View implements Runnable {
 		try {
 			if (oggetto instanceof String) {
 				InputOutput.stampa((String) oggetto);
-				if ("scegli mappa".equalsIgnoreCase((String) oggetto)) {
-					InputOutput.stampa("Inserisci un numero da 0 a 7:");
-					String input = InputOutput.leggiStringa(false);
-					this.getConnessione().inviaOggetto(input);
-				}
 			}
 			if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
@@ -906,8 +901,7 @@ public class ViewCLI extends View implements Runnable {
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
 				semBonus.acquire();
-				if (inputString.equals("passa"))
-					((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
+				((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
 				this.getConnessione().inviaOggetto(oggetto);
 			}
 			if (oggetto instanceof BonusTesseraPermesso) {

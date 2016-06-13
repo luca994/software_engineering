@@ -45,9 +45,8 @@ public class Controller implements Observer<Object, Bonus> {
 	public void updateBonus(Bonus cambiamento, Giocatore giocatore) {
 		if (cambiamento instanceof BonusGettoneCitta) {
 			try {
-				List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) cambiamento).getCitta());
-				if (!tmp.isEmpty()) {
-					Citta citta = this.gioco.getTabellone().cercaCitta(tmp.get(0).getNome());
+				if (((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus()!=null) {
+					Citta citta = this.gioco.getTabellone().cercaCitta(((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus().getNome());
 					if (citta == null) {
 						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 						gioco.notificaObservers("nome città non corretto", giocatore);
@@ -62,7 +61,7 @@ public class Controller implements Observer<Object, Bonus> {
 					return;
 				}
 			} catch (IllegalArgumentException e) {
-				gioco.notificaObservers(e.getMessage());
+				gioco.notificaObservers(e.getMessage(), giocatore);
 			}
 		}
 		if (cambiamento instanceof BonusTesseraPermesso) {

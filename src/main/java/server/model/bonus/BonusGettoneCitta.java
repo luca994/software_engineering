@@ -26,14 +26,7 @@ public class BonusGettoneCitta implements Bonus {
 	private Set<Citta> citta;
 	private Gioco gioco;
 	boolean cittaGiusta;
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "BonusGettoneCitta [numeroCitta=" + numeroCitta + "]";
-	}
+	private Citta cittaPerCompletamentoBonus;
 
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {
 		if(numeroCitta<0)
@@ -41,6 +34,11 @@ public class BonusGettoneCitta implements Bonus {
 		this.gioco = gioco;
 		this.numeroCitta = numeroCitta;
 		this.citta = new HashSet<>();
+	}
+	
+	@Override
+	public String toString() {
+		return "BonusGettoneCitta [numeroCitta=" + numeroCitta + "]";
 	}
 
 	/**
@@ -66,6 +64,20 @@ public class BonusGettoneCitta implements Bonus {
 	public Set<Citta> getCitta() {
 		return citta;
 	}
+	
+	/**
+	 * @return the cittaPerCompletamentoBonus
+	 */
+	public Citta getCittaPerCompletamentoBonus() {
+		return cittaPerCompletamentoBonus;
+	}
+
+	/**
+	 * @param cittaPerCompletamentoBonus the cittaPerCompletamentoBonus to set
+	 */
+	public void setCittaPerCompletamentoBonus(Citta cittaPerCompletamentoBonus) {
+		this.cittaPerCompletamentoBonus = cittaPerCompletamentoBonus;
+	}
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
@@ -89,6 +101,7 @@ public class BonusGettoneCitta implements Bonus {
 						gioco.notificaObservers("Non hai un'emporio nella città", giocatore);
 					}
 				}
+				cittaPerCompletamentoBonus=null;
 			} while (!cittaGiusta);
 		}
 

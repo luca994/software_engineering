@@ -29,7 +29,6 @@ import server.model.bonus.BonusTesseraPermesso;
 public class ServerSocketView extends ServerView implements Runnable {
 
 	private Socket socket;
-	private List<String> input;
 	private AzioneFactory azioneFactory;
 	private Bonus bonusDaCompletare;
 
@@ -51,7 +50,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 		this.socket = socket;
 		azioneFactory = new AzioneFactory(gioco);
 		semBonus = new Semaphore(0);
-		input = new ArrayList<>(2);
 	}
 
 	/**
@@ -84,8 +82,8 @@ public class ServerSocketView extends ServerView implements Runnable {
 				Object object = socketIn.readObject();
 				if (object instanceof BonusGettoneCitta) {
 					List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) object).getCitta());
-					if (!tmp.get(0).getNome().equals("passa"))
-						((BonusGettoneCitta) bonusDaCompletare).getCitta().add(tmp.get(0));
+					if (!"passa".equals(tmp.get(0).getNome()))
+						((BonusGettoneCitta) bonusDaCompletare).setCittaPerCompletamentoBonus(tmp.get(0));
 					semBonus.release();
 				}
 				if (object instanceof BonusTesseraPermesso) {
@@ -147,7 +145,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 			inviaOggetto(cambiamento);
 			try {
 				semBonus.acquire();
-				this.notificaObservers((Bonus) cambiamento, input);
+				this.notificaObservers((Bonus) cambiamento, this.getGiocatore());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
