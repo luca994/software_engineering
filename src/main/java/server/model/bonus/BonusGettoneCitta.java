@@ -95,7 +95,7 @@ public class BonusGettoneCitta implements Bonus {
 		for (Citta cit : this.citta) {
 			cit.eseguiBonus(giocatore);
 		}
-
+		citta = new HashSet<>();
 	}
 
 	@Override
