@@ -1,10 +1,12 @@
-package server.model;
+package server.model.componenti;
 
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import server.model.Giocatore;
 
 /**
  * 

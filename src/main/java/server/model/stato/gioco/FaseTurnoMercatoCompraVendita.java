@@ -6,8 +6,8 @@ import java.util.List;
 
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Mercato;
-import server.model.OggettoVendibile;
+import server.model.componenti.Mercato;
+import server.model.componenti.OggettoVendibile;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 
 public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {

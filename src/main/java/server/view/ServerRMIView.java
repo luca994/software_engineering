@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import client.ConnessioneRMIInterface;
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.OggettoVendibile;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.componenti.Citta;
+import server.model.componenti.OggettoVendibile;
 
 public class ServerRMIView extends ServerView implements ServerRMIViewInterface {
 

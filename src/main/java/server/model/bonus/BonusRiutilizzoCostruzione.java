@@ -5,7 +5,7 @@ package server.model.bonus;
 
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.TesseraCostruzione;
+import server.model.componenti.TesseraCostruzione;
 
 /**
  * To make the method azioneBonus work the class need a

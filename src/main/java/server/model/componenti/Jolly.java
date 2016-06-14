@@ -1,7 +1,7 @@
 /**
  * 
  */
-package server.model;
+package server.model.componenti;
 
 /**
  * @author Luca

@@ -9,9 +9,9 @@ import java.rmi.server.UnicastRemoteObject;
 
 import eccezione.NomeGiaScelto;
 import server.ServerRMIInterface;
-import server.model.OggettoVendibile;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
+import server.model.componenti.OggettoVendibile;
 import server.view.ServerRMIViewInterface;
 
 public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, ConnessioneRMIInterface{

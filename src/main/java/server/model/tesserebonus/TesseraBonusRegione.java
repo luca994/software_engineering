@@ -2,8 +2,8 @@ package server.model.tesserebonus;
 
 import java.util.Set;
 
-import server.model.Regione;
 import server.model.bonus.Bonus;
+import server.model.componenti.Regione;
 
 public class TesseraBonusRegione extends TesseraBonus {
 

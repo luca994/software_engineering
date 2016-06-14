@@ -1,8 +1,9 @@
-package server.model;
+package server.model.componenti;
 
 import java.io.Serializable;
 
 import eccezione.FuoriDalLimiteDelPercorso;
+import server.model.Giocatore;
 
 /**
  * @author Luca

@@ -2,9 +2,9 @@ package server.model.stato.giocatore;
 
 import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
-import server.model.Mercato;
-import server.model.OggettoVendibile;
 import server.model.azione.Azione;
+import server.model.componenti.Mercato;
+import server.model.componenti.OggettoVendibile;
 
 public class TurnoMercatoAggiuntaOggetti extends TurnoMercato {
 

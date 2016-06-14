@@ -13,13 +13,13 @@ import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Assistente;
-import server.model.CartaColorata;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Mercato;
-import server.model.OggettoVendibile;
-import server.model.TesseraCostruzione;
+import server.model.componenti.Assistente;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.Mercato;
+import server.model.componenti.OggettoVendibile;
+import server.model.componenti.TesseraCostruzione;
 
 /**
  * @author Luca
@@ -42,7 +42,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#Mercato(server.model.percorso.Percorso)}.
+	 * {@link server.model.componenti.Mercato#Mercato(server.model.percorso.Percorso)}.
 	 */
 	@Test
 	public void testMercatoValido() {
@@ -51,7 +51,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#Mercato(server.model.percorso.Percorso)}.
+	 * {@link server.model.componenti.Mercato#Mercato(server.model.percorso.Percorso)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testMercatoNull() {
@@ -60,7 +60,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#cercaOggetto(server.model.OggettoVendibile)}.
+	 * {@link server.model.componenti.Mercato#cercaOggetto(server.model.componenti.OggettoVendibile)}.
 	 */
 	@Test
 	public void testCercaOggettoAssistente() {
@@ -80,7 +80,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#cercaOggetto(server.model.OggettoVendibile)}.
+	 * {@link server.model.componenti.Mercato#cercaOggetto(server.model.componenti.OggettoVendibile)}.
 	 */
 	@Test
 	public void testCercaOggettoCartaColorata() {
@@ -100,7 +100,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#cercaOggetto(server.model.OggettoVendibile)}.
+	 * {@link server.model.componenti.Mercato#cercaOggetto(server.model.componenti.OggettoVendibile)}.
 	 */
 	@Test
 	public void testCercaOggettoCartaColorataNomeDiverso() {
@@ -120,7 +120,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#cercaOggetto(server.model.OggettoVendibile)}.
+	 * {@link server.model.componenti.Mercato#cercaOggetto(server.model.componenti.OggettoVendibile)}.
 	 */
 	@Test
 	public void testCercaOggettoCartaColorataConPrezzoDiverso() {
@@ -140,7 +140,7 @@ public class MercatoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Mercato#cercaOggetto(server.model.OggettoVendibile)}.
+	 * {@link server.model.componenti.Mercato#cercaOggetto(server.model.componenti.OggettoVendibile)}.
 	 */
 	@Test
 	public void testCercaOggettoTesseraPermesso() {
@@ -162,7 +162,7 @@ public class MercatoTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Mercato#getOggettiInVendita()}.
+	 * Test method for {@link server.model.componenti.Mercato#getOggettiInVendita()}.
 	 */
 	@Test
 	public void testGetOggettiInVenditaGet0() {
@@ -177,7 +177,7 @@ public class MercatoTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Mercato#getOggettiInVendita()}.
+	 * Test method for {@link server.model.componenti.Mercato#getOggettiInVendita()}.
 	 */
 	@Test
 	public void testGetOggettiInVenditaGetVuoto() {
@@ -188,7 +188,7 @@ public class MercatoTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Mercato#getPercorsoRicchezza()}.
+	 * Test method for {@link server.model.componenti.Mercato#getPercorsoRicchezza()}.
 	 */
 	@Test
 	public void testGetPercorsoRicchezza() {

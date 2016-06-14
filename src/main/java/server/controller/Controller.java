@@ -10,12 +10,8 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.OggettoVendibile;
-import server.model.Regione;
-import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzionePrincipale;
 import server.model.azione.AzioneRapida;
@@ -23,6 +19,11 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.componenti.Citta;
+import server.model.componenti.OggettoVendibile;
+import server.model.componenti.Regione;
+import server.model.componenti.TesseraCostruzione;
+import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
@@ -128,6 +129,9 @@ public class Controller implements Observer<Object, Bonus> {
 			} else {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
+		}
+		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")){
+			giocatore.setStatoGiocatore(new Sospeso(giocatore));
 		}
 		if (oggetto instanceof String && ((String) oggetto).equals("-")
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {

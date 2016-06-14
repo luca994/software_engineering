@@ -10,26 +10,35 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.OggettoVendibile;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.componenti.Citta;
+import server.model.componenti.OggettoVendibile;
 
-/**
- * @author Massimiliano Ventura
- *
- */
+
+
 public class ServerSocketView extends ServerView implements Runnable {
 
+
+	private static final Logger LOG = Logger.getLogger(ServerSocketView.class.getName());
+	
 	private Socket socket;
+	
+	private final ObjectOutputStream socketOut;
+
+	private final ObjectInputStream socketIn;
+	
 	private AzioneFactory azioneFactory;
+	
 	private Bonus bonusDaCompletare;
 
 	private Semaphore semBonus;
@@ -43,10 +52,12 @@ public class ServerSocketView extends ServerView implements Runnable {
 	 *            the socket to which the player client is connected
 	 * @param nuovoGiocatore
 	 *            the player connected to this view
+	 * @throws IOException 
 	 */
-	public ServerSocketView(Gioco gioco, Socket socket, Giocatore nuovoGiocatore) {
+	public ServerSocketView(Gioco gioco, Socket socket) throws IOException{
 		gioco.registerObserver(this);
-		setGiocatore(nuovoGiocatore);
+		socketOut = new ObjectOutputStream(socket.getOutputStream());
+		socketIn = new ObjectInputStream(socket.getInputStream());
 		this.socket = socket;
 		azioneFactory = new AzioneFactory(gioco);
 		semBonus = new Semaphore(0);
@@ -60,14 +71,48 @@ public class ServerSocketView extends ServerView implements Runnable {
 	 */
 	public synchronized void inviaOggetto(Object oggetto) {
 		try {
-			ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
 			socketOut.writeObject(oggetto);
 			socketOut.flush();
+			socketOut.reset();
 		} catch (IOException e) {
-			System.err.println("socket del giocatore " + getGiocatore().getNome()
-					+ " non connesso o errore nella creazione dello stream");
+			LOG.log(Level.FINEST, e.toString(), e);
+			disconnetti();
 		}
 	}
+	
+	public synchronized void disconnetti() {
+		if (socketOut != null) {
+			try {
+				socketOut.writeObject("Disconnetti");
+				socketOut.flush();
+				socketOut.reset();
+			} catch (IOException e) {
+				LOG.log(Level.FINER, e.toString(), e);
+			}
+		}
+		try {
+			socketOut.close();
+			socketIn.close();
+			socket.close();
+		} catch (IOException e) {
+			LOG.log(Level.FINE, "Il socket è già chiuso: " + e.toString(), e);
+		}
+		socket = null;
+		this.notificaObservers("Sospendi", getGiocatore());
+	}
+	
+	public synchronized String riceviString(){
+		try {
+			return (String)socketIn.readObject();
+		} catch (ClassNotFoundException e) {
+			LOG.log(Level.FINE, "Errore nella lettura della stringa" , e);
+		} catch (IOException e1) {
+			LOG.log(Level.SEVERE, "ERRORE NELLA CONNESSIONE CON CLIENT");
+			disconnetti();
+		}
+		return null;
+	}
+
 
 	/**
 	 * reads the socket and does an action when receives an object
@@ -76,9 +121,8 @@ public class ServerSocketView extends ServerView implements Runnable {
 	 */
 	@Override
 	public void run() {
-		while (true) {
+		while (socket!=null && !socket.isClosed() ) {
 			try {
-				ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 				Object object = socketIn.readObject();
 				if (object instanceof BonusGettoneCitta) {
 					List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) object).getCitta());
@@ -113,10 +157,11 @@ public class ServerSocketView extends ServerView implements Runnable {
 					this.notificaObservers(object, getGiocatore());
 				}
 			} catch (IOException e) {
-				System.err.println("Il giocatore " + getGiocatore().getNome() + " si è disconnesso");
-				break;
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				LOG.log(Level.SEVERE, "Il giocatore " + getGiocatore().getNome() + " si è disconnesso",e);
+				disconnetti();
+			} catch (ClassNotFoundException e1) {
+				LOG.log(Level.SEVERE, "OGGETTO SCONOSCIUTO RICEVUTO",e1);
+				disconnetti();
 			}
 		}
 	}

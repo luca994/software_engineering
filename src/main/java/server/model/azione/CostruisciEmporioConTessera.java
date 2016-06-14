@@ -6,10 +6,10 @@ import java.util.List;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.TesseraCostruzione;
+import server.model.componenti.Citta;
+import server.model.componenti.TesseraCostruzione;
 
 /**
  * Main action that allows you to build an emporium. Choose one of the cities on

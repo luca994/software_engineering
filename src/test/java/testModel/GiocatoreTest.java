@@ -16,12 +16,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Assistente;
-import server.model.CartaColorata;
-import server.model.CartaPolitica;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.OggettoVendibile;
+import server.model.componenti.Assistente;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.OggettoVendibile;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.TurnoNormale;
 

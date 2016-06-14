@@ -9,11 +9,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Consigliere;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.EleggiConsigliere;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
 
 public class TestEleggiConsigliere {
 

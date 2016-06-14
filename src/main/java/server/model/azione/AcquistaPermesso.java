@@ -5,13 +5,13 @@ import java.util.List;
 
 import eccezione.CartePoliticaIncorrette;
 import eccezione.FuoriDalLimiteDelPercorso;
-import server.model.CartaColorata;
-import server.model.CartaPolitica;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Jolly;
-import server.model.TesseraCostruzione;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.Consiglio;
+import server.model.componenti.Jolly;
+import server.model.componenti.TesseraCostruzione;
 
 /**
  * Main action that allows you to buy a card allowed after fulfilling the

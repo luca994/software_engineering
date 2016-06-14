@@ -12,11 +12,11 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.Assistente;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
+import server.model.componenti.Assistente;
 import server.model.stato.giocatore.TurnoNormale;
 
 /**

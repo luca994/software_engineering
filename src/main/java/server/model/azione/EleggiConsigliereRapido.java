@@ -1,10 +1,10 @@
 package server.model.azione;
 
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.Consigliere;
-import server.model.Consiglio;
 import server.model.Giocatore;
-import server.model.Regione;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
+import server.model.componenti.Regione;
 
 /**
  * Rapid action that allows you to elect a councilor for an assistant .

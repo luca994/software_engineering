@@ -1,4 +1,4 @@
-package server.model;
+package server.model.componenti;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import eccezione.FuoriDalLimiteDelPercorso;
+import server.model.Giocatore;
 import server.model.bonus.Bonus;
 
 public class TesseraCostruzione extends OggettoVendibile implements Serializable {

@@ -1,10 +1,10 @@
 package server.model.azione;
 
 import eccezione.FuoriDalLimiteDelPercorso;
-import server.model.Consigliere;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
 
 /**
  * Main action that allows you to elect a councilor. Choose one of the

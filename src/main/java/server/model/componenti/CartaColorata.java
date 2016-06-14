@@ -1,9 +1,11 @@
 /**
  * 
  */
-package server.model;
+package server.model.componenti;
 
 import java.awt.Color;
+
+import server.model.ParseColor;
 
 /**
  * @author Luca

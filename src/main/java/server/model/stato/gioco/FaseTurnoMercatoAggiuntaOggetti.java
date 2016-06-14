@@ -2,7 +2,7 @@ package server.model.stato.gioco;
 
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Mercato;
+import server.model.componenti.Mercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 
 public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {

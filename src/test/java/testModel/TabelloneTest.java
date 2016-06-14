@@ -13,11 +13,11 @@ import org.jgrapht.graph.DefaultEdge;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Regione;
 import server.model.Tabellone;
+import server.model.componenti.Citta;
+import server.model.componenti.Regione;
 
 /**
  * @author Luca
@@ -130,7 +130,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.Regione)}
+	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.componenti.Regione)}
 	 * .
 	 */
 	@Test(expected = NullPointerException.class)
@@ -143,7 +143,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.Regione)}
+	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.componenti.Regione)}
 	 * .
 	 */
 	@Test(expected = NullPointerException.class)
@@ -154,7 +154,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.Regione)}
+	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.componenti.Regione)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -167,7 +167,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.Regione)}
+	 * {@link server.model.Tabellone#cercaCitta(java.lang.String, server.model.componenti.Regione)}
 	 * .
 	 */
 	@Test
@@ -180,7 +180,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioColoreBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioColoreBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test
@@ -193,7 +193,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioColoreBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioColoreBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test
@@ -207,7 +207,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test
@@ -224,7 +224,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test
@@ -237,7 +237,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test
@@ -249,7 +249,7 @@ public class TabelloneTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.Citta)}
+	 * {@link server.model.Tabellone#verificaEmporioRegioneBonus(server.model.Giocatore, server.model.componenti.Citta)}
 	 * .
 	 */
 	@Test(expected = NullPointerException.class)

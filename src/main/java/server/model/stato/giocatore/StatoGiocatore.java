@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
-import server.model.OggettoVendibile;
 import server.model.azione.Azione;
+import server.model.componenti.OggettoVendibile;
 import server.model.stato.Stato;
 
 public abstract class StatoGiocatore implements Stato, Serializable{

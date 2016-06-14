@@ -3,8 +3,8 @@ package server.model.tesserebonus;
 import java.io.Serializable;
 import java.util.Set;
 
-import server.model.OggettoConBonus;
 import server.model.bonus.Bonus;
+import server.model.componenti.OggettoConBonus;
 
 /**
  * 

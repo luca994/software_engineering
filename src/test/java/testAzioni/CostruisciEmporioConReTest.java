@@ -21,13 +21,13 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.CartaColorata;
-import server.model.CartaPolitica;
-import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.Consigliere;
 import server.model.stato.giocatore.TurnoNormale;
 
 /**

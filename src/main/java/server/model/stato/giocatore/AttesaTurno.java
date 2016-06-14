@@ -1,8 +1,8 @@
 package server.model.stato.giocatore;
 
 import server.model.Giocatore;
-import server.model.OggettoVendibile;
 import server.model.azione.Azione;
+import server.model.componenti.OggettoVendibile;
 
 public class AttesaTurno extends StatoGiocatore {
 

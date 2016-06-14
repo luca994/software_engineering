@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Re;
+import server.model.componenti.Re;
 
 /**
  * @author Luca
@@ -35,7 +35,7 @@ public class ReTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Re#Re(server.model.Citta, server.model.Consiglio)}.
+	 * {@link server.model.componenti.Re#Re(server.model.Citta, server.model.Consiglio)}.
 	 */
 	@Test
 	public void testReNull() {
@@ -44,7 +44,7 @@ public class ReTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Re#Re(server.model.Citta, server.model.Consiglio)}.
+	 * {@link server.model.componenti.Re#Re(server.model.Citta, server.model.Consiglio)}.
 	 */
 	@Test
 	public void testReInputValidi() {
@@ -53,7 +53,7 @@ public class ReTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Re#contaPassi(server.model.Citta)}.
+	 * Test method for {@link server.model.componenti.Re#contaPassi(server.model.Citta)}.
 	 */
 	@Test
 	public void testContaPassi() {
@@ -65,7 +65,7 @@ public class ReTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Re#muoviRe(server.model.Citta)}.
+	 * Test method for {@link server.model.componenti.Re#muoviRe(server.model.Citta)}.
 	 */
 	@Test
 	public void testMuoviRe() {
@@ -79,7 +79,7 @@ public class ReTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Re#getCitta()}.
+	 * Test method for {@link server.model.componenti.Re#getCitta()}.
 	 */
 	@Test
 	public void testGetCitta() {

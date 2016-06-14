@@ -9,7 +9,7 @@ import java.awt.Color;
 
 import org.junit.Test;
 
-import server.model.Consigliere;
+import server.model.componenti.Consigliere;
 
 /**
  * @author Luca
@@ -18,7 +18,7 @@ import server.model.Consigliere;
 public class ConsigliereTest {
 
 	/**
-	 * Test method for {@link server.model.Consigliere#Consigliere(java.awt.Color)}.
+	 * Test method for {@link server.model.componenti.Consigliere#Consigliere(java.awt.Color)}.
 	 */
 	@Test
 	public void testConsigliereNull() {
@@ -27,7 +27,7 @@ public class ConsigliereTest {
 	}
 	
 	/**
-	 * Test method for {@link server.model.Consigliere#Consigliere(java.awt.Color)}.
+	 * Test method for {@link server.model.componenti.Consigliere#Consigliere(java.awt.Color)}.
 	 */
 	@Test
 	public void testConsigliereValido() {
@@ -36,7 +36,7 @@ public class ConsigliereTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Consigliere#getColore()}.
+	 * Test method for {@link server.model.componenti.Consigliere#getColore()}.
 	 */
 	@Test
 	public void testGetColore() {
@@ -45,7 +45,7 @@ public class ConsigliereTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Consigliere#getColore()}.
+	 * Test method for {@link server.model.componenti.Consigliere#getColore()}.
 	 */
 	@Test
 	public void testGetColoreNull() {
