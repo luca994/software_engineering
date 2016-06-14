@@ -85,13 +85,12 @@ public class ServerSocketView extends ServerView implements Runnable {
 			try {
 				socketOut.writeObject("Disconnetti");
 				socketOut.flush();
-				socketOut.reset();
+				socketOut.close();
 			} catch (IOException e) {
-				LOG.log(Level.FINER, e.toString(), e);
+				LOG.log(Level.FINE, e.toString(), e);
 			}
 		}
 		try {
-			socketOut.close();
 			socketIn.close();
 			socket.close();
 		} catch (IOException e) {
@@ -157,7 +156,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 					this.notificaObservers(object, getGiocatore());
 				}
 			} catch (IOException e) {
-				LOG.log(Level.SEVERE, "Il giocatore " + getGiocatore().getNome() + " si è disconnesso",e);
+				LOG.log(Level.SEVERE, "Il giocatore " + getGiocatore().getNome() + " si è disconnesso");
 				disconnetti();
 			} catch (ClassNotFoundException e1) {
 				LOG.log(Level.SEVERE, "OGGETTO SCONOSCIUTO RICEVUTO",e1);

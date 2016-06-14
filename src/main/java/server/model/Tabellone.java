@@ -113,7 +113,7 @@ public class Tabellone implements Serializable{
 	 */
 	private void creaPercorsi() {
 		try {
-			this.percorsoVittoria = new Percorso("src/main/resources/PercorsoVittoria.xml", this);
+			this.percorsoVittoria = new Percorso("src/main/resources/percorsoVittoria.xml", this);
 			this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
 			this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
 		} catch (JDOMException | IOException e) {

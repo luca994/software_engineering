@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
@@ -49,6 +50,7 @@ import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 
 public class ViewCLI extends View implements Runnable {
 
+	private static final Logger LOG = Logger.getLogger(ViewCLI.class.getName());
 	private StatoGiocatore statoAttuale;
 	private String inputString;
 	private Tabellone tabelloneClient;
@@ -88,22 +90,19 @@ public class ViewCLI extends View implements Runnable {
 			int port = InputOutput.leggiIntero(false);
 			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome, mappa));
 		} catch (DataFormatException e) {
-			InputOutput.stampa(e.getMessage());
+			LOG.log(Level.WARNING, e.getMessage());
 			impostaConnessione(nome, mappa);
 		} catch (UnknownHostException e) {
-			InputOutput.stampa("Indirizzo ip non corretto o non raggiungibile");
+			LOG.log(Level.WARNING, "Indirizzo ip non corretto o non raggiungibile");
 			impostaConnessione(nome, mappa);
 		} catch (IOException e) {
-			InputOutput.stampa("C'è un problema nella connessione");
-			impostaConnessione(nome, mappa);
-		} catch (InputMismatchException e) {
-			InputOutput.stampa("La porta deve essere un numero");
+			LOG.log(Level.WARNING, "C'è un problema nella connessione");
 			impostaConnessione(nome, mappa);
 		} catch (NotBoundException e) {
-			InputOutput.stampa("il nome del registro non è corretto");
+			LOG.log(Level.WARNING, "il nome del registro non è corretto");
 			impostaConnessione(nome, mappa);
 		} catch (NomeGiaScelto e) {
-			InputOutput.stampa(e.getMessage());
+			LOG.log(Level.WARNING, e.getMessage());
 			inizializzazione();
 		}
 	}
@@ -157,8 +156,7 @@ public class ViewCLI extends View implements Runnable {
 				if (inserimentoBonus.get()) {
 					inputString = InputOutput.leggiStringa(false);
 					inserimentoBonus.set(false);
-					if (semBonus.availablePermits() == 0)
-						semBonus.release();
+					semBonus.release();
 				}
 				if (inserimentoAzione.get()) {
 					try {
@@ -661,9 +659,9 @@ public class ViewCLI extends View implements Runnable {
 	 *            the action factory used by the cli to create the action
 	 */
 	private boolean inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
-		if(giocatore.getTessereValide().size()>0)
+		if (giocatore.getTessereValide().size() > 0)
 			InputOutput.stampa("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
-						+ ((int)giocatore.getTessereValide().size()-1) + ") oppure inserisci 'annulla' per annullare");
+					+ ((int) giocatore.getTessereValide().size() - 1) + ") oppure inserisci 'annulla' per annullare");
 		else
 			InputOutput.stampa("Non hai tessere, inserisci 'annulla'");
 		String numTessera = InputOutput.leggiStringa(false);
@@ -950,7 +948,7 @@ public class ViewCLI extends View implements Runnable {
 						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
 					inserimentoAzione.set(true);
 					this.getConnessione().inviaOggetto(oggetto);
-				} catch (IndexOutOfBoundsException | NumberFormatException e){
+				} catch (IndexOutOfBoundsException | NumberFormatException e) {
 					e.printStackTrace();
 					System.out.println("numero tessera non corretto");
 					riceviOggetto(oggetto);
