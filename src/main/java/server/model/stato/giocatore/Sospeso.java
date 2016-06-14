@@ -45,7 +45,6 @@ public class Sospeso extends StatoGiocatore {
 
 	@Override
 	public void prossimoStato() {
-		throw new IllegalStateException();
 	}
 
 }

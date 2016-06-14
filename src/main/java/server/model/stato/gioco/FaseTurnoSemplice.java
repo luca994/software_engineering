@@ -2,6 +2,7 @@ package server.model.stato.gioco;
 
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
 
@@ -27,12 +28,12 @@ public class FaseTurnoSemplice extends Esecuzione{
 	public void eseguiFase() {
 		boolean exit = false;
 		for (Giocatore giocat : getGiocatori()) {
-			if(giocat.isConnesso()){
+			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
 				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
 					exit = true;
 					break;
 				}
-				giocat.getStatoGiocatore().prossimoStato();
+				giocat.getStatoGiocatore().prossimoStato();}
 				getGioco().notificaObservers(getGioco().getTabellone());
 				
 				while (true) {
@@ -51,7 +52,7 @@ public class FaseTurnoSemplice extends Esecuzione{
 				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
 					ultimoTurno = true;
 				}
-			}
+			
 		}
 		if (ultimoTurno && !exit)
 			eseguiFase();

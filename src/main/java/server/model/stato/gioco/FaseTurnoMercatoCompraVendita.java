@@ -8,6 +8,7 @@ import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Mercato;
 import server.model.componenti.OggettoVendibile;
+import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 
 public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
@@ -29,7 +30,7 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 		listaTurniMercatoGiocatori.addAll(getGiocatori());
 		Collections.shuffle(listaTurniMercatoGiocatori);
 		for (Giocatore giocat : listaTurniMercatoGiocatori) {
-			if(giocat.isConnesso()){
+			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
 				giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
 				getGioco().notificaObservers(getGioco().getTabellone());
 				while (true) {

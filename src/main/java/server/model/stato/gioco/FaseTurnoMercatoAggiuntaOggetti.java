@@ -3,6 +3,7 @@ package server.model.stato.gioco;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Mercato;
+import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 
 public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
@@ -21,7 +22,7 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 	@Override
 	public void eseguiFase() {
 		for (Giocatore giocat : getGiocatori()) {
-			if(giocat.isConnesso()){
+			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
 				giocat.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(giocat, mercato));
 				getGioco().notificaObservers(getGioco().getTabellone());
 				while (true) {
