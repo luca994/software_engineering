@@ -75,6 +75,7 @@ public class BonusTesseraPermesso implements Bonus {
 	public void azioneBonus(Giocatore giocatore) {
 		if(giocatore==null)
 			throw new NullPointerException();
+		gioco.notificaObservers(gioco.getTabellone(), giocatore);
 		while(!tesseraCorretta){
 			gioco.notificaObservers(this, giocatore);
 		}

@@ -7,7 +7,7 @@ import java.util.List;
 
 import server.model.bonus.Bonus;
 import server.model.componenti.Assistente;
-import server.model.componenti.CartePoliticaFactory;
+import server.model.componenti.CartaPoliticaFactory;
 import server.model.componenti.Citta;
 import server.model.componenti.Regione;
 import server.model.stato.gioco.Attesa;
@@ -102,7 +102,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 			this.tabellone.getPercorsoRicchezza().getCaselle().get(9 + numGiocatore).getGiocatori().add(gio);
 
 			for (int i = 0; i < 6; i++) {
-				gio.getCartePolitica().add(new CartePoliticaFactory().creaCartaPolitica());
+				gio.getCartePolitica().add(new CartaPoliticaFactory().creaCartaPolitica());
 			}
 			numGiocatore++;
 		}

@@ -31,6 +31,7 @@ public class InputOutput {
 		if(tornaIndietroDisponibile)
 			InputOutput.stampa("\nPremi - per tornare indietro\n");
 		in = input.nextLine();
+		input.reset();
 		if (in.equals("-") && tornaIndietroDisponibile)
 			return null;
 		return in;
@@ -53,7 +54,8 @@ public class InputOutput {
 		System.out.print("--> ");
 		System.out.flush();
 		in = input.nextLine();
-		if (in.equals("-") && tornaIndietroDisponibile)
+		input.reset();
+		if ("-".equals(in) && tornaIndietroDisponibile)
 			return null;
 		try {
 			scelta = Integer.parseInt(in);

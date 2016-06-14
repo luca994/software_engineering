@@ -43,6 +43,7 @@ import server.model.percorso.Casella;
 import server.model.percorso.CasellaConBonus;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
+import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
@@ -191,17 +192,18 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa("5) Cambia tessere costruzione in una regione");
 		InputOutput.stampa("6) Eleggi consigliere rapido");
 		InputOutput.stampa("7) Azione principale aggiuntiva");
+		InputOutput.stampa("8) Salta azione rapida");
 		InputOutput.stampa("- Informazioni:\n");
-		InputOutput.stampa("8) Scegli cosa stampare dello stato attuale del gioco\n");
+		InputOutput.stampa("9) Scegli cosa stampare dello stato attuale del gioco\n");
 		scelta = InputOutput.leggiIntero(false);
-		if (scelta < 8) {
+		if (scelta < 9) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
 			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
 				this.getConnessione().inviaOggetto(azioneFactory);
 			} else
 				return false;
-		} else if (scelta == 8)
+		} else if (scelta == 9)
 			stampeTabellone();
 		else {
 			InputOutput.stampa("");
@@ -223,18 +225,11 @@ public class ViewCLI extends View implements Runnable {
 			if (oggettoDaAcquistare == null)
 				faseCompraVendita();
 			else
-				try {
-					getConnessione().inviaOggetto(oggettoDaAcquistare);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				getConnessione().inviaOggetto(oggettoDaAcquistare);
+
 			break;
 		case 2:
-			try {
-				getConnessione().inviaOggetto("-");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			getConnessione().inviaOggetto("-");
 			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
@@ -254,18 +249,10 @@ public class ViewCLI extends View implements Runnable {
 			if (oggettoDaAggiungere == null)
 				faseAggiuntaOggetti();
 			else
-				try {
-					getConnessione().inviaOggetto(oggettoDaAggiungere);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				getConnessione().inviaOggetto(oggettoDaAggiungere);
 			break;
 		case 2:
-			try {
-				getConnessione().inviaOggetto("-");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			getConnessione().inviaOggetto("-");
 			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
@@ -887,8 +874,8 @@ public class ViewCLI extends View implements Runnable {
 				this.giocatore = (Giocatore) oggetto;
 			if (oggetto instanceof Tabellone) {
 				tabelloneClient = (Tabellone) oggetto;
-				aggiornaGiocatore();
 				aggiornaStato();
+				aggiornaGiocatore();
 				semaforo.release();
 			}
 			if (oggetto instanceof Exception) {
@@ -949,12 +936,11 @@ public class ViewCLI extends View implements Runnable {
 					inserimentoAzione.set(true);
 					this.getConnessione().inviaOggetto(oggetto);
 				} catch (IndexOutOfBoundsException | NumberFormatException e) {
-					e.printStackTrace();
-					System.out.println("numero tessera non corretto");
+					InputOutput.stampa("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}
 			}
-		} catch (IOException | InterruptedException e) {
+		} catch (InterruptedException e) {
 			throw new IllegalStateException();
 		}
 	}
@@ -962,9 +948,14 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	public void aggiornaGiocatore() {
+	public synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
+				for (CartaPolitica c : g.getCartePolitica()) {
+					if (giocatore.cercaCarta(c)==null) {
+						InputOutput.stampa("Hai pescato: " + c);
+					}
+				}
 				giocatore = g;
 			}
 		}
@@ -973,10 +964,21 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the state of the player from the game
 	 */
-	public void aggiornaStato() {
+	public synchronized void aggiornaStato() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
+		}
+		if (statoAttuale instanceof AttesaTurno) {
+			for (Giocatore g : tabelloneClient.getGioco().getGiocatori())
+				if (g.getStatoGiocatore() instanceof TurnoNormale || g.getStatoGiocatore() instanceof TurnoMercato) {
+					InputOutput.stampa("Turno di " + g.getNome() + "..");
+					InputOutput.stampa("");
+				}
+		}
+		if (statoAttuale instanceof TurnoNormale || statoAttuale instanceof TurnoMercato) {
+			InputOutput.stampa("E' il tuo turno");
+			InputOutput.stampa("");
 		}
 	}
 }

@@ -26,7 +26,7 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	 * @param citta
 	 * @param tessera
 	 */
-	public CostruisciEmporioConTessera(Gioco gioco,Citta citta, TesseraCostruzione tessera) {
+	public CostruisciEmporioConTessera(Gioco gioco, Citta citta, TesseraCostruzione tessera) {
 		super(gioco);
 		this.citta = citta;
 		this.tessera = tessera;
@@ -58,14 +58,14 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 					"Il giocatore non ha abbastanza aiutanti per costruire l'emporio in quella posizione");
 		for (int i = 0; i < citta.getEmpori().size(); i++)
 			giocatore.getAssistenti().remove(0);
-		
+
 		citta.getEmpori().add(giocatore);
 		giocatore.spostaTesseraValidaInTesseraUsata(tessera);
 		giocatore.decrementaEmporiRimasti();
 
-		
-
-		// Se il giocatore ha finito gli empori guadagna 3 punti vittoria
+		/* Se il giocatore ha finito gli empori guadagna 3 punti vittoria,
+		l'eccezione FuoriDalLimiteDelPercorso diventa unchecked perchè non deve
+		essere lanciata visto che il giocatore si sposta di un numero di passi positivo */
 		if (giocatore.getEmporiRimasti() == 0) {
 			try {
 				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
