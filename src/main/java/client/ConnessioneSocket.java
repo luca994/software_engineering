@@ -45,7 +45,7 @@ public class ConnessioneSocket implements Connessione, Runnable {
 			inviaOggetto(nome);
 			inviaOggetto(mappa);
 		} catch (IOException e) {
-			LOG.log(Level.FINEST, "Server Disconnesso");
+			LOG.log(Level.SEVERE, "Server Disconnesso");
 		}
 	}
 
@@ -55,13 +55,13 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 */
 	@Override
 	public void run() {
-		while (true) {
+		while (socket != null && !socket.isClosed()) {
 			try {
 				Object oggetto = streamIn.readObject();
 				view.riceviOggetto(oggetto);
 			} catch (IOException | ClassNotFoundException e) {
-				LOG.log(Level.FINEST, "Server Disconnesso");
-				break;
+				LOG.log(Level.SEVERE, "Server Disconnesso");
+				disconnetti();
 			}
 		}
 	}
@@ -75,10 +75,32 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 *             if there is a problem with the connection
 	 */
 	@Override
-	public synchronized void inviaOggetto(Object oggetto) throws IOException {
-		streamOut.writeObject(oggetto);
-		streamOut.flush();
-		streamOut.reset();
+	public synchronized void inviaOggetto(Object oggetto) {
+		try {
+			streamOut.writeObject(oggetto);
+			streamOut.flush();
+			streamOut.reset();
+		} catch (IOException e) {
+			LOG.log(Level.SEVERE, "Server Disconnesso");
+			disconnetti();
+		}
+	}
+	
+	public synchronized void disconnetti(){
+		if (streamOut != null) {
+			try {
+				streamOut.close();
+			} catch (IOException e) {
+				LOG.log(Level.FINE, e.toString(), e);
+			}
+		}
+		try {
+			streamIn.close();
+			socket.close();
+		} catch (IOException e) {
+			LOG.log(Level.FINE, "Il socket è già chiuso: " + e.toString(), e);
+		}
+		socket = null;
 	}
 
 }

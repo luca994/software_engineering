@@ -4,6 +4,7 @@ import server.model.Giocatore;
 import server.model.azione.Azione;
 import server.model.azione.AzionePrincipale;
 import server.model.azione.AzioneRapida;
+import server.model.componenti.CartaPoliticaFactory;
 import server.model.componenti.OggettoVendibile;
 
 public class TurnoNormale extends StatoGiocatore {
@@ -24,7 +25,9 @@ public class TurnoNormale extends StatoGiocatore {
 		super(giocatore);
 		this.azioniPrincipaliEseguibili = AZIONI_PRINCIPALI_PER_TURNO;
 		this.azioniRapideEseguibili = AZIONI_RAPIDE_PER_TURNO;
+		giocatore.getCartePolitica().add(new CartaPoliticaFactory().creaCartaPolitica());
 	}
+
 
 	/**
 	 * This method should be called every time an AzionePrincipale is performed.

@@ -69,6 +69,9 @@ public class AzioneFactory implements Serializable{
 		if (Integer.parseInt(tipoAzione)==4) {
 			return new IngaggioAiutante(gioco);
 		}
+		if (Integer.parseInt(tipoAzione)==8) {
+			return new AzioneRapidaNulla(gioco);
+		}
 		throw new IllegalStateException("l'azione inserita non è corretta");
 	}
 

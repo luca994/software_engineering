@@ -2,13 +2,11 @@ package server.model.stato.gioco;
 
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.bonus.Bonus;
-import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
 
-public class FaseTurnoSemplice extends Esecuzione{
+public class FaseTurnoSemplice extends Esecuzione {
 
 	/**
 	 * 
@@ -18,7 +16,7 @@ public class FaseTurnoSemplice extends Esecuzione{
 
 	public FaseTurnoSemplice(Gioco gioco) {
 		super(gioco);
-		ultimoTurno=false;
+		ultimoTurno = false;
 	}
 
 	/**
@@ -30,37 +28,32 @@ public class FaseTurnoSemplice extends Esecuzione{
 	public void eseguiFase() {
 		boolean exit = false;
 		for (Giocatore giocat : getGiocatori()) {
-			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
+			if (!(giocat.getStatoGiocatore() instanceof Sospeso)) {
 				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
 					exit = true;
 					break;
 				}
-				giocat.getStatoGiocatore().prossimoStato();}
-				getGioco().notificaObservers(getGioco().getTabellone());
-				
-				giocat.getTessereValide().add(getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
-				getGioco().notificaObservers(getGioco().getTabellone(), giocat);
-				Bonus bonus = new BonusRiutilizzoCostruzione(getGioco());
-				bonus.azioneBonus(giocat);
-				getGioco().notificaObservers(getGioco().getTabellone(), giocat);
-				
-				while (true) {
-					synchronized (giocat.getStatoGiocatore()) {
-						if (!(giocat.getStatoGiocatore() instanceof TurnoNormale))
-							break;
-					}
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				giocat.getStatoGiocatore().prossimoStato();
+			}
+			getGioco().notificaObservers(getGioco().getTabellone());
+
+			while (true) {
+				synchronized (giocat.getStatoGiocatore()) {
+					if (!(giocat.getStatoGiocatore() instanceof TurnoNormale))
+						break;
 				}
-				if (ultimoTurno)
-					giocat.setStatoGiocatore(new TurniConclusi(giocat));
-				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
-					ultimoTurno = true;
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-			
+			}
+			if (ultimoTurno)
+				giocat.setStatoGiocatore(new TurniConclusi(giocat));
+			if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
+				ultimoTurno = true;
+			}
+
 		}
 		if (ultimoTurno && !exit)
 			eseguiFase();

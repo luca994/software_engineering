@@ -25,7 +25,7 @@ public class BonusGettoneCitta implements Bonus {
 	private int numeroCitta;
 	private Set<Citta> citta;
 	private Gioco gioco;
-	boolean cittaGiusta;
+	private boolean cittaGiusta;
 	private Citta cittaPerCompletamentoBonus;
 
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {
@@ -86,6 +86,7 @@ public class BonusGettoneCitta implements Bonus {
 		for (int i = 0; i < numeroCitta; i++) {
 			do {
 				cittaGiusta = true;
+				gioco.notificaObservers(gioco.getTabellone(), giocatore);
 				gioco.notificaObservers(this, giocatore);
 				for (Citta c : citta) {
 					for (Bonus b : c.getBonus()) {

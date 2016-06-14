@@ -37,7 +37,7 @@ import server.observer.Observer;
  */
 public class Controller implements Observer<Object, Bonus> {
 
-	private Gioco gioco;
+	private final Gioco gioco;
 
 	public Controller(Gioco gioco) {
 		this.gioco = gioco;

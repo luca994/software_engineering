@@ -2,7 +2,7 @@ package server.model.componenti;
 
 import java.awt.Color;
 
-public class CartePoliticaFactory {
+public class CartaPoliticaFactory {
 	
 	public CartaPolitica creaCartaPolitica(){
 		

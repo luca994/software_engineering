@@ -4,7 +4,7 @@
 package server.model.bonus;
 
 import server.model.Giocatore;
-import server.model.componenti.CartePoliticaFactory;
+import server.model.componenti.CartaPoliticaFactory;
 
 /**
  * @author Massimiliano Ventura
@@ -36,7 +36,7 @@ public class BonusCartaPolitica implements Bonus {
 		if (giocatore == null)
 			throw new NullPointerException();
 		for (int i = 0; i < this.numeroCarte; i++)
-			giocatore.getCartePolitica().add(new CartePoliticaFactory().creaCartaPolitica());
+			giocatore.getCartePolitica().add(new CartaPoliticaFactory().creaCartaPolitica());
 	}
 
 	@Override

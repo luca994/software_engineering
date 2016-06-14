@@ -128,7 +128,7 @@ public class GestorePartite implements Runnable {
 			giocatori.add(giocatore);
 			serverSocketView.inviaOggetto("Giocatore aggiunto alla partita");
 		} catch (NomeGiaScelto e) {
-			LOG.log(Level.SEVERE, "Oggetto ricevuto non valido o nome già utilizzato, giocatore non aggiunto",e);
+			LOG.log(Level.SEVERE, "Nome già utilizzato, giocatore non aggiunto",e);
 		} catch (IOException e1) {
 			LOG.log(Level.SEVERE, "CONNESSIONE COL CLIENT NON STABILITA",e1);
 		} 
@@ -173,7 +173,7 @@ public class GestorePartite implements Runnable {
 			timer.set(System.currentTimeMillis());
 			LOG.log(Level.INFO, "NUOVO GIOCATORE CONNESSO CON RMI");
 		} catch (RemoteException e) {
-			LOG.log(Level.SEVERE, "ERRORE NELL'AGGIONGERE GIOCATORE RMI", e);
+			LOG.log(Level.SEVERE, "ERRORE NELL'AGGIUNGERE GIOCATORE RMI", e);
 		}
 		return viewRMI;
 	}

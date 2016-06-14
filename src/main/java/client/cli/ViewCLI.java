@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
@@ -42,6 +43,7 @@ import server.model.percorso.Casella;
 import server.model.percorso.CasellaConBonus;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
+import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
@@ -49,6 +51,7 @@ import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 
 public class ViewCLI extends View implements Runnable {
 
+	private static final Logger LOG = Logger.getLogger(ViewCLI.class.getName());
 	private StatoGiocatore statoAttuale;
 	private String inputString;
 	private Tabellone tabelloneClient;
@@ -88,22 +91,19 @@ public class ViewCLI extends View implements Runnable {
 			int port = InputOutput.leggiIntero(false);
 			this.setConnessione(connessioneFactory.createConnessione(scelta, host, port, nome, mappa));
 		} catch (DataFormatException e) {
-			InputOutput.stampa(e.getMessage());
+			LOG.log(Level.WARNING, e.getMessage());
 			impostaConnessione(nome, mappa);
 		} catch (UnknownHostException e) {
-			InputOutput.stampa("Indirizzo ip non corretto o non raggiungibile");
+			LOG.log(Level.WARNING, "Indirizzo ip non corretto o non raggiungibile");
 			impostaConnessione(nome, mappa);
 		} catch (IOException e) {
-			InputOutput.stampa("C'è un problema nella connessione");
-			impostaConnessione(nome, mappa);
-		} catch (InputMismatchException e) {
-			InputOutput.stampa("La porta deve essere un numero");
+			LOG.log(Level.WARNING, "C'è un problema nella connessione");
 			impostaConnessione(nome, mappa);
 		} catch (NotBoundException e) {
-			InputOutput.stampa("il nome del registro non è corretto");
+			LOG.log(Level.WARNING, "il nome del registro non è corretto");
 			impostaConnessione(nome, mappa);
 		} catch (NomeGiaScelto e) {
-			InputOutput.stampa(e.getMessage());
+			LOG.log(Level.WARNING, e.getMessage());
 			inizializzazione();
 		}
 	}
@@ -157,8 +157,7 @@ public class ViewCLI extends View implements Runnable {
 				if (inserimentoBonus.get()) {
 					inputString = InputOutput.leggiStringa(false);
 					inserimentoBonus.set(false);
-					if (semBonus.availablePermits() == 0)
-						semBonus.release();
+					semBonus.release();
 				}
 				if (inserimentoAzione.get()) {
 					try {
@@ -193,17 +192,18 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa("5) Cambia tessere costruzione in una regione");
 		InputOutput.stampa("6) Eleggi consigliere rapido");
 		InputOutput.stampa("7) Azione principale aggiuntiva");
+		InputOutput.stampa("8) Salta azione rapida");
 		InputOutput.stampa("- Informazioni:\n");
-		InputOutput.stampa("8) Scegli cosa stampare dello stato attuale del gioco\n");
+		InputOutput.stampa("9) Scegli cosa stampare dello stato attuale del gioco\n");
 		scelta = InputOutput.leggiIntero(false);
-		if (scelta < 8) {
+		if (scelta < 9) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
 			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
 				this.getConnessione().inviaOggetto(azioneFactory);
 			} else
 				return false;
-		} else if (scelta == 8)
+		} else if (scelta == 9)
 			stampeTabellone();
 		else {
 			InputOutput.stampa("");
@@ -225,18 +225,11 @@ public class ViewCLI extends View implements Runnable {
 			if (oggettoDaAcquistare == null)
 				faseCompraVendita();
 			else
-				try {
-					getConnessione().inviaOggetto(oggettoDaAcquistare);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				getConnessione().inviaOggetto(oggettoDaAcquistare);
+
 			break;
 		case 2:
-			try {
-				getConnessione().inviaOggetto("-");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			getConnessione().inviaOggetto("-");
 			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
@@ -256,18 +249,10 @@ public class ViewCLI extends View implements Runnable {
 			if (oggettoDaAggiungere == null)
 				faseAggiuntaOggetti();
 			else
-				try {
-					getConnessione().inviaOggetto(oggettoDaAggiungere);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				getConnessione().inviaOggetto(oggettoDaAggiungere);
 			break;
 		case 2:
-			try {
-				getConnessione().inviaOggetto("-");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			getConnessione().inviaOggetto("-");
 			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
@@ -661,9 +646,9 @@ public class ViewCLI extends View implements Runnable {
 	 *            the action factory used by the cli to create the action
 	 */
 	private boolean inserimentoTesseraCostruzioneDaUtilizzare(AzioneFactory azioneFactory) {
-		if(giocatore.getTessereValide().size()>0)
+		if (giocatore.getTessereValide().size() > 0)
 			InputOutput.stampa("Inserisci la tessera costruzione che vuoi utilizzare (da 0 a "
-						+ ((int)giocatore.getTessereValide().size()-1) + ") oppure inserisci 'annulla' per annullare");
+					+ ((int) giocatore.getTessereValide().size() - 1) + ") oppure inserisci 'annulla' per annullare");
 		else
 			InputOutput.stampa("Non hai tessere, inserisci 'annulla'");
 		String numTessera = InputOutput.leggiStringa(false);
@@ -889,8 +874,8 @@ public class ViewCLI extends View implements Runnable {
 				this.giocatore = (Giocatore) oggetto;
 			if (oggetto instanceof Tabellone) {
 				tabelloneClient = (Tabellone) oggetto;
-				aggiornaGiocatore();
 				aggiornaStato();
+				aggiornaGiocatore();
 				semaforo.release();
 			}
 			if (oggetto instanceof Exception) {
@@ -950,13 +935,12 @@ public class ViewCLI extends View implements Runnable {
 						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
 					inserimentoAzione.set(true);
 					this.getConnessione().inviaOggetto(oggetto);
-				} catch (IndexOutOfBoundsException | NumberFormatException e){
-					e.printStackTrace();
-					System.out.println("numero tessera non corretto");
+				} catch (IndexOutOfBoundsException | NumberFormatException e) {
+					InputOutput.stampa("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}
 			}
-		} catch (IOException | InterruptedException e) {
+		} catch (InterruptedException e) {
 			throw new IllegalStateException();
 		}
 	}
@@ -964,9 +948,14 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	public void aggiornaGiocatore() {
+	public synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
+				for (CartaPolitica c : g.getCartePolitica()) {
+					if (giocatore.cercaCarta(c)==null) {
+						InputOutput.stampa("Hai pescato: " + c);
+					}
+				}
 				giocatore = g;
 			}
 		}
@@ -975,10 +964,21 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the state of the player from the game
 	 */
-	public void aggiornaStato() {
+	public synchronized void aggiornaStato() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
+		}
+		if (statoAttuale instanceof AttesaTurno) {
+			for (Giocatore g : tabelloneClient.getGioco().getGiocatori())
+				if (g.getStatoGiocatore() instanceof TurnoNormale || g.getStatoGiocatore() instanceof TurnoMercato) {
+					InputOutput.stampa("Turno di " + g.getNome() + "..");
+					InputOutput.stampa("");
+				}
+		}
+		if (statoAttuale instanceof TurnoNormale || statoAttuale instanceof TurnoMercato) {
+			InputOutput.stampa("E' il tuo turno");
+			InputOutput.stampa("");
 		}
 	}
 }
