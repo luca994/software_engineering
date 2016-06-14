@@ -892,7 +892,6 @@ public class ViewCLI extends View implements Runnable {
 				aggiornaGiocatore();
 				aggiornaStato();
 				semaforo.release();
-				inserimentoAzione.set(true);
 			}
 			if (oggetto instanceof Exception) {
 				InputOutput.stampa(((Exception) oggetto).getMessage());
@@ -903,13 +902,16 @@ public class ViewCLI extends View implements Runnable {
 				InputOutput.stampa("Inserisci il nome di una città dove hai un emporio"
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
+				inserimentoAzione.set(false);
 				semBonus.acquire();
 				((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
+				inserimentoAzione.set(true);
 				this.getConnessione().inviaOggetto(oggetto);
 			}
 			if (oggetto instanceof BonusTesseraPermesso) {
 				InputOutput.stampa("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus.set(true);
+				inserimentoAzione.set(false);
 				semBonus.acquire();
 				try {
 					TesseraCostruzione tmp = selezionaTesseraDaTabellone(Integer.parseInt(inputString));
@@ -923,15 +925,18 @@ public class ViewCLI extends View implements Runnable {
 					System.out.println("la stringa deve essere un numero");
 					riceviOggetto(oggetto);
 				}
+				inserimentoAzione.set(true);
 				this.getConnessione().inviaOggetto(oggetto);
 			}
 			if (oggetto instanceof BonusRiutilizzoCostruzione) {
 				InputOutput.stampa(
 						"inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				inserimentoBonus.set(true);
+				inserimentoAzione.set(false);
 				semBonus.acquire();
 				String prov = inputString;
 				InputOutput.stampa("inserisci il numero della tessera da riciclare");
+				semaforo.release();
 				inserimentoBonus.set(true);
 				semBonus.acquire();
 				try {
@@ -943,6 +948,7 @@ public class ViewCLI extends View implements Runnable {
 								.setTessera(giocatore.getTessereUsate().get(Integer.parseInt(inputString)));
 					} else if ("passa".equals(prov))
 						((BonusRiutilizzoCostruzione) oggetto).setTessera(null);
+					inserimentoAzione.set(true);
 					this.getConnessione().inviaOggetto(oggetto);
 				} catch (IndexOutOfBoundsException | NumberFormatException e){
 					e.printStackTrace();

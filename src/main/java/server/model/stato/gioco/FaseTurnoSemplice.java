@@ -2,6 +2,8 @@ package server.model.stato.gioco;
 
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.bonus.Bonus;
+import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
@@ -35,6 +37,12 @@ public class FaseTurnoSemplice extends Esecuzione{
 				}
 				giocat.getStatoGiocatore().prossimoStato();}
 				getGioco().notificaObservers(getGioco().getTabellone());
+				
+				giocat.getTessereValide().add(getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
+				getGioco().notificaObservers(getGioco().getTabellone(), giocat);
+				Bonus bonus = new BonusRiutilizzoCostruzione(getGioco());
+				bonus.azioneBonus(giocat);
+				getGioco().notificaObservers(getGioco().getTabellone(), giocat);
 				
 				while (true) {
 					synchronized (giocat.getStatoGiocatore()) {
