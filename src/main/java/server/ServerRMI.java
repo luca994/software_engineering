@@ -6,10 +6,10 @@ import server.view.ServerRMIViewInterface;
 
 public class ServerRMI implements ServerRMIInterface {
 
-	private GestisciGioco gestisciGioco;
+	private GestorePartite gestorePartite;
 	
-	public ServerRMI(GestisciGioco gestisciGioco) {
-		this.gestisciGioco = gestisciGioco;
+	public ServerRMI(GestorePartite gestorePartite) {
+		this.gestorePartite = gestorePartite;
 	}
 	
 	/**
@@ -17,6 +17,6 @@ public class ServerRMI implements ServerRMIInterface {
 	 */
 	@Override
 	public ServerRMIViewInterface register(String nome, String mappa, ConnessioneRMIInterface client) {
-		return gestisciGioco.aggiungiGiocatoreRMI(new Giocatore(nome), mappa, client);
+		return gestorePartite.aggiungiGiocatoreRMI(new Giocatore(nome), mappa, client);
 	}
 }

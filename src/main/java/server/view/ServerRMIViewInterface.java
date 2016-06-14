@@ -3,9 +3,9 @@ package server.view;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import server.model.OggettoVendibile;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
+import server.model.componenti.OggettoVendibile;
 
 public interface ServerRMIViewInterface extends Remote {
 

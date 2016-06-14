@@ -1,9 +1,9 @@
 package server.model.azione;
 
 import eccezione.FuoriDalLimiteDelPercorso;
-import server.model.Assistente;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.componenti.Assistente;
 
 /**
  * Rapid action that allows you to hire an assistant paying 3 coins

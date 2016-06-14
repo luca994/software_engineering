@@ -1,4 +1,4 @@
-package server.model;
+package server.model.componenti;
 
 import java.awt.Color;
 

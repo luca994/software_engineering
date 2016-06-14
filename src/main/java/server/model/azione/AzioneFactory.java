@@ -7,14 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.model.CartaPolitica;
-import server.model.Citta;
-import server.model.Consigliere;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Regione;
-import server.model.TesseraCostruzione;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.Citta;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
+import server.model.componenti.Regione;
+import server.model.componenti.TesseraCostruzione;
 
 /**
  * Factory class for actions, is used to instantiate a new action. 

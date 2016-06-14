@@ -11,10 +11,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Consigliere;
-import server.model.Consiglio;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
 
 /**
  * @author Luca
@@ -37,7 +37,7 @@ public class ConsiglioTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Consiglio#Consiglio(server.model.Tabellone)}.
+	 * {@link server.model.componenti.Consiglio#Consiglio(server.model.Tabellone)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testConsiglioNull() {
@@ -46,7 +46,7 @@ public class ConsiglioTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Consiglio#Consiglio(server.model.Tabellone)}.
+	 * {@link server.model.componenti.Consiglio#Consiglio(server.model.Tabellone)}.
 	 */
 	@Test
 	public void testConsiglioValido() {
@@ -55,7 +55,7 @@ public class ConsiglioTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Consiglio#acquisisciColoriConsiglio()}.
+	 * {@link server.model.componenti.Consiglio#acquisisciColoriConsiglio()}.
 	 */
 	@Test
 	public void testAcquisisciColoriConsiglio() {
@@ -64,7 +64,7 @@ public class ConsiglioTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Consiglio#removeConsigliere()}.
+	 * Test method for {@link server.model.componenti.Consiglio#removeConsigliere()}.
 	 */
 	@Test
 	public void testRemoveConsigliere() {
@@ -77,7 +77,7 @@ public class ConsiglioTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Consiglio#addConsigliere(server.model.Consigliere)}.
+	 * {@link server.model.componenti.Consiglio#addConsigliere(server.model.componenti.Consigliere)}.
 	 */
 	@Test
 	public void testAddConsigliere() {
@@ -98,7 +98,7 @@ public class ConsiglioTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Consiglio#getTabellone()}.
+	 * Test method for {@link server.model.componenti.Consiglio#getTabellone()}.
 	 */
 	@Test
 	public void testGetTabellone() {
@@ -111,7 +111,7 @@ public class ConsiglioTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Consiglio#getRegione()}.
+	 * Test method for {@link server.model.componenti.Consiglio#getRegione()}.
 	 */
 	@Test
 	public void testGetRegione() {

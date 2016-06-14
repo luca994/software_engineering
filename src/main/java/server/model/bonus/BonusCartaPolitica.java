@@ -3,8 +3,8 @@
  */
 package server.model.bonus;
 
-import server.model.CartePoliticaFactory;
 import server.model.Giocatore;
+import server.model.componenti.CartePoliticaFactory;
 
 /**
  * @author Massimiliano Ventura

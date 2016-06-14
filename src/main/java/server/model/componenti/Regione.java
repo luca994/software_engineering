@@ -1,4 +1,4 @@
-package server.model;
+package server.model.componenti;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import server.model.Tabellone;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusCreator;
 

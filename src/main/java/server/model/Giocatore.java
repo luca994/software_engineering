@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import server.model.componenti.Assistente;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.OggettoVendibile;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 

@@ -2,7 +2,7 @@ package server.model.azione;
 
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
-import server.model.Regione;
+import server.model.componenti.Regione;
 
 /**
  * Rapid action that allows you to take the two TesserePermesso face up in a

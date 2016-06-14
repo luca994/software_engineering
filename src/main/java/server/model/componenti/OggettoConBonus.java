@@ -1,8 +1,9 @@
-package server.model;
+package server.model.componenti;
 
 import java.io.Serializable;
 import java.util.Set;
 
+import server.model.Giocatore;
 import server.model.bonus.Bonus;
 
 public abstract class OggettoConBonus implements Serializable {

@@ -1,11 +1,11 @@
 package server.view;
 
-import server.model.Assistente;
-import server.model.CartaPolitica;
 import server.model.Giocatore;
-import server.model.OggettoVendibile;
-import server.model.TesseraCostruzione;
 import server.model.bonus.Bonus;
+import server.model.componenti.Assistente;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.OggettoVendibile;
+import server.model.componenti.TesseraCostruzione;
 import server.observer.Observable;
 import server.observer.Observer;
 
@@ -40,15 +40,16 @@ public abstract class ServerView extends Observable<Object, Bonus> implements Ob
 	/**
 	 * @return the giocatore
 	 */
-	public Giocatore getGiocatore() {
+	public synchronized Giocatore getGiocatore() {
 		return giocatore;
 	}
 
 	/**
-	 * @param giocatore
-	 *            the giocatore to set
+	 * @param giocatore the giocatore to set
 	 */
-	public void setGiocatore(Giocatore giocatore) {
+	public synchronized void setGiocatore(Giocatore giocatore) {
 		this.giocatore = giocatore;
 	}
+
+
 }

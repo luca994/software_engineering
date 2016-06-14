@@ -1,9 +1,11 @@
-package server.model;
+package server.model.componenti;
 
 import java.io.Serializable;
 
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
+
+import server.model.Tabellone;
 
 /**
  * 

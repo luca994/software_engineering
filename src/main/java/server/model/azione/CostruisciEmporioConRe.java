@@ -7,12 +7,12 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.CartaColorata;
-import server.model.CartaPolitica;
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Jolly;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.Citta;
+import server.model.componenti.Jolly;
 
 /**
  * 

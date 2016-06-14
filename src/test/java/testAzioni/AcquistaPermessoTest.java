@@ -22,16 +22,16 @@ import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
-import server.model.CartaColorata;
-import server.model.CartaPolitica;
-import server.model.Citta;
-import server.model.Consigliere;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.Jolly;
-import server.model.TesseraCostruzione;
 import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
+import server.model.componenti.CartaColorata;
+import server.model.componenti.CartaPolitica;
+import server.model.componenti.Citta;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Jolly;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.TurnoNormale;
 
 /**
@@ -60,7 +60,7 @@ public class AcquistaPermessoTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.azione.AcquistaPermesso#AcquistaPermesso(server.model.Gioco, server.model.TesseraCostruzione, java.util.List, server.model.Consiglio)}
+	 * {@link server.model.azione.AcquistaPermesso#AcquistaPermesso(server.model.Gioco, server.model.componenti.TesseraCostruzione, java.util.List, server.model.Consiglio)}
 	 * .
 	 */
 	@Test

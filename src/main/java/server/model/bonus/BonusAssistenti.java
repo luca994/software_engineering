@@ -3,8 +3,8 @@
  */
 package server.model.bonus;
 
-import server.model.Assistente;
 import server.model.Giocatore;
+import server.model.componenti.Assistente;
 
 /**
  * @author Massimiliano Ventura

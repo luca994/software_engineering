@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.componenti.Citta;
 
 /**
  * This class asks the player which city bonuses wants to obtain with this

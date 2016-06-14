@@ -1,4 +1,4 @@
-package server.model;
+package server.model.componenti;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+
+import server.model.Tabellone;
 
 /**
  * @author Riccardo

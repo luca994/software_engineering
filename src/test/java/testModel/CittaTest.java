@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.componenti.Citta;
 
 /**
  * @author Luca
@@ -37,7 +37,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#Citta(java.lang.String, server.model.Regione)}.
+	 * {@link server.model.componenti.Citta#Citta(java.lang.String, server.model.Regione)}.
 	 */
 	@Test
 	public void testCittaNomeNull() {
@@ -51,7 +51,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#Citta(java.lang.String, server.model.Regione)}.
+	 * {@link server.model.componenti.Citta#Citta(java.lang.String, server.model.Regione)}.
 	 */
 	@Test
 	public void testCittaRegioneNull() {
@@ -65,7 +65,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#Citta(java.lang.String, server.model.Regione)}.
+	 * {@link server.model.componenti.Citta#Citta(java.lang.String, server.model.Regione)}.
 	 */
 	@Test
 	public void testCittaValida() {
@@ -79,7 +79,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
+	 * {@link server.model.componenti.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
 	 * .
 	 */
 	@Test
@@ -98,7 +98,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
+	 * {@link server.model.componenti.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
 	 * .
 	 */
 	@Test(expected = NullPointerException.class)
@@ -109,7 +109,7 @@ public class CittaTest {
 
 	/**
 	 * Test method for
-	 * {@link server.model.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
+	 * {@link server.model.componenti.Citta#cittaVicinaConEmporio(server.model.Giocatore, java.util.List)}
 	 * .
 	 */
 	@Test(expected = NullPointerException.class)
@@ -119,7 +119,7 @@ public class CittaTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Citta#setRe(server.model.Re)}.
+	 * Test method for {@link server.model.componenti.Citta#setRe(server.model.Re)}.
 	 */
 	@Test
 	public void testSetGetRe() {

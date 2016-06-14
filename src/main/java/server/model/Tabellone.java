@@ -21,6 +21,12 @@ import org.jgrapht.graph.SimpleGraph;
 import server.model.bonus.Bonus;
 
 import server.model.bonus.BonusCreator;
+import server.model.componenti.Citta;
+import server.model.componenti.Consigliere;
+import server.model.componenti.Consiglio;
+import server.model.componenti.Re;
+import server.model.componenti.Regione;
+import server.model.componenti.TesseraCostruzione;
 import server.model.percorso.Percorso;
 import server.model.tesserebonus.TesseraBonusCitta;
 import server.model.tesserebonus.TesseraBonusCreator;

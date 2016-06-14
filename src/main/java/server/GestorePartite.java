@@ -1,8 +1,6 @@
 package server;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -15,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import client.ConnessioneRMIInterface;
 import eccezione.NomeGiaScelto;
@@ -25,9 +25,10 @@ import server.view.ServerRMIView;
 import server.view.ServerRMIViewInterface;
 import server.view.ServerSocketView;
 
-public class GestisciGioco implements Runnable {
+public class GestorePartite implements Runnable {
 
-	private final SocketServer server;
+	private static final Logger LOG = Logger.getLogger(GestorePartite.class.getName());
+	private static GestorePartite gestorePartite = null;
 	private List<Socket> giocatoriAttesa;
 	private List<Controller> controllersGiochi;
 	private AtomicLong timer;
@@ -47,13 +48,18 @@ public class GestisciGioco implements Runnable {
 	 *             if there is an error while the server is waiting the
 	 *             connection
 	 */
-	public GestisciGioco() throws IOException {
-		this.server = new SocketServer();
+	private GestorePartite(){
 		giocatoriAttesa = Collections.synchronizedList(new ArrayList<>());
 		controllersGiochi = new ArrayList<>();
 		timer = new AtomicLong();
 		executor = Executors.newCachedThreadPool();
 		giocatori = Collections.synchronizedList(new ArrayList<>());
+	}
+
+	public static synchronized GestorePartite getGestorePartite(){
+		if (gestorePartite == null)
+			gestorePartite = new GestorePartite();
+		return gestorePartite;
 	}
 
 	/**
@@ -64,23 +70,25 @@ public class GestisciGioco implements Runnable {
 	 *             if there is an error while the server is waiting the
 	 *             connection
 	 */
-	public void creaGiochi() throws IOException {
+	public void creaGiochi(){
 		executor.submit(this);
 		while (true) {
 			gioco = new Gioco();
 			controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (giocatori.size() < 2 || (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 5000)) {
+			while (giocatori.size() < 2
+					|| (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 5000)) {
 				if (!giocatoriAttesa.isEmpty()) {
+					timer.set(System.currentTimeMillis());
 					aggiungiGiocatoreSocket();
 				}
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					LOG.log(Level.SEVERE, "Gestore partite interrotto?!");
 				}
 			}
-			System.out.println("Gioco creato");
+			LOG.log(Level.INFO, "NUOVA PARTITA CREATA");
 			controllersGiochi.add(controller);
 			gioco.setGiocatori(giocatori);
 			giocatori = Collections.synchronizedList(new ArrayList<>());
@@ -100,43 +108,43 @@ public class GestisciGioco implements Runnable {
 	 *             if the class of the input object of the socket cannot be
 	 *             found
 	 */
-	public void aggiungiGiocatoreSocket() throws IOException {
+	public void aggiungiGiocatoreSocket(){
 		try {
-			Socket socket = giocatoriAttesa.remove(0);
-			ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
-			String nome = (String) streamIn.readObject();
-			streamIn = new ObjectInputStream(socket.getInputStream());
-			String mappaTemp = (String) streamIn.readObject();
-			if(giocatori.isEmpty()){
-				this.mappa=mappaTemp;
+			ServerSocketView serverSocketView = new ServerSocketView(gioco, giocatoriAttesa.remove(0));
+			String nomeGiocatore = serverSocketView.riceviString();
+			String mappaTemp = serverSocketView.riceviString();
+			if (giocatori.isEmpty()) {
+				this.mappa = mappaTemp;
 			}
-			if(!controllaNome(nome)){
-				ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
-				streamOut.writeObject(new NomeGiaScelto("Il nome è già stato scelto"));
-				streamOut.flush();
+			if (!controllaNome(nomeGiocatore)) {
+				serverSocketView.inviaOggetto(new NomeGiaScelto("Il nome è già stato scelto"));
 				throw new NomeGiaScelto();
 			}
-			Giocatore giocatore = new Giocatore(nome);
-			ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
-			streamOut.writeObject(giocatore);
-			streamOut.flush();
-			ServerSocketView serverView = new ServerSocketView(gioco, socket, giocatore);
-			serverView.registerObserver(controller);
-			executor.submit(serverView);
+			Giocatore giocatore = new Giocatore(nomeGiocatore);
+			serverSocketView.inviaOggetto(giocatore);
+			serverSocketView.setGiocatore(giocatore);
+			serverSocketView.registerObserver(controller);
+			executor.submit(serverSocketView);
 			giocatori.add(giocatore);
-		} catch (ClassNotFoundException | NomeGiaScelto e) {
-			System.out.println("Oggetto ricevuto non valido o nome già utilizzato, giocatore non aggiunto");
-		}
+			serverSocketView.inviaOggetto("Giocatore aggiunto alla partita");
+		} catch (NomeGiaScelto e) {
+			LOG.log(Level.SEVERE, "Oggetto ricevuto non valido o nome già utilizzato, giocatore non aggiunto",e);
+		} catch (IOException e1) {
+			LOG.log(Level.SEVERE, "CONNESSIONE COL CLIENT NON STABILITA",e1);
+		} 
+		
 	}
-	
+
 	/**
 	 * checks if the name of the player is already taken
-	 * @param nome the name you want to control
-	 * @return true if the name isn't taken yet, otherwise false 
+	 * 
+	 * @param nome
+	 *            the name you want to control
+	 * @return true if the name isn't taken yet, otherwise false
 	 */
-	public boolean controllaNome(String nome){
-		for(Giocatore g:giocatori){
-			if(g.getNome().equals(nome))
+	public boolean controllaNome(String nome) {
+		for (Giocatore g : giocatori) {
+			if (g.getNome().equals(nome))
 				return false;
 		}
 		return true;
@@ -151,23 +159,47 @@ public class GestisciGioco implements Runnable {
 	 *            the client of the player
 	 * @return return a new ServerRMIView
 	 */
-	public ServerRMIViewInterface aggiungiGiocatoreRMI(Giocatore giocatore, String mappa,ConnessioneRMIInterface client) {
-		if(!controllaNome(giocatore.getNome()))
+	public ServerRMIViewInterface aggiungiGiocatoreRMI(Giocatore giocatore, String mappa,
+			ConnessioneRMIInterface client) {
+		if (!controllaNome(giocatore.getNome()))
 			return null;
-		if(giocatori.isEmpty())
-			this.mappa=mappa;
+		if (giocatori.isEmpty())
+			this.mappa = mappa;
 		giocatori.add(giocatore);
 		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, PORT);
 		((ServerRMIView) viewRMI).registerObserver(controller);
 		try {
 			client.passaOggetto(giocatore);
 			timer.set(System.currentTimeMillis());
-			System.out.println("Aggiunto giocatore RMI");
+			LOG.log(Level.INFO, "NUOVO GIOCATORE CONNESSO CON RMI");
 		} catch (RemoteException e) {
-			e.printStackTrace();
-			System.out.println("giocatore RMI non aggiunto");
+			LOG.log(Level.SEVERE, "ERRORE NELL'AGGIONGERE GIOCATORE RMI", e);
 		}
 		return viewRMI;
+	}
+
+	/**
+	 * starts the RMI server and create a registry with a ServerRMIInterface
+	 * 
+	 * @throws RemoteException
+	 * @throws AlreadyBoundException
+	 */
+	public void startRMI() throws RemoteException, AlreadyBoundException {
+		registry = LocateRegistry.createRegistry(PORT);
+		ServerRMIInterface serverRMI = new ServerRMI(this);
+		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, PORT);
+		registry.bind(NAME, serverRMIRemote);
+		LOG.log(Level.INFO, "RMI registry on port: " + PORT);
+	}
+
+	public void startSocket(){
+		try {
+			SocketServer socketServer = new SocketServer();
+			socketServer.startSocket();
+		} catch (IOException e) {
+			LOG.log(Level.SEVERE, "ERRORE NELL AVVIO DEL SOCKET SERVER",e);
+			LOG.log(Level.INFO, "SOCKET SERVER NON CONNESSO",e);
+		}
 	}
 
 	/**
@@ -177,27 +209,17 @@ public class GestisciGioco implements Runnable {
 	@Override
 	public void run() {
 		try {
-			while (true) {
-				Socket socket = server.startSocket();
-				timer.set(System.currentTimeMillis());
-				giocatoriAttesa.add(socket);
-				System.out.println("Aggiunto giocatore socket");
-			}
-		} catch (IOException e) {
+				startRMI();
+				startSocket();
+		} catch (RemoteException | AlreadyBoundException  e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * starts the RMI server and create a registry with a ServerRMIInterface
-	 * @throws RemoteException
-	 * @throws AlreadyBoundException
+	 * @return the giocatoriAttesa
 	 */
-	public void startRMI() throws RemoteException, AlreadyBoundException {
-		registry = LocateRegistry.createRegistry(PORT);
-		ServerRMIInterface serverRMI = new ServerRMI(this);
-		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, PORT);
-		registry.bind(NAME, serverRMIRemote);
-		System.out.println("RMI registry on port: "+PORT);
+	public synchronized List<Socket> getGiocatoriAttesa() {
+		return giocatoriAttesa;
 	}
 }

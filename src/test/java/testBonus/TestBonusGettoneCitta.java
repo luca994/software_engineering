@@ -10,10 +10,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.bonus.BonusGettoneCitta;
+import server.model.componenti.Citta;
 
 public class TestBonusGettoneCitta {
 

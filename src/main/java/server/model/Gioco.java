@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import server.model.bonus.Bonus;
+import server.model.componenti.Assistente;
+import server.model.componenti.CartePoliticaFactory;
+import server.model.componenti.Citta;
+import server.model.componenti.Regione;
 import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.Esecuzione;
 import server.model.stato.gioco.StatoGioco;

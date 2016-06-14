@@ -5,10 +5,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnessioneSocket implements Connessione, Runnable {
 
+	private static final Logger LOG = Logger.getLogger(ConnessioneSocket.class.getName());
+
 	private Socket socket;
+
+	private ObjectInputStream streamIn;
+
+	private ObjectOutputStream streamOut;
 
 	private View view;
 
@@ -27,13 +35,18 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 * @throws IOException
 	 *             if there is a problem in the socket connection
 	 */
-	public ConnessioneSocket(View view, String host, int port, String nome, String mappa) throws IOException {
-		this.view = view;
-		socket = new Socket(host, port);
-		Thread threadConnessione = new Thread(this);
-		threadConnessione.start();
-		inviaOggetto(nome);
-		inviaOggetto(mappa);
+	public ConnessioneSocket(View view, String host, int port, String nome, String mappa) {
+		try {
+			this.view = view;
+			socket = new Socket(host, port);
+			streamIn = new ObjectInputStream(socket.getInputStream());
+			streamOut = new ObjectOutputStream(socket.getOutputStream());
+			new Thread(this).start();
+			inviaOggetto(nome);
+			inviaOggetto(mappa);
+		} catch (IOException e) {
+			LOG.log(Level.FINEST, "Server Disconnesso");
+		}
 	}
 
 	/**
@@ -44,13 +57,10 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	public void run() {
 		while (true) {
 			try {
-				ObjectInputStream streamIn = new ObjectInputStream(socket.getInputStream());
 				Object oggetto = streamIn.readObject();
 				view.riceviOggetto(oggetto);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				System.err.println("server disconnesso");
+			} catch (IOException | ClassNotFoundException e) {
+				LOG.log(Level.FINEST, "Server Disconnesso");
 				break;
 			}
 		}
@@ -66,9 +76,9 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 */
 	@Override
 	public synchronized void inviaOggetto(Object oggetto) throws IOException {
-		ObjectOutputStream streamOut = new ObjectOutputStream(socket.getOutputStream());
 		streamOut.writeObject(oggetto);
 		streamOut.flush();
+		streamOut.reset();
 	}
 
 }

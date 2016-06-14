@@ -10,14 +10,14 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.model.Citta;
 import server.model.Giocatore;
 import server.model.Gioco;
-import server.model.TesseraCostruzione;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusAzionePrincipale;
 import server.model.bonus.BonusCartaPolitica;
 import server.model.bonus.BonusRiutilizzoCostruzione;
+import server.model.componenti.Citta;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.TurnoNormale;
 
 public class TestBonusRiutilizzoCostruzione {
