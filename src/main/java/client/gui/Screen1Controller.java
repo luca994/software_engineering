@@ -8,28 +8,27 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.zip.DataFormatException;
 
-import client.Connessione;
 import client.ConnessioneFactory;
-import client.View;
 import eccezione.NomeGiaScelto;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
 /**
@@ -42,7 +41,8 @@ public class Screen1Controller implements Initializable {
 	ObservableList<String> sceltaMappa = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8");
 
 	private ViewGUI view;
-
+	@FXML
+	private AnchorPane backgroundPane;
 	@FXML // fx:id="confirmButton"
 	private Button confirmButton; // Value injected by FXMLLoader
 	@FXML
@@ -56,7 +56,7 @@ public class Screen1Controller implements Initializable {
 	@FXML
 	private ChoiceBox<String> sceltaMappaChoiceBox;
 
-	@FXML//è l'onAction dell'fxml
+	@FXML // è l'onAction del bottone nell'fxml
 	private void handleConfirmButtonAction(ActionEvent event) {
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
@@ -74,6 +74,21 @@ public class Screen1Controller implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		//Setup sfondo
+		BackgroundImage myBI = new BackgroundImage(
+				new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500,
+						377, false, true),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				BackgroundSize.DEFAULT);
+
+		backgroundPane.setBackground(new Background(myBI));
+
+		/*
+		 * BackgroundFill myBF = new BackgroundFill(Color.BLUEVIOLET, new
+		 * CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));// or null for the
+		 * padding //then you set to your node or container or layout
+		 * backgroundPane.setBackground(new Background(myBF));
+		 */
 		tipoConnessioneChoiceBox.setItems(sceltaConnessione);
 		sceltaMappaChoiceBox.setItems(sceltaMappa);
 		tipoConnessioneChoiceBox.setValue("Socket");
@@ -94,22 +109,22 @@ public class Screen1Controller implements Initializable {
 					Integer.parseInt(portaTextField.getText()), nomeUtenteTextField.getText(),
 					sceltaMappaChoiceBox.getValue()));
 
-			stampaErrore("vaffanculo\n lol");
+			stampaMessaggio("Messaggio", "Connessione avvenuta");
 			return true;
 		} catch (NomeGiaScelto e) {
-			stampaErrore("Nome già scelto");
+			stampaMessaggio("Errore", "Nome già scelto");
 			return false;
 		} catch (DataFormatException e) {
-			stampaErrore(e.getMessage());
+			stampaMessaggio("Errore", e.getMessage());
 			return false;
 		} catch (UnknownHostException e) {
-			stampaErrore("Indirizzo ip non corretto o non raggiungibile");
+			stampaMessaggio("Errore", "Indirizzo ip non corretto o non raggiungibile");
 			return false;
 		} catch (IOException e) {
-			stampaErrore("C'è un problema nella connessione");
+			stampaMessaggio("Errore", "C'è un problema nella connessione");
 			return false;
 		} catch (NotBoundException e) {
-			stampaErrore("il nome del registro non è corretto");
+			stampaMessaggio("Errore", "il nome del registro non è corretto");
 			return false;
 		}
 	}
@@ -117,17 +132,17 @@ public class Screen1Controller implements Initializable {
 	private boolean controlloCompletamentoCampi() {
 		if (nomeUtenteTextField.getText().equals("") || ipTextField.getText().equals("")
 				|| portaTextField.getText().equals("")) {
-			stampaErrore("Completa tutti i campi");
+			stampaMessaggio("Errore", "Completa tutti i campi");
 			return false;
 		}
 		return true;
 	}
 
-	public void stampaErrore(String msg) {
+	public void stampaMessaggio(String nomeFinestra, String msg) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenMessaggioErrore.fxml"));
 		try {
 			Stage stage = new Stage();
-			stage.setTitle("Errore");
+			stage.setTitle(nomeFinestra);
 			stage.setScene(new Scene((AnchorPane) loader.load()));
 			MessaggioErroreController controller = loader.<MessaggioErroreController> getController();
 			controller.setMsg(msg);

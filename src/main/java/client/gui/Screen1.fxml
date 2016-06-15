@@ -5,20 +5,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="377.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.Screen1Controller">
+<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="377.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.Screen1Controller">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffffbd" height="377.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
       <Button fx:id="confirmButton" layoutX="219.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleConfirmButtonAction" prefHeight="31.0" prefWidth="63.0" text="OK" />
       <Label alignment="CENTER" layoutX="51.0" layoutY="73.0" prefHeight="21.0" prefWidth="110.0" text="Nome Utente:" />
-      <Label layoutX="49.0" layoutY="124.0" text="Tipo Connessone:" />
+      <Label layoutX="49.0" layoutY="122.0" text="Tipo Connessone:" />
       <Label layoutX="77.0" layoutY="172.0" text="IP Server:" />
       <Label layoutX="88.0" layoutY="223.0" text="Porta:" />
       <Label layoutX="175.0" layoutY="25.0" text="Configurazione Iniziale:" />
       <TextField fx:id="nomeUtenteTextField" layoutX="251.0" layoutY="68.0" />
+      <ChoiceBox fx:id="tipoConnessioneChoiceBox" layoutX="251.0" layoutY="117.0" prefHeight="31.0" prefWidth="187.0" />
       <TextField fx:id="ipTextField" layoutX="251.0" layoutY="167.0" />
       <TextField fx:id="portaTextField" layoutX="251.0" layoutY="218.0" />
-      <ChoiceBox fx:id="tipoConnessioneChoiceBox" layoutX="251.0" layoutY="119.0" prefHeight="31.0" prefWidth="187.0" />
-      <Label layoutX="48.0" layoutY="270.0" text="Mappa (8 casuale):" />
       <ChoiceBox fx:id="sceltaMappaChoiceBox" layoutX="251.0" layoutY="265.0" prefHeight="31.0" prefWidth="63.0" />
+      <Label layoutX="48.0" layoutY="270.0" text="Mappa (8 casuale):" />
    </children>
 </AnchorPane>
