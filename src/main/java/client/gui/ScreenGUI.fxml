@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<SplitPane dividerPositions="0.6309192200557103" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1050.0" prefWidth="1680.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+      <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane />
+            <AnchorPane />
+          <AnchorPane prefHeight="195.0" />
+        </items>
+      </SplitPane>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Azioni Principali" />
+                  <Button layoutX="24.0" layoutY="47.0" mnemonicParsing="false" text="Button" />
+                  <Label layoutX="187.0" layoutY="14.0" text="Azioni Rapide" />
+                  <Button layoutX="24.0" layoutY="90.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="24.0" layoutY="134.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="24.0" layoutY="177.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="24.0" layoutY="220.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="520.0" />
+        </items>
+      </SplitPane>
+  </items>
+</SplitPane>
