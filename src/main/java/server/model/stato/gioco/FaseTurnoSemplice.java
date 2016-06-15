@@ -6,7 +6,7 @@ import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
 
-public class FaseTurnoSemplice extends Esecuzione {
+public class FaseTurnoSemplice extends Esecuzione{
 
 	/**
 	 * 
@@ -28,6 +28,14 @@ public class FaseTurnoSemplice extends Esecuzione {
 	public void eseguiFase() {
 		boolean exit = false;
 		for (Giocatore giocat : getGiocatori()) {
+			
+			//avvio il thread che controlla il tempo per l'azione
+			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
+				setGiocatoreCorrente(giocat);
+				Thread threadTempo = new Thread(this);
+				threadTempo.start();
+			}
+			
 			if (!(giocat.getStatoGiocatore() instanceof Sospeso)) {
 				if (giocat.getStatoGiocatore() instanceof TurniConclusi) {
 					exit = true;
@@ -36,7 +44,7 @@ public class FaseTurnoSemplice extends Esecuzione {
 				giocat.getStatoGiocatore().prossimoStato();
 			}
 			getGioco().notificaObservers(getGioco().getTabellone());
-
+			
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {
 					if (!(giocat.getStatoGiocatore() instanceof TurnoNormale))
@@ -55,6 +63,7 @@ public class FaseTurnoSemplice extends Esecuzione {
 			}
 
 		}
+		setGiocatoreCorrente(null);
 		if (ultimoTurno && !exit)
 			eseguiFase();
 	}

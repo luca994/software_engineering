@@ -10,8 +10,8 @@ import javafx.application.Application;
 
 public class ViewFactory {
 
-	private static final int VIEW_CLI = 0;
-	private static final int VIEW_GUI = 1;
+	private static final int VIEW_CLI = 1;
+	private static final int VIEW_GUI = 2;
 
 	private Set<String> listaView;
 

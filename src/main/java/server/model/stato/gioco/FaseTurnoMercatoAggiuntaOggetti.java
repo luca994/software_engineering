@@ -6,7 +6,7 @@ import server.model.componenti.Mercato;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 
-public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
+public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato{
 
 	/**
 	 * 
@@ -23,6 +23,11 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 	public void eseguiFase() {
 		for (Giocatore giocat : getGiocatori()) {
 			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
+				//avvio il thread che controlla il tempo per l'azione
+				setGiocatoreCorrente(giocat);
+				Thread threadTempo = new Thread(this);
+				threadTempo.start();
+				
 				giocat.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(giocat, mercato));
 				getGioco().notificaObservers(getGioco().getTabellone());
 				while (true) {
@@ -38,11 +43,11 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato {
 				}
 			}
 		}
+		setGiocatoreCorrente(null);
 	}
 
 	@Override
 	public void prossimoStato() {
 		getGioco().setStato(new FaseTurnoMercatoCompraVendita(getGioco(), mercato));
 	}
-
 }

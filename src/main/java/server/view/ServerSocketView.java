@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,10 +37,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 	private final ObjectInputStream socketIn;
 	
 	private AzioneFactory azioneFactory;
-	
-	private Bonus bonusDaCompletare;
-
-	private Semaphore semBonus;
 
 	/**
 	 * builds a server socket view
@@ -60,7 +55,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 		socketIn = new ObjectInputStream(socket.getInputStream());
 		this.socket = socket;
 		azioneFactory = new AzioneFactory(gioco);
-		semBonus = new Semaphore(0);
 	}
 
 	/**
@@ -123,21 +117,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 		while (socket!=null && !socket.isClosed() ) {
 			try {
 				Object object = socketIn.readObject();
-				if (object instanceof BonusGettoneCitta) {
-					List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) object).getCitta());
-					if (!"passa".equals(tmp.get(0).getNome()))
-						((BonusGettoneCitta) bonusDaCompletare).setCittaPerCompletamentoBonus(tmp.get(0));
-					semBonus.release();
-				}
-				if (object instanceof BonusTesseraPermesso) {
-					((BonusTesseraPermesso) bonusDaCompletare).setTessera(((BonusTesseraPermesso) object).getTessera());
-					semBonus.release();
-				}
-				if (object instanceof BonusRiutilizzoCostruzione) {
-					((BonusRiutilizzoCostruzione) bonusDaCompletare)
-							.setTessera(((BonusRiutilizzoCostruzione) object).getTessera());
-					semBonus.release();
-				}
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
@@ -185,20 +164,41 @@ public class ServerSocketView extends ServerView implements Runnable {
 	public void update(Object cambiamento, Giocatore attributo) {
 
 		if (cambiamento instanceof Bonus && getGiocatore().equals(attributo)) {
-			bonusDaCompletare = (Bonus) cambiamento;
 			inviaOggetto(cambiamento);
 			try {
-				semBonus.acquire();
+				Bonus bonusClient = (Bonus) socketIn.readObject();
+				completaBonus(bonusClient, (Bonus) cambiamento);
 				this.notificaObservers((Bonus) cambiamento, this.getGiocatore());
-			} catch (InterruptedException e) {
+			} catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		} else if (getGiocatore().equals(attributo)) {
 			inviaOggetto(cambiamento);
-		}	}
+		}	
+	}
 
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {
 		throw new IllegalArgumentException();
+	}
+	
+	/**
+	 * completes the bonus of the server with the parameters sent by the client
+	 * @param bonusClient the bonus sent by the client
+	 * @param bonusServer the bonus to complete
+	 */
+	public void completaBonus(Bonus bonusClient, Bonus bonusServer){
+		if (bonusClient instanceof BonusGettoneCitta) {
+			List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) bonusClient).getCitta());
+			if (!"passa".equals(tmp.get(0).getNome()))
+				((BonusGettoneCitta) bonusServer).setCittaPerCompletamentoBonus(tmp.get(0));
+		}
+		if (bonusClient instanceof BonusTesseraPermesso) {
+			((BonusTesseraPermesso) bonusServer).setTessera(((BonusTesseraPermesso) bonusClient).getTessera());
+		}
+		if (bonusClient instanceof BonusRiutilizzoCostruzione) {
+			((BonusRiutilizzoCostruzione) bonusServer)
+					.setTessera(((BonusRiutilizzoCostruzione) bonusClient).getTessera());
+		}
 	}
 }

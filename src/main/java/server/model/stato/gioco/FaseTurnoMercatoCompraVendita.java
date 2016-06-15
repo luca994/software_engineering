@@ -11,7 +11,7 @@ import server.model.componenti.OggettoVendibile;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 
-public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
+public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato{
 
 	/**
 	 * 
@@ -31,6 +31,11 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 		Collections.shuffle(listaTurniMercatoGiocatori);
 		for (Giocatore giocat : listaTurniMercatoGiocatori) {
 			if(!(giocat.getStatoGiocatore() instanceof Sospeso)){
+				//avvio il thread che controlla il tempo per l'azione
+				setGiocatoreCorrente(giocat);
+				Thread threadTempo = new Thread(this);
+				threadTempo.start();
+				
 				giocat.setStatoGiocatore(new TurnoMercatoCompraVendita(giocat));
 				getGioco().notificaObservers(getGioco().getTabellone());
 				while (true) {
@@ -46,6 +51,7 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato {
 				}
 			}
 		}
+		setGiocatoreCorrente(null);
 		/*
 		 * Ora che il mercato è finito, posso svuotarlo e resettare gli
 		 * attributi degli oggetti invenduti lasciando il vecchio

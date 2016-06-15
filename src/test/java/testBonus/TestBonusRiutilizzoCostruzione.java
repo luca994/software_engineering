@@ -56,7 +56,7 @@ public class TestBonusRiutilizzoCostruzione {
 		bonus.setTesseraCostruzioneCorretta(true);
 		bonus.azioneBonus(g1);
 		assertEquals(0, g1.getTessereValide().size());
-		assertEquals(6, g1.getCartePolitica().size());
+		assertEquals(7, g1.getCartePolitica().size());
 		assertEquals(1, g1.getAssistenti().size());
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		assertEquals(0, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
@@ -79,7 +79,7 @@ public class TestBonusRiutilizzoCostruzione {
 		bonus.azioneBonus(g1);
 		assertEquals(0, g1.getTessereValide().size());
 		assertEquals(1, g1.getTessereUsate().size());
-		assertEquals(7, g1.getCartePolitica().size());
+		assertEquals(8, g1.getCartePolitica().size());
 		assertEquals(1, g1.getAssistenti().size());
 		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		assertEquals(0, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
