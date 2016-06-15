@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,23 +29,18 @@ public class ConnessioneSocket implements Connessione, Runnable {
 	 *            the host of the server
 	 * @param port
 	 *            the port of the connection
-	 * @throws UnknownHostException
-	 *             if the host isn't correct or is unreachable
 	 * @throws IOException
 	 *             if there is a problem in the socket connection
 	 */
-	public ConnessioneSocket(View view, String host, int port, String nome, String mappa) {
-		try {
-			this.view = view;
-			socket = new Socket(host, port);
-			streamIn = new ObjectInputStream(socket.getInputStream());
-			streamOut = new ObjectOutputStream(socket.getOutputStream());
-			new Thread(this).start();
-			inviaOggetto(nome);
-			inviaOggetto(mappa);
-		} catch (IOException e) {
-			LOG.log(Level.SEVERE, "Server Disconnesso");
-		}
+	public ConnessioneSocket(View view, String host, int port, String nome, String mappa) throws IOException{
+		this.view = view;
+		socket = new Socket(host, port);
+		streamIn = new ObjectInputStream(socket.getInputStream());
+		streamOut = new ObjectOutputStream(socket.getOutputStream());
+		new Thread(this).start();
+		inviaOggetto(nome);
+		inviaOggetto(mappa);
+
 	}
 
 	/**

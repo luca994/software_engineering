@@ -17,8 +17,8 @@ public class ViewFactory {
 
 	public ViewFactory() {
 		listaView = new HashSet<>();
-		listaView.add("CommandLineInterface-CLI");
-		listaView.add("GraphicUserInterface-GUI");
+		listaView.add("0)CommandLineInterface-CLI");
+		listaView.add("1)GraphicUserInterface-GUI");
 	}
 
 	public Set<String> getListaView() {

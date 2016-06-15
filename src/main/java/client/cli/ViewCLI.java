@@ -201,6 +201,7 @@ public class ViewCLI extends View implements Runnable {
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
 			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
 				this.getConnessione().inviaOggetto(azioneFactory);
+				inserimentoAzione.set(false);
 			} else
 				return false;
 		} else if (scelta == 9)
@@ -869,6 +870,10 @@ public class ViewCLI extends View implements Runnable {
 		try {
 			if (oggetto instanceof String) {
 				InputOutput.stampa((String) oggetto);
+				if ("Azione Eseguita!".equalsIgnoreCase((String) oggetto)
+						|| "Non hai più azioni principali".equalsIgnoreCase((String) oggetto)
+						|| "Non hai più azioni rapide".equalsIgnoreCase((String) oggetto))
+					inserimentoAzione.set(true);
 			}
 			if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
@@ -880,6 +885,7 @@ public class ViewCLI extends View implements Runnable {
 			}
 			if (oggetto instanceof Exception) {
 				InputOutput.stampa(((Exception) oggetto).getMessage());
+				inserimentoAzione.set(true);
 				if (oggetto instanceof NomeGiaScelto)
 					inizializzazione();
 			}
@@ -887,16 +893,14 @@ public class ViewCLI extends View implements Runnable {
 				InputOutput.stampa("Inserisci il nome di una città dove hai un emporio"
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
-				inserimentoAzione.set(false);
+				semaforo.release();
 				semBonus.acquire();
 				((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
-				inserimentoAzione.set(true);
 				this.getConnessione().inviaOggetto(oggetto);
 			}
 			if (oggetto instanceof BonusTesseraPermesso) {
 				InputOutput.stampa("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus.set(true);
-				inserimentoAzione.set(false);
 				semBonus.acquire();
 				try {
 					TesseraCostruzione tmp = selezionaTesseraDaTabellone(Integer.parseInt(inputString));
@@ -910,19 +914,15 @@ public class ViewCLI extends View implements Runnable {
 					System.out.println("la stringa deve essere un numero");
 					riceviOggetto(oggetto);
 				}
-				inserimentoAzione.set(true);
 				this.getConnessione().inviaOggetto(oggetto);
 			}
 			if (oggetto instanceof BonusRiutilizzoCostruzione) {
 				InputOutput.stampa(
 						"inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				inserimentoBonus.set(true);
-				inserimentoAzione.set(false);
 				semBonus.acquire();
 				String prov = inputString;
 				InputOutput.stampa("inserisci il numero della tessera da riciclare");
-				semaforo.release();
-				inserimentoBonus.set(true);
 				semBonus.acquire();
 				try {
 					if ("0".equals(prov)) {
@@ -952,7 +952,7 @@ public class ViewCLI extends View implements Runnable {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
 				for (CartaPolitica c : g.getCartePolitica()) {
-					if (giocatore.cercaCarta(c)==null) {
+					if (giocatore.cercaCarta(c) == null) {
 						InputOutput.stampa("Hai pescato: " + c);
 					}
 				}
