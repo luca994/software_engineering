@@ -23,5 +23,4 @@ public class GuiCreator extends Application {
 			Logger.getLogger(GuiCreator.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
 }

@@ -5,16 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 import client.cli.ViewCLI;
+import client.gui.GuiCreator;
+import javafx.application.Application;
 
 public class ViewFactory {
 
 	private static final int VIEW_CLI = 0;
+	private static final int VIEW_GUI = 1;
 
 	private Set<String> listaView;
 
 	public ViewFactory() {
 		listaView = new HashSet<>();
 		listaView.add("CommandLineInterface-CLI");
+		listaView.add("GraphicUserInterface-GUI");
 	}
 
 	public Set<String> getListaView() {
@@ -34,7 +38,10 @@ public class ViewFactory {
 
 		case VIEW_CLI:
 			return new ViewCLI();
-
+		case VIEW_GUI:{
+			Application.launch(GuiCreator.class, (java.lang.String[])null);
+			System.exit(0);
+		}
 		default:
 			throw new InvalidParameterException("La view selezionata non è valida!");
 
