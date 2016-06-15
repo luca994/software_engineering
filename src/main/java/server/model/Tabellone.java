@@ -19,7 +19,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import server.model.bonus.Bonus;
-
 import server.model.bonus.BonusCreator;
 import server.model.componenti.Citta;
 import server.model.componenti.Consigliere;

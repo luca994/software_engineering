@@ -843,12 +843,13 @@ public class ViewCLI extends View implements Runnable {
 	 */
 	private boolean inserimentoConsiglio(AzioneFactory azioneFactory) {
 		InputOutput.stampa(
-				"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure 'annulla' per annullare");
+				"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure re per il consiglio del re oppure 'annulla' per annullare");
 		String scelta = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(scelta))
 			return false;
 		if (("re").equalsIgnoreCase(scelta)) {
 			azioneFactory.setConsiglio(tabelloneClient.getRe().getConsiglio());
+			azioneFactory.setConsiglioRe(true);
 		} else {
 			if (tabelloneClient.getRegioneDaNome(scelta) != null)
 				azioneFactory.setConsiglio(tabelloneClient.getRegioneDaNome(scelta).getConsiglio());
