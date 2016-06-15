@@ -10,15 +10,15 @@ import javafx.application.Application;
 
 public class ViewFactory {
 
-	private static final int VIEW_CLI = 0;
-	private static final int VIEW_GUI = 1;
+	private static final int VIEW_CLI = 1;
+	private static final int VIEW_GUI = 2;
 
 	private Set<String> listaView;
 
 	public ViewFactory() {
 		listaView = new HashSet<>();
-		listaView.add("0)CommandLineInterface-CLI");
-		listaView.add("1)GraphicUserInterface-GUI");
+		listaView.add("CommandLineInterface-CLI");
+		listaView.add("GraphicUserInterface-GUI");
 	}
 
 	public Set<String> getListaView() {
