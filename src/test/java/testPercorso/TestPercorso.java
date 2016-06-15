@@ -1,6 +1,7 @@
 package testPercorso;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.Set;
 
 import org.jdom2.JDOMException;
 import org.junit.Before;
-
 import org.junit.Test;
 
 import server.model.Giocatore;

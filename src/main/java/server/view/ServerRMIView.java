@@ -18,7 +18,7 @@ import server.model.bonus.BonusTesseraPermesso;
 import server.model.componenti.Citta;
 import server.model.componenti.OggettoVendibile;
 
-public class ServerRMIView extends ServerView implements ServerRMIViewInterface {
+public class ServerRMIView extends ServerView implements ServerRMIViewInterface, Runnable {
 
 	private ConnessioneRMIInterface client;
 	private AzioneFactory azioneFactory;
@@ -91,9 +91,8 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	public void riceviAzione(AzioneFactory azioneFactory) throws RemoteException {
 		this.azioneFactory.setTipoAzione(azioneFactory.getTipoAzione());
 		if (this.azioneFactory.completaAzioneFactory(azioneFactory, getGiocatore())) {
-			Azione azione = this.azioneFactory.createAzione();
-			this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
-			this.notificaObservers(azione, getGiocatore());
+			Thread threadAzione = new Thread(this);
+			threadAzione.start();
 		} else {
 			client.passaOggetto("Parametri dell'azione errati");
 		}
@@ -107,6 +106,16 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface 
 	@Override
 	public void riceviStringa(String messaggio) throws RemoteException {
 		this.notificaObservers(messaggio, getGiocatore());
+	}
+
+	/**
+	 * runs the actions sent by the client
+	 */
+	@Override
+	public void run() {
+		Azione azione = this.azioneFactory.createAzione();
+		this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
+		this.notificaObservers(azione, getGiocatore());
 	}
 	
 }
