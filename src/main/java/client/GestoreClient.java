@@ -34,8 +34,13 @@ public class GestoreClient {
 	 */
 	public void scegliView() {
 		try {
+			int i=1;
 			ViewFactory viewFactory = new ViewFactory();
-			InputOutput.stampa("Scegli la view che vuoi utilizzare: " + viewFactory.getListaView());
+			InputOutput.stampa("Scegli la view che vuoi utilizzare: ");
+			for(String s:viewFactory.getListaView()){
+				InputOutput.stampa(i+") "+s);
+				i++;
+			}
 			view = viewFactory.createView(InputOutput.leggiIntero(false));
 		} catch (InvalidParameterException e) {
 			InputOutput.stampa(e.getMessage());

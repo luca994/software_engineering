@@ -1,5 +1,7 @@
 package client;
 
+import client.cli.InputOutput;
+
 public class MainClient {
 
 	/**
@@ -14,7 +16,7 @@ public class MainClient {
 			View view = gestoreClient.getView();
 			view.startClient();
 		} else {
-			System.out.println("Errore nella creazione della view");
+			InputOutput.stampa("Errore nella creazione della view");
 		}
 	}
 }
