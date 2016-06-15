@@ -1,7 +1,9 @@
 package server.model.stato.gioco;
 
+import eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.bonus.BonusPercorsoNobilta;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
@@ -44,6 +46,17 @@ public class FaseTurnoSemplice extends Esecuzione{
 				giocat.getStatoGiocatore().prossimoStato();
 			}
 			getGioco().notificaObservers(getGioco().getTabellone());
+			
+			//prova bonus
+			try {
+				getGioco().getTabellone().getPercorsoNobilta().muoviGiocatore(giocat, 3);
+				getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0).getBonus().clear();
+				getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0).getBonus().add(new BonusPercorsoNobilta(getGioco().getTabellone().getPercorsoNobilta(), 1));
+				getGioco().notificaObservers(getGioco().getTabellone());
+			} catch (FuoriDalLimiteDelPercorso e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {

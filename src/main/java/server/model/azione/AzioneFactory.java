@@ -34,11 +34,13 @@ public class AzioneFactory implements Serializable{
 	private Regione regione;
 	private Citta citta;
 	private String tipoAzione;
+	private boolean consiglioRe;
 
 	private Gioco gioco;
 
 	public AzioneFactory(Gioco gioco) {
 		this.gioco = gioco;
+		consiglioRe = false;
 	}
 
 	public Azione createAzione() {
@@ -113,12 +115,17 @@ public class AzioneFactory implements Serializable{
 		}
 
 		if (azioneFactoryCompleta.getConsiglio() != null) {
-			Regione regioneAzione = this.getGioco().getTabellone()
-					.getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
-			if (regioneAzione == null)
-				return false;
+			if(azioneFactoryCompleta.isConsiglioRe()){
+				this.setConsiglio(gioco.getTabellone().getRe().getConsiglio());
+			}
+			else{
+				Regione regioneAzione = this.getGioco().getTabellone()
+						.getRegioneDaNome(azioneFactoryCompleta.getConsiglio().getRegione().getNome());
+				if (regioneAzione == null)
+					return false;
 
-			this.setConsiglio(regioneAzione.getConsiglio());
+				this.setConsiglio(regioneAzione.getConsiglio());
+			}
 		}
 
 		if (azioneFactoryCompleta.getRegione() != null) {
@@ -152,6 +159,20 @@ public class AzioneFactory implements Serializable{
 	 */
 	public String getTipoAzione() {
 		return tipoAzione;
+	}
+
+	/**
+	 * @return the consiglioRe
+	 */
+	public boolean isConsiglioRe() {
+		return consiglioRe;
+	}
+
+	/**
+	 * @param consiglioRe the consiglioRe to set
+	 */
+	public void setConsiglioRe(boolean consiglioRe) {
+		this.consiglioRe = consiglioRe;
 	}
 
 	/**
