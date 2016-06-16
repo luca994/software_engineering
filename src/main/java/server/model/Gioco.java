@@ -69,7 +69,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 			numMappa = Integer.toString((int) Math.random()*7);
 		String nomeMappaScelta = new String("src/main/resources/mappacollegamenti"+numMappa+".xml");
 
-		this.tabellone = new Tabellone(nomeMappaScelta, this);
+		this.tabellone = new Tabellone(nomeMappaScelta, this, numMappa);
 
 		inizializzaGiocatori();
 

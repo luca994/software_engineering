@@ -56,11 +56,15 @@ public class Tabellone implements Serializable{
 	private Percorso percorsoVittoria;
 	private Re re;
 	private Gioco gioco;
+	private String numeroMappa;
+
+
 
 	/**
 	 * It builds the board by calling methods : creaPercorsi() ,
 	 * creaConsiglieriDisponibili() , creaRegioni() , creaGettoniCittà() ,
 	 * collegaCittà(nomeFileMappa,gettoniCitta) , creaTessereBonus().
+	 * @param numMappa 
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if there is an error in reading files
@@ -68,7 +72,8 @@ public class Tabellone implements Serializable{
 	 * @throws NullPointerException
 	 *             if nomeFileMappa is null
 	 */
-	public Tabellone(String nomeFileMappa, Gioco gioco) {
+	public Tabellone(String nomeFileMappa, Gioco gioco, String numMappa) {
+		this.numeroMappa=numMappa;
 		if (nomeFileMappa == null)
 			throw new NullPointerException();
 		this.gioco = gioco;
@@ -600,5 +605,11 @@ public class Tabellone implements Serializable{
 	 */
 	public Gioco getGioco() {
 		return gioco;
+	}
+	/**
+	 * @return the numeroMappa
+	 */
+	public String getNumeroMappa() {
+		return numeroMappa;
 	}
 }

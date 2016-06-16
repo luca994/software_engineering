@@ -32,7 +32,7 @@ public class TestPercorso {
 
 	@Before
 	public void oggettiPerTest() throws JDOMException, IOException {
-		tabellone = new Tabellone("src/main/resources/mappacollegamenti0.xml", new Gioco());
+		tabellone = new Tabellone("src/main/resources/mappacollegamenti0.xml", new Gioco(),"0");
 		g1 = new Giocatore("pippo");
 		g2 = new Giocatore("piero");
 		giocatori = new HashSet<>();

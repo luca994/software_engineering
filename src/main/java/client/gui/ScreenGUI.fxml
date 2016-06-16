@@ -7,58 +7,62 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.7757633587786259" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1050.0" prefWidth="1680.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
-  <items>
-      <SplitPane fx:id="splitPaneTabellone" dividerPositions="0.7470967741935484" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+<AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
+   <children>
+      <SplitPane dividerPositions="0.7249443207126949" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-            <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="1678.0">
+            <SplitPane fx:id="splitPaneTabellone" dividerPositions="0.5950540958268934" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
-                <AnchorPane fx:id="anchorPaneMare" />
-                  <AnchorPane fx:id="anchorPanePianura" />
-                <AnchorPane fx:id="anchorPaneMontagna" prefHeight="195.0" />
+                  <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="1678.0">
+                    <items>
+                      <AnchorPane fx:id="anchorPaneMare" />
+                        <AnchorPane fx:id="anchorPanePianura" />
+                      <AnchorPane fx:id="anchorPaneMontagna" />
+                    </items>
+                  </SplitPane>
+                <AnchorPane fx:id="anchorPanePercorsi" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
               </items>
             </SplitPane>
-          <AnchorPane fx:id="anchorPanePercorsi" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+            <SplitPane fx:id="splitPanePannelloInterazione" dividerPositions="0.6674491392801252" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                <AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Azioni Principali" />
+                        <Label layoutX="244.0" layoutY="14.0" text="Azioni Rapide" />
+                        <Button fx:id="ingaggiaAiutanteButton" layoutX="244.0" layoutY="41.0" mnemonicParsing="false" onAction="#ingaggiaAiutanteButtonAction" prefHeight="31.0" prefWidth="301.0" text="Ingaggia aiutante" />
+                        <Button fx:id="cambiaTessereButton" layoutX="244.0" layoutY="78.0" mnemonicParsing="false" onAction="#cambiaTessereButtonAction" text="Cambia tessere costruzione in una regione" />
+                        <Button fx:id="consigliereRapidoButton" layoutX="244.0" layoutY="116.0" mnemonicParsing="false" onAction="#consigliereRapidoButtonAction" prefHeight="31.0" prefWidth="301.0" text="Eleggi consigliere rapido" />
+                        <Button fx:id="principaleAggiuntivaButton" layoutX="244.0" layoutY="155.0" mnemonicParsing="false" onAction="#principaleAggiuntivaButtonAction" prefHeight="31.0" prefWidth="301.0" text="Azione principale aggiuntiva" />
+                        <Button fx:id="saltaRapidaButton" layoutX="244.0" layoutY="192.0" mnemonicParsing="false" onAction="#saltaRapidaButtonAction" prefHeight="31.0" prefWidth="301.0" text="Salta azione rapida" />
+                        <Button fx:id="acquistaPermessoButton" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#acquistaPermessoButtonAction" prefHeight="31.0" prefWidth="223.0" text="Acquista permesso" />
+                        <Button fx:id="costruisciConReButton" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#costruisciConReButtonAction" prefHeight="31.0" prefWidth="223.0" text="Costruisci emporio con re" />
+                        <Button fx:id="eleggiConsigliereButton" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#eleggiConsigliereButtonAction" prefHeight="31.0" prefWidth="223.0" text="Eleggi consigliere" />
+                        <Button fx:id="costruisciEmporioTesseraButton" layoutX="14.0" layoutY="155.0" mnemonicParsing="false" onAction="#costruisciEmporioTesseraButtonAction" text="Costruisci emporio con tessera" />
+                        <Label layoutX="576.0" layoutY="31.0" text="Stato Gioco:" />
+                        <Label layoutX="550.0" layoutY="55.0" text="Stato Giocatore:" />
+                        <Label fx:id="labelStatoGioco" layoutX="671.0" layoutY="31.0" text="dynamic stato gioco" />
+                        <Label fx:id="labelStatoGiocatore" layoutX="671.0" layoutY="55.0" text="dynamic stato giocatore" />
+                        <Label fx:id="labelAzioneDaFare" layoutX="552.0" layoutY="83.0" />
+                        <Button fx:id="confermaAzioneButton" layoutX="684.0" layoutY="186.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" text="Conferma Azione" />
+                     </children>
+                  </AnchorPane>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Untitled Tab 1">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" />
+                        </content>
+                      </Tab>
+                      <Tab text="Untitled Tab 2">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+              </items>
+            </SplitPane>
         </items>
       </SplitPane>
-      <SplitPane fx:id="splitPanePannelloInterazione" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
-        <items>
-          <AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Azioni Principali" />
-                  <Label layoutX="244.0" layoutY="14.0" text="Azioni Rapide" />
-                  <Button fx:id="ingaggiaAiutanteButton" layoutX="244.0" layoutY="41.0" mnemonicParsing="false" onAction="#ingaggiaAiutanteButtonAction" prefHeight="31.0" prefWidth="301.0" text="Ingaggia aiutante" />
-                  <Button fx:id="cambiaTessereButton" layoutX="244.0" layoutY="78.0" mnemonicParsing="false" onAction="#cambiaTessereButtonAction" text="Cambia tessere costruzione in una regione" />
-                  <Button fx:id="consigliereRapidoButton" layoutX="244.0" layoutY="116.0" mnemonicParsing="false" onAction="#consigliereRapidoButtonAction" prefHeight="31.0" prefWidth="301.0" text="Eleggi consigliere rapido" />
-                  <Button fx:id="principaleAggiuntivaButton" layoutX="244.0" layoutY="155.0" mnemonicParsing="false" onAction="#principaleAggiuntivaButtonAction" prefHeight="31.0" prefWidth="301.0" text="Azione principale aggiuntiva" />
-                  <Button fx:id="saltaRapidaButton" layoutX="244.0" layoutY="192.0" mnemonicParsing="false" onAction="#saltaRapidaButtonAction" prefHeight="31.0" prefWidth="301.0" text="Salta azione rapida" />
-                  <Button fx:id="acquistaPermessoButton" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#acquistaPermessoButtonAction" prefHeight="31.0" prefWidth="223.0" text="Acquista permesso" />
-                  <Button fx:id="costruisciConReButton" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#costruisciConReButtonAction" prefHeight="31.0" prefWidth="223.0" text="Costruisci emporio con re" />
-                  <Button fx:id="eleggiConsigliereButton" layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#eleggiConsigliereButtonAction" prefHeight="31.0" prefWidth="223.0" text="Eleggi consigliere" />
-                  <Button fx:id="costruisciEmporioTesseraButton" layoutX="14.0" layoutY="155.0" mnemonicParsing="false" onAction="#costruisciEmporioTesseraButtonAction" text="Costruisci emporio con tessera" />
-                  <Label layoutX="576.0" layoutY="31.0" text="Stato Gioco:" />
-                  <Label layoutX="550.0" layoutY="55.0" text="Stato Giocatore:" />
-                  <Label fx:id="labelStatoGioco" layoutX="671.0" layoutY="31.0" text="dynamic stato gioco" />
-                  <Label fx:id="labelStatoGiocatore" layoutX="671.0" layoutY="55.0" text="dynamic stato giocatore" />
-                  <Label fx:id="labelAzioneDaFare" layoutX="552.0" layoutY="83.0" />
-                  <Button fx:id="confermaAzioneButton" layoutX="684.0" layoutY="186.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" text="Conferma Azione" />
-               </children>
-            </AnchorPane>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Untitled Tab 1">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" />
-                  </content>
-                </Tab>
-                <Tab text="Untitled Tab 2">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-        </items>
-      </SplitPane>
-  </items>
-</SplitPane>
+   </children>
+</AnchorPane>

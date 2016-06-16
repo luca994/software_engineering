@@ -17,15 +17,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import server.model.Giocatore;
 import server.model.Tabellone;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
-import server.model.componenti.Citta;
-import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoMercato;
@@ -41,6 +45,15 @@ public class ViewGUI extends View implements Initializable {
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
 	private AtomicBoolean inserimentoAzione;
+
+	@FXML
+	private AnchorPane anchorPaneMare;
+	@FXML
+	private AnchorPane anchorPanePianura;
+	@FXML
+	private AnchorPane anchorPaneMontagna;
+	@FXML
+	private AnchorPane anchorPanePercorsi;
 
 	@FXML
 	private Button acquistaPermessoButton;
@@ -71,6 +84,27 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private Label labelAzioneDaFare;
+	
+	@FXML
+	private void ingaggiaAiutanteButtonAction(){};
+	@FXML
+	private void cambiaTessereButtonAction(){};
+	@FXML
+	private void consigliereRapidoButtonAction(){};
+	@FXML
+	private void principaleAggiuntivaButtonAction(){};
+	@FXML
+	private void saltaRapidaButtonAction(){};
+	@FXML
+	private void acquistaPermessoButtonAction(){};
+	@FXML
+	private void costruisciConReButtonAction(){};
+	@FXML
+	private void eleggiConsigliereButtonAction(){};
+	@FXML
+	private void costruisciEmporioTesseraButtonAction(){};
+	@FXML
+	private void confermaAzioneButtonAction(){};
 
 	/*
 	 * (non-Javadoc)
@@ -176,6 +210,15 @@ public class ViewGUI extends View implements Initializable {
 	public void startClient() {
 		
 			// fai robe
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
+		try {
+			Stage stage = new Stage();
+			stage.setTitle("Gioco vediamo se va");
+			stage.setScene(new Scene((AnchorPane) loader.load()));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 
 	}
@@ -188,7 +231,7 @@ public class ViewGUI extends View implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Costruiamo sta gui, setto i parametri iniziali
+		creazioneSfondiMappa();
 
 	}
 
@@ -229,7 +272,53 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void aggiornaGUI() {
-
+	}
+	
+	private void creazioneSfondiMappa(){
+		BackgroundImage mare;
+		BackgroundImage pianura;
+		BackgroundImage montagna;
+		BackgroundImage percorsi;
+		//int num=Integer.parseInt(tabelloneClient.getNumeroMappa());
+		int num=0;
+		if(0==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(1==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(2==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(3==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(4==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(5==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else if(6==num){
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}else {
+			mare = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			pianura = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+			montagna = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		}
+		percorsi = new BackgroundImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/percorsi.jpg").toString(), 1278, 258, false, true),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,	BackgroundSize.DEFAULT);
+		anchorPanePercorsi.setBackground(new Background(percorsi));
+		anchorPaneMare.setBackground(new Background(mare));
+		anchorPanePianura.setBackground(new Background(pianura));
+		anchorPaneMontagna.setBackground(new Background(montagna));
 	}
 
 	/**
@@ -247,16 +336,11 @@ public class ViewGUI extends View implements Initializable {
 	public void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
 		costruisciConReButton.setDisable(value);
-
 		eleggiConsigliereButton.setDisable(value);
-
 		costruisciEmporioTesseraButton.setDisable(value);
-
 		ingaggiaAiutanteButton.setDisable(value);
 		cambiaTessereButton.setDisable(value);
-
 		consigliereRapidoButton.setDisable(value);
-
 		principaleAggiuntivaButton.setDisable(value);
 		saltaRapidaButton.setDisable(value);
 		labelAzioneDaFare.setDisable(value);
