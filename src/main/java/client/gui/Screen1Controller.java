@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
-import client.cli.ViewCLI;
 import eccezione.NomeGiaScelto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

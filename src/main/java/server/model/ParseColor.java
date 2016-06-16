@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.lang.reflect.Field;
 
 public class ParseColor {
-
+	
 	/**
 	 * 
 	 * @param color

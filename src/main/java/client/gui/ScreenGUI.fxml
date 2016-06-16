@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
+<AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
    <children>
       <SplitPane dividerPositions="0.7249443207126949" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -17,12 +17,45 @@
               <items>
                   <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="1678.0">
                     <items>
-                      <AnchorPane fx:id="anchorPaneMare" />
-                        <AnchorPane fx:id="anchorPanePianura" />
-                      <AnchorPane fx:id="anchorPaneMontagna" />
+                      <AnchorPane fx:id="anchorPaneMare">
+                           <children>
+                              <Button fx:id="castrum" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
+                              <Button fx:id="arkon" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
+                              <Button fx:id="burgen" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
+                              <Button fx:id="dortid" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
+                              <Button fx:id="esti" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Esti" />
+                           </children></AnchorPane>
+                        <AnchorPane fx:id="anchorPanePianura">
+                           <children>
+                              <Button fx:id="indur" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Indur" />
+                              <Button fx:id="framek" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Framek" />
+                              <Button fx:id="graden" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Graden" />
+                              <Button fx:id="juvelar" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
+                              <Button fx:id="hellar" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
+                           </children></AnchorPane>
+                      <AnchorPane fx:id="anchorPaneMontagna">
+                           <children>
+                              <Button fx:id="lyram" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
+                              <Button fx:id="kultos" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
+                              <Button fx:id="naris" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Naris" />
+                              <Button fx:id="osium" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Osium" />
+                              <Button fx:id="merkatim" layoutX="38.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
+                           </children></AnchorPane>
                     </items>
                   </SplitPane>
-                <AnchorPane fx:id="anchorPanePercorsi" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane fx:id="anchorPanePercorsi" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <Button fx:id="tesseraMare0Button" layoutX="182.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraMare1Button" layoutX="283.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <Button fx:id="tesseraPianura0Button" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraPianura1Button" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <Button fx:id="tesseraMontagna0Button" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraMontagna1Button" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <Button fx:id="consiglioMareButton" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Mare" />
+                        <Button fx:id="consiglioPianuraButton" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
+                        <Button fx:id="consiglioMontagnaButton" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
+                        <Button fx:id="consiglioReButton" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Re" />
+                     </children></AnchorPane>
               </items>
             </SplitPane>
             <SplitPane fx:id="splitPanePannelloInterazione" dividerPositions="0.6674491392801252" prefHeight="160.0" prefWidth="200.0">
@@ -44,7 +77,7 @@
                         <Label layoutX="550.0" layoutY="55.0" text="Stato Giocatore:" />
                         <Label fx:id="labelStatoGioco" layoutX="671.0" layoutY="31.0" text="dynamic stato gioco" />
                         <Label fx:id="labelStatoGiocatore" layoutX="671.0" layoutY="55.0" text="dynamic stato giocatore" />
-                        <Label fx:id="labelAzioneDaFare" layoutX="552.0" layoutY="83.0" />
+                        <Label fx:id="labelAzioneDaFare" layoutX="552.0" layoutY="83.0" prefHeight="93.0" prefWidth="280.0" />
                         <Button fx:id="confermaAzioneButton" layoutX="684.0" layoutY="186.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" text="Conferma Azione" />
                      </children>
                   </AnchorPane>

@@ -6,17 +6,21 @@ package client.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import client.View;
 import client.cli.InputOutput;
 import eccezione.NomeGiaScelto;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -30,6 +34,9 @@ import server.model.Tabellone;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.componenti.Citta;
+import server.model.componenti.Consiglio;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoMercato;
@@ -45,6 +52,10 @@ public class ViewGUI extends View implements Initializable {
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
 	private AtomicBoolean inserimentoAzione;
+	private Semaphore semInput;
+	private Citta cittaInput;
+	private TesseraCostruzione tesseraInput;
+	private Consiglio consiglioInput;
 
 	@FXML
 	private AnchorPane anchorPaneMare;
@@ -57,31 +68,72 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private Button acquistaPermessoButton;
-
 	@FXML
 	private Button costruisciConReButton;
-
 	@FXML
 	private Button eleggiConsigliereButton;
-
 	@FXML
 	private Button costruisciEmporioTesseraButton;
-
 	@FXML
 	private Button ingaggiaAiutanteButton;
-
 	@FXML
 	private Button cambiaTessereButton;
-
 	@FXML
 	private Button consigliereRapidoButton;
-
 	@FXML
 	private Button principaleAggiuntivaButton;
-
 	@FXML
 	private Button saltaRapidaButton;
-
+	@FXML
+	private Button arkon;
+	@FXML
+	private Button burgen;
+	@FXML
+	private Button castrum;
+	@FXML
+	private Button dortid;
+	@FXML
+	private Button esti;
+	@FXML
+	private Button framek;
+	@FXML
+	private Button indur;
+	@FXML
+	private Button graden;
+	@FXML
+	private Button juvelar;
+	@FXML
+	private Button hellar;
+	@FXML
+	private Button kultos;
+	@FXML
+	private Button naris;
+	@FXML
+	private Button lyram;
+	@FXML
+	private Button osium;
+	@FXML
+	private Button merkatim;
+	@FXML
+	private Button tesseraMare0Button;
+	@FXML
+	private Button tesseraMare1Button;
+	@FXML
+	private Button tesseraPianura0Button;
+	@FXML
+	private Button tesseraPianura1Button;
+	@FXML
+	private Button tesseraMontagna0Button;
+	@FXML
+	private Button tesseraMontagna1Button;
+	@FXML
+	private Button consiglioMareButton;
+	@FXML
+	private Button consiglioPianuraButton;
+	@FXML
+	private Button consiglioMontagnaButton;
+	@FXML
+	private Button consiglioReButton;
 	@FXML
 	private Label labelAzioneDaFare;
 	
@@ -105,7 +157,62 @@ public class ViewGUI extends View implements Initializable {
 	private void costruisciEmporioTesseraButtonAction(){};
 	@FXML
 	private void confermaAzioneButtonAction(){};
+	
+	private Citta impostaCitta(){
+		try {
+			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
+			semInput.acquire();
+			Citta citta = cittaInput;
+			cittaInput = null;
+			return citta;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
+	@FXML
+	private void handleCittaButton(ActionEvent event){
+		String nomeCitta = ((Node) event.getSource()).getId();
+		labelAzioneDaFare.setText(nomeCitta);
+		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
+		semInput.release();
+	}
+	
+	@FXML
+	private void handleTesseraMareButton(ActionEvent event){
+		int numTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		labelAzioneDaFare.setText(String.valueOf(numTessera));
+		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
+		semInput.release();
+	}
+	
+	@FXML
+	private void handleTesseraPianuraButton(ActionEvent event){
+		int numTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		tesseraInput = tabelloneClient.getRegioneDaNome("pianura").getTessereCostruzione().get(numTessera);
+		semInput.release();
+	}
+	
+	@FXML
+	private void handleTesseraMontagnaButton(ActionEvent event){
+		int numeroTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		tesseraInput = tabelloneClient.getRegioneDaNome("montagna").getTessereCostruzione().get(numeroTessera);
+		semInput.release();
+	}
+	
+	@FXML
+	private void handleConsiglioButton(ActionEvent event){
+		String nomeConsiglio = ((Labeled) event.getSource()).getText();
+		if("re".equalsIgnoreCase(nomeConsiglio)){
+			consiglioInput = tabelloneClient.getRe().getConsiglio();
+		}
+		else{
+			consiglioInput = tabelloneClient.getRegioneDaNome(nomeConsiglio).getConsiglio();
+		}
+		semInput.release();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
