@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="138.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.MessaggioErroreController">
+<AnchorPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.MessaggioErroreController">
    <children>
-      <Label fx:id="messaggioLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="21.0" prefHeight="50.0" prefWidth="238.0" text="Label" />
-      <Button fx:id="confirmButton" layoutX="114.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleConfirmButtonAction" text="OK" />
+      <Label fx:id="messaggioLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="12.0" prefHeight="63.0" prefWidth="300.0" text="Label" />
+      <Button fx:id="confirmButton" layoutX="130.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleConfirmButtonAction" text="OK" />
    </children>
 </AnchorPane>

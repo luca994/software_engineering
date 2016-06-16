@@ -28,8 +28,8 @@ public class MessaggioErroreController implements Initializable {
 	
 	@FXML//è l'onAction dell'fxml
 	private void handleConfirmButtonAction(ActionEvent event) {
-		 Stage stage = (Stage) confirmButton.getScene().getWindow();
-		 stage.close();
+		 Stage thisStage = (Stage) confirmButton.getScene().getWindow();
+		 thisStage.close();
 	}
 
 	/*

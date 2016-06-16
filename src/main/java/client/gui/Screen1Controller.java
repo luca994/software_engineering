@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
+import client.cli.ViewCLI;
 import eccezione.NomeGiaScelto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,7 @@ public class Screen1Controller implements Initializable {
 	private void handleConfirmButtonAction(ActionEvent event) {
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				this.view.startClient();
+				view.startClient();
 				Stage stage = (Stage) confirmButton.getScene().getWindow();
 				stage.close();
 			}
@@ -99,17 +100,17 @@ public class Screen1Controller implements Initializable {
 	}
 
 	private boolean impostaConnessione() {
-		this.view = new ViewGUI();
 		int scelta = 1;
 		if ("Socket".equals(tipoConnessioneChoiceBox.getValue()))
 			scelta = 0;
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(view);
 		try {
+			
 			view.setConnessione(connessioneFactory.createConnessione(scelta, ipTextField.getText(),
 					Integer.parseInt(portaTextField.getText()), nomeUtenteTextField.getText(),
 					sceltaMappaChoiceBox.getValue()));
 
-			stampaMessaggio("Messaggio", "Connessione avvenuta");
+			stampaMessaggio("Messaggio", "Connesione Avvenuta");
 			return true;
 		} catch (NomeGiaScelto e) {
 			stampaMessaggio("Errore", "Nome già scelto");
@@ -151,6 +152,13 @@ public class Screen1Controller implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * @param view2
+	 */
+	public void setView(ViewGUI view) {
+		this.view=view;		
 	}
 
 }
