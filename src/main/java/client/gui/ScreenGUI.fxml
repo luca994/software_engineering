@@ -89,6 +89,13 @@
                                           <Image url="@../../../resources/immaginiGUI/cartePolitica/orange.png" />
                                        </image>
                                     </ImageView>
+                                    <Label fx:id="labelCartaPoliticaBlack" layoutX="18.0" layoutY="95.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaWhite" layoutX="133.0" layoutY="95.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaPink" layoutX="73.0" layoutY="185.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaOrange" layoutX="195.5" layoutY="185.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaCyan" layoutX="258.0" layoutY="95.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaJolly" layoutX="313.0" layoutY="185.0" text="Label" />
+                                    <Label fx:id="labelCartaPoliticaMagenta" layoutX="368.0" layoutY="95.0" text="Label" />
                                  </children></AnchorPane>
                         </content>
                       </Tab>
