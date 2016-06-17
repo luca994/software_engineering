@@ -78,7 +78,7 @@ public class AcquistaPermessoTest {
 		carteTest.add(new Jolly());
 		giocoTester.getTabellone().getRegioni().get(0).getConsiglio().setConsiglieri(consiglieri);
 		TesseraCostruzione tesseraTest = new TesseraCostruzione(null, s,
-				giocoTester.getTabellone().getRegioneDaNome("mare"));
+				giocoTester.getTabellone().getRegioneDaNome("mare"), "0");
 		creaAzioniTester.setTesseraCostruzione(tesseraTest);
 		creaAzioniTester.setConsiglio(giocoTester.getTabellone().getRegioni().get(0).getConsiglio());
 		creaAzioniTester.setCartePolitica(carteTest);

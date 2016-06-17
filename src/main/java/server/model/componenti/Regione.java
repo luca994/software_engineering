@@ -91,6 +91,7 @@ public class Regione implements Serializable{
 			List<Element> elencoSet = tessere.getChildren();
 			Set<Bonus> bonusTessera = new HashSet<>(3);
 			Set<Citta> elencoRiferimentiCitta = new HashSet<>(3);
+			String idTessera = tessere.getAttributeValue("id");
 			for (Element set : elencoSet)// Scorro i set di bonus e città nel
 											// file
 			{
@@ -113,7 +114,7 @@ public class Regione implements Serializable{
 					}
 				}
 			}
-			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera, elencoRiferimentiCitta, this));
+			elencoRiferimentiTessere.add(new TesseraCostruzione(bonusTessera, elencoRiferimentiCitta, this, idTessera));
 		}
 		setTessereCoperte(elencoRiferimentiTessere);
 	}

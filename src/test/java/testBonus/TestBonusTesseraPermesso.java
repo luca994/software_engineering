@@ -131,8 +131,8 @@ public class TestBonusTesseraPermesso {
 		Citta citta2 = new Citta("roma", gioco.getTabellone().getRegioni().get(0));
 		Set<Citta> setCitta2 = new HashSet<>();
 		setCitta2.add(citta2);
-		bonus1.setTessera(new TesseraCostruzione(setBonusTessera1, setCitta1, gioco.getTabellone().getRegioni().get(1)));
-		bonus2.setTessera(new TesseraCostruzione(setBonusTessera2, setCitta2, gioco.getTabellone().getRegioni().get(1)));
+		bonus1.setTessera(new TesseraCostruzione(setBonusTessera1, setCitta1, gioco.getTabellone().getRegioni().get(1),"0"));
+		bonus2.setTessera(new TesseraCostruzione(setBonusTessera2, setCitta2, gioco.getTabellone().getRegioni().get(1),"0"));
 		assertEquals(true, bonus1.isUguale(bonus2));
 	}
 
