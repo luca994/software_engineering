@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
    <children>
       <SplitPane dividerPositions="0.7249443207126949" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -17,7 +17,7 @@
               <items>
                   <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="1678.0">
                     <items>
-                      <AnchorPane fx:id="anchorPaneMare">
+                      <AnchorPane fx:id="anchorPaneMare" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                            <children>
                               <Button fx:id="castrum" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
                               <Button fx:id="arkon" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
@@ -25,7 +25,7 @@
                               <Button fx:id="dortid" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
                               <Button fx:id="esti" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Esti" />
                            </children></AnchorPane>
-                        <AnchorPane fx:id="anchorPanePianura">
+                        <AnchorPane fx:id="anchorPanePianura" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="420.0">
                            <children>
                               <Button fx:id="indur" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Indur" />
                               <Button fx:id="framek" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Framek" />
@@ -33,9 +33,9 @@
                               <Button fx:id="juvelar" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
                               <Button fx:id="hellar" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
                            </children></AnchorPane>
-                      <AnchorPane fx:id="anchorPaneMontagna">
+                      <AnchorPane fx:id="anchorPaneMontagna" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                            <children>
-                              <Button fx:id="lyram" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
+                              <Button fx:id="lyram" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
                               <Button fx:id="kultos" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
                               <Button fx:id="naris" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Naris" />
                               <Button fx:id="osium" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Osium" />
@@ -43,7 +43,7 @@
                            </children></AnchorPane>
                     </items>
                   </SplitPane>
-                <AnchorPane fx:id="anchorPanePercorsi" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane fx:id="anchorPanePercorsi" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="1278.0">
                      <children>
                         <Button fx:id="tesseraMare0Button" layoutX="182.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="0" />
                         <Button fx:id="tesseraMare1Button" layoutX="283.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="1" />

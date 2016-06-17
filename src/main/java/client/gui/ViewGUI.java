@@ -17,11 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -35,12 +33,12 @@ import server.model.Tabellone;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
-import server.model.componenti.Citta;
-import server.model.componenti.Consiglio;
-import server.model.componenti.TesseraCostruzione;
 import server.model.componenti.CartaColorata;
 import server.model.componenti.CartaPolitica;
+import server.model.componenti.Citta;
+import server.model.componenti.Consiglio;
 import server.model.componenti.Jolly;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoMercato;
@@ -56,7 +54,7 @@ public class ViewGUI extends View implements Initializable {
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
 	private AtomicBoolean inserimentoAzione;
-	private Semaphore semInput;
+	private Semaphore semInput = new Semaphore(0);
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
@@ -95,7 +93,7 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button castrum;
 	@FXML
-	private Button dortid;
+	private Button dorful;
 	@FXML
 	private Button esti;
 	@FXML
@@ -173,50 +171,37 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void confermaAzioneButtonAction(){};
 	
-	private Citta impostaCitta(){
-		try {
-			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
-			semInput.acquire();
-			Citta citta = cittaInput;
-			cittaInput = null;
-			return citta;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
 	@FXML
 	private void consigliereRapidoButtonAction() {
-	};
+	}
 
 	@FXML
 	private void principaleAggiuntivaButtonAction() {
-	};
+	}
 
 	@FXML
 	private void saltaRapidaButtonAction() {
-	};
+	}
 
 	@FXML
 	private void acquistaPermessoButtonAction() {
-	};
+	}
 
 	@FXML
 	private void costruisciConReButtonAction() {
-	};
+	}
 
 	@FXML
 	private void eleggiConsigliereButtonAction() {
-	};
+	}
 
 	@FXML
 	private void costruisciEmporioTesseraButtonAction() {
-	};
+	}
 
 	@FXML
 	private void handleCittaButton(ActionEvent event){
-		String nomeCitta = ((Node) event.getSource()).getId();
+		String nomeCitta = ((Button) event.getSource()).getId();
 		labelAzioneDaFare.setText(nomeCitta);
 		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
 		semInput.release();
@@ -224,7 +209,7 @@ public class ViewGUI extends View implements Initializable {
 	
 	@FXML
 	private void handleTesseraMareButton(ActionEvent event){
-		int numTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		labelAzioneDaFare.setText(String.valueOf(numTessera));
 		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
 		semInput.release();
@@ -232,21 +217,21 @@ public class ViewGUI extends View implements Initializable {
 	
 	@FXML
 	private void handleTesseraPianuraButton(ActionEvent event){
-		int numTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("pianura").getTessereCostruzione().get(numTessera);
 		semInput.release();
 	}
 	
 	@FXML
 	private void handleTesseraMontagnaButton(ActionEvent event){
-		int numeroTessera = Integer.parseInt(((Labeled) event.getSource()).getText());
+		int numeroTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("montagna").getTessereCostruzione().get(numeroTessera);
 		semInput.release();
 	}
 	
 	@FXML
 	private void handleConsiglioButton(ActionEvent event){
-		String nomeConsiglio = ((Labeled) event.getSource()).getText();
+		String nomeConsiglio = ((Button) event.getSource()).getText();
 		if("re".equalsIgnoreCase(nomeConsiglio)){
 			consiglioInput = tabelloneClient.getRe().getConsiglio();
 		}
@@ -256,21 +241,55 @@ public class ViewGUI extends View implements Initializable {
 		semInput.release();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
+	private Citta impostaCitta(){
+		try {
+			disabilitazioneBottoniCitta(false);
+			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
+			semInput.acquire();
+			Citta citta = cittaInput;
+			cittaInput = null;
+			disabilitazioneBottoniCitta(true);
+			return citta;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private Consiglio impostaConsiglio(){
+		try{
+			disabilitazioneBottoniConsigli(false);
+			labelAzioneDaFare.setText("Clicca sul consiglio da utilizzare");
+			semInput.acquire();
+			Consiglio consiglio = consiglioInput;
+			consiglioInput = null;
+			disabilitazioneBottoniConsigli(true);
+			return consiglio;
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private TesseraCostruzione impostaTesseraCostruzioneAcquisto(){
+		try{
+			disabilitazioneBottoniTessereCostruzione(false);
+			labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
+			semInput.acquire();
+			TesseraCostruzione tessera = tesseraInput;
+			tesseraInput = null;
+			disabilitazioneBottoniTessereCostruzione(true);
+			return tessera;
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see client.View#riceviOggetto(java.lang.Object)
-	 */
 	@Override
 	public synchronized void riceviOggetto(Object oggetto) {
 		try {
@@ -352,14 +371,8 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see client.View#startClient()
-	 */
 	@Override
 	public void startClient() {
-
 		// fai robe
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
 		try {
@@ -370,19 +383,11 @@ public class ViewGUI extends View implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
-	 * java.util.ResourceBundle)
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		creazioneSfondiMappa();
-
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -632,5 +637,38 @@ public class ViewGUI extends View implements Initializable {
 		saltaRapidaButton.setDisable(value);
 		labelAzioneDaFare.setDisable(value);
 	}
+	
+	public void disabilitazioneBottoniCitta(boolean value){
+		arkon.setDisable(value);
+		burgen.setDisable(value);
+		castrum.setDisable(value);
+		dorful.setDisable(value);
+		esti.setDisable(value);
+		framek.setDisable(value);
+		graden.setDisable(value);
+		juvelar.setDisable(value);
+		hellar.setDisable(value);
+		indur.setDisable(value);
+		kultos.setDisable(value);
+		naris.setDisable(value);
+		lyram.setDisable(value);
+		osium.setDisable(value);
+		merkatim.setDisable(value);
+	}
+	
+	public void disabilitazioneBottoniTessereCostruzione(boolean value){
+		tesseraMare0Button.setDisable(value);
+		tesseraMare1Button.setDisable(value);
+		tesseraMontagna0Button.setDisable(value);
+		tesseraMontagna1Button.setDisable(value);
+		tesseraPianura0Button.setDisable(value);
+		tesseraPianura1Button.setDisable(value);
+	}
 
+	public void disabilitazioneBottoniConsigli(boolean value){
+		consiglioMareButton.setDisable(value);
+		consiglioMontagnaButton.setDisable(value);
+		consiglioPianuraButton.setDisable(value);
+		consiglioReButton.setDisable(value);
+	}
 }
