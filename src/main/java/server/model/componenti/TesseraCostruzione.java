@@ -19,16 +19,18 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 	private Set<Citta> citta;
 	private Regione regioneDiAppartenenza;
 	private Set<Bonus> bonus;
+	private final String id;
 
 	/**
 	 * @param bonus
 	 * @param citta
 	 * @param regioneDiAppartenenza
 	 */
-	public TesseraCostruzione(Set<Bonus> bonus, Set<Citta> citta, Regione regioneDiAppartenenza) {
+	public TesseraCostruzione(Set<Bonus> bonus, Set<Citta> citta, Regione regioneDiAppartenenza, String id) {
 		this.bonus = bonus;
 		this.citta = citta;
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
+		this.id=id;
 	}
 
 	public boolean verifyCitta(Citta cittaDaVerificare) {
@@ -145,4 +147,10 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 		this.bonus = bonus;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
 }

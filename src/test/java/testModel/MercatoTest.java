@@ -151,7 +151,7 @@ public class MercatoTest {
 				.get(0);
 		OggettoVendibile tester = new TesseraCostruzione(((TesseraCostruzione) oggettoDaAggiungere).getBonus(),
 				((TesseraCostruzione) oggettoDaAggiungere).getCitta(),
-				((TesseraCostruzione) oggettoDaAggiungere).getRegioneDiAppartenenza());
+				((TesseraCostruzione) oggettoDaAggiungere).getRegioneDiAppartenenza(), "0");
 		oggettoDaAggiungere.setPrezzo(2);
 		oggettoDaAggiungere.setMercato(mercatoTester);
 		oggettoDaAggiungere.setGiocatore(venditore);
