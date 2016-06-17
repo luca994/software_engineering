@@ -4,7 +4,6 @@ import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
-import server.model.componenti.Regione;
 
 /**
  * Rapid action that allows you to elect a councilor for an assistant .
@@ -48,21 +47,5 @@ public class EleggiConsigliereRapido extends AzioneRapida {
 		giocatore.getAssistenti().remove(0);
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 
-	}
-
-	public boolean verificaInput(Giocatore giocatore) {
-		if (giocatore == null)
-			throw new NullPointerException("Il giocatore non può essere nullo");
-		boolean consigliereValido = false;
-		boolean consiglioValido = false;
-		if (getGioco().getTabellone().getConsiglieriDisponibili().contains(consigliere))
-			consigliereValido = true;
-		for (Regione regione : getGioco().getTabellone().getRegioni()) {
-			if (regione.getConsiglio().equals(consiglio)) {
-				consiglioValido = true;
-				break;
-			}
-		}
-		return consiglioValido && consigliereValido;
 	}
 }
