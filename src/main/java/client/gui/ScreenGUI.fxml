@@ -90,14 +90,14 @@
                               <Button fx:id="confermaAzioneButton" layoutX="684.0" layoutY="186.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" text="Conferma Azione" />
                               <Label layoutX="14.0" layoutY="205.0" text="Consiglieri disponibili" />
                               <Button fx:id="annullaAzioneButton" layoutX="539.0" layoutY="187.0" mnemonicParsing="false" onAction="#annullaAzioneButtonAction" prefHeight="31.0" prefWidth="130.0" text="Annulla Azione" />
-                              <ComboBox fx:id="consigliereDisponibileComboBox" layoutX="142.0" layoutY="201.0" onAction="#handleConsigliereButton" prefHeight="25.0" prefWidth="93.0" />
+                              <ComboBox fx:id="consigliereDisponibileComboBox" layoutX="142.0" layoutY="201.0" onAction="#handleConsigliereComboBox" prefHeight="25.0" prefWidth="93.0" />
                            </children>
                         </AnchorPane>
                         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab closable="false" text="Carte Politica">
                                  <content>
-                                    <ListView fx:id="cartePoliticaListView" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="cartePoliticaListView" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Tessere Valide">
