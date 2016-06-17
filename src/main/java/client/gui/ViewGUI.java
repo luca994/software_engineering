@@ -5,6 +5,8 @@ package client.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,6 +30,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -71,11 +74,15 @@ public class ViewGUI extends View implements Initializable {
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
+	private Consigliere consigliereInput;
+	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
 
 	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereUsate = FXCollections.observableArrayList();
 	ObservableList<Color> consiglieriDisponibili = FXCollections.observableArrayList();
+	ObservableList<ImageView> tessereCostruzioneValide = FXCollections.observableArrayList();
+	ObservableList<ImageView> tessereCostruzioneUsate = FXCollections.observableArrayList();
 
 	public void aggiornaCartePolitica() {
 		cartePolitica.clear();
@@ -94,6 +101,19 @@ public class ViewGUI extends View implements Initializable {
 		cartePoliticaListView.setItems(cartePolitica);
 	}
 
+	public void aggiornaTessereCostruzioneGiocatore(){
+		tessereCostruzioneUsate.clear();
+		tessereCostruzioneValide.clear();
+		for(TesseraCostruzione t: giocatore.getTessereValide()){
+			tessereCostruzioneValide.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		}
+		for(TesseraCostruzione t: giocatore.getTessereUsate()){
+			tessereCostruzioneUsate.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		}
+		tessereValideListView.setItems(tessereCostruzioneValide);
+		tessereUsateListView.setItems(tessereCostruzioneUsate);
+	}
+	
 	public void aggiornaConsiglieriDisponibili() {
 		consiglieriDisponibili.clear();
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
@@ -266,8 +286,11 @@ public class ViewGUI extends View implements Initializable {
 		gioco.getGiocatori().add(new Giocatore("paolo"));
 		gioco.inizializzaPartita("0");
 		tabelloneClient = gioco.getTabellone();
+		g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(3));
+		g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(6));
 		aggiornaConsiglieriDisponibili();
 		aggiornaCartePolitica();
+		aggiornaTessereCostruzioneGiocatore();
 	}
 
 	@FXML
@@ -340,12 +363,25 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void handleConsigliereButton(ActionEvent event){
-		int posizione = ((ComboBox)event.getSource()).getSelectionModel().getSelectedIndex();
-		labelAzioneDaFare.setText(String.valueOf(posizione)+"\n"+tabelloneClient.getConsiglieriDisponibili().get(posizione));
-		posizione = 0;
+	private void handleConsigliereComboBox(ActionEvent event) {
+		int posizione = ((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
+		consigliereInput = tabelloneClient.getConsiglieriDisponibili().get(posizione);
+		labelAzioneDaFare.setText("Colore consigliere: "+ParseColor.colorIntToString(consigliereInput.getColore().getRGB()));
 	}
-	
+
+	@FXML
+	private void handleCartePoliticaList(MouseEvent event) {
+		if(cartePoliticaInput.size()<4){
+			ObservableList<Integer> carteSelezionate = ((ListView) event.getSource()).getSelectionModel().getSelectedIndices();
+			labelAzioneDaFare.setText(giocatore.getCartePolitica().get(carteSelezionate.get(0)).toString());
+			cartePoliticaInput.add(giocatore.getCartePolitica().get(carteSelezionate.get(0)));
+			cartePolitica.remove(carteSelezionate.get(0));
+			aggiornaCartePolitica();
+		}
+		else
+			labelAzioneDaFare.setText("Hai già selezionato 4 carte");
+	}
+
 	private Citta impostaCitta() {
 		try {
 			disabilitazioneBottoniCitta(false);
@@ -532,7 +568,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	private void aggiornaGUI(){
+	private void aggiornaGUI() {
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
 	}
