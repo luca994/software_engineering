@@ -26,7 +26,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 * 
 	 */
 	private static final long serialVersionUID = -3738439371299756375L;
-	
+
 	private static final int MIN_NUM_GIOCATORI = 2;
 	private static final int NUM_EMPORI_MASSIMO = 10;
 
@@ -65,9 +65,9 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 		if (statoGioco instanceof Esecuzione)
 			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
 
-		if("8".equals(numMappa))
-			numMappa = Integer.toString((int) Math.random()*7);
-		String nomeMappaScelta = new String("src/main/resources/mappacollegamenti"+numMappa+".xml");
+		if ("8".equals(numMappa))
+			numMappa = Integer.toString((int) Math.random() * 7);
+		String nomeMappaScelta = new String("src/main/resources/mappacollegamenti" + numMappa + ".xml");
 
 		this.tabellone = new Tabellone(nomeMappaScelta, this, numMappa);
 
@@ -129,18 +129,14 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 * initialized and is therefore still in Attesa state. After the method has
 	 * been executed the game will be terminated.
 	 * 
-	 * @throws IllegalStateException
-	 *             if the game is not in Attesa state.
 	 */
 	public void eseguiPartita() {
-		if (!(statoGioco instanceof Attesa))
-			throw new IllegalStateException("Stai eseguendo una partita che è già in esecuzione!");
 		while (!(statoGioco instanceof Terminato)) {
 			statoGioco.prossimoStato();
 			statoGioco.eseguiFase();
 		}
 	}
-	
+
 	/**
 	 * runs the method eseguiPartita in another thread
 	 */
@@ -148,14 +144,18 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	public void run() {
 		eseguiPartita();
 	}
+
 	/**
 	 * searches a player in the game from his name.
-	 * @param nomeGiocatore the name of the player to search.
-	 * @return the reference to the searched player if it exists, else return null.
+	 * 
+	 * @param nomeGiocatore
+	 *            the name of the player to search.
+	 * @return the reference to the searched player if it exists, else return
+	 *         null.
 	 */
-	public Giocatore cercaGiocatoreDaNome(String nomeGiocatore){
-		for(Giocatore g:giocatori)
-			if(g.getNome().equals(nomeGiocatore))
+	public Giocatore cercaGiocatoreDaNome(String nomeGiocatore) {
+		for (Giocatore g : giocatori)
+			if (g.getNome().equals(nomeGiocatore))
 				return g;
 		return null;
 	}
