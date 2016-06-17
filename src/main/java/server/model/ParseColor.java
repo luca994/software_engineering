@@ -7,6 +7,18 @@ public class ParseColor {
 	
 	/**
 	 * 
+	 * @param color the javaAWT color you want to convert
+	 * @return a javaFx color from a javaAWT color
+	 */
+	public static javafx.scene.paint.Color colorAwtToFx(java.awt.Color color){
+		double r = color.getRed()/255;
+		double g = color.getGreen()/255;
+		double b = color.getBlue()/255;
+		return javafx.scene.paint.Color.color(r, g, b);
+	}
+	
+	/**
+	 * 
 	 * @param color
 	 *            the integer value of the color
 	 * @return the string of the color

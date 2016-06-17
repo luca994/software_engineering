@@ -3,7 +3,6 @@
  */
 package client.gui;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,9 +20,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -32,9 +34,13 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
+import javafx.util.Callback;
 import server.model.Giocatore;
+import server.model.Gioco;
+import server.model.ParseColor;
 import server.model.Tabellone;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
@@ -42,6 +48,7 @@ import server.model.bonus.BonusTesseraPermesso;
 import server.model.componenti.CartaColorata;
 import server.model.componenti.CartaPolitica;
 import server.model.componenti.Citta;
+import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
 import server.model.componenti.Jolly;
 import server.model.componenti.TesseraCostruzione;
@@ -68,10 +75,80 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereUsate = FXCollections.observableArrayList();
-	ObservableList<ImageView> consiglieriDisponibili = FXCollections.observableArrayList();
+	ObservableList<Color> consiglieriDisponibili = FXCollections.observableArrayList();
+
+	public void aggiornaCartePolitica() {
+		cartePolitica.clear();
+		for (CartaPolitica c : giocatore.getCartePolitica()) {
+			if (c instanceof Jolly) {
+				cartePolitica.add(new ImageView(new Image(
+						getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 100,
+						200, false, false)));
+			} else {
+				cartePolitica.add(new ImageView(new Image(getClass().getClassLoader()
+						.getResource("immaginiGUI/cartePolitica/"
+								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
+						.toString(), 100, 200, false, false)));
+			}
+		}
+		cartePoliticaListView.setItems(cartePolitica);
+	}
+
+	public void aggiornaConsiglieriDisponibili() {
+		consiglieriDisponibili.clear();
+		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
+			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consigliereDisponibileComboBox.setItems(consiglieriDisponibili);
+
+		consigliereDisponibileComboBox.setButtonCell(new ListCell<Color>() {
+			private final Rectangle rectangle;
+			{
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+				rectangle = new Rectangle(60, 20);
+			}
+
+			@Override
+			protected void updateItem(Color item, boolean empty) {
+				super.updateItem(item, empty);
+
+				if (item == null || empty) {
+					setGraphic(null);
+				} else {
+					rectangle.setFill(item);
+					setGraphic(rectangle);
+				}
+			}
+		});
+
+		consigliereDisponibileComboBox.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(60, 20);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
 
 	@FXML
-	private ChoiceBox<ImageView> consigliereDisponibileChoiceBox;
+	private ComboBox<Color> consigliereDisponibileComboBox;
 
 	@FXML
 	private ListView<ImageView> tessereValideListView;
@@ -88,8 +165,7 @@ public class ViewGUI extends View implements Initializable {
 	private AnchorPane anchorPaneMontagna;
 	@FXML
 	private AnchorPane anchorPanePercorsi;
-	
-	
+
 	@FXML
 	private Button annullaAzioneButton;
 	@FXML
@@ -166,8 +242,9 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelAzioneDaFare;
 
 	@FXML
-	private void annullaAzioneButtonAction(){
+	private void annullaAzioneButtonAction() {
 	}
+
 	@FXML
 	private void messaggioChatButtonAction() {
 	}
@@ -182,7 +259,16 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void confermaAzioneButtonAction() {
-	};
+		Gioco gioco = new Gioco();
+		Giocatore g1 = new Giocatore("pippo");
+		this.giocatore = g1;
+		gioco.getGiocatori().add(g1);
+		gioco.getGiocatori().add(new Giocatore("paolo"));
+		gioco.inizializzaPartita("0");
+		tabelloneClient = gioco.getTabellone();
+		aggiornaConsiglieriDisponibili();
+		aggiornaCartePolitica();
+	}
 
 	@FXML
 	private void consigliereRapidoButtonAction() {
@@ -306,7 +392,7 @@ public class ViewGUI extends View implements Initializable {
 	public synchronized void riceviOggetto(Object oggetto) {
 		try {
 			if (oggetto instanceof String) {
-				stampaMessaggio("Messaggio", (String) oggetto);
+				// stampaMessaggio("Messaggio", (String) oggetto);
 			}
 			if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
@@ -314,7 +400,7 @@ public class ViewGUI extends View implements Initializable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaStato();
 				aggiornaGiocatore();
-				//aggiornaCarte();
+				// aggiornaCarte();
 			}
 			if (oggetto instanceof Exception) {
 				stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
@@ -400,6 +486,7 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		creazioneSfondiMappa();
+		cartePoliticaListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -439,6 +526,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void aggiornaGUI() {
+		cartePoliticaListView.setItems(cartePolitica);
 	}
 
 	private void creazioneSfondiMappa() {
@@ -603,39 +691,27 @@ public class ViewGUI extends View implements Initializable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	/*public synchronized void aggiornaCarte() {
-		CartaColorata c1 = new CartaColorata(Color.black);
-		CartaColorata c2 = new CartaColorata(Color.cyan);
-		CartaColorata c3 = new CartaColorata(Color.white);
-		CartaColorata c4 = new CartaColorata(Color.orange);
-		CartaColorata c5 = new CartaColorata(Color.magenta);
-		CartaColorata c6 = new CartaColorata(Color.pink);
-		Jolly jolly = new Jolly();
-		Integer b = 0, c = 0, w = 0, o = 0, m = 0, p = 0, j = 0;
-		for (CartaPolitica cP : giocatore.getCartePolitica()) {
-			if (cP.isUguale(c1))
-				b++;
-			if (cP.isUguale(c2))
-				c++;
-			if (cP.isUguale(c3))
-				w++;
-			if (cP.isUguale(c4))
-				o++;
-			if (cP.isUguale(c5))
-				m++;
-			if (cP.isUguale(c6))
-				p++;
-			if (cP.isUguale(jolly))
-				j++;
-		}
-		labelCartaPoliticaBlack.setText(b.toString());
-		labelCartaPoliticaCyan.setText(c.toString());
-		labelCartaPoliticaWhite.setText(w.toString());
-		labelCartaPoliticaOrange.setText(o.toString());
-		labelCartaPoliticaMagenta.setText(m.toString());
-		labelCartaPoliticaPink.setText(p.toString());
-		labelCartaPoliticaJolly.setText(j.toString());
-	}*/
+	/*
+	 * public synchronized void aggiornaCarte() { CartaColorata c1 = new
+	 * CartaColorata(Color.black); CartaColorata c2 = new
+	 * CartaColorata(Color.cyan); CartaColorata c3 = new
+	 * CartaColorata(Color.white); CartaColorata c4 = new
+	 * CartaColorata(Color.orange); CartaColorata c5 = new
+	 * CartaColorata(Color.magenta); CartaColorata c6 = new
+	 * CartaColorata(Color.pink); Jolly jolly = new Jolly(); Integer b = 0, c =
+	 * 0, w = 0, o = 0, m = 0, p = 0, j = 0; for (CartaPolitica cP :
+	 * giocatore.getCartePolitica()) { if (cP.isUguale(c1)) b++; if
+	 * (cP.isUguale(c2)) c++; if (cP.isUguale(c3)) w++; if (cP.isUguale(c4))
+	 * o++; if (cP.isUguale(c5)) m++; if (cP.isUguale(c6)) p++; if
+	 * (cP.isUguale(jolly)) j++; }
+	 * labelCartaPoliticaBlack.setText(b.toString());
+	 * labelCartaPoliticaCyan.setText(c.toString());
+	 * labelCartaPoliticaWhite.setText(w.toString());
+	 * labelCartaPoliticaOrange.setText(o.toString());
+	 * labelCartaPoliticaMagenta.setText(m.toString());
+	 * labelCartaPoliticaPink.setText(p.toString());
+	 * labelCartaPoliticaJolly.setText(j.toString()); }
+	 */
 
 	public void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);

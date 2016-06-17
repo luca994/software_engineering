@@ -109,7 +109,6 @@ public class Screen1Controller implements Initializable {
 					Integer.parseInt(portaTextField.getText()), nomeUtenteTextField.getText(),
 					sceltaMappaChoiceBox.getValue()));
 
-			stampaMessaggio("Messaggio", "Connesione Avvenuta");
 			return true;
 		} catch (NomeGiaScelto e) {
 			stampaMessaggio("Errore", "Nome già scelto");
