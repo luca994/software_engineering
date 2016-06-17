@@ -339,6 +339,13 @@ public class ViewGUI extends View implements Initializable {
 		semInput.release();
 	}
 
+	@FXML
+	private void handleConsigliereButton(ActionEvent event){
+		int posizione = ((ComboBox)event.getSource()).getSelectionModel().getSelectedIndex();
+		labelAzioneDaFare.setText(String.valueOf(posizione)+"\n"+tabelloneClient.getConsiglieriDisponibili().get(posizione));
+		posizione = 0;
+	}
+	
 	private Citta impostaCitta() {
 		try {
 			disabilitazioneBottoniCitta(false);
@@ -400,7 +407,7 @@ public class ViewGUI extends View implements Initializable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaStato();
 				aggiornaGiocatore();
-				// aggiornaCarte();
+				aggiornaGUI();
 			}
 			if (oggetto instanceof Exception) {
 				stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
@@ -525,8 +532,9 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	private void aggiornaGUI() {
-		cartePoliticaListView.setItems(cartePolitica);
+	private void aggiornaGUI(){
+		aggiornaCartePolitica();
+		aggiornaConsiglieriDisponibili();
 	}
 
 	private void creazioneSfondiMappa() {
