@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -32,6 +33,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+
 import server.model.Giocatore;
 import server.model.Tabellone;
 import server.model.bonus.BonusGettoneCitta;
@@ -62,10 +64,21 @@ public class ViewGUI extends View implements Initializable {
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
-	
+
+	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
+	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
+	ObservableList<ImageView> tessereUsate = FXCollections.observableArrayList();
+	ObservableList<ImageView> consiglieriDisponibili = FXCollections.observableArrayList();
+
+	@FXML
+	private ChoiceBox<ImageView> consigliereDisponibileChoiceBox;
+
 	@FXML
 	private ListView<ImageView> tessereValideListView;
-	ObservableList<ImageView> tessereValide =FXCollections.observableArrayList();
+	@FXML
+	private ListView<ImageView> tessereUsateListView;
+	@FXML
+	private ListView<ImageView> cartePoliticaListView;
 
 	@FXML
 	private AnchorPane anchorPaneMare;
@@ -75,7 +88,10 @@ public class ViewGUI extends View implements Initializable {
 	private AnchorPane anchorPaneMontagna;
 	@FXML
 	private AnchorPane anchorPanePercorsi;
-
+	
+	
+	@FXML
+	private Button annullaAzioneButton;
 	@FXML
 	private Button acquistaPermessoButton;
 	@FXML
@@ -150,26 +166,8 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelAzioneDaFare;
 
 	@FXML
-	private Label labelCartaPoliticaBlack;
-
-	@FXML
-	private Label labelCartaPoliticaWhite;
-
-	@FXML
-	private Label labelCartaPoliticaMagenta;
-
-	@FXML
-	private Label labelCartaPoliticaOrange;
-
-	@FXML
-	private Label labelCartaPoliticaCyan;
-
-	@FXML
-	private Label labelCartaPoliticaPink;
-
-	@FXML
-	private Label labelCartaPoliticaJolly;
-	
+	private void annullaAzioneButtonAction(){
+	}
 	@FXML
 	private void messaggioChatButtonAction() {
 	}
@@ -183,8 +181,9 @@ public class ViewGUI extends View implements Initializable {
 	};
 
 	@FXML
-	private void confermaAzioneButtonAction(){};
-	
+	private void confermaAzioneButtonAction() {
+	};
+
 	@FXML
 	private void consigliereRapidoButtonAction() {
 	}
@@ -214,48 +213,47 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void handleCittaButton(ActionEvent event){
+	private void handleCittaButton(ActionEvent event) {
 		String nomeCitta = ((Button) event.getSource()).getId();
 		labelAzioneDaFare.setText(nomeCitta);
 		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
 		semInput.release();
 	}
-	
+
 	@FXML
-	private void handleTesseraMareButton(ActionEvent event){
+	private void handleTesseraMareButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		labelAzioneDaFare.setText(String.valueOf(numTessera));
 		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
 		semInput.release();
 	}
-	
+
 	@FXML
-	private void handleTesseraPianuraButton(ActionEvent event){
+	private void handleTesseraPianuraButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("pianura").getTessereCostruzione().get(numTessera);
 		semInput.release();
 	}
-	
+
 	@FXML
-	private void handleTesseraMontagnaButton(ActionEvent event){
+	private void handleTesseraMontagnaButton(ActionEvent event) {
 		int numeroTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("montagna").getTessereCostruzione().get(numeroTessera);
 		semInput.release();
 	}
-	
+
 	@FXML
-	private void handleConsiglioButton(ActionEvent event){
+	private void handleConsiglioButton(ActionEvent event) {
 		String nomeConsiglio = ((Button) event.getSource()).getText();
-		if("re".equalsIgnoreCase(nomeConsiglio)){
+		if ("re".equalsIgnoreCase(nomeConsiglio)) {
 			consiglioInput = tabelloneClient.getRe().getConsiglio();
-		}
-		else{
+		} else {
 			consiglioInput = tabelloneClient.getRegioneDaNome(nomeConsiglio).getConsiglio();
 		}
 		semInput.release();
 	}
-	
-	private Citta impostaCitta(){
+
+	private Citta impostaCitta() {
 		try {
 			disabilitazioneBottoniCitta(false);
 			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
@@ -269,9 +267,9 @@ public class ViewGUI extends View implements Initializable {
 		}
 		return null;
 	}
-	
-	private Consiglio impostaConsiglio(){
-		try{
+
+	private Consiglio impostaConsiglio() {
+		try {
 			disabilitazioneBottoniConsigli(false);
 			labelAzioneDaFare.setText("Clicca sul consiglio da utilizzare");
 			semInput.acquire();
@@ -279,14 +277,14 @@ public class ViewGUI extends View implements Initializable {
 			consiglioInput = null;
 			disabilitazioneBottoniConsigli(true);
 			return consiglio;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	private TesseraCostruzione impostaTesseraCostruzioneAcquisto(){
-		try{
+
+	private TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
+		try {
 			disabilitazioneBottoniTessereCostruzione(false);
 			labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
 			semInput.acquire();
@@ -294,12 +292,12 @@ public class ViewGUI extends View implements Initializable {
 			tesseraInput = null;
 			disabilitazioneBottoniTessereCostruzione(true);
 			return tessera;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void run() {
 	}
@@ -308,7 +306,7 @@ public class ViewGUI extends View implements Initializable {
 	public synchronized void riceviOggetto(Object oggetto) {
 		try {
 			if (oggetto instanceof String) {
-				/* stampaMessaggio("Messaggio", (String) oggetto); */
+				stampaMessaggio("Messaggio", (String) oggetto);
 			}
 			if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
@@ -316,7 +314,7 @@ public class ViewGUI extends View implements Initializable {
 				tabelloneClient = (Tabellone) oggetto;
 				aggiornaStato();
 				aggiornaGiocatore();
-				aggiornaCarte();
+				//aggiornaCarte();
 			}
 			if (oggetto instanceof Exception) {
 				stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
@@ -605,7 +603,7 @@ public class ViewGUI extends View implements Initializable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	public synchronized void aggiornaCarte() {
+	/*public synchronized void aggiornaCarte() {
 		CartaColorata c1 = new CartaColorata(Color.black);
 		CartaColorata c2 = new CartaColorata(Color.cyan);
 		CartaColorata c3 = new CartaColorata(Color.white);
@@ -637,7 +635,7 @@ public class ViewGUI extends View implements Initializable {
 		labelCartaPoliticaMagenta.setText(m.toString());
 		labelCartaPoliticaPink.setText(p.toString());
 		labelCartaPoliticaJolly.setText(j.toString());
-	}
+	}*/
 
 	public void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
@@ -651,8 +649,8 @@ public class ViewGUI extends View implements Initializable {
 		saltaRapidaButton.setDisable(value);
 		labelAzioneDaFare.setDisable(value);
 	}
-	
-	public void disabilitazioneBottoniCitta(boolean value){
+
+	public void disabilitazioneBottoniCitta(boolean value) {
 		arkon.setDisable(value);
 		burgen.setDisable(value);
 		castrum.setDisable(value);
@@ -669,8 +667,8 @@ public class ViewGUI extends View implements Initializable {
 		osium.setDisable(value);
 		merkatim.setDisable(value);
 	}
-	
-	public void disabilitazioneBottoniTessereCostruzione(boolean value){
+
+	public void disabilitazioneBottoniTessereCostruzione(boolean value) {
 		tesseraMare0Button.setDisable(value);
 		tesseraMare1Button.setDisable(value);
 		tesseraMontagna0Button.setDisable(value);
@@ -679,7 +677,7 @@ public class ViewGUI extends View implements Initializable {
 		tesseraPianura1Button.setDisable(value);
 	}
 
-	public void disabilitazioneBottoniConsigli(boolean value){
+	public void disabilitazioneBottoniConsigli(boolean value) {
 		consiglioMareButton.setDisable(value);
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
