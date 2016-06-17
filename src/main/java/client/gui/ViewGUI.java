@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import client.View;
 import client.cli.InputOutput;
 import eccezione.NomeGiaScelto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -58,6 +62,10 @@ public class ViewGUI extends View implements Initializable {
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
+	
+	@FXML
+	private ListView<ImageView> tessereValideListView;
+	ObservableList<ImageView> tessereValide =FXCollections.observableArrayList();
 
 	@FXML
 	private AnchorPane anchorPaneMare;
@@ -137,6 +145,8 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button consiglioReButton;
 	@FXML
+	private Button messaggioChatButton;
+	@FXML
 	private Label labelAzioneDaFare;
 
 	@FXML
@@ -159,6 +169,10 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private Label labelCartaPoliticaJolly;
+	
+	@FXML
+	private void messaggioChatButtonAction() {
+	}
 
 	@FXML
 	private void ingaggiaAiutanteButtonAction() {
