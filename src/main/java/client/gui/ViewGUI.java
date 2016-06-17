@@ -83,12 +83,12 @@ public class ViewGUI extends View implements Initializable {
 			if (c instanceof Jolly) {
 				cartePolitica.add(new ImageView(new Image(
 						getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 100,
-						200, false, false)));
+						170, false, false)));
 			} else {
 				cartePolitica.add(new ImageView(new Image(getClass().getClassLoader()
 						.getResource("immaginiGUI/cartePolitica/"
 								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
-						.toString(), 100, 200, false, false)));
+						.toString(), 100, 170, false, false)));
 			}
 		}
 		cartePoliticaListView.setItems(cartePolitica);
