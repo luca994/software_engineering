@@ -92,12 +92,12 @@
 			<Città id="Esti"></Città>
 			<Città id="Dortid"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" attributo="3"></Bonus>
 			<Bonus id="BonusAssistenti" attributo="1"></Bonus></SetBonus></Tessera>
 	<Tessera id="15">
 		<SetCittà>
 			<Città id="Castrum"></Città>
 			<Città id="Dortid"></Città></SetCittà>
 		<SetBonus>
-			<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus>
+			<Bonus id="BonusPuntoVittoria" attributo="3"></Bonus>
 			<Bonus id="BonusAssistenti" attributo="1"></Bonus></SetBonus></Tessera></TessereMare>
