@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TesserePianura QuantitàTessere="15">
-	<Tessera>
+	<Tessera id="16">
 		<SetCittà>
 			<Città id="Indur"></Città>
 			<Città id="Juvelar"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus>
 			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="17">
 		<SetCittà>
 			<Città id="Hellar"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusAssistenti" attributo="4"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="18">
 		<SetCittà>
 			<Città id="Framek"></Città>
 			<Città id="Juvelar"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusAssistenti" attributo="2"></Bonus>
 			<Bonus id="BonusMoneta" attributo="1"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="19">
 		<SetCittà>
 			<Città id="Graden"></Città>
 			<Città id="Hellar"></Città>
@@ -27,7 +27,7 @@
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
 			<Bonus id="BonusAssistenti" attributo="1"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="20">
 		<SetCittà>
 			<Città id="Framek"></Città>
 			<Città id="Graden"></Città>
@@ -35,44 +35,44 @@
 		<SetBonus>
 			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus>
 			<Bonus id="BonusMoneta" attributo="1"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="21">
 		<SetCittà>
 			<Città id="Juvelar"></Città>
 			<Città id="Hellar"></Città>
 			<Città id="Indur"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="22">
 		<SetCittà>
 			<Città id="Graden"></Città>
 			<Città id="Hellar"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusAssistenti" attributo="3"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="23">
 		<SetCittà>
 			<Città id="Framek"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus>
 			<Bonus id="BonusMoneta" attributo="4"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="24">
 		<SetCittà>
 			<Città id="Framek"></Città>
 			<Città id="Graden"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusMoneta" attributo="5"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="25">
 		<SetCittà>
 			<Città id="Juvelar"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusAzionePrincipale"></Bonus>
 			<Bonus id="BonusPuntoVittoria" attributo="2"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="26">
 		<SetCittà>
 			<Città id="Hellar"></Città>
 			<Città id="Indur"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusPuntoVittoria" attributo="5"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="27">
 		<SetCittà>
 			<Città id="Graden"></Città>
 			<Città id="Framek"></Città>
@@ -80,20 +80,20 @@
 		<SetBonus>
 			<Bonus id="BonusMoneta" attributo="2"></Bonus>
 			<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="28">
 		<SetCittà>
 			<Città id="Indur"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusCartaPolitica" attributo="2"></Bonus>
 			<Bonus id="BonusAssistenti" attributo="2"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="29">
 		<SetCittà>
 			<Città id="Graden"></Città></SetCittà>
 		<SetBonus>
 			<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus>
 			<Bonus id="BonusPuntoVittoria" attributo="2"></Bonus>
 			<Bonus id="BonusAssistenti" attributo="2"></Bonus></SetBonus></Tessera>
-	<Tessera>
+	<Tessera id="30">
 		<SetCittà>
 			<Città id="Indur"></Città>
 			<Città id="Framek"></Città>
