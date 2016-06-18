@@ -102,12 +102,12 @@
                             </Tab>
                               <Tab closable="false" text="Tessere Valide">
                                  <content>
-                                    <ListView fx:id="tessereValideListView" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="tessereValideListView" onMouseClicked="#handleTessereCostruzioneValideList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                               </Tab>
                             <Tab closable="false" text="Tessere Usate">
                                  <content>
-                                    <ListView fx:id="tessereUsateListView" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="tessereUsateListView" onMouseClicked="#handleTessereCostruzioneUsateList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Chat">

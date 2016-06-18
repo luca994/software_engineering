@@ -189,6 +189,8 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button annullaAzioneButton;
 	@FXML
+	private Button confermaAzioneButton;
+	@FXML
 	private Button acquistaPermessoButton;
 	@FXML
 	private Button costruisciConReButton;
@@ -372,16 +374,32 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleCartePoliticaList(MouseEvent event) {
 		if(cartePoliticaInput.size()<4){
-			ObservableList<Integer> carteSelezionate = ((ListView) event.getSource()).getSelectionModel().getSelectedIndices();
-			labelAzioneDaFare.setText(giocatore.getCartePolitica().get(carteSelezionate.get(0)).toString());
-			cartePoliticaInput.add(giocatore.getCartePolitica().get(carteSelezionate.get(0)));
-			cartePolitica.remove(carteSelezionate.get(0));
-			aggiornaCartePolitica();
+			int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+			labelAzioneDaFare.setText(giocatore.getCartePolitica().get(numeroCarta).toString());
+			cartePoliticaInput.add(giocatore.getCartePolitica().get(numeroCarta));
+			cartePolitica.remove(numeroCarta);
+			cartePoliticaListView.setItems(cartePolitica);
 		}
 		else
 			labelAzioneDaFare.setText("Hai già selezionato 4 carte");
 	}
+	
+	@FXML
+	private void handleTessereCostruzioneValideList(MouseEvent event){
+		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+		labelAzioneDaFare.setText(giocatore.getTessereValide().get(numeroTessera).toString());
+		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
+		semInput.release();
+	}
 
+	@FXML
+	private void handleTessereCostruzioneUsateList(MouseEvent event){
+		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+		labelAzioneDaFare.setText(giocatore.getTessereUsate().get(numeroTessera).toString());
+		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
+		semInput.release();
+	}
+	
 	private Citta impostaCitta() {
 		try {
 			disabilitazioneBottoniCitta(false);
@@ -397,6 +415,22 @@ public class ViewGUI extends View implements Initializable {
 		return null;
 	}
 
+	private Consigliere impostaConsigliere(){
+		try{
+			consigliereDisponibileComboBox.setDisable(false);
+			confermaAzioneButton.setDisable(false);
+			semInput.acquire();
+			Consigliere consigliere = consigliereInput;
+			consigliereInput = null;
+			consigliereDisponibileComboBox.setDisable(true);
+			confermaAzioneButton.setDisable(true);
+			return consigliere;
+		}catch(InterruptedException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	private Consiglio impostaConsiglio() {
 		try {
 			disabilitazioneBottoniConsigli(false);
@@ -408,8 +442,8 @@ public class ViewGUI extends View implements Initializable {
 			return consiglio;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	private TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
@@ -423,8 +457,46 @@ public class ViewGUI extends View implements Initializable {
 			return tessera;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return null;
+	}
+
+	private List<CartaPolitica> impostaCartePolitica(){
+		try{
+			cartePoliticaListView.setDisable(false);
+			semInput.acquire();
+			cartePoliticaListView.setDisable(true);
+			List<CartaPolitica> cartePolitica = new ArrayList<>(cartePoliticaInput);
+			cartePoliticaInput = new ArrayList<>();
+			return cartePolitica;
+		}catch(InterruptedException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida){
+		try{
+			if(valida)
+				tessereValideListView.setDisable(false);
+			else
+				tessereUsateListView.setDisable(false);
+			semInput.acquire();
+			tessereValideListView.setDisable(true);
+			tessereUsateListView.setDisable(true);
+			TesseraCostruzione tessera = tesseraInput;
+			tesseraInput = null;
+			return tessera;
+		}catch(InterruptedException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private void aggiornaGUI() {
+		aggiornaCartePolitica();
+		aggiornaConsiglieriDisponibili();
+		aggiornaTessereCostruzioneGiocatore();
 	}
 
 	@Override
@@ -529,7 +601,7 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		creazioneSfondiMappa();
-		cartePoliticaListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		//cartePoliticaListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -566,11 +638,6 @@ public class ViewGUI extends View implements Initializable {
 			InputOutput.stampa("E' il tuo turno");
 			InputOutput.stampa("");
 		}
-	}
-
-	private void aggiornaGUI() {
-		aggiornaCartePolitica();
-		aggiornaConsiglieriDisponibili();
 	}
 
 	private void creazioneSfondiMappa() {
