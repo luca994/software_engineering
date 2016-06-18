@@ -31,6 +31,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
+
 /**
  * @author Massimiliano Ventura
  *
@@ -41,6 +42,21 @@ public class Screen1Controller implements Initializable {
 	ObservableList<String> sceltaMappa = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8");
 
 	private ViewGUI view;
+	private boolean buonFine;
+	/**
+	 * @return the buonFine
+	 */
+	public boolean isBuonFine() {
+		return buonFine;
+	}
+
+	/**
+	 * @param buonFine the buonFine to set
+	 */
+	public void setBuonFine(boolean buonFine) {
+		this.buonFine = buonFine;
+	}
+
 	@FXML
 	private AnchorPane backgroundPane;
 	@FXML // fx:id="confirmButton"
@@ -60,9 +76,9 @@ public class Screen1Controller implements Initializable {
 	private void handleConfirmButtonAction(ActionEvent event) {
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				view.startClient();
+				buonFine=true;
 				Stage stage = (Stage) confirmButton.getScene().getWindow();
-				stage.close();
+				//stage.close();
 			}
 	}
 
@@ -75,6 +91,7 @@ public class Screen1Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Setup sfondo
+		buonFine=false;
 		BackgroundImage myBI = new BackgroundImage(
 				new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500,
 						377, false, true),
