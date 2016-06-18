@@ -158,5 +158,5 @@ public class Screen1Controller implements Initializable {
 	public void setView(ViewGUI view) {
 		this.view=view;		
 	}
-
+	
 }

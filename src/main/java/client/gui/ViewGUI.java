@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import client.View;
-import client.cli.InputOutput;
 import eccezione.NomeGiaScelto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -41,7 +40,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import server.model.Giocatore;
-import server.model.Gioco;
 import server.model.ParseColor;
 import server.model.Tabellone;
 import server.model.azione.AzioneFactory;
@@ -65,7 +63,7 @@ import server.model.stato.giocatore.TurnoNormale;
  * @author Massimiliano Ventura
  *
  */
-public class ViewGUI extends View implements Initializable {
+public class ViewGUI extends View implements Initializable{
 
 	private Giocatore giocatore;
 	private Tabellone tabelloneClient;
@@ -85,104 +83,6 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<ImageView> tessereCostruzioneValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereCostruzioneUsate = FXCollections.observableArrayList();
 
-	public void aggiornaCartePolitica() {
-		cartePolitica.clear();
-		for (CartaPolitica c : giocatore.getCartePolitica()) {
-			if (c instanceof Jolly) {
-				cartePolitica.add(new ImageView(new Image(
-						getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 100,
-						170, false, false)));
-			} else {
-				cartePolitica.add(new ImageView(new Image(getClass().getClassLoader()
-						.getResource("immaginiGUI/cartePolitica/"
-								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
-						.toString(), 100, 170, false, false)));
-			}
-		}
-		cartePoliticaListView.setItems(cartePolitica);
-	}
-
-	public void aggiornaTessereCostruzioneGiocatore(){
-		tessereCostruzioneUsate.clear();
-		tessereCostruzioneValide.clear();
-		for(TesseraCostruzione t: giocatore.getTessereValide()){
-			tessereCostruzioneValide.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
-		}
-		for(TesseraCostruzione t: giocatore.getTessereUsate()){
-			tessereCostruzioneUsate.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
-		}
-		tessereValideListView.setItems(tessereCostruzioneValide);
-		tessereUsateListView.setItems(tessereCostruzioneUsate);
-	}
-	
-	public void aggiornaConsiglieriDisponibili() {
-		consiglieriDisponibili.clear();
-		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
-			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
-		}
-		consigliereDisponibileComboBox.setItems(consiglieriDisponibili);
-
-		consigliereDisponibileComboBox.setButtonCell(new ListCell<Color>() {
-			private final Rectangle rectangle;
-			{
-				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-				rectangle = new Rectangle(60, 20);
-			}
-
-			@Override
-			protected void updateItem(Color item, boolean empty) {
-				super.updateItem(item, empty);
-
-				if (item == null || empty) {
-					setGraphic(null);
-				} else {
-					rectangle.setFill(item);
-					setGraphic(rectangle);
-				}
-			}
-		});
-
-		consigliereDisponibileComboBox.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
-			@Override
-			public ListCell<Color> call(ListView<Color> p) {
-				return new ListCell<Color>() {
-					private final Rectangle rectangle;
-					{
-						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-						rectangle = new Rectangle(60, 20);
-					}
-
-					@Override
-					protected void updateItem(Color item, boolean empty) {
-						super.updateItem(item, empty);
-
-						if (item == null || empty) {
-							setGraphic(null);
-						} else {
-							rectangle.setFill(item);
-							setGraphic(rectangle);
-						}
-					}
-				};
-			}
-		});
-	}
-
-	public void aggiornaTessereTabellone(){
-		String id0 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(0).getId();
-		tesseraMare0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id0+".jpg").toString(), 80, 50, false, false));
-		String id1 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(1).getId();
-		tesseraMare1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id1+".jpg").toString(), 80, 50, false, false));
-		String id2 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(0).getId();
-		tesseraPianura0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id2+".jpg").toString(), 80, 50, false, false));
-		String id3 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(1).getId();
-		tesseraPianura1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id3+".jpg").toString(), 80, 50, false, false));
-		String id4 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(0).getId();
-		tesseraMontagna0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id4+".jpg").toString(), 80, 50, false, false));
-		String id5 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(1).getId();
-		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id5+".jpg").toString(), 80, 50, false, false));
-	}
-	
 	@FXML
 	private ComboBox<Color> consigliereDisponibileComboBox;
 
@@ -328,7 +228,8 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void confermaAzioneButtonAction() {
-		Gioco gioco = new Gioco();
+		semInput.release();
+		/*Gioco gioco = new Gioco();
 		Giocatore g1 = new Giocatore("pippo");
 		this.giocatore = g1;
 		gioco.getGiocatori().add(g1);
@@ -337,7 +238,7 @@ public class ViewGUI extends View implements Initializable {
 		tabelloneClient = gioco.getTabellone();
 		g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(3));
 		g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(6));
-		aggiornaGUI();
+		aggiornaGUI();*/
 	}
 
 	@FXML
@@ -441,7 +342,6 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleCittaButton(ActionEvent event) {
 		String nomeCitta = ((Button) event.getSource()).getId();
-		labelAzioneDaFare.setText(nomeCitta);
 		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
 		semInput.release();
 	}
@@ -449,7 +349,6 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleTesseraMareButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
-		labelAzioneDaFare.setText(String.valueOf(numTessera));
 		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
 		semInput.release();
 	}
@@ -483,14 +382,12 @@ public class ViewGUI extends View implements Initializable {
 	private void handleConsigliereComboBox(ActionEvent event) {
 		int posizione = ((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
 		consigliereInput = tabelloneClient.getConsiglieriDisponibili().get(posizione);
-		labelAzioneDaFare.setText("Colore consigliere: "+ParseColor.colorIntToString(consigliereInput.getColore().getRGB()));
 	}
 
 	@FXML
 	private void handleCartePoliticaList(MouseEvent event) {
 		if(cartePoliticaInput.size()<4){
 			int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
-			labelAzioneDaFare.setText(giocatore.getCartePolitica().get(numeroCarta).toString());
 			cartePoliticaInput.add(giocatore.getCartePolitica().get(numeroCarta));
 			cartePolitica.remove(numeroCarta);
 			cartePoliticaListView.setItems(cartePolitica);
@@ -502,7 +399,6 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleTessereCostruzioneValideList(MouseEvent event){
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
-		labelAzioneDaFare.setText(giocatore.getTessereValide().get(numeroTessera).toString());
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
 		semInput.release();
 	}
@@ -510,7 +406,6 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleTessereCostruzioneUsateList(MouseEvent event){
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
-		labelAzioneDaFare.setText(giocatore.getTessereUsate().get(numeroTessera).toString());
 		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
 		semInput.release();
 	}
@@ -578,9 +473,11 @@ public class ViewGUI extends View implements Initializable {
 
 	private List<CartaPolitica> impostaCartePolitica(){
 		try{
-			cartePoliticaListView.setDisable(false);
+			cartePoliticaListView.setVisible(true);;
+			confermaAzioneButton.setDisable(false);
 			semInput.acquire();
-			cartePoliticaListView.setDisable(true);
+			cartePoliticaListView.setVisible(false);
+			confermaAzioneButton.setDisable(true);
 			List<CartaPolitica> cartePolitica = new ArrayList<>(cartePoliticaInput);
 			cartePoliticaInput = new ArrayList<>();
 			return cartePolitica;
@@ -593,12 +490,12 @@ public class ViewGUI extends View implements Initializable {
 	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida){
 		try{
 			if(valida)
-				tessereValideListView.setDisable(false);
+				tessereValideListView.setVisible(true);
 			else
-				tessereUsateListView.setDisable(false);
+				tessereUsateListView.setVisible(true);
 			semInput.acquire();
-			tessereValideListView.setDisable(true);
-			tessereUsateListView.setDisable(true);
+			tessereValideListView.setVisible(false);
+			tessereUsateListView.setVisible(false);
 			TesseraCostruzione tessera = tesseraInput;
 			tesseraInput = null;
 			return tessera;
@@ -610,11 +507,11 @@ public class ViewGUI extends View implements Initializable {
 	
 	private TesseraCostruzione impostaTesseraRiutilizzoCostruzione(){
 		try{
-			tessereValideListView.setDisable(false);
-			tessereUsateListView.setDisable(false);
+			tessereValideListView.setVisible(true);
+			tessereUsateListView.setVisible(true);
 			semInput.acquire();
-			tessereValideListView.setDisable(true);
-			tessereUsateListView.setDisable(true);
+			tessereValideListView.setVisible(false);
+			tessereUsateListView.setVisible(false);
 			TesseraCostruzione tessera = tesseraInput;
 			tesseraInput = null;
 			return tessera;
@@ -629,6 +526,104 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
 		aggiornaTessereTabellone();
+	}
+
+	public void aggiornaCartePolitica() {
+		cartePolitica.clear();
+		for (CartaPolitica c : giocatore.getCartePolitica()) {
+			if (c instanceof Jolly) {
+				cartePolitica.add(new ImageView(new Image(
+						getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 100,
+						170, false, false)));
+			} else {
+				cartePolitica.add(new ImageView(new Image(getClass().getClassLoader()
+						.getResource("immaginiGUI/cartePolitica/"
+								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
+						.toString(), 100, 170, false, false)));
+			}
+		}
+		cartePoliticaListView.setItems(cartePolitica);
+	}
+
+	public void aggiornaTessereCostruzioneGiocatore(){
+		tessereCostruzioneUsate.clear();
+		tessereCostruzioneValide.clear();
+		for(TesseraCostruzione t: giocatore.getTessereValide()){
+			tessereCostruzioneValide.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		}
+		for(TesseraCostruzione t: giocatore.getTessereUsate()){
+			tessereCostruzioneUsate.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		}
+		tessereValideListView.setItems(tessereCostruzioneValide);
+		tessereUsateListView.setItems(tessereCostruzioneUsate);
+	}
+
+	public void aggiornaConsiglieriDisponibili() {
+		consiglieriDisponibili.clear();
+		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
+			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consigliereDisponibileComboBox.setItems(consiglieriDisponibili);
+	
+		consigliereDisponibileComboBox.setButtonCell(new ListCell<Color>() {
+			private final Rectangle rectangle;
+			{
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+				rectangle = new Rectangle(60, 20);
+			}
+	
+			@Override
+			protected void updateItem(Color item, boolean empty) {
+				super.updateItem(item, empty);
+	
+				if (item == null || empty) {
+					setGraphic(null);
+				} else {
+					rectangle.setFill(item);
+					setGraphic(rectangle);
+				}
+			}
+		});
+	
+		consigliereDisponibileComboBox.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(60, 20);
+					}
+	
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+	
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
+
+	public void aggiornaTessereTabellone(){
+		String id0 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(0).getId();
+		tesseraMare0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id0+".jpg").toString(), 80, 50, false, false));
+		String id1 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(1).getId();
+		tesseraMare1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id1+".jpg").toString(), 80, 50, false, false));
+		String id2 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(0).getId();
+		tesseraPianura0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id2+".jpg").toString(), 80, 50, false, false));
+		String id3 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(1).getId();
+		tesseraPianura1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id3+".jpg").toString(), 80, 50, false, false));
+		String id4 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(0).getId();
+		tesseraMontagna0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id4+".jpg").toString(), 80, 50, false, false));
+		String id5 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(1).getId();
+		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id5+".jpg").toString(), 80, 50, false, false));
 	}
 
 	@Override
@@ -692,12 +687,12 @@ public class ViewGUI extends View implements Initializable {
 
 	@Override
 	public void startClient() {
-		// fai robe
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
-		try {
+		try{
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
+			Parent root = loader.load();
 			Stage stage = new Stage();
 			stage.setTitle("Gioco vediamo se va");
-			stage.setScene(new Scene((AnchorPane) loader.load()));
+			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -707,6 +702,14 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		creazioneSfondiMappa();
+		/*disabilitazioneBottoniAzione(true);
+		disabilitazioneBottoniCitta(true);
+		disabilitazioneBottoniConsigli(true);
+		disabilitazioneBottoniTessereCostruzione(true);
+		tessereUsateListView.setDisable(true);
+		tessereValideListView.setDisable(true);
+		cartePoliticaListView.setDisable(true);
+		consigliereDisponibileComboBox.setDisable(true);*/
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -739,8 +742,9 @@ public class ViewGUI extends View implements Initializable {
 					labelAzioneDaFare.setText("Turno di " + g.getNome() + "..");
 				}
 		}
-		if (statoAttuale instanceof TurnoNormale || statoAttuale instanceof TurnoMercato) {
+		if (statoAttuale instanceof TurnoNormale) {
 			labelAzioneDaFare.setText("E' il tuo turno");
+			disabilitazioneBottoniAzione(false);
 		}
 	}
 
@@ -913,7 +917,6 @@ public class ViewGUI extends View implements Initializable {
 		consigliereRapidoButton.setDisable(value);
 		principaleAggiuntivaButton.setDisable(value);
 		saltaRapidaButton.setDisable(value);
-		labelAzioneDaFare.setDisable(value);
 	}
 
 	public void disabilitazioneBottoniCitta(boolean value) {
@@ -948,5 +951,5 @@ public class ViewGUI extends View implements Initializable {
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
 		consiglioReButton.setDisable(value);
-	}
+	}	
 }
