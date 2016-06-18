@@ -24,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -65,9 +67,8 @@ public class Screen1Controller implements Initializable {
 	private ChoiceBox<String> tipoConnessioneChoiceBox;
 	@FXML
 	private ChoiceBox<String> sceltaMappaChoiceBox;
-
-	@FXML // è l'onAction del bottone nell'fxml
-	private void handleConfirmButtonAction(ActionEvent event) {
+	
+	private void azioneConfermaDati(){
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
 				
@@ -80,6 +81,18 @@ public class Screen1Controller implements Initializable {
 			}
 	}
 
+	@FXML // è l'onAction del bottone nell'fxml
+	private void handleConfirmButtonAction(ActionEvent event) {
+		azioneConfermaDati();
+	}
+	@FXML
+	public void buttonPressed(KeyEvent e)
+	{
+	    if(e.getCode()==KeyCode.ENTER)
+	    {
+	    	azioneConfermaDati();
+	    }
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

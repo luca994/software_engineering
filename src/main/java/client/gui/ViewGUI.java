@@ -709,8 +709,8 @@ public class ViewGUI extends View implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		creazioneSfondiMappa();
 		semInizializzazione.release();
+		creazioneSfondiMappa();
 		/*disabilitazioneBottoniAzione(true);
 		disabilitazioneBottoniCitta(true);
 		disabilitazioneBottoniConsigli(true);
