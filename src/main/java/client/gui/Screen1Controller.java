@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -42,19 +43,12 @@ public class Screen1Controller implements Initializable {
 	ObservableList<String> sceltaMappa = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8");
 
 	private ViewGUI view;
-	private boolean buonFine;
+	private Parent rootGUI;
 	/**
-	 * @return the buonFine
+	 * @param rootGUI the rootGUI to set
 	 */
-	public boolean isBuonFine() {
-		return buonFine;
-	}
-
-	/**
-	 * @param buonFine the buonFine to set
-	 */
-	public void setBuonFine(boolean buonFine) {
-		this.buonFine = buonFine;
+	public void setRootGUI(Parent rootGUI) {
+		this.rootGUI = rootGUI;
 	}
 
 	@FXML
@@ -76,9 +70,13 @@ public class Screen1Controller implements Initializable {
 	private void handleConfirmButtonAction(ActionEvent event) {
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				buonFine=true;
-				Stage stage = (Stage) confirmButton.getScene().getWindow();
-				//stage.close();
+				
+				Stage stageGUI = new Stage();
+				stageGUI.setTitle("Gioco vediamo se va");
+				stageGUI.setScene(new Scene(rootGUI));
+				stageGUI.show();
+				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
+				stageScreen1.close();
 			}
 	}
 
@@ -91,7 +89,6 @@ public class Screen1Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Setup sfondo
-		buonFine=false;
 		BackgroundImage myBI = new BackgroundImage(
 				new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500,
 						377, false, true),

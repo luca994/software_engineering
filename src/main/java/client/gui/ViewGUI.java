@@ -69,6 +69,7 @@ public class ViewGUI extends View implements Initializable{
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
 	private Semaphore semInput = new Semaphore(0);
+	private	Semaphore semInizializzazione = new Semaphore(0);
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
@@ -633,6 +634,12 @@ public class ViewGUI extends View implements Initializable{
 	@Override
 	public synchronized void riceviOggetto(Object oggetto) {
 		try {
+			semInizializzazione.acquire();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
 			if (oggetto instanceof String) {
 				labelAzioneDaFare.setText((String) oggetto);
 			}
@@ -683,6 +690,7 @@ public class ViewGUI extends View implements Initializable{
 		} catch (IOException e) {
 			throw new IllegalStateException();
 		}
+		semInizializzazione.release();
 	}
 
 	@Override
@@ -702,6 +710,7 @@ public class ViewGUI extends View implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		creazioneSfondiMappa();
+		semInizializzazione.release();
 		/*disabilitazioneBottoniAzione(true);
 		disabilitazioneBottoniCitta(true);
 		disabilitazioneBottoniConsigli(true);
