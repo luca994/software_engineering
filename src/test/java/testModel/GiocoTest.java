@@ -17,7 +17,6 @@ import server.model.stato.gioco.Attesa;
 import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 import server.model.stato.gioco.FaseTurnoSemplice;
 import server.model.stato.gioco.StatoGioco;
-import server.model.stato.gioco.Terminato;
 
 /**
  * @author Luca
@@ -72,19 +71,21 @@ public class GiocoTest {
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
 		giocoTester.inizializzaPartita("0");
 		for (Giocatore giocat : giocoTester.getGiocatori()) {
-			if(giocat.getNome()!="dummy"){
-			assertEquals(10, giocat.getEmporiRimasti());
-			assertTrue(giocoTester.getTabellone().getPercorsoRicchezza().getCaselle().get(10 + i).getGiocatori()
-					.contains(giocat));
-			assertTrue(giocoTester.getTabellone().getPercorsoNobilta().getCaselle().get(0).getGiocatori()
-					.contains(giocat));
-			assertTrue(giocoTester.getTabellone().getPercorsoVittoria().getCaselle().get(0).getGiocatori()
-					.contains(giocat));
-			assertEquals(i + 1, giocat.getAssistenti().size());
-			i++;
-		}}
+			if (giocat.getNome() != "dummy") {
+				assertEquals(10, giocat.getEmporiRimasti());
+				assertTrue(giocoTester.getTabellone().getPercorsoRicchezza().getCaselle().get(10 + i).getGiocatori()
+						.contains(giocat));
+				assertTrue(giocoTester.getTabellone().getPercorsoNobilta().getCaselle().get(0).getGiocatori()
+						.contains(giocat));
+				assertTrue(giocoTester.getTabellone().getPercorsoVittoria().getCaselle().get(0).getGiocatori()
+						.contains(giocat));
+				assertEquals(i + 1, giocat.getAssistenti().size());
+				i++;
+			}
+		}
 		assertNotNull(giocoTester.getTabellone());
-		assertEquals(giocoTester.getTabellone(),giocoTester.getTabellone().getRegioni().get(0).getConsiglio().getTabellone());
+		assertEquals(giocoTester.getTabellone(),
+				giocoTester.getTabellone().getRegioni().get(0).getConsiglio().getTabellone());
 	}
 
 	/**
@@ -121,8 +122,6 @@ public class GiocoTest {
 		giocoTester.inizializzaPartita("0");
 	}
 
-
-
 	/**
 	 * Test method for {@link server.model.Gioco#inizializzaPartita()}.
 	 */
@@ -135,36 +134,13 @@ public class GiocoTest {
 	}
 
 	/**
-	 * Test method for {@link server.model.Gioco#eseguiPartita()}.
-	 */
-	@Test(expected=IllegalStateException.class)
-	public void testEseguiPartita2GiocatoriGiaInEsecuzione() {
-		giocoTester.getGiocatori().add(new Giocatore("pippo"));
-		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita("0");
-		giocoTester.setStato(new FaseTurnoSemplice(giocoTester));
-		giocoTester.eseguiPartita();
-	}
-	/**
-	 * Test method for {@link server.model.Gioco#eseguiPartita()}.
-	 */
-	@Test(expected=IllegalStateException.class)
-	public void testEseguiPartita2GiocatoriConStatoInizialeTerminata() {
-		giocoTester.getGiocatori().add(new Giocatore("pippo"));
-		giocoTester.getGiocatori().add(new Giocatore("paolo"));
-		giocoTester.inizializzaPartita("0");
-		giocoTester.setStato(new Terminato(giocoTester));
-		giocoTester.eseguiPartita();
-	}
-
-	/**
 	 * Test method for {@link server.model.Gioco#getTabellone()}.
 	 */
 	@Test
 	public void testGetNullTabellone() {
-		assertTrue(giocoTester.getTabellone()==null);
+		assertTrue(giocoTester.getTabellone() == null);
 	}
-	
+
 	/**
 	 * Test method for {@link server.model.Gioco#getTabellone()}.
 	 */
@@ -173,7 +149,7 @@ public class GiocoTest {
 		giocoTester.getGiocatori().add(new Giocatore("pippo"));
 		giocoTester.getGiocatori().add(new Giocatore("paolo"));
 		giocoTester.inizializzaPartita("0");
-		assertTrue(giocoTester.getTabellone()!=null);
+		assertTrue(giocoTester.getTabellone() != null);
 	}
 
 	/**
@@ -181,7 +157,7 @@ public class GiocoTest {
 	 */
 	@Test
 	public void testGetGiocatori() {
-		Giocatore g1=new Giocatore("pippo");
+		Giocatore g1 = new Giocatore("pippo");
 		giocoTester.getGiocatori().add(g1);
 		assertTrue(giocoTester.getGiocatori().contains(g1));
 	}
@@ -205,7 +181,7 @@ public class GiocoTest {
 		giocoTester.inizializzaPartita("0");
 		StatoGioco statoDaSettare = new FaseTurnoSemplice(giocoTester);
 		giocoTester.setStato(statoDaSettare);
-		assertTrue(giocoTester.getStato()==statoDaSettare);
+		assertTrue(giocoTester.getStato() == statoDaSettare);
 	}
 
 }
