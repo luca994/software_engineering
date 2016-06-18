@@ -167,6 +167,21 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
+	public void aggiornaTessereTabellone(){
+		String id0 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(0).getId();
+		tesseraMare0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id0+".jpg").toString(), 80, 50, false, false));
+		String id1 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(1).getId();
+		tesseraMare1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id1+".jpg").toString(), 80, 50, false, false));
+		String id2 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(0).getId();
+		tesseraPianura0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id2+".jpg").toString(), 80, 50, false, false));
+		String id3 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(1).getId();
+		tesseraPianura1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id3+".jpg").toString(), 80, 50, false, false));
+		String id4 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(0).getId();
+		tesseraMontagna0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id4+".jpg").toString(), 80, 50, false, false));
+		String id5 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(1).getId();
+		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id5+".jpg").toString(), 80, 50, false, false));
+	}
+	
 	@FXML
 	private ComboBox<Color> consigliereDisponibileComboBox;
 
@@ -241,15 +256,27 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button tesseraMare0Button;
 	@FXML
+	private ImageView tesseraMare0Image;
+	@FXML
 	private Button tesseraMare1Button;
+	@FXML
+	private ImageView tesseraMare1Image;
 	@FXML
 	private Button tesseraPianura0Button;
 	@FXML
+	private ImageView tesseraPianura0Image;
+	@FXML
 	private Button tesseraPianura1Button;
+	@FXML
+	private ImageView tesseraPianura1Image;
 	@FXML
 	private Button tesseraMontagna0Button;
 	@FXML
+	private ImageView tesseraMontagna0Image;
+	@FXML
 	private Button tesseraMontagna1Button;
+	@FXML
+	private ImageView tesseraMontagna1Image;
 	@FXML
 	private Button consiglioMareButton;
 	@FXML
@@ -290,9 +317,7 @@ public class ViewGUI extends View implements Initializable {
 		tabelloneClient = gioco.getTabellone();
 		g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(3));
 		g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(6));
-		aggiornaConsiglieriDisponibili();
-		aggiornaCartePolitica();
-		aggiornaTessereCostruzioneGiocatore();
+		aggiornaGUI();
 	}
 
 	@FXML
@@ -497,6 +522,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
+		aggiornaTessereTabellone();
 	}
 
 	@Override

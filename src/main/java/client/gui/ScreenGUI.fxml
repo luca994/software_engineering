@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
@@ -53,12 +54,18 @@
                         </SplitPane>
                       <AnchorPane fx:id="anchorPanePercorsi" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="1278.0">
                            <children>
-                              <Button fx:id="tesseraMare0Button" layoutX="182.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraMare1Button" layoutX="283.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="tesseraPianura0Button" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraPianura1Button" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="tesseraMontagna0Button" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraMontagna1Button" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" prefHeight="45.0" prefWidth="74.0" text="1" />
+                              <ImageView fx:id="tesseraMontagna1Image" fitHeight="50.0" fitWidth="80.0" layoutX="1096.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="tesseraMontagna0Image" fitHeight="50.0" fitWidth="80.0" layoutX="996.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="tesseraPianura1Image" fitHeight="50.0" fitWidth="80.0" layoutX="666.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="tesseraPianura0Image" fitHeight="50.0" fitWidth="80.0" layoutX="570.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="tesseraMare1Image" fitHeight="50.0" fitWidth="80.0" layoutX="280.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="tesseraMare0Image" fitHeight="50.0" fitWidth="80.0" layoutX="179.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="tesseraMare0Button" layoutX="182.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                              <Button fx:id="tesseraMare1Button" layoutX="283.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
+                              <Button fx:id="tesseraPianura0Button" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                              <Button fx:id="tesseraPianura1Button" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
+                              <Button fx:id="tesseraMontagna0Button" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                              <Button fx:id="tesseraMontagna1Button" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
                               <Button fx:id="consiglioMareButton" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Mare" />
                               <Button fx:id="consiglioPianuraButton" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
                               <Button fx:id="consiglioMontagnaButton" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
