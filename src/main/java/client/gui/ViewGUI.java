@@ -19,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -54,7 +53,6 @@ import server.model.componenti.Citta;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
 import server.model.componenti.Jolly;
-import server.model.componenti.Regione;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
@@ -67,10 +65,10 @@ import server.model.stato.giocatore.TurnoNormale;
  */
 public class ViewGUI extends View implements Initializable {
 
+	private boolean turnoCambiato;
 	private Giocatore giocatore;
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
-	private Semaphore semInput;
 	private Semaphore semInizializzazione;
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
@@ -78,6 +76,7 @@ public class ViewGUI extends View implements Initializable {
 	private Consigliere consigliereInput;
 	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
+	private Bonus bonus;
 
 	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
@@ -134,7 +133,7 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button castrum;
 	@FXML
-	private Button dorful;
+	private Button dortid;
 	@FXML
 	private Button esti;
 	@FXML
@@ -196,6 +195,24 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void annullaAzioneButtonAction(ActionEvent event) {
+		azioneFactory = new AzioneFactory(null);
+		cartePoliticaInput = new ArrayList<>();
+		consigliereInput = null;
+		consiglioInput = null;
+		disabilitazioneBottoniAzione(false);
+		disabilitazioneBottoniConsigli(true);
+		cartePoliticaListView.setDisable(true);
+		confermaAzioneButton.setDisable(true);
+		consigliereDisponibileComboBox.valueProperty().set(null);
+		consigliereDisponibileComboBox.setDisable(true);
+		consigliereDisponibileComboBox.setValue(null);
+		cittaInput = null;
+		tesseraInput = null;
+		disabilitazioneBottoniCitta(true);
+		disabilitazioneBottoniTessereCostruzione(true);
+		tessereValideListView.setDisable(true);
+		tessereUsateListView.setDisable(true);
+		annullaAzioneButton.setDisable(true);
 	}
 
 	@FXML
@@ -203,7 +220,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void ingaggiaAiutanteButtonAction() {
+	private void ingaggiaAiutanteButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		azioneFactory.setTipoAzione("4");
 		this.getConnessione().inviaOggetto(azioneFactory);
@@ -212,26 +229,57 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void cambiaTessereButtonAction() {
+	private void cambiaTessereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio della regione nella quale vuoi cambiare le tessere");
+		labelAzioneDaFare.setText("Clicca sul consiglio della regione nella quale vuoi cambiare le tessere" + "\n"
+				+ ", poi clicca su conferma azione");
 		consiglioMareButton.setDisable(false);
 		consiglioPianuraButton.setDisable(false);
 		consiglioMontagnaButton.setDisable(false);
-		Regione regioneAzione = impostaConsiglio().getRegione();
-		consiglioMareButton.setDisable(true);
-		consiglioPianuraButton.setDisable(true);
-		consiglioMontagnaButton.setDisable(true);
-		azioneFactory.setRegione(regioneAzione);
 		azioneFactory.setTipoAzione("5");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		confermaAzioneButton.setDisable(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
-	private void confermaAzioneButtonAction() {
-		semInput.release();
+	private void confermaAzioneButtonAction(ActionEvent event) {
+		if (bonus != null) {
+			if(bonus instanceof BonusGettoneCitta){
+				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
+			} else if(bonus instanceof BonusTesseraPermesso){
+				((BonusTesseraPermesso) bonus).setTessera(tesseraInput);
+			}else {
+				((BonusRiutilizzoCostruzione) bonus).setTessera(tesseraInput);
+			}
+			this.getConnessione().inviaOggetto(bonus);
+			bonus = null;
+		} else {
+			azioneFactory.setCartePolitica(cartePoliticaInput);
+			azioneFactory.setCitta(cittaInput);
+			azioneFactory.setConsigliere(consigliereInput);
+			azioneFactory.setConsiglio(consiglioInput);
+			if("5".equals(azioneFactory.getTipoAzione()))
+					azioneFactory.setRegione(consiglioInput.getRegione());
+			azioneFactory.setTesseraCostruzione(tesseraInput);
+			this.getConnessione().inviaOggetto(azioneFactory);
+			azioneFactory = new AzioneFactory(null);
+			cartePoliticaInput = new ArrayList<>();
+			consigliereInput = null;
+			consiglioInput = null;
+			disabilitazioneBottoniAzione(false);
+			disabilitazioneBottoniConsigli(true);
+			cartePoliticaListView.setDisable(true);
+			confermaAzioneButton.setDisable(true);
+			consigliereDisponibileComboBox.valueProperty().set(null);
+			consigliereDisponibileComboBox.setDisable(true);
+			consigliereDisponibileComboBox.setValue(null);	
+		}
+		cittaInput = null;
+		tesseraInput = null;
+		disabilitazioneBottoniCitta(true);
+		disabilitazioneBottoniTessereCostruzione(true);
+		tessereValideListView.setDisable(true);
+		tessereUsateListView.setDisable(true);
 		/*
 		 * Gioco gioco = new Gioco(); Giocatore g1 = new Giocatore("pippo");
 		 * this.giocatore = g1; gioco.getGiocatori().add(g1);
@@ -246,23 +294,19 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void consigliereRapidoButtonAction() {
-		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere");
-		Consiglio consiglioAzione = impostaConsiglio();
-		labelAzioneDaFare.setText("Scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
-		Consigliere consigliereAzione = impostaConsigliere();
-		labelAzioneDaFare.setText("");
-		azioneFactory.setConsiglio(consiglioAzione);
-		azioneFactory.setConsigliere(consigliereAzione);
+	private void consigliereRapidoButtonAction(ActionEvent event) {
 		azioneFactory.setTipoAzione("6");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		confermaAzioneButton.setDisable(false);
+		disabilitazioneBottoniAzione(true);
+		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere e " + "\n"
+				+ "scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
+		consigliereDisponibileComboBox.setDisable(false);
+		disabilitazioneBottoniConsigli(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
-	private void principaleAggiuntivaButtonAction() {
+	private void principaleAggiuntivaButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		azioneFactory.setTipoAzione("7");
 		this.getConnessione().inviaOggetto(azioneFactory);
@@ -271,7 +315,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void saltaRapidaButtonAction() {
+	private void saltaRapidaButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		azioneFactory.setTipoAzione("8");
 		this.getConnessione().inviaOggetto(azioneFactory);
@@ -280,95 +324,81 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void acquistaPermessoButtonAction() {
+	private void acquistaPermessoButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio che vuoi soddisfare");
-		Consiglio consiglioAzione = impostaConsiglio();
-		labelAzioneDaFare.setText("Seleziona carte politica, clicca conferma azione quando hai finito");
-		List<CartaPolitica> carteAzione = impostaCartePolitica();
-		labelAzioneDaFare.setText("Clicca sulla tessera permesso che vuoi acquistare");
-		TesseraCostruzione tesseraAzione = impostaTesseraCostruzioneAcquisto();
-		azioneFactory.setConsiglio(consiglioAzione);
-		azioneFactory.setCartePolitica(carteAzione);
-		azioneFactory.setTesseraCostruzione(tesseraAzione);
+		confermaAzioneButton.setDisable(false);
+		labelAzioneDaFare.setText("Clicca sul consiglio che vuoi " + "\n" + "soddisfare, seleziona carte politica, "
+				+ "\n" + " clicca sulla tessera permesso che vuoi acquistare," + "\n"
+				+ " clicca conferma azione quando hai finito");
+		consiglioMareButton.setDisable(false);
+		consiglioMontagnaButton.setDisable(false);
+		consiglioPianuraButton.setDisable(false);
+		cartePoliticaListView.setDisable(false);
+		disabilitazioneBottoniTessereCostruzione(false);
 		azioneFactory.setTipoAzione("0");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
-	private void costruisciConReButtonAction() {
+	private void costruisciConReButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Seleziona carte politica, clicca conferma azione quando hai finito");
-		List<CartaPolitica> carteAzione = impostaCartePolitica();
-		labelAzioneDaFare.setText("Clicca sulla città nella quale vuoi costruire");
-		Citta cittaAzione = impostaCitta();
-		azioneFactory.setCartePolitica(carteAzione);
-		azioneFactory.setCitta(cittaAzione);
+		confermaAzioneButton.setDisable(false);
+		labelAzioneDaFare
+				.setText("Seleziona carte politica, " + "\n" + " clicca sulla città nella quale vuoi costruire, " + "\n"
+						+ "clicca conferma azione quando hai finito");
+		cartePoliticaListView.setDisable(false);
+		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("1");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
-	private void eleggiConsigliereButtonAction() {
+	private void eleggiConsigliereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere");
-		Consiglio consiglioAzione = impostaConsiglio();
-		labelAzioneDaFare.setText("Scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
-		Consigliere consigliereAzione = impostaConsigliere();
-		labelAzioneDaFare.setText("");
-		azioneFactory.setConsiglio(consiglioAzione);
-		azioneFactory.setConsigliere(consigliereAzione);
+		confermaAzioneButton.setDisable(false);
+		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere" + "\n"
+				+ "scegli il consigliere che vuoi eleggere," + "\n" + " poi clicca su conferma azione");
+		consigliereDisponibileComboBox.setDisable(false);
+		disabilitazioneBottoniConsigli(false);
 		azioneFactory.setTipoAzione("2");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
-	private void costruisciEmporioTesseraButtonAction() {
+	private void costruisciEmporioTesseraButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sulla tessera valida che vuoi utilizzare");
-		TesseraCostruzione tesseraAzione = impostaTesseraCostruzioneGiocatore(true);
-		labelAzioneDaFare.setText("Inserisci la città nella quale vuoi costruire");
-		Citta cittaAzione = impostaCitta();
-		azioneFactory.setTesseraCostruzione(tesseraAzione);
-		azioneFactory.setCitta(cittaAzione);
+		confermaAzioneButton.setDisable(false);
+		labelAzioneDaFare.setText("Clicca sulla tessera valida che vuoi utilizzare," + "\n"
+				+ "inserisci la città nella quale vuoi costruire," + "\n"
+				+ "clicca su conferma azione quando hai finito");
+		tessereValideListView.setDisable(false);
+		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("3");
-		this.getConnessione().inviaOggetto(azioneFactory);
-		azioneFactory = new AzioneFactory(null);
-		disabilitazioneBottoniAzione(false);
+		annullaAzioneButton.setDisable(false);
 	}
 
 	@FXML
 	private void handleCittaButton(ActionEvent event) {
 		String nomeCitta = ((Button) event.getSource()).getId();
 		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
-		semInput.release();
 	}
 
 	@FXML
 	private void handleTesseraMareButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
-		semInput.release();
 	}
 
 	@FXML
 	private void handleTesseraPianuraButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("pianura").getTessereCostruzione().get(numTessera);
-		semInput.release();
 	}
 
 	@FXML
 	private void handleTesseraMontagnaButton(ActionEvent event) {
 		int numeroTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("montagna").getTessereCostruzione().get(numeroTessera);
-		semInput.release();
 	}
 
 	@FXML
@@ -376,10 +406,10 @@ public class ViewGUI extends View implements Initializable {
 		String nomeConsiglio = ((Button) event.getSource()).getText();
 		if ("re".equalsIgnoreCase(nomeConsiglio)) {
 			consiglioInput = tabelloneClient.getRe().getConsiglio();
+			azioneFactory.setConsiglioRe(true);
 		} else {
 			consiglioInput = tabelloneClient.getRegioneDaNome(nomeConsiglio).getConsiglio();
 		}
-		semInput.release();
 	}
 
 	@FXML
@@ -403,127 +433,82 @@ public class ViewGUI extends View implements Initializable {
 	private void handleTessereCostruzioneValideList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
-		semInput.release();
 	}
 
 	@FXML
 	private void handleTessereCostruzioneUsateList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
-		semInput.release();
 	}
 
-	public Citta impostaCitta() {
-		try {
-			disabilitazioneBottoniCitta(false);
-			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
-			semInput.acquire();
-			Citta citta = cittaInput;
-			cittaInput = null;
-			disabilitazioneBottoniCitta(true);
-			return citta;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return null;
+	/*public Citta impostaCitta() {
+		disabilitazioneBottoniCitta(false);
+		labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
+		Citta citta = cittaInput;
+		cittaInput = null;
+		disabilitazioneBottoniCitta(true);
+		return citta;
 	}
 
 	private Consigliere impostaConsigliere() {
-		try {
-			consigliereDisponibileComboBox.setDisable(false);
-			confermaAzioneButton.setDisable(false);
-			semInput.acquire();
-			Consigliere consigliere = consigliereInput;
-			consigliereInput = null;
-			consigliereDisponibileComboBox.setDisable(true);
-			confermaAzioneButton.setDisable(true);
-			return consigliere;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		consigliereDisponibileComboBox.setDisable(false);
+		confermaAzioneButton.setDisable(false);
+		Consigliere consigliere = consigliereInput;
+		consigliereInput = null;
+		consigliereDisponibileComboBox.setDisable(true);
+		confermaAzioneButton.setDisable(true);
+		return consigliere;
 	}
 
 	private Consiglio impostaConsiglio() {
-		try {
-			disabilitazioneBottoniConsigli(false);
-			labelAzioneDaFare.setText("Clicca sul consiglio da utilizzare");
-			semInput.acquire();
-			Consiglio consiglio = consiglioInput;
-			consiglioInput = null;
-			disabilitazioneBottoniConsigli(true);
-			return consiglio;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		disabilitazioneBottoniConsigli(false);
+		labelAzioneDaFare.setText("Clicca sul consiglio da utilizzare");
+		Consiglio consiglio = consiglioInput;
+		consiglioInput = null;
+		disabilitazioneBottoniConsigli(true);
+		return consiglio;
 	}
 
 	public TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
-		try {
-			disabilitazioneBottoniTessereCostruzione(false);
-			labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
-			semInput.acquire();
-			TesseraCostruzione tessera = tesseraInput;
-			tesseraInput = null;
-			disabilitazioneBottoniTessereCostruzione(true);
-			return tessera;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		disabilitazioneBottoniTessereCostruzione(false);
+		labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
+		TesseraCostruzione tessera = tesseraInput;
+		tesseraInput = null;
+		disabilitazioneBottoniTessereCostruzione(true);
+		return tessera;
 	}
 
 	private List<CartaPolitica> impostaCartePolitica() {
-		try {
-			cartePoliticaListView.setVisible(true);
-			;
-			confermaAzioneButton.setDisable(false);
-			semInput.acquire();
-			cartePoliticaListView.setVisible(false);
-			confermaAzioneButton.setDisable(true);
-			List<CartaPolitica> cartePolitica = new ArrayList<>(cartePoliticaInput);
-			cartePoliticaInput = new ArrayList<>();
-			return cartePolitica;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		cartePoliticaListView.setDisable(false);
+		confermaAzioneButton.setDisable(false);
+		cartePoliticaListView.setDisable(true);
+		confermaAzioneButton.setDisable(true);
+		List<CartaPolitica> cartePoliticaSelezionate = new ArrayList<>(cartePoliticaInput);
+		cartePoliticaInput = new ArrayList<>();
+		return cartePoliticaSelezionate;
 	}
 
 	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida) {
-		try {
-			if (valida)
-				tessereValideListView.setVisible(true);
-			else
-				tessereUsateListView.setVisible(true);
-			semInput.acquire();
-			tessereValideListView.setVisible(false);
-			tessereUsateListView.setVisible(false);
-			TesseraCostruzione tessera = tesseraInput;
-			tesseraInput = null;
-			return tessera;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		if (valida)
+			tessereValideListView.setDisable(false);
+		else
+			tessereUsateListView.setDisable(false);
+		tessereValideListView.setDisable(true);
+		tessereUsateListView.setDisable(true);
+		TesseraCostruzione tessera = tesseraInput;
+		tesseraInput = null;
+		return tessera;
 	}
 
 	public TesseraCostruzione impostaTesseraRiutilizzoCostruzione() {
-		try {
-			tessereValideListView.setVisible(true);
-			tessereUsateListView.setVisible(true);
-			semInput.acquire();
-			tessereValideListView.setVisible(false);
-			tessereUsateListView.setVisible(false);
-			TesseraCostruzione tessera = tesseraInput;
-			tesseraInput = null;
-			return tessera;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+		tessereValideListView.setDisable(false);
+		tessereUsateListView.setDisable(false);
+		tessereValideListView.setDisable(true);
+		tessereUsateListView.setDisable(true);
+		TesseraCostruzione tessera = tesseraInput;
+		tesseraInput = null;
+		return tessera;
+	}*/
 
 	private void aggiornaGUI() {
 		aggiornaCartePolitica();
@@ -569,7 +554,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void aggiornaConsiglieriDisponibili() {
-		consiglieriDisponibili.clear();
+		consiglieriDisponibili = FXCollections.observableArrayList();
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
 			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
@@ -658,7 +643,6 @@ public class ViewGUI extends View implements Initializable {
 		try {
 			semInizializzazione.acquire();
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if (oggetto instanceof String) {
@@ -688,6 +672,7 @@ public class ViewGUI extends View implements Initializable {
 				@Override
 				public void run() {
 					stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
+					annullaAzioneButton.setDisable(true);
 				}
 			});
 			if (oggetto instanceof NomeGiaScelto) {
@@ -706,26 +691,17 @@ public class ViewGUI extends View implements Initializable {
 
 	@Override
 	public void startClient() {
-		semInput = new Semaphore(0);
-
 		semInizializzazione.release();
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		turnoCambiato = true;
 		semInizializzazione = new Semaphore(0);
 		creazioneSfondiMappa();
-		/*
-		 * disabilitazioneBottoniAzione(true);
-		 * disabilitazioneBottoniCitta(true);
-		 * disabilitazioneBottoniConsigli(true);
-		 * disabilitazioneBottoniTessereCostruzione(true);
-		 * tessereUsateListView.setDisable(true);
-		 * tessereValideListView.setDisable(true);
-		 * cartePoliticaListView.setDisable(true);
-		 * consigliereDisponibileComboBox.setDisable(true);
-		 */
+		cartePoliticaListView.setDisable(true);
+		tessereUsateListView.setDisable(true);
+		tessereValideListView.setDisable(true);
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -753,13 +729,17 @@ public class ViewGUI extends View implements Initializable {
 		}
 		if (statoAttuale instanceof AttesaTurno) {
 			disabilitazioneBottoniAzione(true);
+			turnoCambiato = true;
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori())
 				if (g.getStatoGiocatore() instanceof TurnoNormale || g.getStatoGiocatore() instanceof TurnoMercato) {
 					labelAzioneDaFare.setText("Turno di " + g.getNome() + "..");
 				}
 		}
 		if (statoAttuale instanceof TurnoNormale) {
-			labelAzioneDaFare.setText("E' il tuo turno");
+			if(turnoCambiato){
+				labelAzioneDaFare.setText("E' il tuo turno");
+				turnoCambiato = false;
+			}
 			disabilitazioneBottoniAzione(false);
 		}
 	}
@@ -923,7 +903,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	public void disabilitazioneBottoniAzione(boolean value) {
+	public synchronized void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
 		costruisciConReButton.setDisable(value);
 		eleggiConsigliereButton.setDisable(value);
@@ -935,11 +915,11 @@ public class ViewGUI extends View implements Initializable {
 		saltaRapidaButton.setDisable(value);
 	}
 
-	public void disabilitazioneBottoniCitta(boolean value) {
+	public synchronized void disabilitazioneBottoniCitta(boolean value) {
 		arkon.setDisable(value);
 		burgen.setDisable(value);
 		castrum.setDisable(value);
-		dorful.setDisable(value);
+		dortid.setDisable(value);
 		esti.setDisable(value);
 		framek.setDisable(value);
 		graden.setDisable(value);
@@ -953,7 +933,7 @@ public class ViewGUI extends View implements Initializable {
 		merkatim.setDisable(value);
 	}
 
-	public void disabilitazioneBottoniTessereCostruzione(boolean value) {
+	public synchronized void disabilitazioneBottoniTessereCostruzione(boolean value) {
 		tesseraMare0Button.setDisable(value);
 		tesseraMare1Button.setDisable(value);
 		tesseraMontagna0Button.setDisable(value);
@@ -962,10 +942,25 @@ public class ViewGUI extends View implements Initializable {
 		tesseraPianura1Button.setDisable(value);
 	}
 
-	public void disabilitazioneBottoniConsigli(boolean value) {
+	public synchronized void disabilitazioneBottoniConsigli(boolean value) {
 		consiglioMareButton.setDisable(value);
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
 		consiglioReButton.setDisable(value);
 	}
+
+	/**
+	 * @return the tessereValideListView
+	 */
+	public ListView<ImageView> getTessereValideListView() {
+		return tessereValideListView;
+	}
+
+	/**
+	 * @return the tessereUsateListView
+	 */
+	public ListView<ImageView> getTessereUsateListView() {
+		return tessereUsateListView;
+	}	
+	
 }

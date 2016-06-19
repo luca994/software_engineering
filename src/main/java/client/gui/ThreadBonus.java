@@ -14,7 +14,6 @@ import server.model.bonus.BonusTesseraPermesso;
 public class ThreadBonus implements Runnable {
 
 
-	private BonusGettoneCitta bonus;
 	private Object oggetto;
 	private ViewGUI viewGUI;
 	private Label labelAzioneDaFare;
@@ -29,7 +28,6 @@ public class ThreadBonus implements Runnable {
 	}
 
 	public void setOggetto(BonusGettoneCitta oggetto){
-		this.bonus=oggetto;
 	}
 	
 	@Override
@@ -37,21 +35,18 @@ public class ThreadBonus implements Runnable {
 		viewGUI.disabilitazioneBottoniAzione(true);
 		
 		if(oggetto instanceof BonusGettoneCitta){
-			
-			labelAzioneDaFare.setText("Clicca sulla città col bonus che ti interessa(col tuo emporio)");
-			((BonusGettoneCitta) oggetto).getCitta().add(viewGUI.impostaCitta());
-			
+			labelAzioneDaFare.setText("Clicca sulla città col bonus che ti interessa(col tuo emporio), poi clicca su conferma azione");	
+			viewGUI.disabilitazioneBottoniCitta(false);
 		}
 		else if(oggetto instanceof BonusTesseraPermesso){
-			labelAzioneDaFare.setText("Clicca sulla tessera permesso del tabellone che vuoi ottenere");
-			((BonusTesseraPermesso) oggetto).setTessera(viewGUI.impostaTesseraCostruzioneAcquisto());
+			labelAzioneDaFare.setText("Clicca sulla tessera permesso del tabellone che vuoi ottenere, poi clicca su conferma azione");
+			viewGUI.disabilitazioneBottoniTessereCostruzione(false);
 		}
 		else {
-			labelAzioneDaFare.setText("Clicca su una delle tue tessere permesso di cui vuoi ottenere i bonus");
-			((BonusTesseraPermesso) oggetto).setTessera(viewGUI.impostaTesseraRiutilizzoCostruzione());
+			labelAzioneDaFare.setText("Clicca su una delle tue tessere permesso di cui vuoi ottenere i bonus, poi clicca su conferma azione");
+			viewGUI.getTessereUsateListView().setDisable(false);
+			viewGUI.getTessereValideListView().setDisable(false);
 		}
-		viewGUI.getConnessione().inviaOggetto(oggetto);
-		viewGUI.disabilitazioneBottoniAzione(false);
 	}
 }
 

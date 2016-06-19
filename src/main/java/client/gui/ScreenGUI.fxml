@@ -104,17 +104,17 @@
                           <tabs>
                             <Tab closable="false" text="Carte Politica">
                                  <content>
-                                    <ListView fx:id="cartePoliticaListView" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="cartePoliticaListView" disable="true" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Tessere Valide">
                                  <content>
-                                    <ListView fx:id="tessereValideListView" onMouseClicked="#handleTessereCostruzioneValideList" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="tessereValideListView" disable="true" onMouseClicked="#handleTessereCostruzioneValideList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                               </Tab>
                             <Tab closable="false" text="Tessere Usate">
                                  <content>
-                                    <ListView fx:id="tessereUsateListView" onMouseClicked="#handleTessereCostruzioneUsateList" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="tessereUsateListView" disable="true" onMouseClicked="#handleTessereCostruzioneUsateList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Chat">
