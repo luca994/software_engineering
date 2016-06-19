@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
 
 import client.View;
 import eccezione.NomeGiaScelto;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,8 +69,8 @@ public class ViewGUI extends View implements Initializable{
 	private Giocatore giocatore;
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
-	private Semaphore semInput = new Semaphore(0);
-	private	Semaphore semInizializzazione = new Semaphore(0);
+	private Semaphore semInput;
+	private	Semaphore semInizializzazione;
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
@@ -695,21 +696,15 @@ public class ViewGUI extends View implements Initializable{
 
 	@Override
 	public void startClient() {
-		try{
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
-			Parent root = loader.load();
-			Stage stage = new Stage();
-			stage.setTitle("Gioco vediamo se va");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		semInput = new Semaphore(0);
+
+		semInizializzazione.release();
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		semInizializzazione.release();
+
+		semInizializzazione = new Semaphore(0);
 		creazioneSfondiMappa();
 		/*disabilitazioneBottoniAzione(true);
 		disabilitazioneBottoniCitta(true);

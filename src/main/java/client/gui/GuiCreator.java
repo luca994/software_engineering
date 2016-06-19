@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,9 +18,9 @@ public class GuiCreator extends Application {
 		try {
 			FXMLLoader loaderGUI = new FXMLLoader(getClass().getResource("ScreenGUI.fxml"));
 		    Parent rootGUI = loaderGUI.load();
-		    
-			ViewGUI view=new ViewGUI();
-			loaderGUI.setController(view);
+			ViewGUI view=loaderGUI.getController();
+			view.startClient();
+			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Screen1.fxml"));
 			screen1Stage.setTitle("CdQ: Configurazione");
 			screen1Stage.setScene(new Scene((AnchorPane) loader.load()));

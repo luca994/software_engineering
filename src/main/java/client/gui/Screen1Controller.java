@@ -12,6 +12,7 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import eccezione.NomeGiaScelto;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,11 +72,16 @@ public class Screen1Controller implements Initializable {
 	private void azioneConfermaDati(){
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				
-				Stage stageGUI = new Stage();
-				stageGUI.setTitle("Gioco vediamo se va");
-				stageGUI.setScene(new Scene(rootGUI));
-				stageGUI.show();
+				Platform.runLater(() -> {
+                   
+                        Stage stageGUI = new Stage();
+                        
+                        Scene scene = new Scene(rootGUI);
+                        stageGUI.setScene(scene);
+                        stageGUI.setTitle("Gioco:vediamo se va");
+                        stageGUI.show();
+                   
+                });
 				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
 				stageScreen1.close();
 			}
