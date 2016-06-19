@@ -72,16 +72,17 @@ public class Screen1Controller implements Initializable {
 	private void azioneConfermaDati(){
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				Platform.runLater(() -> {
-                   
-                        Stage stageGUI = new Stage();
-                        
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						Stage stageGUI = new Stage();
                         Scene scene = new Scene(rootGUI);
                         stageGUI.setScene(scene);
                         stageGUI.setTitle("Gioco:vediamo se va");
                         stageGUI.show();
-                   
-                });
+					}
+                 });
 				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
 				stageScreen1.close();
 			}

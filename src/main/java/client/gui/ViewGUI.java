@@ -44,6 +44,7 @@ import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;
 import server.model.azione.AzioneFactory;
+import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
@@ -64,13 +65,13 @@ import server.model.stato.giocatore.TurnoNormale;
  * @author Massimiliano Ventura
  *
  */
-public class ViewGUI extends View implements Initializable{
+public class ViewGUI extends View implements Initializable {
 
 	private Giocatore giocatore;
 	private Tabellone tabelloneClient;
 	private StatoGiocatore statoAttuale;
 	private Semaphore semInput;
-	private	Semaphore semInizializzazione;
+	private Semaphore semInizializzazione;
 	private Citta cittaInput;
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
@@ -231,16 +232,17 @@ public class ViewGUI extends View implements Initializable{
 	@FXML
 	private void confermaAzioneButtonAction() {
 		semInput.release();
-		/*Gioco gioco = new Gioco();
-		Giocatore g1 = new Giocatore("pippo");
-		this.giocatore = g1;
-		gioco.getGiocatori().add(g1);
-		gioco.getGiocatori().add(new Giocatore("paolo"));
-		gioco.inizializzaPartita("0");
-		tabelloneClient = gioco.getTabellone();
-		g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(3));
-		g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).getTessereCoperte().get(6));
-		aggiornaGUI();*/
+		/*
+		 * Gioco gioco = new Gioco(); Giocatore g1 = new Giocatore("pippo");
+		 * this.giocatore = g1; gioco.getGiocatori().add(g1);
+		 * gioco.getGiocatori().add(new Giocatore("paolo"));
+		 * gioco.inizializzaPartita("0"); tabelloneClient =
+		 * gioco.getTabellone();
+		 * g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).
+		 * getTessereCoperte().get(3));
+		 * g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).
+		 * getTessereCoperte().get(6)); aggiornaGUI();
+		 */
 	}
 
 	@FXML
@@ -388,31 +390,30 @@ public class ViewGUI extends View implements Initializable{
 
 	@FXML
 	private void handleCartePoliticaList(MouseEvent event) {
-		if(cartePoliticaInput.size()<4){
+		if (cartePoliticaInput.size() < 4) {
 			int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 			cartePoliticaInput.add(giocatore.getCartePolitica().get(numeroCarta));
 			cartePolitica.remove(numeroCarta);
 			cartePoliticaListView.setItems(cartePolitica);
-		}
-		else
+		} else
 			labelAzioneDaFare.setText("Hai già selezionato 4 carte");
 	}
-	
+
 	@FXML
-	private void handleTessereCostruzioneValideList(MouseEvent event){
+	private void handleTessereCostruzioneValideList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
 		semInput.release();
 	}
 
 	@FXML
-	private void handleTessereCostruzioneUsateList(MouseEvent event){
+	private void handleTessereCostruzioneUsateList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
 		semInput.release();
 	}
-	
-	private Citta impostaCitta() {
+
+	public Citta impostaCitta() {
 		try {
 			disabilitazioneBottoniCitta(false);
 			labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
@@ -427,8 +428,8 @@ public class ViewGUI extends View implements Initializable{
 		return null;
 	}
 
-	private Consigliere impostaConsigliere(){
-		try{
+	private Consigliere impostaConsigliere() {
+		try {
 			consigliereDisponibileComboBox.setDisable(false);
 			confermaAzioneButton.setDisable(false);
 			semInput.acquire();
@@ -437,12 +438,12 @@ public class ViewGUI extends View implements Initializable{
 			consigliereDisponibileComboBox.setDisable(true);
 			confermaAzioneButton.setDisable(true);
 			return consigliere;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	private Consiglio impostaConsiglio() {
 		try {
 			disabilitazioneBottoniConsigli(false);
@@ -458,7 +459,7 @@ public class ViewGUI extends View implements Initializable{
 		}
 	}
 
-	private TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
+	public TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
 		try {
 			disabilitazioneBottoniTessereCostruzione(false);
 			labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
@@ -473,9 +474,10 @@ public class ViewGUI extends View implements Initializable{
 		}
 	}
 
-	private List<CartaPolitica> impostaCartePolitica(){
-		try{
-			cartePoliticaListView.setVisible(true);;
+	private List<CartaPolitica> impostaCartePolitica() {
+		try {
+			cartePoliticaListView.setVisible(true);
+			;
 			confermaAzioneButton.setDisable(false);
 			semInput.acquire();
 			cartePoliticaListView.setVisible(false);
@@ -483,15 +485,15 @@ public class ViewGUI extends View implements Initializable{
 			List<CartaPolitica> cartePolitica = new ArrayList<>(cartePoliticaInput);
 			cartePoliticaInput = new ArrayList<>();
 			return cartePolitica;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida){
-		try{
-			if(valida)
+
+	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida) {
+		try {
+			if (valida)
 				tessereValideListView.setVisible(true);
 			else
 				tessereUsateListView.setVisible(true);
@@ -501,14 +503,14 @@ public class ViewGUI extends View implements Initializable{
 			TesseraCostruzione tessera = tesseraInput;
 			tesseraInput = null;
 			return tessera;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	private TesseraCostruzione impostaTesseraRiutilizzoCostruzione(){
-		try{
+
+	public TesseraCostruzione impostaTesseraRiutilizzoCostruzione() {
+		try {
 			tessereValideListView.setVisible(true);
 			tessereUsateListView.setVisible(true);
 			semInput.acquire();
@@ -517,12 +519,12 @@ public class ViewGUI extends View implements Initializable{
 			TesseraCostruzione tessera = tesseraInput;
 			tesseraInput = null;
 			return tessera;
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	private void aggiornaGUI() {
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
@@ -547,14 +549,20 @@ public class ViewGUI extends View implements Initializable{
 		cartePoliticaListView.setItems(cartePolitica);
 	}
 
-	public void aggiornaTessereCostruzioneGiocatore(){
+	public void aggiornaTessereCostruzioneGiocatore() {
 		tessereCostruzioneUsate.clear();
 		tessereCostruzioneValide.clear();
-		for(TesseraCostruzione t: giocatore.getTessereValide()){
-			tessereCostruzioneValide.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		for (TesseraCostruzione t : giocatore.getTessereValide()) {
+			tessereCostruzioneValide.add(new ImageView(new Image(
+					getClass().getClassLoader()
+							.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
+					100, 100, false, false)));
 		}
-		for(TesseraCostruzione t: giocatore.getTessereUsate()){
-			tessereCostruzioneUsate.add(new ImageView(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+t.getId()+".jpg").toString(), 100, 100, false, false)));
+		for (TesseraCostruzione t : giocatore.getTessereUsate()) {
+			tessereCostruzioneUsate.add(new ImageView(new Image(
+					getClass().getClassLoader()
+							.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
+					100, 100, false, false)));
 		}
 		tessereValideListView.setItems(tessereCostruzioneValide);
 		tessereUsateListView.setItems(tessereCostruzioneUsate);
@@ -566,18 +574,18 @@ public class ViewGUI extends View implements Initializable{
 			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
 		consigliereDisponibileComboBox.setItems(consiglieriDisponibili);
-	
+
 		consigliereDisponibileComboBox.setButtonCell(new ListCell<Color>() {
 			private final Rectangle rectangle;
 			{
 				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 				rectangle = new Rectangle(60, 20);
 			}
-	
+
 			@Override
 			protected void updateItem(Color item, boolean empty) {
 				super.updateItem(item, empty);
-	
+
 				if (item == null || empty) {
 					setGraphic(null);
 				} else {
@@ -586,7 +594,7 @@ public class ViewGUI extends View implements Initializable{
 				}
 			}
 		});
-	
+
 		consigliereDisponibileComboBox.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
@@ -596,11 +604,11 @@ public class ViewGUI extends View implements Initializable{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(60, 20);
 					}
-	
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
-	
+
 						if (item == null || empty) {
 							setGraphic(null);
 						} else {
@@ -613,19 +621,31 @@ public class ViewGUI extends View implements Initializable{
 		});
 	}
 
-	public void aggiornaTessereTabellone(){
+	public void aggiornaTessereTabellone() {
 		String id0 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(0).getId();
-		tesseraMare0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id0+".jpg").toString(), 80, 50, false, false));
+		tesseraMare0Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id0 + ".jpg").toString(), 80, 50, false,
+				false));
 		String id1 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(1).getId();
-		tesseraMare1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id1+".jpg").toString(), 80, 50, false, false));
+		tesseraMare1Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id1 + ".jpg").toString(), 80, 50, false,
+				false));
 		String id2 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(0).getId();
-		tesseraPianura0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id2+".jpg").toString(), 80, 50, false, false));
+		tesseraPianura0Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id2 + ".jpg").toString(), 80, 50, false,
+				false));
 		String id3 = tabelloneClient.getRegioni().get(1).getTessereCostruzione().get(1).getId();
-		tesseraPianura1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id3+".jpg").toString(), 80, 50, false, false));
+		tesseraPianura1Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id3 + ".jpg").toString(), 80, 50, false,
+				false));
 		String id4 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(0).getId();
-		tesseraMontagna0Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id4+".jpg").toString(), 80, 50, false, false));
+		tesseraMontagna0Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id4 + ".jpg").toString(), 80, 50, false,
+				false));
 		String id5 = tabelloneClient.getRegioni().get(2).getTessereCostruzione().get(1).getId();
-		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereCostruzione/tessera"+id5+".jpg").toString(), 80, 50, false, false));
+		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader()
+				.getResource("immaginiGUI/tessereCostruzione/tessera" + id5 + ".jpg").toString(), 80, 50, false,
+				false));
 	}
 
 	@Override
@@ -634,64 +654,54 @@ public class ViewGUI extends View implements Initializable{
 
 	@Override
 	public synchronized void riceviOggetto(Object oggetto) {
+
 		try {
 			semInizializzazione.acquire();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try {
-			if (oggetto instanceof String) {
-				labelAzioneDaFare.setText((String) oggetto);
-			}
-			if (oggetto instanceof Giocatore)
-				this.giocatore = (Giocatore) oggetto;
-			if (oggetto instanceof Tabellone) {
-				tabelloneClient = (Tabellone) oggetto;
-				aggiornaStato();
-				aggiornaGiocatore();
-				aggiornaGUI();
-			}
-			if (oggetto instanceof Exception) {
-				stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
-				if (oggetto instanceof NomeGiaScelto) {
-					Stage stage = new Stage();
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("Screen1.fxml"));
-					stage.setTitle("CdQ: Configurazione");
-					stage.setScene(new Scene((AnchorPane) loader.load()));
-					Screen1Controller controller = loader.<Screen1Controller> getController();
-					controller.setView(this);
-					stage.show();
-					Stage thisStage = (Stage) acquistaPermessoButton.getScene().getWindow();
-					thisStage.close();
+		if (oggetto instanceof String) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					labelAzioneDaFare.setText((String) oggetto);
 				}
-			}
-			if (oggetto instanceof BonusGettoneCitta) {
-				disabilitazioneBottoniAzione(true);
-				labelAzioneDaFare.setText("Clicca sulla città\ndove hai un emporio"
-						+ " e di cui vuoi ottenere il bonus,\n se non hai un'emporio scrivi 'passa'");
-				((BonusGettoneCitta) oggetto).getCitta().add(impostaCitta());
-				this.getConnessione().inviaOggetto(oggetto);
-				disabilitazioneBottoniAzione(false);
-			}
-			if (oggetto instanceof BonusTesseraPermesso) {
-				disabilitazioneBottoniAzione(true);
-				labelAzioneDaFare.setText("Clicca sulla tessera permesso del tabellone che vuoi ottenere");
-				((BonusTesseraPermesso) oggetto).setTessera(impostaTesseraCostruzioneAcquisto());
-				this.getConnessione().inviaOggetto(oggetto);
-				disabilitazioneBottoniAzione(false);
-			}
-			if (oggetto instanceof BonusRiutilizzoCostruzione) {
-				disabilitazioneBottoniAzione(true);
-				labelAzioneDaFare.setText("Clicca su una delle tue tessere permesso di cui vuoi ottenere i bonus");
-				((BonusTesseraPermesso) oggetto).setTessera(impostaTesseraRiutilizzoCostruzione());
-				this.getConnessione().inviaOggetto(oggetto);
-				disabilitazioneBottoniAzione(false);
-			}
-		} catch (IOException e) {
-			throw new IllegalStateException();
+			});
 		}
+		if (oggetto instanceof Giocatore)
+			this.giocatore = (Giocatore) oggetto;
+		if (oggetto instanceof Tabellone) {
+			tabelloneClient = (Tabellone) oggetto;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					aggiornaStato();
+					aggiornaGiocatore();
+					aggiornaGUI();
+				}
+			});
+		}
+		if (oggetto instanceof Exception) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					stampaMessaggio("Errore", ((Exception) oggetto).getMessage());
+				}
+			});
+			if (oggetto instanceof NomeGiaScelto) {
+				((Stage) confermaAzioneButton.getScene().getWindow()).close();
+			}
+		}
+		if (oggetto instanceof Bonus) {
+			ThreadBonus threadBonus = new ThreadBonus(this, oggetto, labelAzioneDaFare);
+			Platform.runLater(threadBonus);
+
+		}
+
 		semInizializzazione.release();
+
 	}
 
 	@Override
@@ -706,14 +716,16 @@ public class ViewGUI extends View implements Initializable{
 
 		semInizializzazione = new Semaphore(0);
 		creazioneSfondiMappa();
-		/*disabilitazioneBottoniAzione(true);
-		disabilitazioneBottoniCitta(true);
-		disabilitazioneBottoniConsigli(true);
-		disabilitazioneBottoniTessereCostruzione(true);
-		tessereUsateListView.setDisable(true);
-		tessereValideListView.setDisable(true);
-		cartePoliticaListView.setDisable(true);
-		consigliereDisponibileComboBox.setDisable(true);*/
+		/*
+		 * disabilitazioneBottoniAzione(true);
+		 * disabilitazioneBottoniCitta(true);
+		 * disabilitazioneBottoniConsigli(true);
+		 * disabilitazioneBottoniTessereCostruzione(true);
+		 * tessereUsateListView.setDisable(true);
+		 * tessereValideListView.setDisable(true);
+		 * cartePoliticaListView.setDisable(true);
+		 * consigliereDisponibileComboBox.setDisable(true);
+		 */
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -955,5 +967,5 @@ public class ViewGUI extends View implements Initializable{
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
 		consiglioReButton.setDisable(value);
-	}	
+	}
 }
