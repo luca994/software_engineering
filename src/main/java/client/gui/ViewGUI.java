@@ -84,6 +84,11 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<Color> consiglieriDisponibili = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereCostruzioneValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereCostruzioneUsate = FXCollections.observableArrayList();
+	
+	ObservableList<Color> consiglioMare = FXCollections.observableArrayList();
+	ObservableList<Color> consiglioPianura = FXCollections.observableArrayList();
+	ObservableList<Color> consiglioMontagna = FXCollections.observableArrayList();
+	ObservableList<Color> consiglioRe = FXCollections.observableArrayList();
 
 	@FXML
 	private ComboBox<Color> consigliereDisponibileComboBox;
@@ -94,6 +99,14 @@ public class ViewGUI extends View implements Initializable {
 	private ListView<ImageView> tessereUsateListView;
 	@FXML
 	private ListView<ImageView> cartePoliticaListView;
+	@FXML
+	private ListView<Color> consiglioMareListView;
+	@FXML
+	private ListView<Color> consiglioPianuraListView;
+	@FXML
+	private ListView<Color> consiglioMontagnaListView;
+	@FXML
+	private ListView<Color> consiglioReListView;
 
 	@FXML
 	private AnchorPane anchorPaneMare;
@@ -272,7 +285,8 @@ public class ViewGUI extends View implements Initializable {
 			confermaAzioneButton.setDisable(true);
 			consigliereDisponibileComboBox.valueProperty().set(null);
 			consigliereDisponibileComboBox.setDisable(true);
-			consigliereDisponibileComboBox.setValue(null);	
+			consigliereDisponibileComboBox.setValue(null);
+			annullaAzioneButton.setDisable(true);
 		}
 		cittaInput = null;
 		tesseraInput = null;
@@ -441,82 +455,145 @@ public class ViewGUI extends View implements Initializable {
 		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
 	}
 
-	/*public Citta impostaCitta() {
-		disabilitazioneBottoniCitta(false);
-		labelAzioneDaFare.setText("Clicca la città che vuoi utilizzare");
-		Citta citta = cittaInput;
-		cittaInput = null;
-		disabilitazioneBottoniCitta(true);
-		return citta;
-	}
-
-	private Consigliere impostaConsigliere() {
-		consigliereDisponibileComboBox.setDisable(false);
-		confermaAzioneButton.setDisable(false);
-		Consigliere consigliere = consigliereInput;
-		consigliereInput = null;
-		consigliereDisponibileComboBox.setDisable(true);
-		confermaAzioneButton.setDisable(true);
-		return consigliere;
-	}
-
-	private Consiglio impostaConsiglio() {
-		disabilitazioneBottoniConsigli(false);
-		labelAzioneDaFare.setText("Clicca sul consiglio da utilizzare");
-		Consiglio consiglio = consiglioInput;
-		consiglioInput = null;
-		disabilitazioneBottoniConsigli(true);
-		return consiglio;
-	}
-
-	public TesseraCostruzione impostaTesseraCostruzioneAcquisto() {
-		disabilitazioneBottoniTessereCostruzione(false);
-		labelAzioneDaFare.setText("Clicca sulla tessera che vuoi comprare");
-		TesseraCostruzione tessera = tesseraInput;
-		tesseraInput = null;
-		disabilitazioneBottoniTessereCostruzione(true);
-		return tessera;
-	}
-
-	private List<CartaPolitica> impostaCartePolitica() {
-		cartePoliticaListView.setDisable(false);
-		confermaAzioneButton.setDisable(false);
-		cartePoliticaListView.setDisable(true);
-		confermaAzioneButton.setDisable(true);
-		List<CartaPolitica> cartePoliticaSelezionate = new ArrayList<>(cartePoliticaInput);
-		cartePoliticaInput = new ArrayList<>();
-		return cartePoliticaSelezionate;
-	}
-
-	private TesseraCostruzione impostaTesseraCostruzioneGiocatore(boolean valida) {
-		if (valida)
-			tessereValideListView.setDisable(false);
-		else
-			tessereUsateListView.setDisable(false);
-		tessereValideListView.setDisable(true);
-		tessereUsateListView.setDisable(true);
-		TesseraCostruzione tessera = tesseraInput;
-		tesseraInput = null;
-		return tessera;
-	}
-
-	public TesseraCostruzione impostaTesseraRiutilizzoCostruzione() {
-		tessereValideListView.setDisable(false);
-		tessereUsateListView.setDisable(false);
-		tessereValideListView.setDisable(true);
-		tessereUsateListView.setDisable(true);
-		TesseraCostruzione tessera = tesseraInput;
-		tesseraInput = null;
-		return tessera;
-	}*/
-
 	private void aggiornaGUI() {
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
 		aggiornaTessereTabellone();
+		aggiornaConsiglioMare();
+		aggiornaConsiglioPianura();
+		aggiornaConsiglioMontagna();
+		aggiornaConsiglioRe();
 	}
 
+	public void aggiornaConsiglioMare(){
+		consiglioMare.clear();
+		for(Consigliere c: tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()){
+			consiglioMare.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consiglioMareListView.setItems(consiglioMare);
+		consiglioMareListView.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(15, 15);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
+	
+	public void aggiornaConsiglioPianura(){
+		consiglioPianura.clear();
+		for(Consigliere c: tabelloneClient.getRegioneDaNome("pianura").getConsiglio().getConsiglieri()){
+			consiglioPianura.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consiglioPianuraListView.setItems(consiglioPianura);
+		consiglioPianuraListView.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(15, 15);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
+	
+	public void aggiornaConsiglioRe(){
+		consiglioRe.clear();
+		for(Consigliere c: tabelloneClient.getRe().getConsiglio().getConsiglieri()){
+			consiglioRe.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consiglioReListView.setItems(consiglioRe);
+		consiglioReListView.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(15, 15);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
+	
+	public void aggiornaConsiglioMontagna(){
+		consiglioMontagna.clear();
+		for(Consigliere c: tabelloneClient.getRegioneDaNome("Montagna").getConsiglio().getConsiglieri()){
+			consiglioMontagna.add(ParseColor.colorAwtToFx(c.getColore()));
+		}
+		consiglioMontagnaListView.setItems(consiglioMontagna);
+		consiglioMontagnaListView.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(15, 15);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
+	}
+	
 	public void aggiornaCartePolitica() {
 		cartePolitica.clear();
 		for (CartaPolitica c : giocatore.getCartePolitica()) {
@@ -554,7 +631,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void aggiornaConsiglieriDisponibili() {
-		consiglieriDisponibili = FXCollections.observableArrayList();
+		consiglieriDisponibili.clear();
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
 			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
 		}

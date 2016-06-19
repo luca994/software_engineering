@@ -66,10 +66,14 @@
                               <Button fx:id="tesseraPianura1Button" disable="true" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
                               <Button fx:id="tesseraMontagna0Button" disable="true" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
                               <Button fx:id="tesseraMontagna1Button" disable="true" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Mare" />
-                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
-                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
-                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Re" />
+                              <ListView fx:id="consiglioMareListView" layoutX="176.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioPianuraListView" layoutX="561.0" layoutY="88.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="117.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioMontagnaListView" layoutX="992.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Mare" />
+                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
+                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
+                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Re" />
                            </children>
                         </AnchorPane>
                     </items>
