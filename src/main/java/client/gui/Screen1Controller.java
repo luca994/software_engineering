@@ -78,6 +78,9 @@ public class Screen1Controller implements Initializable {
 					public void run() {
 						Stage stageGUI = new Stage();
                         Scene scene = new Scene(rootGUI);
+                       
+                        scene.getStylesheets().add(getClass().getResource("stileGUI.css").toExternalForm());
+
                         stageGUI.setScene(scene);
                         stageGUI.setTitle("Gioco:vediamo se va");
                         stageGUI.show();
