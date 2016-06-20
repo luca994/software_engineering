@@ -84,7 +84,7 @@
                   </SplitPane>
                   <SplitPane fx:id="splitPanePannelloInterazione" dividerPositions="0.6635367762128326" prefHeight="160.0" prefWidth="200.0">
                     <items>
-                      <AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="827.0">
+                      <AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="827.0" style="-fx-background-color: #DEB887;">
                            <children>
                               <Label layoutX="70.0" layoutY="12.0" text="Azioni Principali" />
                               <Label layoutX="340.0" layoutY="12.0" text="Azioni Rapide" />
@@ -113,22 +113,22 @@
                           <tabs>
                             <Tab closable="false" text="Carte Politica">
                                  <content>
-                                    <ListView fx:id="cartePoliticaListView" disable="true" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="cartePoliticaListView" disable="true" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DEB887;" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Tessere Valide">
                                  <content>
-                                    <ListView fx:id="tessereValideListView" disable="true" onMouseClicked="#handleTessereCostruzioneValideList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="tessereValideListView" disable="true" onMouseClicked="#handleTessereCostruzioneValideList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DEB887;" />
                                  </content>
                               </Tab>
                             <Tab closable="false" text="Tessere Usate">
                                  <content>
-                                    <ListView fx:id="tessereUsateListView" disable="true" onMouseClicked="#handleTessereCostruzioneUsateList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="tessereUsateListView" disable="true" onMouseClicked="#handleTessereCostruzioneUsateList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DEB887;" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Chat">
                                 <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DEB887;">
                                        <children>
                                           <TextArea fx:id="chatTextArea" layoutX="14.0" layoutY="14.0" prefHeight="124.0" prefWidth="396.0" />
                                           <TextField fx:id="chatTextField" layoutX="14.0" layoutY="146.0" prefHeight="31.0" prefWidth="339.0" />
