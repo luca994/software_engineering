@@ -4,10 +4,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="105.0" prefWidth="214.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="client.gui.ScreenPrezzoController">
+<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ScreenPrezzoController">
    <children>
-      <TextField fx:id="priceTextField" layoutX="14.0" layoutY="14.0" />
-      <Button fx:id="confermaButton" layoutX="65.0" layoutY="53.0" mnemonicParsing="false" onAction="#confermaButtonAction" text="Conferma" />
+      <TextField fx:id="priceTextField" alignment="CENTER" layoutX="76.0" layoutY="75.0" />
+      <Button fx:id="confermaButton" alignment="CENTER" layoutX="116.0" layoutY="126.0" mnemonicParsing="false" onAction="#confermaButtonAction" text="Conferma" />
    </children>
 </AnchorPane>

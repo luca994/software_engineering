@@ -103,29 +103,41 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface,
 	public void riceviOggettoVendibile(OggettoVendibile oggettoVendibile) throws RemoteException {
 		this.notificaObservers(cercaOggettoVendibile(oggettoVendibile), getGiocatore());
 	}
-	
+
 	@Override
 	public void riceviStringa(String messaggio) throws RemoteException {
 		this.notificaObservers(messaggio, getGiocatore());
 	}
-	
 
 	/**
 	 * runs the actions sent by the client
 	 */
 	@Override
 	public void run() {
-		Azione azione = this.azioneFactory.createAzione();
-		this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
-		this.notificaObservers(azione, getGiocatore());
+		try {
+			Azione azione = this.azioneFactory.createAzione();
+			if (azione != null) {
+				this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
+				this.notificaObservers(azione, getGiocatore());
+			} else {
+				client.passaOggetto("Parametri errati");
+				this.azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+				client.passaOggetto(this.azioneFactory.getGioco().getTabellone());
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see server.view.ServerRMIViewInterface#riceviMessaggioChat(client.gui.MessaggioChat)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see server.view.ServerRMIViewInterface#riceviMessaggioChat(client.gui.
+	 * MessaggioChat)
 	 */
 	@Override
 	public void riceviMessaggioChat(MessaggioChat messaggioChat) throws RemoteException {
-		this.notificaObservers(messaggioChat);		
+		this.notificaObservers(messaggioChat);
 	}
-	
+
 }

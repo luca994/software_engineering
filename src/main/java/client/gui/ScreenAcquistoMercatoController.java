@@ -147,7 +147,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 			}
 		}
 		cartePoliticaListView.setItems(cartePolitica);
-	}// 50*130
+	}
 
 	private void aggiornaAssistenti() {
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {

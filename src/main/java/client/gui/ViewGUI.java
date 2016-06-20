@@ -270,8 +270,7 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void cambiaTessereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio della regione nella quale vuoi cambiare le tessere" + "\n"
-				+ ", poi clicca su conferma azione");
+		labelAzioneDaFare.setText("Clicca sul consiglio della regione nella quale vuoi cambiare le tessere, poi clicca su conferma azione");
 		consiglioMareButton.setDisable(false);
 		consiglioPianuraButton.setDisable(false);
 		consiglioMontagnaButton.setDisable(false);
@@ -284,6 +283,10 @@ public class ViewGUI extends View implements Initializable {
 	private void confermaAzioneButtonAction(ActionEvent event) {
 		if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 			this.getConnessione().inviaOggetto("-");
+			cartePoliticaListView.setDisable(true);
+			tessereValideListView.setDisable(true);
+			labelNumeroAssistenti.setDisable(true);
+			confermaAzioneButton.setDisable(true);
 		} else if (bonus != null) {
 			if (bonus instanceof BonusGettoneCitta) {
 				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
@@ -327,8 +330,7 @@ public class ViewGUI extends View implements Initializable {
 		azioneFactory.setTipoAzione("6");
 		confermaAzioneButton.setDisable(false);
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere e " + "\n"
-				+ "scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
+		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere e scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
 		consigliereDisponibileComboBox.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		annullaAzioneButton.setDisable(false);
@@ -356,9 +358,7 @@ public class ViewGUI extends View implements Initializable {
 	private void acquistaPermessoButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sul consiglio che vuoi " + "\n" + "soddisfare, seleziona carte politica, "
-				+ "\n" + " clicca sulla tessera permesso che vuoi acquistare," + "\n"
-				+ " clicca conferma azione quando hai finito");
+		labelAzioneDaFare.setText("Clicca sul consiglio che vuoi soddisfare, seleziona carte politica, clicca sulla tessera permesso che vuoi acquistare, clicca conferma azione quando hai finito");
 		consiglioMareButton.setDisable(false);
 		consiglioMontagnaButton.setDisable(false);
 		consiglioPianuraButton.setDisable(false);
@@ -373,8 +373,7 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
 		labelAzioneDaFare
-				.setText("Seleziona carte politica, " + "\n" + " clicca sulla città nella quale vuoi costruire, " + "\n"
-						+ "clicca conferma azione quando hai finito");
+				.setText("Seleziona carte politica, clicca sulla città nella quale vuoi costruire, clicca conferma azione quando hai finito");
 		cartePoliticaListView.setDisable(false);
 		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("1");
@@ -385,8 +384,7 @@ public class ViewGUI extends View implements Initializable {
 	private void eleggiConsigliereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere" + "\n"
-				+ "scegli il consigliere che vuoi eleggere," + "\n" + " poi clicca su conferma azione");
+		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere," + "\n" + " poi clicca su conferma azione");
 		consigliereDisponibileComboBox.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		azioneFactory.setTipoAzione("2");
@@ -397,9 +395,7 @@ public class ViewGUI extends View implements Initializable {
 	private void costruisciEmporioTesseraButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sulla tessera valida che vuoi utilizzare," + "\n"
-				+ "inserisci la città nella quale vuoi costruire," + "\n"
-				+ "clicca su conferma azione quando hai finito");
+		labelAzioneDaFare.setText("Clicca sulla tessera valida che vuoi utilizzare, inserisci la città nella quale vuoi costruire, clicca su conferma azione quando hai finito");
 		tessereValideListView.setDisable(false);
 		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("3");
@@ -658,14 +654,14 @@ public class ViewGUI extends View implements Initializable {
 				tessereCostruzioneValide.add(new ImageView(new Image(
 						getClass().getClassLoader()
 								.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
-						100, 100, false, false)));
+						150, 150, false, false)));
 			}
 		}
 		for (TesseraCostruzione t : giocatore.getTessereUsate()) {
 			tessereCostruzioneUsate.add(new ImageView(new Image(
 					getClass().getClassLoader()
 							.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
-					100, 100, false, false)));
+					150, 150, false, false)));
 		}
 		tessereValideListView.setItems(tessereCostruzioneValide);
 		tessereUsateListView.setItems(tessereCostruzioneUsate);
@@ -881,6 +877,7 @@ public class ViewGUI extends View implements Initializable {
 		if (statoAttuale instanceof AttesaTurno) {
 			disabilitazioneBottoniAzione(true);
 			turnoCambiato = true;
+			labelStatoGioco.setText("Attesa turno");
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori())
 				if (g.getStatoGiocatore() instanceof TurnoNormale || g.getStatoGiocatore() instanceof TurnoMercato) {
 					labelAzioneDaFare.setText("Turno di " + g.getNome() + "..");
@@ -892,8 +889,11 @@ public class ViewGUI extends View implements Initializable {
 				turnoCambiato = false;
 			}
 			disabilitazioneBottoniAzione(false);
+			labelStatoGioco.setText("Turno normale");
 		}
 		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+			labelStatoGioco.setText("Fase mercato aggiunta");
+			labelAzioneDaFare.setText("E' il tuo turno");
 			turnoCambiato = true;
 			cartePoliticaListView.setDisable(false);
 			tessereValideListView.setDisable(false);
@@ -902,14 +902,12 @@ public class ViewGUI extends View implements Initializable {
 			confermaAzioneButton.setDisable(false);
 		}
 		if (statoAttuale instanceof TurnoMercatoCompraVendita) {
-			cartePoliticaListView.setDisable(true);
-			tessereValideListView.setDisable(true);
-			labelNumeroAssistenti.setDisable(true);
-			confermaAzioneButton.setDisable(true);
+			labelStatoGioco.setText("Fase mercato acquisto");
 			controllerMercato.setGiocatore(giocatore);
 			controllerMercato
 					.setMercato(((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato());
 			if (turnoCambiato) {
+				labelAzioneDaFare.setText("E' il tuo turno");
 				controllerMercato.setConnessione(getConnessione());
 				stageMercato.show();
 				turnoCambiato = false;

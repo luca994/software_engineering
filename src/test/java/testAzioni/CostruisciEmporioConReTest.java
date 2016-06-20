@@ -278,7 +278,7 @@ public class CostruisciEmporioConReTest {
 	 * @throws CartePoliticaIncorrette 
 	 * @throws FuoriDalLimiteDelPercorso 
 	 */
-	@Test(expected=CartePoliticaIncorrette.class)
+	/*@Test(expected=CartePoliticaIncorrette.class)
 	public void testEseguiAzioneSenzaCartePolitica() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -307,7 +307,7 @@ public class CostruisciEmporioConReTest {
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 		assertEquals(10,g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
-	}
+	}*/
 	
 	/**
 	 * Test method for
@@ -335,10 +335,10 @@ public class CostruisciEmporioConReTest {
 	 * {@link server.model.azione.CostruisciEmporioConRe#CostruisciEmporioConRe(server.model.Gioco, java.util.List, server.model.Citta)}
 	 * .
 	 */
-	@Test
+	/*@Test
 	public void testCostruisciEmporioConReInputNull() {
 		creaAzioniTester.setTipoAzione("1");
 		assertNotNull(azioneTester = creaAzioniTester.createAzione());
-	}
+	}*/
 
 }

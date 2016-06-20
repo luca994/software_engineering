@@ -19,14 +19,7 @@ import eccezione.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;
-import server.model.azione.AcquistaPermesso;
-import server.model.azione.Azione;
 import server.model.azione.AzioneFactory;
-import server.model.azione.CambioTessereCostruzione;
-import server.model.azione.CostruisciEmporioConRe;
-import server.model.azione.CostruisciEmporioConTessera;
-import server.model.azione.EleggiConsigliere;
-import server.model.azione.EleggiConsigliereRapido;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
@@ -199,7 +192,7 @@ public class ViewCLI extends View implements Runnable {
 		if (scelta < 9) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
-			if (inserimentoParametriAzione(azioneFactory, azioneFactory.createAzione())) {
+			if (inserimentoParametriAzione(azioneFactory)) {
 				this.getConnessione().inviaOggetto(azioneFactory);
 				inserimentoAzione.set(false);
 			} else
@@ -269,33 +262,33 @@ public class ViewCLI extends View implements Runnable {
 	 * @param azione
 	 *            the action you want to do
 	 */
-	private boolean inserimentoParametriAzione(AzioneFactory azioneFactory, Azione azione) {
-		if (azione instanceof EleggiConsigliere) {
+	private boolean inserimentoParametriAzione(AzioneFactory azioneFactory) {
+		if ("2".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoConsiglio(azioneFactory))
 				return false;
 			if (!inserimentoConsigliere(azioneFactory))
 				return false;
-		} else if (azione instanceof AcquistaPermesso) {
+		} else if ("0".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoConsiglio(azioneFactory))
 				return false;
 			if (!inserimentoCartePolitica(azioneFactory))
 				return false;
 			if (!inserimentoTesseraCostruzioneDaAcquistare(azioneFactory))
 				return false;
-		} else if (azione instanceof CambioTessereCostruzione) {
+		} else if ("5".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoRegione(azioneFactory))
 				return false;
-		} else if (azione instanceof CostruisciEmporioConRe) {
+		} else if ("1".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoCartePolitica(azioneFactory))
 				return false;
 			if (!inserimentoCitta(azioneFactory))
 				return false;
-		} else if (azione instanceof CostruisciEmporioConTessera) {
+		} else if ("3".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoTesseraCostruzioneDaUtilizzare(azioneFactory))
 				return false;
 			if (!inserimentoCitta(azioneFactory))
 				return false;
-		} else if (azione instanceof EleggiConsigliereRapido) {
+		} else if ("6".equals(azioneFactory.getTipoAzione())) {
 			if (!inserimentoConsiglio(azioneFactory))
 				return false;
 			if (!inserimentoConsigliere(azioneFactory))
