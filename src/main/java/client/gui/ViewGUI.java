@@ -64,6 +64,7 @@ import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
+import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 
 /**
  * @author Massimiliano Ventura
@@ -83,6 +84,7 @@ public class ViewGUI extends View implements Initializable {
 	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
 	private Bonus bonus;
+	private ScreenAcquistoMercatoController controllerMercato;
 
 	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
@@ -223,6 +225,7 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelNumeroAssistenti;
 	@FXML
 	private Label labelStatoGioco;
+	private Stage stageMercato;
 
 	@FXML
 	private void annullaAzioneButtonAction(ActionEvent event) {
@@ -279,10 +282,9 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void confermaAzioneButtonAction(ActionEvent event) {
-		if(giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
+		if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 			this.getConnessione().inviaOggetto("-");
-		}
-		else if (bonus != null) {
+		} else if (bonus != null) {
 			if (bonus instanceof BonusGettoneCitta) {
 				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
 			} else if (bonus instanceof BonusTesseraPermesso) {
@@ -461,7 +463,7 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleTessereCostruzioneValideList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
-		if(giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
+		if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 			apriScreenPrezzo("Tessera Costruzione", giocatore.getTessereValide().get(numeroTessera));
 		}
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
@@ -474,10 +476,10 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void clickAssistenti(MouseEvent event){
+	private void clickAssistenti(MouseEvent event) {
 		apriScreenPrezzo("Assistente", giocatore.getAssistenti().get(0));
 	}
-	
+
 	private void aggiornaGUI() {
 		creazioneSfondiMappa();
 		aggiornaAssistenti();
@@ -492,15 +494,17 @@ public class ViewGUI extends View implements Initializable {
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
-	public void aggiornaAssistenti(){
+	public void aggiornaAssistenti() {
 		int num = 0;
-		for(Assistente a:giocatore.getAssistenti()){
-			if(a.getPrezzo()==0)
+		for (Assistente a : giocatore.getAssistenti()) {
+			if (a.getPrezzo() == 0)
 				num++;
 		}
 		labelNumeroAssistenti.setText(String.valueOf(num));
+		if (num == 0)
+			labelNumeroAssistenti.setDisable(true);
 	}
-	
+
 	public void aggiornaConsiglioMare() {
 		consiglioMare.clear();
 		for (Consigliere c : tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()) {
@@ -825,7 +829,15 @@ public class ViewGUI extends View implements Initializable {
 		cartePoliticaListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
 		tessereValideListView.setDisable(true);
-
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenAcquistoMercato.fxml"));
+		stageMercato = new Stage();
+		stageMercato.setTitle("Mercato");
+		try {
+			stageMercato.setScene(new Scene((AnchorPane) loader.load()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		controllerMercato = loader.<ScreenAcquistoMercatoController> getController();
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -882,14 +894,26 @@ public class ViewGUI extends View implements Initializable {
 			disabilitazioneBottoniAzione(false);
 		}
 		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+			turnoCambiato = true;
 			cartePoliticaListView.setDisable(false);
 			tessereValideListView.setDisable(false);
-			labelNumeroAssistenti.setDisable(false);
+			if (giocatore.getAssistenti().size() != 0)
+				labelNumeroAssistenti.setDisable(false);
+			confermaAzioneButton.setDisable(false);
 		}
 		if (statoAttuale instanceof TurnoMercatoCompraVendita) {
 			cartePoliticaListView.setDisable(true);
 			tessereValideListView.setDisable(true);
 			labelNumeroAssistenti.setDisable(true);
+			confermaAzioneButton.setDisable(true);
+			controllerMercato.setGiocatore(giocatore);
+			controllerMercato
+					.setMercato(((FaseTurnoMercatoCompraVendita) tabelloneClient.getGioco().getStato()).getMercato());
+			if (turnoCambiato) {
+				controllerMercato.setConnessione(getConnessione());
+				stageMercato.show();
+				turnoCambiato = false;
+			}
 		}
 	}
 
