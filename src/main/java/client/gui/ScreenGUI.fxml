@@ -25,29 +25,29 @@
                           <items>
                             <AnchorPane fx:id="anchorPaneMare" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                                  <children>
-                                    <Button fx:id="castrum" disable="true" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
-                                    <Button fx:id="arkon" disable="true" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
-                                    <Button fx:id="burgen" disable="true" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
-                                    <Button fx:id="dortid" disable="true" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
-                                    <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Esti" />
+                                    <Button fx:id="castrum" disable="true" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
+                                    <Button fx:id="arkon" disable="true" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
+                                    <Button fx:id="burgen" disable="true" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
+                                    <Button fx:id="dortid" disable="true" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
+                                    <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Esti" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="anchorPanePianura" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="420.0">
                                  <children>
-                                    <Button fx:id="indur" disable="true" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Indur" />
-                                    <Button fx:id="framek" disable="true" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Framek" />
-                                    <Button fx:id="graden" disable="true" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Graden" />
-                                    <Button fx:id="juvelar" disable="true" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
-                                    <Button fx:id="hellar" disable="true" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
+                                    <Button fx:id="indur" disable="true" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Indur" />
+                                    <Button fx:id="framek" disable="true" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Framek" />
+                                    <Button fx:id="graden" disable="true" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Graden" />
+                                    <Button fx:id="juvelar" disable="true" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
+                                    <Button fx:id="hellar" disable="true" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane fx:id="anchorPaneMontagna" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                                  <children>
                                     <Button fx:id="lyram" disable="true" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
-                                    <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
-                                    <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Naris" />
-                                    <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Osium" />
-                                    <Button fx:id="merkatim" disable="true" layoutX="38.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
+                                    <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
+                                    <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Naris" />
+                                    <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Osium" />
+                                    <Button fx:id="merkatim" disable="true" layoutX="38.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
                                  </children>
                               </AnchorPane>
                           </items>

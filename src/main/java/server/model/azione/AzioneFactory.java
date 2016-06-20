@@ -48,24 +48,36 @@ public class AzioneFactory implements Serializable{
 			throw new IllegalStateException("l'azione non può essere nulla");
 		}
 		if (Integer.parseInt(tipoAzione)==2) {
+			if(consigliere==null || consiglio==null)
+				return null;
 			return new EleggiConsigliere(gioco,consigliere, consiglio);
 		}
 		if (Integer.parseInt(tipoAzione)==0) {
+			if(tesseraCostruzione==null || cartePolitica.isEmpty() || consiglio==null)
+				return null;
 			return new AcquistaPermesso(gioco,tesseraCostruzione, cartePolitica, consiglio);
 		}
 		if (Integer.parseInt(tipoAzione)==7) {
 			return new AzionePrincipaleAggiuntiva();
 		}
 		if (Integer.parseInt(tipoAzione)==5) {
+			if(regione==null)
+				return null;
 			return new CambioTessereCostruzione(regione);
 		}
 		if (Integer.parseInt(tipoAzione)==1) {
+			if(cartePolitica.isEmpty() || citta==null)
+				return null;
 			return new CostruisciEmporioConRe(gioco, cartePolitica, citta);
 		}
 		if (Integer.parseInt(tipoAzione)==3) {
+			if(citta==null || tesseraCostruzione==null)
+				return null;
 			return new CostruisciEmporioConTessera(gioco,citta, tesseraCostruzione);
 		}
 		if (Integer.parseInt(tipoAzione)==6) {
+			if(consigliere==null || consiglio==null)
+				return null;
 			return new EleggiConsigliereRapido(consigliere, consiglio);
 		}
 		if (Integer.parseInt(tipoAzione)==4) {

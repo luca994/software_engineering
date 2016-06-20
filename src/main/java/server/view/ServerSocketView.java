@@ -122,8 +122,12 @@ public class ServerSocketView extends ServerView implements Runnable {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
 						Azione azioneGiocatore = azioneFactory.createAzione();
-						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
-						this.notificaObservers(azioneGiocatore, getGiocatore());
+						if(azioneGiocatore != null){
+							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+							this.notificaObservers(azioneGiocatore, getGiocatore());
+						}
+						else
+							inviaOggetto("Parametri errati");
 					} else {
 						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 					}

@@ -290,14 +290,12 @@ public class ViewGUI extends View implements Initializable {
 			cartePoliticaInput = new ArrayList<>();
 			consigliereInput = null;
 			consiglioInput = null;
-			disabilitazioneBottoniAzione(false);
 			disabilitazioneBottoniConsigli(true);
 			cartePoliticaListView.setDisable(true);
 			confermaAzioneButton.setDisable(true);
-			consigliereDisponibileComboBox.valueProperty().set(null);
-			consigliereDisponibileComboBox.setDisable(true);
-			consigliereDisponibileComboBox.setValue(null);
 			annullaAzioneButton.setDisable(true);
+			consigliereDisponibileComboBox.setDisable(true);
+			disabilitazioneBottoniAzione(false);
 		}
 		cittaInput = null;
 		tesseraInput = null;
@@ -305,17 +303,6 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniTessereCostruzione(true);
 		tessereValideListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
-		/*
-		 * Gioco gioco = new Gioco(); Giocatore g1 = new Giocatore("pippo");
-		 * this.giocatore = g1; gioco.getGiocatori().add(g1);
-		 * gioco.getGiocatori().add(new Giocatore("paolo"));
-		 * gioco.inizializzaPartita("0"); tabelloneClient =
-		 * gioco.getTabellone();
-		 * g1.getTessereValide().add(tabelloneClient.getRegioni().get(0).
-		 * getTessereCoperte().get(3));
-		 * g1.getTessereUsate().add(tabelloneClient.getRegioni().get(0).
-		 * getTessereCoperte().get(6)); aggiornaGUI();
-		 */
 	}
 
 	@FXML
