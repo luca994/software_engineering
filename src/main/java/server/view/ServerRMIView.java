@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import client.ConnessioneRMIInterface;
+import client.gui.MessaggioChat;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
@@ -107,6 +108,7 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface,
 	public void riceviStringa(String messaggio) throws RemoteException {
 		this.notificaObservers(messaggio, getGiocatore());
 	}
+	
 
 	/**
 	 * runs the actions sent by the client
@@ -116,6 +118,14 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface,
 		Azione azione = this.azioneFactory.createAzione();
 		this.azioneFactory = new AzioneFactory(this.azioneFactory.getGioco());
 		this.notificaObservers(azione, getGiocatore());
+	}
+
+	/* (non-Javadoc)
+	 * @see server.view.ServerRMIViewInterface#riceviMessaggioChat(client.gui.MessaggioChat)
+	 */
+	@Override
+	public void riceviMessaggioChat(MessaggioChat messaggioChat) throws RemoteException {
+		this.notificaObservers(messaggioChat);		
 	}
 	
 }

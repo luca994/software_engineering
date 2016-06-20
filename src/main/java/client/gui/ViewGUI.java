@@ -26,6 +26,8 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -84,7 +86,7 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<Color> consiglieriDisponibili = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereCostruzioneValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> tessereCostruzioneUsate = FXCollections.observableArrayList();
-	
+
 	ObservableList<Color> consiglioMare = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioPianura = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioMontagna = FXCollections.observableArrayList();
@@ -116,6 +118,11 @@ public class ViewGUI extends View implements Initializable {
 	private AnchorPane anchorPaneMontagna;
 	@FXML
 	private AnchorPane anchorPanePercorsi;
+
+	@FXML
+	private TextArea chatTextArea;
+	@FXML
+	private TextField chatTextField;
 
 	@FXML
 	private Button annullaAzioneButton;
@@ -230,6 +237,10 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void messaggioChatButtonAction() {
+		if (!"".equals(chatTextField.getText())) {
+			this.getConnessione().inviaOggetto(new MessaggioChat(giocatore.getNome(), chatTextField.getText()));
+			chatTextField.clear();
+		}
 	}
 
 	@FXML
@@ -257,11 +268,11 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void confermaAzioneButtonAction(ActionEvent event) {
 		if (bonus != null) {
-			if(bonus instanceof BonusGettoneCitta){
+			if (bonus instanceof BonusGettoneCitta) {
 				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
-			} else if(bonus instanceof BonusTesseraPermesso){
+			} else if (bonus instanceof BonusTesseraPermesso) {
 				((BonusTesseraPermesso) bonus).setTessera(tesseraInput);
-			}else {
+			} else {
 				((BonusRiutilizzoCostruzione) bonus).setTessera(tesseraInput);
 			}
 			this.getConnessione().inviaOggetto(bonus);
@@ -271,8 +282,8 @@ public class ViewGUI extends View implements Initializable {
 			azioneFactory.setCitta(cittaInput);
 			azioneFactory.setConsigliere(consigliereInput);
 			azioneFactory.setConsiglio(consiglioInput);
-			if("5".equals(azioneFactory.getTipoAzione()))
-					azioneFactory.setRegione(consiglioInput.getRegione());
+			if ("5".equals(azioneFactory.getTipoAzione()))
+				azioneFactory.setRegione(consiglioInput.getRegione());
 			azioneFactory.setTesseraCostruzione(tesseraInput);
 			this.getConnessione().inviaOggetto(azioneFactory);
 			azioneFactory = new AzioneFactory(null);
@@ -466,9 +477,9 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglioRe();
 	}
 
-	public void aggiornaConsiglioMare(){
+	public void aggiornaConsiglioMare() {
 		consiglioMare.clear();
-		for(Consigliere c: tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()){
+		for (Consigliere c : tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()) {
 			consiglioMare.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
 		consiglioMareListView.setItems(consiglioMare);
@@ -497,10 +508,10 @@ public class ViewGUI extends View implements Initializable {
 			}
 		});
 	}
-	
-	public void aggiornaConsiglioPianura(){
+
+	public void aggiornaConsiglioPianura() {
 		consiglioPianura.clear();
-		for(Consigliere c: tabelloneClient.getRegioneDaNome("pianura").getConsiglio().getConsiglieri()){
+		for (Consigliere c : tabelloneClient.getRegioneDaNome("pianura").getConsiglio().getConsiglieri()) {
 			consiglioPianura.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
 		consiglioPianuraListView.setItems(consiglioPianura);
@@ -529,10 +540,10 @@ public class ViewGUI extends View implements Initializable {
 			}
 		});
 	}
-	
-	public void aggiornaConsiglioRe(){
+
+	public void aggiornaConsiglioRe() {
 		consiglioRe.clear();
-		for(Consigliere c: tabelloneClient.getRe().getConsiglio().getConsiglieri()){
+		for (Consigliere c : tabelloneClient.getRe().getConsiglio().getConsiglieri()) {
 			consiglioRe.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
 		consiglioReListView.setItems(consiglioRe);
@@ -561,10 +572,10 @@ public class ViewGUI extends View implements Initializable {
 			}
 		});
 	}
-	
-	public void aggiornaConsiglioMontagna(){
+
+	public void aggiornaConsiglioMontagna() {
 		consiglioMontagna.clear();
-		for(Consigliere c: tabelloneClient.getRegioneDaNome("Montagna").getConsiglio().getConsiglieri()){
+		for (Consigliere c : tabelloneClient.getRegioneDaNome("Montagna").getConsiglio().getConsiglieri()) {
 			consiglioMontagna.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
 		consiglioMontagnaListView.setItems(consiglioMontagna);
@@ -593,7 +604,7 @@ public class ViewGUI extends View implements Initializable {
 			}
 		});
 	}
-	
+
 	public void aggiornaCartePolitica() {
 		cartePolitica.clear();
 		for (CartaPolitica c : giocatore.getCartePolitica()) {
@@ -730,6 +741,15 @@ public class ViewGUI extends View implements Initializable {
 				}
 			});
 		}
+		if (oggetto instanceof MessaggioChat) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					chatTextArea.appendText("\n" + "[" + ((MessaggioChat) oggetto).getAutore() + "]: "
+							+ ((MessaggioChat) oggetto).getMsg());
+				}
+			});
+		}
 		if (oggetto instanceof Giocatore)
 			this.giocatore = (Giocatore) oggetto;
 		if (oggetto instanceof Tabellone) {
@@ -813,7 +833,7 @@ public class ViewGUI extends View implements Initializable {
 				}
 		}
 		if (statoAttuale instanceof TurnoNormale) {
-			if(turnoCambiato){
+			if (turnoCambiato) {
 				labelAzioneDaFare.setText("E' il tuo turno");
 				turnoCambiato = false;
 			}
@@ -1038,6 +1058,6 @@ public class ViewGUI extends View implements Initializable {
 	 */
 	public ListView<ImageView> getTessereUsateListView() {
 		return tessereUsateListView;
-	}	
-	
+	}
+
 }

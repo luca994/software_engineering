@@ -3,6 +3,7 @@ package server.view;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import client.gui.MessaggioChat;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.componenti.OggettoVendibile;
@@ -16,4 +17,6 @@ public interface ServerRMIViewInterface extends Remote {
 	public void riceviOggettoVendibile(OggettoVendibile oggettoVendibile) throws RemoteException;
 
 	public void riceviStringa(String messaggio) throws RemoteException;
+	
+	public void riceviMessaggioChat(MessaggioChat messaggioChat) throws RemoteException;
 }
