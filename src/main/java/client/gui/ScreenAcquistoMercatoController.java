@@ -165,6 +165,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 								130, false, false)));
 			}
 		}
+		assistentiListView.setItems(assistenti);
 	}
 
 	/**
