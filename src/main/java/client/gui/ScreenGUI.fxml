@@ -50,6 +50,7 @@
                                     <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
                                     <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Naris" />
                                     <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Osium" />
+                                    <Button fx:id="merkatim" disable="true" layoutX="28.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
                                     <ImageView fx:id="tesseraBonusMontagnaImageView" fitHeight="26.0" fitWidth="79.0" layoutX="278.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
@@ -97,10 +98,10 @@
                               <Button fx:id="eleggiConsigliereButton" disable="true" layoutX="10.0" layoutY="120.0" mnemonicParsing="false" onAction="#eleggiConsigliereButtonAction" prefHeight="30.0" prefWidth="225.0" text="Eleggi consigliere" />
                               <Button fx:id="costruisciEmporioTesseraButton" disable="true" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#costruisciEmporioTesseraButtonAction" prefHeight="30.0" prefWidth="225.0" text="Costruisci emporio con tessera" />
                               <Label layoutX="576.0" layoutY="31.0" text="Stato Gioco:" />
-                              <Label layoutX="550.0" layoutY="55.0" text="Stato Giocatore:" />
-                              <Label fx:id="labelStatoGioco" layoutX="671.0" layoutY="31.0" text="dynamic stato gioco" />
-                              <Label fx:id="labelStatoGiocatore" layoutX="671.0" layoutY="55.0" text="dynamic stato giocatore" />
-                              <Label fx:id="labelAzioneDaFare" layoutX="552.0" layoutY="83.0" prefHeight="46.0" prefWidth="280.0" text="dynamic azione da fare" />
+                              <Label layoutX="550.0" layoutY="55.0" text="Assistenti Posseduti:" />
+                              <Label fx:id="labelStatoGioco" layoutX="671.0" layoutY="31.0" text="Attesa Partita" />
+                              <Label fx:id="labelNumeroAssistenti" layoutX="689.0" layoutY="55.0" onMouseClicked="#clickAssistenti" prefHeight="21.0" prefWidth="142.0" />
+                              <Label fx:id="labelAzioneDaFare" alignment="CENTER" contentDisplay="CENTER" layoutX="552.0" layoutY="83.0" prefHeight="96.0" prefWidth="280.0" wrapText="true" />
                               <Button fx:id="confermaAzioneButton" disable="true" layoutX="684.0" layoutY="186.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" text="Conferma Azione" />
                               <Label layoutX="14.0" layoutY="205.0" text="Consiglieri disponibili" />
                               <Button fx:id="annullaAzioneButton" disable="true" layoutX="539.0" layoutY="187.0" mnemonicParsing="false" onAction="#annullaAzioneButtonAction" prefHeight="31.0" prefWidth="130.0" text="Annulla Azione" />

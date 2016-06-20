@@ -19,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,13 +33,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -53,16 +49,20 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.bonus.BonusRiutilizzoCostruzione;
 import server.model.bonus.BonusTesseraPermesso;
+import server.model.componenti.Assistente;
 import server.model.componenti.CartaColorata;
 import server.model.componenti.CartaPolitica;
 import server.model.componenti.Citta;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
 import server.model.componenti.Jolly;
+import server.model.componenti.OggettoVendibile;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurnoMercato;
+import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
+import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
 
 /**
@@ -127,7 +127,7 @@ public class ViewGUI extends View implements Initializable {
 	private TextArea chatTextArea;
 	@FXML
 	private TextField chatTextField;
-	
+
 	@FXML
 	private Rectangle playerColorRectangle;
 
@@ -219,6 +219,10 @@ public class ViewGUI extends View implements Initializable {
 	private Button messaggioChatButton;
 	@FXML
 	private Label labelAzioneDaFare;
+	@FXML
+	private Label labelNumeroAssistenti;
+	@FXML
+	private Label labelStatoGioco;
 
 	@FXML
 	private void annullaAzioneButtonAction(ActionEvent event) {
@@ -275,7 +279,10 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void confermaAzioneButtonAction(ActionEvent event) {
-		if (bonus != null) {
+		if(giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
+			this.getConnessione().inviaOggetto("-");
+		}
+		else if (bonus != null) {
 			if (bonus instanceof BonusGettoneCitta) {
 				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
 			} else if (bonus instanceof BonusTesseraPermesso) {
@@ -440,8 +447,10 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private void handleCartePoliticaList(MouseEvent event) {
-		if (cartePoliticaInput.size() < 4) {
-			int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+		int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+		if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
+			apriScreenPrezzo("Carta Politica", giocatore.getCartePolitica().get(numeroCarta));
+		} else if (cartePoliticaInput.size() < 4) {
 			cartePoliticaInput.add(giocatore.getCartePolitica().get(numeroCarta));
 			cartePolitica.remove(numeroCarta);
 			cartePoliticaListView.setItems(cartePolitica);
@@ -452,6 +461,9 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void handleTessereCostruzioneValideList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
+		if(giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti){
+			apriScreenPrezzo("Tessera Costruzione", giocatore.getTessereValide().get(numeroTessera));
+		}
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
 	}
 
@@ -461,8 +473,14 @@ public class ViewGUI extends View implements Initializable {
 		tesseraInput = giocatore.getTessereUsate().get(numeroTessera);
 	}
 
+	@FXML
+	private void clickAssistenti(MouseEvent event){
+		apriScreenPrezzo("Assistente", giocatore.getAssistenti().get(0));
+	}
+	
 	private void aggiornaGUI() {
 		creazioneSfondiMappa();
+		aggiornaAssistenti();
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
@@ -474,6 +492,15 @@ public class ViewGUI extends View implements Initializable {
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
+	public void aggiornaAssistenti(){
+		int num = 0;
+		for(Assistente a:giocatore.getAssistenti()){
+			if(a.getPrezzo()==0)
+				num++;
+		}
+		labelNumeroAssistenti.setText(String.valueOf(num));
+	}
+	
 	public void aggiornaConsiglioMare() {
 		consiglioMare.clear();
 		for (Consigliere c : tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()) {
@@ -605,11 +632,11 @@ public class ViewGUI extends View implements Initializable {
 	public void aggiornaCartePolitica() {
 		cartePolitica.clear();
 		for (CartaPolitica c : giocatore.getCartePolitica()) {
-			if (c instanceof Jolly) {
+			if (c instanceof Jolly && c.getPrezzo() == 0) {
 				cartePolitica.add(new ImageView(new Image(
 						getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 100,
 						170, false, false)));
-			} else {
+			} else if (c.getPrezzo() == 0) {
 				cartePolitica.add(new ImageView(new Image(getClass().getClassLoader()
 						.getResource("immaginiGUI/cartePolitica/"
 								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
@@ -623,10 +650,12 @@ public class ViewGUI extends View implements Initializable {
 		tessereCostruzioneUsate.clear();
 		tessereCostruzioneValide.clear();
 		for (TesseraCostruzione t : giocatore.getTessereValide()) {
-			tessereCostruzioneValide.add(new ImageView(new Image(
-					getClass().getClassLoader()
-							.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
-					100, 100, false, false)));
+			if (t.getPrezzo() == 0) {
+				tessereCostruzioneValide.add(new ImageView(new Image(
+						getClass().getClassLoader()
+								.getResource("immaginiGUI/tessereCostruzione/tessera" + t.getId() + ".jpg").toString(),
+						100, 100, false, false)));
+			}
 		}
 		for (TesseraCostruzione t : giocatore.getTessereUsate()) {
 			tessereCostruzioneUsate.add(new ImageView(new Image(
@@ -792,11 +821,11 @@ public class ViewGUI extends View implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		turnoCambiato = true;
 		semInizializzazione = new Semaphore(0);
-		
+		labelNumeroAssistenti.setDisable(true);
 		cartePoliticaListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
 		tessereValideListView.setDisable(true);
-		
+
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -812,6 +841,21 @@ public class ViewGUI extends View implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void apriScreenPrezzo(String titolo, OggettoVendibile obj) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenPrezzo.fxml"));
+		try {
+			Stage stage = new Stage();
+			stage.setTitle(titolo + ": inserisci il prezzo");
+			stage.setScene(new Scene((AnchorPane) loader.load()));
+			ScreenPrezzoController controller = loader.<ScreenPrezzoController> getController();
+			controller.setConnessione(this.getConnessione());
+			controller.setOggetto(obj);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -837,6 +881,16 @@ public class ViewGUI extends View implements Initializable {
 			}
 			disabilitazioneBottoniAzione(false);
 		}
+		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+			cartePoliticaListView.setDisable(false);
+			tessereValideListView.setDisable(false);
+			labelNumeroAssistenti.setDisable(false);
+		}
+		if (statoAttuale instanceof TurnoMercatoCompraVendita) {
+			cartePoliticaListView.setDisable(true);
+			tessereValideListView.setDisable(true);
+			labelNumeroAssistenti.setDisable(true);
+		}
 	}
 
 	private void creazioneSfondiMappa() {
@@ -844,8 +898,8 @@ public class ViewGUI extends View implements Initializable {
 		BackgroundImage pianura;
 		BackgroundImage montagna;
 		BackgroundImage percorsi;
-		int num=Integer.parseInt(tabelloneClient.getNumeroMappa());
-		
+		int num = Integer.parseInt(tabelloneClient.getNumeroMappa());
+
 		if (0 == num) {
 			mare = new BackgroundImage(
 					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,
