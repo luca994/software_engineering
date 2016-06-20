@@ -128,6 +128,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 						}
 						else
 							inviaOggetto("Parametri errati");
+							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 					} else {
 						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 					}
