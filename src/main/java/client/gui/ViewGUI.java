@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,10 +34,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -123,6 +127,9 @@ public class ViewGUI extends View implements Initializable {
 	private TextArea chatTextArea;
 	@FXML
 	private TextField chatTextField;
+	
+	@FXML
+	private Rectangle playerColorRectangle;
 
 	@FXML
 	private Button annullaAzioneButton;
@@ -233,6 +240,7 @@ public class ViewGUI extends View implements Initializable {
 		tessereValideListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
 		annullaAzioneButton.setDisable(true);
+		aggiornaGUI();
 	}
 
 	@FXML
@@ -454,6 +462,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void aggiornaGUI() {
+		creazioneSfondiMappa();
 		aggiornaCartePolitica();
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
@@ -462,6 +471,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglioPianura();
 		aggiornaConsiglioMontagna();
 		aggiornaConsiglioRe();
+		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
 	public void aggiornaConsiglioMare() {
@@ -782,10 +792,11 @@ public class ViewGUI extends View implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		turnoCambiato = true;
 		semInizializzazione = new Semaphore(0);
-		creazioneSfondiMappa();
+		
 		cartePoliticaListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
 		tessereValideListView.setDisable(true);
+		
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -833,8 +844,8 @@ public class ViewGUI extends View implements Initializable {
 		BackgroundImage pianura;
 		BackgroundImage montagna;
 		BackgroundImage percorsi;
-		// int num=Integer.parseInt(tabelloneClient.getNumeroMappa());
-		int num = 0;
+		int num=Integer.parseInt(tabelloneClient.getNumeroMappa());
+		
 		if (0 == num) {
 			mare = new BackgroundImage(
 					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,

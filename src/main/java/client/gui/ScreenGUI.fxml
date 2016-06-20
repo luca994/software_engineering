@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
    <children>
@@ -68,14 +69,14 @@
                               <Button fx:id="tesseraPianura1Button" disable="true" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
                               <Button fx:id="tesseraMontagna0Button" disable="true" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
                               <Button fx:id="tesseraMontagna1Button" disable="true" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <ListView fx:id="consiglioMareListView" layoutX="176.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioPianuraListView" layoutX="561.0" layoutY="88.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="117.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioMontagnaListView" layoutX="992.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
-                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Mare" />
-                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
-                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
-                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Re" />
+                              <ListView fx:id="consiglioMareListView" layoutX="176.0" layoutY="81.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioPianuraListView" layoutX="561.0" layoutY="80.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="109.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioMontagnaListView" layoutX="992.0" layoutY="81.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Mare" />
+                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="38.0" prefWidth="138.0" text="Pianura" />
+                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Montagna" />
+                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="41.0" prefWidth="138.0" text="Re" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -104,6 +105,7 @@
                               <Label layoutX="14.0" layoutY="205.0" text="Consiglieri disponibili" />
                               <Button fx:id="annullaAzioneButton" disable="true" layoutX="539.0" layoutY="187.0" mnemonicParsing="false" onAction="#annullaAzioneButtonAction" prefHeight="31.0" prefWidth="130.0" text="Annulla Azione" />
                               <ComboBox fx:id="consigliereDisponibileComboBox" disable="true" layoutX="142.0" layoutY="201.0" onAction="#handleConsigliereComboBox" prefHeight="25.0" prefWidth="93.0" />
+                              <Rectangle fx:id="playerColorRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="17.0" layoutX="527.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="314.0" />
                            </children>
                         </AnchorPane>
                         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">

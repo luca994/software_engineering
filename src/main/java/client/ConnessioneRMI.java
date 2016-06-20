@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.gui.MessaggioChat;
 import eccezione.NomeGiaScelto;
 import server.ServerRMIInterface;
 import server.model.azione.AzioneFactory;
@@ -74,6 +75,9 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 			}
 			if (oggetto instanceof String) {
 				serverView.riceviStringa((String) oggetto);
+			}
+			if(oggetto instanceof MessaggioChat){
+				serverView.riceviMessaggioChat((MessaggioChat) oggetto);
 			}
 		} catch (RemoteException e) {
 			LOG.log(Level.SEVERE, "Server Disconnesso");
