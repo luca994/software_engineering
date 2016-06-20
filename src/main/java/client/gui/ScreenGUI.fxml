@@ -25,29 +25,31 @@
                           <items>
                             <AnchorPane fx:id="anchorPaneMare" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                                  <children>
-                                    <Button fx:id="castrum" disable="true" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
-                                    <Button fx:id="arkon" disable="true" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
-                                    <Button fx:id="burgen" disable="true" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
-                                    <Button fx:id="dortid" disable="true" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
-                                    <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Esti" />
+                                    <Button fx:id="castrum" disable="true" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
+                                    <Button fx:id="arkon" disable="true" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
+                                    <Button fx:id="burgen" disable="true" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
+                                    <Button fx:id="dortid" disable="true" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
+                                    <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Esti" />
+                                    <ImageView fx:id="tesseraBonusMareImageView" fitHeight="26.0" fitWidth="79.0" layoutX="319.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="anchorPanePianura" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="420.0">
                                  <children>
-                                    <Button fx:id="indur" disable="true" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Indur" />
-                                    <Button fx:id="framek" disable="true" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Framek" />
-                                    <Button fx:id="graden" disable="true" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Graden" />
-                                    <Button fx:id="juvelar" disable="true" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
-                                    <Button fx:id="hellar" disable="true" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
+                                    <Button fx:id="indur" disable="true" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Indur" />
+                                    <Button fx:id="framek" disable="true" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Framek" />
+                                    <Button fx:id="graden" disable="true" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Graden" />
+                                    <Button fx:id="juvelar" disable="true" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
+                                    <Button fx:id="hellar" disable="true" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
+                                    <ImageView fx:id="tesseraBonusPianuraImageView" fitHeight="26.0" fitWidth="79.0" layoutX="274.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane fx:id="anchorPaneMontagna" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
                                  <children>
                                     <Button fx:id="lyram" disable="true" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
-                                    <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
-                                    <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Naris" />
-                                    <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Osium" />
-                                    <Button fx:id="merkatim" disable="true" layoutX="38.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCittaButton" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
+                                    <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
+                                    <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Naris" />
+                                    <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Osium" />
+                                    <ImageView fx:id="tesseraBonusMontagnaImageView" fitHeight="26.0" fitWidth="79.0" layoutX="278.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                           </items>
@@ -66,10 +68,14 @@
                               <Button fx:id="tesseraPianura1Button" disable="true" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
                               <Button fx:id="tesseraMontagna0Button" disable="true" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
                               <Button fx:id="tesseraMontagna1Button" disable="true" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Mare" />
-                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
-                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
-                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" prefHeight="25.0" prefWidth="138.0" text="Re" />
+                              <ListView fx:id="consiglioMareListView" layoutX="176.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioPianuraListView" layoutX="561.0" layoutY="88.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="117.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <ListView fx:id="consiglioMontagnaListView" layoutX="992.0" layoutY="89.0" orientation="HORIZONTAL" prefHeight="25.0" prefWidth="138.0" />
+                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Mare" />
+                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Pianura" />
+                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Montagna" />
+                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="25.0" prefWidth="138.0" text="Re" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -104,25 +110,25 @@
                           <tabs>
                             <Tab closable="false" text="Carte Politica">
                                  <content>
-                                    <ListView fx:id="cartePoliticaListView" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="cartePoliticaListView" disable="true" onMousePressed="#handleCartePoliticaList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Tessere Valide">
                                  <content>
-                                    <ListView fx:id="tessereValideListView" onMouseClicked="#handleTessereCostruzioneValideList" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="tessereValideListView" disable="true" onMouseClicked="#handleTessereCostruzioneValideList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                               </Tab>
                             <Tab closable="false" text="Tessere Usate">
                                  <content>
-                                    <ListView fx:id="tessereUsateListView" onMouseClicked="#handleTessereCostruzioneUsateList" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                                    <ListView fx:id="tessereUsateListView" disable="true" onMouseClicked="#handleTessereCostruzioneUsateList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                             </Tab>
                               <Tab closable="false" text="Chat">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TextArea layoutX="14.0" layoutY="14.0" prefHeight="124.0" prefWidth="396.0" />
-                                          <TextField layoutX="14.0" layoutY="146.0" prefHeight="31.0" prefWidth="339.0" />
+                                          <TextArea fx:id="chatTextArea" layoutX="14.0" layoutY="14.0" prefHeight="124.0" prefWidth="396.0" />
+                                          <TextField fx:id="chatTextField" layoutX="14.0" layoutY="146.0" prefHeight="31.0" prefWidth="339.0" />
                                           <Button fx:id="messaggioChatButton" layoutX="359.0" layoutY="146.0" mnemonicParsing="false" onAction="#messaggioChatButtonAction" text="Invia" />
                                        </children>
                                     </AnchorPane>

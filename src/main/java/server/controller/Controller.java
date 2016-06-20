@@ -6,6 +6,7 @@ package server.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.gui.MessaggioChat;
 import eccezione.CartePoliticaIncorrette;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
@@ -164,6 +165,9 @@ public class Controller implements Observer<Object, Bonus> {
 
 	@Override
 	public void update(Object cambiamento) {
+		if (cambiamento instanceof MessaggioChat){
+			gioco.notificaObservers(cambiamento);
+		}
 	}
 
 	@Override

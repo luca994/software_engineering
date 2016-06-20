@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -25,11 +27,19 @@ public class MessaggioErroreController implements Initializable {
 	private Button confirmButton; // Value injected by FXMLLoader
 	@FXML
 	private Label messaggioLabel;
-	
-	@FXML//è l'onAction dell'fxml
+
+	@FXML // è l'onAction dell'fxml
 	private void handleConfirmButtonAction(ActionEvent event) {
-		 Stage thisStage = (Stage) confirmButton.getScene().getWindow();
-		 thisStage.close();
+		Stage thisStage = (Stage) confirmButton.getScene().getWindow();
+		thisStage.close();
+	}
+
+	@FXML
+	public void buttonPressed(KeyEvent e) {
+		if (e.getCode() == KeyCode.ENTER) {
+			Stage thisStage = (Stage) confirmButton.getScene().getWindow();
+			thisStage.close();
+		}
 	}
 
 	/*
@@ -39,7 +49,8 @@ public class MessaggioErroreController implements Initializable {
 	 * java.util.ResourceBundle)
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {}
+	public void initialize(URL arg0, ResourceBundle arg1) {
+	}
 
 	/**
 	 * @param msg

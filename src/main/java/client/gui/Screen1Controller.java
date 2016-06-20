@@ -12,17 +12,21 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import eccezione.NomeGiaScelto;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -42,19 +46,12 @@ public class Screen1Controller implements Initializable {
 	ObservableList<String> sceltaMappa = FXCollections.observableArrayList("0", "1", "2", "3", "4", "5", "6", "7", "8");
 
 	private ViewGUI view;
-	private boolean buonFine;
+	private Parent rootGUI;
 	/**
-	 * @return the buonFine
+	 * @param rootGUI the rootGUI to set
 	 */
-	public boolean isBuonFine() {
-		return buonFine;
-	}
-
-	/**
-	 * @param buonFine the buonFine to set
-	 */
-	public void setBuonFine(boolean buonFine) {
-		this.buonFine = buonFine;
+	public void setRootGUI(Parent rootGUI) {
+		this.rootGUI = rootGUI;
 	}
 
 	@FXML
@@ -71,17 +68,38 @@ public class Screen1Controller implements Initializable {
 	private ChoiceBox<String> tipoConnessioneChoiceBox;
 	@FXML
 	private ChoiceBox<String> sceltaMappaChoiceBox;
-
-	@FXML // è l'onAction del bottone nell'fxml
-	private void handleConfirmButtonAction(ActionEvent event) {
+	
+	private void azioneConfermaDati(){
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
-				buonFine=true;
-				Stage stage = (Stage) confirmButton.getScene().getWindow();
-				//stage.close();
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						Stage stageGUI = new Stage();
+                        Scene scene = new Scene(rootGUI);
+                        stageGUI.setScene(scene);
+                        stageGUI.setTitle("Gioco:vediamo se va");
+                        stageGUI.show();
+					}
+                 });
+				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
+				stageScreen1.close();
 			}
 	}
 
+	@FXML // è l'onAction del bottone nell'fxml
+	private void handleConfirmButtonAction(ActionEvent event) {
+		azioneConfermaDati();
+	}
+	@FXML
+	public void buttonPressed(KeyEvent e)
+	{
+	    if(e.getCode()==KeyCode.ENTER)
+	    {
+	    	azioneConfermaDati();
+	    }
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -91,7 +109,6 @@ public class Screen1Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Setup sfondo
-		buonFine=false;
 		BackgroundImage myBI = new BackgroundImage(
 				new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500,
 						377, false, true),

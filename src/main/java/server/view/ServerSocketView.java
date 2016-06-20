@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.gui.MessaggioChat;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
@@ -121,8 +122,13 @@ public class ServerSocketView extends ServerView implements Runnable {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
 						Azione azioneGiocatore = azioneFactory.createAzione();
-						azioneFactory = new AzioneFactory(azioneFactory.getGioco());
-						this.notificaObservers(azioneGiocatore, getGiocatore());
+						if(azioneGiocatore != null){
+							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
+							this.notificaObservers(azioneGiocatore, getGiocatore());
+						}
+						else
+							inviaOggetto("Parametri errati");
+							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 					} else {
 						inviaOggetto("Parametri dell'azione errati, la view è stata modificata");
 					}
@@ -133,6 +139,9 @@ public class ServerSocketView extends ServerView implements Runnable {
 				}
 				if (object instanceof String) {
 					this.notificaObservers(object, getGiocatore());
+				}
+				if(object instanceof MessaggioChat){
+					this.notificaObservers(object);
 				}
 			} catch (IOException e) {
 				LOG.log(Level.SEVERE, "Il giocatore " + getGiocatore().getNome() + " si è disconnesso");
