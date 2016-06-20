@@ -136,7 +136,7 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 					copiaBonus.remove(b1);
 					break;
 				}
-		return (copiaBonus.isEmpty());
+		return copiaBonus.isEmpty();
 	}
 
 	/**
