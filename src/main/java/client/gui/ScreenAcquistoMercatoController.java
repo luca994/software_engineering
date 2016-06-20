@@ -57,45 +57,45 @@ public class ScreenAcquistoMercatoController implements Initializable {
 
 	@FXML
 	private void tesseraClick(MouseEvent e) {
-		int numeroTessera = ((ListView)e.getSource()).getSelectionModel().getSelectedIndex();
+		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();
 		int indice = 0;
-		for(OggettoVendibile o: mercato.getOggettiInVendita()){
-			if(indice==numeroTessera && o instanceof TesseraCostruzione){
+		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
+			if (indice == numeroTessera && o instanceof TesseraCostruzione) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
 				oggettoSelezionato = o;
 				break;
 			}
-			if(o instanceof TesseraCostruzione)
+			if (o instanceof TesseraCostruzione)
 				indice++;
 		}
 	}
 
 	@FXML
 	private void cartaClick(MouseEvent e) {
-		int numeroTessera = ((ListView)e.getSource()).getSelectionModel().getSelectedIndex();
+		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();
 		int indice = 0;
-		for(OggettoVendibile o: mercato.getOggettiInVendita()){
-			if(indice==numeroTessera && o instanceof CartaPolitica){
+		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
+			if (indice == numeroTessera && o instanceof CartaPolitica) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
 				oggettoSelezionato = o;
 				break;
 			}
-			if(o instanceof CartaPolitica)
+			if (o instanceof CartaPolitica)
 				indice++;
 		}
 	}
 
 	@FXML
 	private void assistenteClick(MouseEvent e) {
-		int numeroTessera = ((ListView)e.getSource()).getSelectionModel().getSelectedIndex();
+		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();
 		int indice = 0;
-		for(OggettoVendibile o: mercato.getOggettiInVendita()){
-			if(indice==numeroTessera && o instanceof Assistente){
+		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
+			if (indice == numeroTessera && o instanceof Assistente) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
 				oggettoSelezionato = o;
 				break;
 			}
-			if(o instanceof Assistente)
+			if (o instanceof Assistente)
 				indice++;
 		}
 	}
@@ -109,7 +109,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	@FXML
 	private void fineButtonAction(ActionEvent e) {
 		connessione.inviaOggetto("-");
-		Stage stage = ((Stage)fineButton.getScene().getWindow());
+		Stage stage = ((Stage) fineButton.getScene().getWindow());
 		stage.hide();
 	}
 
@@ -120,12 +120,15 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	}
 
 	private void aggiornaTessere() {
+		tessere.clear();
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (!o.getGiocatore().getNome().equals(giocatore.getNome()) && o instanceof TesseraCostruzione) {
 				tessere.add(
 						new ImageView(new Image(
-								getClass().getResource("immaginiGUI/tessereCostruzione/tessera"
-										+ ((TesseraCostruzione) o).getId() + ".jpg").toString(),
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereCostruzione/tessera"
+												+ ((TesseraCostruzione) o).getId() + ".jpg")
+										.toString(),
 								130, 130, false, false)));
 			}
 		}
@@ -133,27 +136,33 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	}
 
 	private void aggiornaCartePolitica() {
+		cartePolitica.clear();
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (!o.getGiocatore().getNome().equals(giocatore.getNome()) && o instanceof CartaPolitica) {
 				if (o instanceof Jolly)
-					cartePolitica.add(new ImageView(
-							new Image(getClass().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(), 130,
-									130, false, false)));
+					cartePolitica.add(new ImageView(new Image(
+							getClass().getClassLoader().getResource("immaginiGUI/cartePolitica/jolly.jpg").toString(),
+							130, 130, false, false)));
 				else
-					cartePolitica.add(new ImageView(new Image(getClass()
-							.getResource("immaginiGUI/cartePolitica/"
-									+ ParseColor.colorIntToString(((CartaColorata) o).getColore().getRGB()) + ".jpg")
-							.toString(), 76, 130, false, false)));
+					cartePolitica
+							.add(new ImageView(new Image(
+									getClass().getClassLoader()
+											.getResource("immaginiGUI/cartePolitica/" + ParseColor.colorIntToString(
+													((CartaColorata) o).getColore().getRGB()) + ".jpg")
+											.toString(),
+									76, 130, false, false)));
 			}
 		}
 		cartePoliticaListView.setItems(cartePolitica);
 	}
 
 	private void aggiornaAssistenti() {
+		assistenti.clear();
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (!o.getGiocatore().getNome().equals(giocatore.getNome()) && o instanceof Assistente) {
-				assistenti.add(new ImageView(new Image(getClass().getResource("immaginiGUI/assistente.jpg").toString(),
-						50, 130, false, false)));
+				assistenti.add(new ImageView(
+						new Image(getClass().getClassLoader().getResource("immaginiGUI/assistente.jpg").toString(), 50,
+								130, false, false)));
 			}
 		}
 	}

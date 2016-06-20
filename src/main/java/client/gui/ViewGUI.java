@@ -893,8 +893,8 @@ public class ViewGUI extends View implements Initializable {
 		}
 		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 			labelStatoGioco.setText("Fase mercato aggiunta");
-			labelAzioneDaFare.setText("E' il tuo turno");
-			turnoCambiato = true;
+			if(turnoCambiato)
+				labelAzioneDaFare.setText("E' il tuo turno");
 			cartePoliticaListView.setDisable(false);
 			tessereValideListView.setDisable(false);
 			if (giocatore.getAssistenti().size() != 0)
