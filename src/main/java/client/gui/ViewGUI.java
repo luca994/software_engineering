@@ -893,8 +893,10 @@ public class ViewGUI extends View implements Initializable {
 	public synchronized void aggiornaStato() {
 		if (!primoTabellone) {
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-				
-				Rectangle recty = new Rectangle(30, 30);
+
+				Rectangle recty = new Rectangle(15, 15);
+				recty.setArcWidth(20);
+				recty.setArcHeight(20);
 				anchorPanePercorsi.getChildren().add(recty);
 				recty.setVisible(false);
 				recty.setFill(ParseColor.colorAwtToFx(g.getColore()));
@@ -1108,21 +1110,28 @@ public class ViewGUI extends View implements Initializable {
 
 	public void aggiornaRicchezza() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-			Rectangle recty = rettangoliRicchezza.get(tabelloneClient.getGioco().getGiocatori().indexOf(g));
+			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
+			Rectangle recty = rettangoliRicchezza.get(index);
 			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
 
 				recty.setVisible(true);
-				recty.setX(((MoveTo) pathRicchezza.getElements()
+				recty.setX(66 + ((MoveTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(((MoveTo) pathRicchezza.getElements()
-						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getY());
+				recty.setY(
+						(3 * index) + 200
+								+ ((MoveTo) pathRicchezza.getElements()
+										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
+												.getY());
 			} else {
 
 				recty.setVisible(true);
-				recty.setX(((LineTo) pathRicchezza.getElements()
+				recty.setX(66 + ((LineTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(((LineTo) pathRicchezza.getElements()
-						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getY());
+				recty.setY(
+						(3 * index) + 200
+								+ ((LineTo) pathRicchezza.getElements()
+										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
+												.getY());
 			}
 		}
 	}
