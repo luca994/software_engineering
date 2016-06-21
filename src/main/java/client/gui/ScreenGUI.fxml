@@ -12,6 +12,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.Path?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ViewGUI">
@@ -58,6 +61,56 @@
                         </SplitPane>
                       <AnchorPane fx:id="anchorPanePercorsi" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="1278.0">
                            <children>
+                              <Path fx:id="pathRicchezza" fill="DODGERBLUE" layoutX="72.0" layoutY="206.0" stroke="BLACK" strokeType="INSIDE">
+                                  <elements>
+                                      <MoveTo />
+                                      <LineTo x="43.0" />
+                                    <LineTo x="87.0" />
+                                    <LineTo x="130.0" />
+                                    <LineTo x="174.0" />
+                                    <LineTo x="217.0" />
+                                    <LineTo x="261.0" />
+                                    <LineTo x="304.0" />
+                                    <LineTo x="348.0" />
+                                    <LineTo x="391.0" />
+                                    <LineTo x="435.0" />
+                                    <LineTo x="478.0" />
+                                    <LineTo x="522.0" />
+                                    <LineTo x="565.0" />
+                                    <LineTo x="609.0" />
+                                    <LineTo x="652.0" />
+                                    <LineTo x="696.0" />
+                                    <LineTo x="739.0" />
+                                    <LineTo x="783.0" />
+                                    <LineTo x="826.0" />
+                                    <LineTo x="870.0" />
+                                  </elements>
+                              </Path>
+                              <Path fx:id="pathNobilta" fill="DODGERBLUE" layoutX="89.0" layoutY="169.0" stroke="BLACK" strokeType="INSIDE">
+                                  <elements>
+                                      <MoveTo />
+                                    <LineTo x="42.0" />
+                                    <LineTo x="84.0" />
+                                    <LineTo x="126.0" />
+                                      <LineTo x="164.0" />
+                                    <LineTo x="208.0" />
+                                    <LineTo x="250.0" />
+                                    <LineTo x="292.0" />
+                                    <LineTo x="332.0" />
+                                    <LineTo x="374.0" />
+                                    <LineTo x="414.0" />
+                                    <LineTo x="457.0" />
+                                    <LineTo x="497.0" />
+                                    <LineTo x="537.0" />
+                                    <LineTo x="577.0" />
+                                    <LineTo x="620.0" />
+                                    <LineTo x="660.0" />
+                                    <LineTo x="704.0" />
+                                    <LineTo x="744.0" />
+                                    <LineTo x="786.0" />
+                                    <LineTo x="828.0" />
+                                  </elements>
+                              </Path>
                               <ImageView fx:id="tesseraMontagna1Image" fitHeight="50.0" fitWidth="80.0" layoutX="1096.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="tesseraMontagna0Image" fitHeight="50.0" fitWidth="80.0" layoutX="996.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="tesseraPianura1Image" fitHeight="50.0" fitWidth="80.0" layoutX="666.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />

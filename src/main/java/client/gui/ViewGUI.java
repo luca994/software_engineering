@@ -38,6 +38,9 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -72,6 +75,7 @@ import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
  */
 public class ViewGUI extends View implements Initializable {
 
+	private boolean primoTabellone;
 	private boolean turnoCambiato;
 	private Giocatore giocatore;
 	private Tabellone tabelloneClient;
@@ -81,6 +85,7 @@ public class ViewGUI extends View implements Initializable {
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
 	private Consigliere consigliereInput;
+	private List<Rectangle> rettangoliRicchezza;
 	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
 	private Bonus bonus;
@@ -100,6 +105,11 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private ComboBox<Color> consigliereDisponibileComboBox;
+
+	@FXML
+	private Path pathRicchezza;
+	@FXML
+	private Path pathNobilta;
 
 	@FXML
 	private ListView<ImageView> tessereValideListView;
@@ -270,7 +280,8 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private void cambiaTessereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio della regione nella quale vuoi cambiare le tessere, poi clicca su conferma azione");
+		labelAzioneDaFare.setText(
+				"Clicca sul consiglio della regione nella quale vuoi cambiare le tessere, poi clicca su conferma azione");
 		consiglioMareButton.setDisable(false);
 		consiglioPianuraButton.setDisable(false);
 		consiglioMontagnaButton.setDisable(false);
@@ -330,7 +341,8 @@ public class ViewGUI extends View implements Initializable {
 		azioneFactory.setTipoAzione("6");
 		confermaAzioneButton.setDisable(false);
 		disabilitazioneBottoniAzione(true);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere e scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
+		labelAzioneDaFare.setText(
+				"Clicca sul consiglio nel quale vuoi eleggere il consigliere e scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
 		consigliereDisponibileComboBox.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		annullaAzioneButton.setDisable(false);
@@ -358,7 +370,8 @@ public class ViewGUI extends View implements Initializable {
 	private void acquistaPermessoButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sul consiglio che vuoi soddisfare, seleziona carte politica, clicca sulla tessera permesso che vuoi acquistare, clicca conferma azione quando hai finito");
+		labelAzioneDaFare.setText(
+				"Clicca sul consiglio che vuoi soddisfare, seleziona carte politica, clicca sulla tessera permesso che vuoi acquistare, clicca conferma azione quando hai finito");
 		consiglioMareButton.setDisable(false);
 		consiglioMontagnaButton.setDisable(false);
 		consiglioPianuraButton.setDisable(false);
@@ -372,8 +385,8 @@ public class ViewGUI extends View implements Initializable {
 	private void costruisciConReButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare
-				.setText("Seleziona carte politica, clicca sulla città nella quale vuoi costruire, clicca conferma azione quando hai finito");
+		labelAzioneDaFare.setText(
+				"Seleziona carte politica, clicca sulla città nella quale vuoi costruire, clicca conferma azione quando hai finito");
 		cartePoliticaListView.setDisable(false);
 		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("1");
@@ -384,7 +397,9 @@ public class ViewGUI extends View implements Initializable {
 	private void eleggiConsigliereButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere," + "\n" + " poi clicca su conferma azione");
+		labelAzioneDaFare.setText(
+				"Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere,"
+						+ "\n" + " poi clicca su conferma azione");
 		consigliereDisponibileComboBox.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		azioneFactory.setTipoAzione("2");
@@ -395,7 +410,8 @@ public class ViewGUI extends View implements Initializable {
 	private void costruisciEmporioTesseraButtonAction(ActionEvent event) {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
-		labelAzioneDaFare.setText("Clicca sulla tessera valida che vuoi utilizzare, inserisci la città nella quale vuoi costruire, clicca su conferma azione quando hai finito");
+		labelAzioneDaFare.setText(
+				"Clicca sulla tessera valida che vuoi utilizzare, inserisci la città nella quale vuoi costruire, clicca su conferma azione quando hai finito");
 		tessereValideListView.setDisable(false);
 		disabilitazioneBottoniCitta(false);
 		azioneFactory.setTipoAzione("3");
@@ -487,6 +503,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglioPianura();
 		aggiornaConsiglioMontagna();
 		aggiornaConsiglioRe();
+		aggiornaRicchezza();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
@@ -815,6 +832,10 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void startClient() {
 		semInizializzazione.release();
+		primoTabellone = false;
+		rettangoliRicchezza = new ArrayList<>();
+		cartePoliticaInput = new ArrayList<>();
+		azioneFactory = new AzioneFactory(null);
 	}
 
 	@Override
@@ -870,6 +891,17 @@ public class ViewGUI extends View implements Initializable {
 	 * takes the state of the player from the game
 	 */
 	public synchronized void aggiornaStato() {
+		if (!primoTabellone) {
+			for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+				
+				Rectangle recty = new Rectangle(30, 30);
+				anchorPanePercorsi.getChildren().add(recty);
+				recty.setVisible(false);
+				recty.setFill(ParseColor.colorAwtToFx(g.getColore()));
+				rettangoliRicchezza.add(recty);
+			}
+			primoTabellone = true;
+		}
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
@@ -893,7 +925,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 			labelStatoGioco.setText("Fase mercato aggiunta");
-			if(turnoCambiato)
+			if (turnoCambiato)
 				labelAzioneDaFare.setText("E' il tuo turno");
 			cartePoliticaListView.setDisable(false);
 			tessereValideListView.setDisable(false);
@@ -1070,6 +1102,27 @@ public class ViewGUI extends View implements Initializable {
 			if (g.getNome().equals(giocatore.getNome())) {
 				giocatore = g;
 				break;
+			}
+		}
+	}
+
+	public void aggiornaRicchezza() {
+		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+			Rectangle recty = rettangoliRicchezza.get(tabelloneClient.getGioco().getGiocatori().indexOf(g));
+			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
+
+				recty.setVisible(true);
+				recty.setX(((MoveTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(((MoveTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getY());
+			} else {
+
+				recty.setVisible(true);
+				recty.setX(((LineTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(((LineTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getY());
 			}
 		}
 	}
