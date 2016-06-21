@@ -199,6 +199,8 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private Button merkatim;
 	@FXML
+	private ImageView tesseraCopertaMareImage;
+	@FXML
 	private Button tesseraMare0Button;
 	@FXML
 	private ImageView tesseraMare0Image;
@@ -207,6 +209,8 @@ public class ViewGUI extends View implements Initializable {
 	@FXML
 	private ImageView tesseraMare1Image;
 	@FXML
+	private ImageView tesseraCopertaPianuraImage;
+	@FXML
 	private Button tesseraPianura0Button;
 	@FXML
 	private ImageView tesseraPianura0Image;
@@ -214,6 +218,8 @@ public class ViewGUI extends View implements Initializable {
 	private Button tesseraPianura1Button;
 	@FXML
 	private ImageView tesseraPianura1Image;
+	@FXML
+	private ImageView tesseraCopertaMontagnaImage;
 	@FXML
 	private Button tesseraMontagna0Button;
 	@FXML
@@ -783,6 +789,18 @@ public class ViewGUI extends View implements Initializable {
 		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader()
 				.getResource("immaginiGUI/tessereCostruzione/tessera" + id5 + ".jpg").toString(), 80, 50, false,
 				false));
+		if(tabelloneClient.getRegioni().get(0).getTessereCoperte().size()>0)
+			tesseraCopertaMareImage.setImage(new Image(getClass().getClassLoader()
+					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMareRetro.jpg").toString(), 80, 50, false,
+					false));
+		if(tabelloneClient.getRegioni().get(1).getTessereCoperte().size()>0)
+			tesseraCopertaPianuraImage.setImage(new Image(getClass().getClassLoader()
+					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzionePianuraRetro.jpg").toString(), 80, 50, false,
+					false));
+		if(tabelloneClient.getRegioni().get(2).getTessereCoperte().size()>0)
+			tesseraCopertaMontagnaImage.setImage(new Image(getClass().getClassLoader()
+					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMontagnaRetro.jpg").toString(), 80, 50, false,
+					false));
 	}
 	
 	public void aggiornaTessereBonus(){
