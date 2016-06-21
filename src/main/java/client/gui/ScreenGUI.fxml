@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -22,145 +21,109 @@
    <children>
       <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <SplitPane dividerPositions="0.7249443207126949" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="900.0" prefWidth="1280.0">
+            <SplitPane dividerPositions="0.5801781737193764" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="900.0" prefWidth="1280.0">
               <items>
-                  <SplitPane dividerPositions="0.5950540958268934" maxHeight="-Infinity" maxWidth="-Infinity" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-                    <items>
-                        <SplitPane dividerPositions="0.3333, 0.6666" prefHeight="160.0" prefWidth="1678.0">
-                          <items>
-                            <AnchorPane fx:id="anchorPaneMare" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
-                                 <children>
-                                    <Button fx:id="castrum" disable="true" layoutX="286.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
-                                    <Button fx:id="arkon" disable="true" layoutX="88.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
-                                    <Button fx:id="burgen" disable="true" layoutX="88.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
-                                    <Button fx:id="dortid" disable="true" layoutX="284.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
-                                    <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Esti" />
-                                    <ImageView fx:id="tesseraBonusMareImageView" fitHeight="26.0" fitWidth="79.0" layoutX="319.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane fx:id="anchorPanePianura" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="420.0">
-                                 <children>
-                                    <Button fx:id="indur" disable="true" layoutX="285.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Indur" />
-                                    <Button fx:id="framek" disable="true" layoutX="83.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Framek" />
-                                    <Button fx:id="graden" disable="true" layoutX="86.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Graden" />
-                                    <Button fx:id="juvelar" disable="true" layoutX="265.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
-                                    <Button fx:id="hellar" disable="true" layoutX="103.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
-                                    <ImageView fx:id="tesseraBonusPianuraImageView" fitHeight="26.0" fitWidth="79.0" layoutX="274.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane fx:id="anchorPaneMontagna" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="383.0" prefWidth="423.0">
-                                 <children>
-                                    <Button fx:id="lyram" disable="true" layoutX="47.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
-                                    <Button fx:id="kultos" disable="true" layoutX="73.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
-                                    <Button fx:id="naris" disable="true" layoutX="227.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Naris" />
-                                    <Button fx:id="osium" disable="true" layoutX="227.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Osium" />
-                                    <Button fx:id="merkatim" disable="true" layoutX="28.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
-                                    <ImageView fx:id="tesseraBonusMontagnaImageView" fitHeight="26.0" fitWidth="79.0" layoutX="278.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
-                      <AnchorPane fx:id="anchorPanePercorsi" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="1278.0">
-                           <children>
-                              <Path fx:id="pathRicchezza" fill="DODGERBLUE" layoutX="72.0" layoutY="206.0" stroke="BLACK" strokeType="INSIDE">
-                                  <elements>
-                                      <MoveTo />
-                                      <LineTo x="43.0" />
-                                    <LineTo x="87.0" />
-                                    <LineTo x="130.0" />
-                                    <LineTo x="174.0" />
-                                    <LineTo x="217.0" />
-                                    <LineTo x="261.0" />
-                                    <LineTo x="304.0" />
-                                    <LineTo x="348.0" />
-                                    <LineTo x="391.0" />
-                                    <LineTo x="435.0" />
-                                    <LineTo x="478.0" />
-                                    <LineTo x="522.0" />
-                                    <LineTo x="565.0" />
-                                    <LineTo x="609.0" />
-                                    <LineTo x="652.0" />
-                                    <LineTo x="696.0" />
-                                    <LineTo x="739.0" />
-                                    <LineTo x="783.0" />
-                                    <LineTo x="826.0" />
-                                    <LineTo x="870.0" />
-                                  </elements>
-                              </Path>
-                              <Path fx:id="pathNobilta" fill="DODGERBLUE" layoutX="89.0" layoutY="169.0" stroke="BLACK" strokeType="INSIDE">
-                                  <elements>
-                                      <MoveTo />
-                                    <LineTo x="41.0" />
-                                    <LineTo x="83.0" />
-                                    <LineTo x="124.0" />
-                                      <LineTo x="166.0" />
-                                    <LineTo x="207.0" />
-                                    <LineTo x="249.0" />
-                                    <LineTo x="290.0" />
-                                    <LineTo x="332.0" />
-                                    <LineTo x="373.0" />
-                                    <LineTo x="415.0" />
-                                    <LineTo x="456.0" />
-                                    <LineTo x="498.0" />
-                                    <LineTo x="539.0" />
-                                    <LineTo x="581.0" />
-                                    <LineTo x="622.0" />
-                                    <LineTo x="664.0" />
-                                    <LineTo x="705.0" />
-                                    <LineTo x="747.0" />
-                                    <LineTo x="788.0" />
-                                    <LineTo x="830.0" />
-                                  </elements>
-                              </Path>
-                              <ImageView fx:id="tesseraMontagna1Image" fitHeight="50.0" fitWidth="80.0" layoutX="1096.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="tesseraMontagna0Image" fitHeight="50.0" fitWidth="80.0" layoutX="996.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="tesseraPianura1Image" fitHeight="50.0" fitWidth="80.0" layoutX="666.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="tesseraPianura0Image" fitHeight="50.0" fitWidth="80.0" layoutX="570.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="tesseraMare1Image" fitHeight="50.0" fitWidth="80.0" layoutX="280.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="tesseraMare0Image" fitHeight="50.0" fitWidth="80.0" layoutX="179.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
-                              <Button fx:id="tesseraMare0Button" disable="true" layoutX="182.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraMare1Button" disable="true" layoutX="283.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="tesseraPianura0Button" disable="true" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraPianura1Button" disable="true" layoutX="669.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <Button fx:id="tesseraMontagna0Button" disable="true" layoutX="999.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
-                              <Button fx:id="tesseraMontagna1Button" disable="true" layoutX="1099.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
-                              <ListView fx:id="consiglioMareListView" layoutX="176.0" layoutY="81.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioPianuraListView" layoutX="561.0" layoutY="80.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="109.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
-                              <ListView fx:id="consiglioMontagnaListView" layoutX="992.0" layoutY="81.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
-                              <Button fx:id="consiglioMareButton" disable="true" layoutX="177.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Mare" />
-                              <Button fx:id="consiglioPianuraButton" disable="true" layoutX="561.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="38.0" prefWidth="138.0" text="Pianura" />
-                              <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="992.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Montagna" />
-                              <Button fx:id="consiglioReButton" disable="true" layoutX="809.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="41.0" prefWidth="138.0" text="Re" />
-                              <ImageView fx:id="tesseraPremioReImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1135.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true" rotate="63.4">
-                                 <rotationAxis>
-                                    <Point3D x="1.3" z="1.0" />
-                                 </rotationAxis>
-                              </ImageView>
-                              <ImageView fx:id="tesseraBonusFerroImageView" fitHeight="42.0" fitWidth="57.0" layoutX="961.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" rotate="63.4">
-                                 <rotationAxis>
-                                    <Point3D x="1.3" z="1.0" />
-                                 </rotationAxis>
-                              </ImageView>
-                              <ImageView fx:id="tesseraBonusBronzoImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1024.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true" rotate="63.4">
-                                 <rotationAxis>
-                                    <Point3D x="1.3" z="1.0" />
-                                 </rotationAxis>
-                              </ImageView>
-                              <ImageView fx:id="tesseraBonusArgentoImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1088.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true" rotate="63.4">
-                                 <rotationAxis>
-                                    <Point3D x="1.3" z="1.0" />
-                                 </rotationAxis>
-                              </ImageView>
-                              <ImageView fx:id="tesseraBonusOroImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1145.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" rotate="63.4">
-                                 <rotationAxis>
-                                    <Point3D x="1.3" z="1.0" />
-                                 </rotationAxis>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
+                <AnchorPane fx:id="anchorPaneMappa" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1280.0">
+                     <children>
+                        <ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0" />
+                        <ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0" />
+                        <ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="castrum" disable="true" layoutX="294.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
+                        <Button fx:id="arkon" disable="true" layoutX="104.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
+                        <Button fx:id="burgen" disable="true" layoutX="81.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
+                        <Button fx:id="dortid" disable="true" layoutX="276.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Dortid" />
+                        <Button fx:id="esti" disable="true" layoutX="150.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Esti" />
+                        <ImageView fx:id="tesseraBonusMareImageView" fitHeight="26.0" fitWidth="79.0" layoutX="322.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="indur" disable="true" layoutX="712.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Indur" />
+                        <Button fx:id="framek" disable="true" layoutX="505.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Framek" />
+                        <Button fx:id="graden" disable="true" layoutX="516.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Graden" />
+                        <Button fx:id="juvelar" disable="true" layoutX="706.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Juvelar" />
+                        <Button fx:id="hellar" disable="true" layoutX="539.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Hellar" />
+                        <ImageView fx:id="tesseraBonusPianuraImageView" fitHeight="26.0" fitWidth="79.0" layoutX="706.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="lyram" disable="true" layoutX="902.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Lyram" />
+                        <Button fx:id="kultos" disable="true" layoutX="932.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Kultos" />
+                        <Button fx:id="naris" disable="true" layoutX="1083.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Naris" />
+                        <Button fx:id="osium" disable="true" layoutX="1089.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Osium" />
+                        <Button fx:id="merkatim" disable="true" layoutX="886.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Merkatim" />
+                        <ImageView fx:id="tesseraBonusMontagnaImageView" fitHeight="26.0" fitWidth="79.0" layoutX="1134.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" />
+                        <Path fx:id="pathRicchezza" fill="DODGERBLUE" layoutX="70.0" layoutY="590.0" stroke="BLACK" strokeType="INSIDE">
+                            <elements>
+                                <MoveTo />
+                                <LineTo x="43.0" />
+                              <LineTo x="87.0" />
+                              <LineTo x="130.0" />
+                              <LineTo x="174.0" />
+                              <LineTo x="217.0" />
+                              <LineTo x="261.0" />
+                              <LineTo x="304.0" />
+                              <LineTo x="348.0" />
+                              <LineTo x="391.0" />
+                              <LineTo x="435.0" />
+                              <LineTo x="478.0" />
+                              <LineTo x="522.0" />
+                              <LineTo x="565.0" />
+                              <LineTo x="609.0" />
+                              <LineTo x="652.0" />
+                              <LineTo x="696.0" />
+                              <LineTo x="739.0" />
+                              <LineTo x="783.0" />
+                              <LineTo x="826.0" />
+                              <LineTo x="870.0" />
+                            </elements>
+                        </Path>
+                        <Path fx:id="pathNobilta" fill="DODGERBLUE" layoutX="90.0" layoutY="550.0" stroke="BLACK" strokeType="INSIDE">
+                            <elements>
+                                <MoveTo />
+                              <LineTo x="41.0" />
+                              <LineTo x="83.0" />
+                              <LineTo x="124.0" />
+                                <LineTo x="166.0" />
+                              <LineTo x="207.0" />
+                              <LineTo x="249.0" />
+                              <LineTo x="290.0" />
+                              <LineTo x="332.0" />
+                              <LineTo x="373.0" />
+                              <LineTo x="415.0" />
+                              <LineTo x="456.0" />
+                              <LineTo x="498.0" />
+                              <LineTo x="539.0" />
+                              <LineTo x="581.0" />
+                              <LineTo x="622.0" />
+                              <LineTo x="664.0" />
+                              <LineTo x="705.0" />
+                              <LineTo x="747.0" />
+                              <LineTo x="788.0" />
+                              <LineTo x="830.0" />
+                            </elements>
+                        </Path>
+                        <ImageView fx:id="tesseraMontagna1Image" fitHeight="50.0" fitWidth="80.0" layoutX="1095.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraMontagna0Image" fitHeight="50.0" fitWidth="80.0" layoutX="998.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraPianura1Image" fitHeight="50.0" fitWidth="80.0" layoutX="663.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraPianura0Image" fitHeight="50.0" fitWidth="80.0" layoutX="570.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraMare1Image" fitHeight="50.0" fitWidth="80.0" layoutX="276.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraMare0Image" fitHeight="50.0" fitWidth="80.0" layoutX="181.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="tesseraMare0Button" disable="true" layoutX="184.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraMare1Button" disable="true" layoutX="279.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraMareButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <Button fx:id="tesseraPianura0Button" disable="true" layoutX="573.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraPianura1Button" disable="true" layoutX="666.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraPianuraButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <Button fx:id="tesseraMontagna0Button" disable="true" layoutX="1001.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="0" />
+                        <Button fx:id="tesseraMontagna1Button" disable="true" layoutX="1099.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleTesseraMontagnaButton" opacity="0.0" prefHeight="45.0" prefWidth="74.0" text="1" />
+                        <ListView fx:id="consiglioMareListView" layoutX="173.0" layoutY="455.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                        <ListView fx:id="consiglioPianuraListView" layoutX="562.0" layoutY="455.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                        <ListView fx:id="consiglioReListView" layoutX="810.0" layoutY="489.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                        <ListView fx:id="consiglioMontagnaListView" layoutX="998.0" layoutY="455.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="138.0" />
+                        <Button fx:id="consiglioMareButton" disable="true" layoutX="173.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Mare" />
+                        <Button fx:id="consiglioPianuraButton" disable="true" layoutX="562.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="38.0" prefWidth="138.0" text="Pianura" />
+                        <Button fx:id="consiglioMontagnaButton" disable="true" layoutX="998.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="40.0" prefWidth="138.0" text="Montagna" />
+                        <Button fx:id="consiglioReButton" disable="true" layoutX="810.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleConsiglioButton" opacity="0.0" prefHeight="41.0" prefWidth="138.0" text="Re" />
+                        <ImageView fx:id="tesseraPremioReImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1135.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraBonusFerroImageView" fitHeight="42.0" fitWidth="57.0" layoutX="960.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraBonusBronzoImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1026.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraBonusArgentoImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1091.0" layoutY="545.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="tesseraBonusOroImageView" fitHeight="42.0" fitWidth="57.0" layoutX="1151.0" layoutY="545.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
                   <SplitPane fx:id="splitPanePannelloInterazione" dividerPositions="0.6635367762128326" prefHeight="160.0" prefWidth="200.0">
                     <items>
                       <AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="827.0" style="-fx-background-color: #DEB887;">

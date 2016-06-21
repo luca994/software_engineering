@@ -113,7 +113,15 @@ public class ViewGUI extends View implements Initializable {
 	private Path pathRicchezza;
 	@FXML
 	private Path pathNobilta;
-
+	@FXML
+	private ImageView imgViewMare;
+	@FXML
+	private ImageView imgViewPianura;
+	@FXML
+	private ImageView imgViewMontagna;
+	@FXML
+	private ImageView imgViewPercorsi;
+	
 	@FXML
 	private ListView<ImageView> tessereValideListView;
 	@FXML
@@ -130,13 +138,7 @@ public class ViewGUI extends View implements Initializable {
 	private ListView<Color> consiglioReListView;
 
 	@FXML
-	private AnchorPane anchorPaneMare;
-	@FXML
-	private AnchorPane anchorPanePianura;
-	@FXML
-	private AnchorPane anchorPaneMontagna;
-	@FXML
-	private AnchorPane anchorPanePercorsi;
+	private AnchorPane anchorPaneMappa;
 
 	@FXML
 	private TextArea chatTextArea;
@@ -818,20 +820,20 @@ public class ViewGUI extends View implements Initializable {
 			if (tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g) == 0) {
 	
 				recty.setVisible(true);
-				recty.setX(82 + ((MoveTo) pathNobilta.getElements()
+				recty.setX(85 + ((MoveTo) pathNobilta.getElements()
 						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(5 * index) + 158
+						(5 * index) + 539
 								+ ((MoveTo) pathNobilta.getElements()
 										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
 												.getY());
 			} else {
 	
 				recty.setVisible(true);
-				recty.setX(82 + ((LineTo) pathNobilta.getElements()
+				recty.setX(85 + ((LineTo) pathNobilta.getElements()
 						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(5 * index) + 158
+						(5 * index) + 539
 								+ ((LineTo) pathNobilta.getElements()
 										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
 												.getY());
@@ -846,20 +848,20 @@ public class ViewGUI extends View implements Initializable {
 			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
 	
 				recty.setVisible(true);
-				recty.setX(66 + ((MoveTo) pathRicchezza.getElements()
+				recty.setX(64 + ((MoveTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(5 * index) + 195
+						(5 * index) + 580
 								+ ((MoveTo) pathRicchezza.getElements()
 										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
 												.getY());
 			} else {
 	
 				recty.setVisible(true);
-				recty.setX(66 + ((LineTo) pathRicchezza.getElements()
+				recty.setX(64 + ((LineTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(5 * index) + 195
+						(5 * index) + 580
 								+ ((LineTo) pathRicchezza.getElements()
 										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
 												.getY());
@@ -1001,7 +1003,7 @@ public class ViewGUI extends View implements Initializable {
 				Rectangle rectyRicch = new Rectangle(15, 15);
 				rectyRicch.setArcWidth(20);
 				rectyRicch.setArcHeight(20);
-				anchorPanePercorsi.getChildren().add(rectyRicch);
+				anchorPaneMappa.getChildren().add(rectyRicch);
 				rectyRicch.setVisible(false);
 				rectyRicch.setFill(ParseColor.colorAwtToFx(g.getColore()));
 				rettangoliRicchezza.add(rectyRicch);
@@ -1011,7 +1013,7 @@ public class ViewGUI extends View implements Initializable {
 				rectyNob = new Rectangle(15, 15);
 				rectyNob.setArcWidth(20);
 				rectyNob.setArcHeight(20);
-				anchorPanePercorsi.getChildren().add(rectyNob);
+				anchorPaneMappa.getChildren().add(rectyNob);
 				rectyNob.setVisible(false);
 				rectyNob.setFill(ParseColor.colorAwtToFx(g.getColore()));
 				rettangoliNobilta.add(rectyNob);
@@ -1065,150 +1067,75 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void creazioneSfondiMappa() {
-		BackgroundImage mare;
-		BackgroundImage pianura;
-		BackgroundImage montagna;
-		BackgroundImage percorsi;
+		Image mare;
+		Image pianura;
+		Image montagna;
+		Image percorsi;
 		int num = Integer.parseInt(tabelloneClient.getNumeroMappa());
 
 		if (0 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = 	new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
+							false, true);
 		} else if (1 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
+							false, true);
 		} else if (2 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
+							false, true);
 		} else if (3 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
+							false, true);
 		} else if (4 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
+							false, true);
 		} else if (5 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
+							false, true);
 		} else if (6 == num) {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
+							false, true);
 		} else {
-			mare = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			pianura = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 418, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
-			montagna = new BackgroundImage(
-					new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 422, 381,
-							false, true),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-					BackgroundSize.DEFAULT);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
+							false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
+							false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
+							false, true);
 		}
-		percorsi = new BackgroundImage(
-				new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/percorsi.jpg").toString(), 1278,
-						258, false, true),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-				BackgroundSize.DEFAULT);
-		anchorPanePercorsi.setBackground(new Background(percorsi));
-		anchorPaneMare.setBackground(new Background(mare));
-		anchorPanePianura.setBackground(new Background(pianura));
-		anchorPaneMontagna.setBackground(new Background(montagna));
+		percorsi = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/percorsi.jpg").toString(), 1280,
+						263, false, true);
+		imgViewPercorsi.setImage(percorsi);
+		imgViewMare.setImage(mare);
+		imgViewPianura.setImage(pianura);
+		imgViewMontagna.setImage(montagna);
 	}
 
 	/**
