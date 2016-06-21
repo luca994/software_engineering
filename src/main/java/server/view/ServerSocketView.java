@@ -88,7 +88,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 		try {
 			socketIn.close();
 			socket.close();
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			LOG.log(Level.FINE, "Il socket è già chiuso: " + e.toString(), e);
 		}
 		socket = null;
