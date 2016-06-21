@@ -11,10 +11,13 @@ public class ParseColor {
 	 * @return a javaFx color from a javaAWT color
 	 */
 	public static javafx.scene.paint.Color colorAwtToFx(java.awt.Color color){
-		double r = color.getRed()/255;
-		double g = color.getGreen()/255;
-		double b = color.getBlue()/255;
-		return javafx.scene.paint.Color.color(r, g, b);
+		int r = color.getRed();
+		int g = color.getGreen();
+		int b = color.getBlue();
+		int a = color.getAlpha();
+		double opacity = a / 255.0 ;
+		javafx.scene.paint.Color fxColor = javafx.scene.paint.Color.rgb(r, g, b, opacity);
+		return fxColor;
 	}
 	
 	/**
