@@ -68,6 +68,8 @@ import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
 import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
+import server.model.tesserebonus.TesseraBonusCitta;
+import server.model.tesserebonus.TesseraBonusRegione;
 
 /**
  * @author Massimiliano Ventura
@@ -228,6 +230,22 @@ public class ViewGUI extends View implements Initializable {
 	private Button consiglioMontagnaButton;
 	@FXML
 	private Button consiglioReButton;
+	@FXML
+	private ImageView tesseraBonusMareImageView;
+	@FXML
+	private ImageView tesseraBonusPianuraImageView;
+	@FXML
+	private ImageView tesseraBonusMontagnaImageView;
+	@FXML
+	private ImageView tesseraBonusFerroImageView;
+	@FXML
+	private ImageView tesseraBonusBronzoImageView;
+	@FXML
+	private ImageView tesseraBonusArgentoImageView;
+	@FXML
+	private ImageView tesseraBonusOroImageView;
+	@FXML
+	private ImageView tesseraPremioReImageView;
 	@FXML
 	private Button messaggioChatButton;
 	@FXML
@@ -500,6 +518,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglieriDisponibili();
 		aggiornaTessereCostruzioneGiocatore();
 		aggiornaTessereTabellone();
+		aggiornaTessereBonus();
 		aggiornaConsiglioMare();
 		aggiornaConsiglioPianura();
 		aggiornaConsiglioMontagna();
@@ -764,6 +783,88 @@ public class ViewGUI extends View implements Initializable {
 		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader()
 				.getResource("immaginiGUI/tessereCostruzione/tessera" + id5 + ".jpg").toString(), 80, 50, false,
 				false));
+	}
+	
+	public void aggiornaTessereBonus(){
+		for(TesseraBonusCitta tessera: tabelloneClient.getTessereBonusCitta()){
+			String colore = ParseColor.colorIntToString(tessera.getColore().getRGB());
+			if("blue".equalsIgnoreCase(colore))
+				tesseraBonusFerroImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusFerro.jpg").toString(), 57, 42, false, false));
+			else if("red".equalsIgnoreCase(colore))
+				tesseraBonusBronzoImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusBronzo.jpg").toString(), 57, 42, false, false));
+			else if("gray".equalsIgnoreCase(colore))
+				tesseraBonusArgentoImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusArgento.jpg").toString(), 57, 42, false, false));
+			else if("yellow".equalsIgnoreCase(colore))
+				tesseraBonusOroImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusOro.jpg").toString(), 57, 42, false, false));
+		}
+		if(tabelloneClient.getTesserePremioRe().size()>0){
+			tesseraPremioReImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraPremioRe"+tabelloneClient.getTesserePremioRe().size()+".jpg").toString(), 57, 42, false, false));
+		}
+		for(TesseraBonusRegione tessera: tabelloneClient.getTessereBonusRegione()){
+			String regione = tessera.getRegione().getNome();
+			if("mare".equalsIgnoreCase(regione))
+				tesseraBonusMareImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusMare.jpg").toString(), 79, 26, false, false));
+			else if("pianura".equalsIgnoreCase(regione))
+				tesseraBonusPianuraImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusPianura.jpg").toString(), 79, 26, false, false));
+			else if("montagna".equalsIgnoreCase(regione))
+				tesseraBonusMontagnaImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusMontagna.jpg").toString(), 79, 26, false, false));
+		}
+	}
+
+	public void aggiornaNobilta(){
+		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
+			Rectangle recty = rettangoliNobilta.get(index);
+			if (tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g) == 0) {
+	
+				recty.setVisible(true);
+				recty.setX(82 + ((MoveTo) pathNobilta.getElements()
+						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 158
+								+ ((MoveTo) pathNobilta.getElements()
+										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
+												.getY());
+			} else {
+	
+				recty.setVisible(true);
+				recty.setX(82 + ((LineTo) pathNobilta.getElements()
+						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 158
+								+ ((LineTo) pathNobilta.getElements()
+										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
+												.getY());
+			}
+		}
+	}
+
+	public void aggiornaRicchezza() {
+		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
+			Rectangle recty = rettangoliRicchezza.get(index);
+			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
+	
+				recty.setVisible(true);
+				recty.setX(66 + ((MoveTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 195
+								+ ((MoveTo) pathRicchezza.getElements()
+										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
+												.getY());
+			} else {
+	
+				recty.setVisible(true);
+				recty.setX(66 + ((LineTo) pathRicchezza.getElements()
+						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 195
+								+ ((LineTo) pathRicchezza.getElements()
+										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
+												.getY());
+			}
+		}
 	}
 
 	@Override
@@ -1121,62 +1222,6 @@ public class ViewGUI extends View implements Initializable {
 			}
 		}
 	}
-	public void aggiornaNobilta(){
-		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
-			Rectangle recty = rettangoliNobilta.get(index);
-			if (tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g) == 0) {
-
-				recty.setVisible(true);
-				recty.setX(82 + ((MoveTo) pathNobilta.getElements()
-						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(
-						(5 * index) + 158
-								+ ((MoveTo) pathNobilta.getElements()
-										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
-												.getY());
-			} else {
-
-				recty.setVisible(true);
-				recty.setX(82 + ((LineTo) pathNobilta.getElements()
-						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(
-						(5 * index) + 158
-								+ ((LineTo) pathNobilta.getElements()
-										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
-												.getY());
-			}
-		}
-	}
-
-	public void aggiornaRicchezza() {
-		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
-			Rectangle recty = rettangoliRicchezza.get(index);
-			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
-
-				recty.setVisible(true);
-				recty.setX(66 + ((MoveTo) pathRicchezza.getElements()
-						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(
-						(5 * index) + 195
-								+ ((MoveTo) pathRicchezza.getElements()
-										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
-												.getY());
-			} else {
-
-				recty.setVisible(true);
-				recty.setX(66 + ((LineTo) pathRicchezza.getElements()
-						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
-				recty.setY(
-						(5 * index) + 195
-								+ ((LineTo) pathRicchezza.getElements()
-										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
-												.getY());
-			}
-		}
-	}
-
 	public synchronized void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
 		costruisciConReButton.setDisable(value);

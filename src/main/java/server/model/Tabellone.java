@@ -612,4 +612,19 @@ public class Tabellone implements Serializable{
 	public String getNumeroMappa() {
 		return numeroMappa;
 	}
+
+	/**
+	 * @return the tessereBonusCitta
+	 */
+	public Set<TesseraBonusCitta> getTessereBonusCitta() {
+		return tessereBonusCitta;
+	}
+
+	/**
+	 * @return the tesserePremioRe
+	 */
+	public List<TesseraPremioRe> getTesserePremioRe() {
+		return tesserePremioRe;
+	}
+	
 }
