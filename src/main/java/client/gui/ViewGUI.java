@@ -86,6 +86,7 @@ public class ViewGUI extends View implements Initializable {
 	private Consiglio consiglioInput;
 	private Consigliere consigliereInput;
 	private List<Rectangle> rettangoliRicchezza;
+	private List<Rectangle> rettangoliNobilta;
 	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
 	private Bonus bonus;
@@ -504,6 +505,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglioMontagna();
 		aggiornaConsiglioRe();
 		aggiornaRicchezza();
+		aggiornaNobilta();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
@@ -834,6 +836,7 @@ public class ViewGUI extends View implements Initializable {
 		semInizializzazione.release();
 		primoTabellone = false;
 		rettangoliRicchezza = new ArrayList<>();
+		rettangoliNobilta = new ArrayList<>();
 		cartePoliticaInput = new ArrayList<>();
 		azioneFactory = new AzioneFactory(null);
 	}
@@ -893,14 +896,25 @@ public class ViewGUI extends View implements Initializable {
 	public synchronized void aggiornaStato() {
 		if (!primoTabellone) {
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-
-				Rectangle recty = new Rectangle(15, 15);
-				recty.setArcWidth(20);
-				recty.setArcHeight(20);
-				anchorPanePercorsi.getChildren().add(recty);
-				recty.setVisible(false);
-				recty.setFill(ParseColor.colorAwtToFx(g.getColore()));
-				rettangoliRicchezza.add(recty);
+				//Rettangoli ricchezza
+				Rectangle rectyRicch = new Rectangle(15, 15);
+				rectyRicch.setArcWidth(20);
+				rectyRicch.setArcHeight(20);
+				anchorPanePercorsi.getChildren().add(rectyRicch);
+				rectyRicch.setVisible(false);
+				rectyRicch.setFill(ParseColor.colorAwtToFx(g.getColore()));
+				rettangoliRicchezza.add(rectyRicch);
+				
+				//rettangoli nobiltà
+				Rectangle rectyNob = new Rectangle(15, 15);
+				rectyNob = new Rectangle(15, 15);
+				rectyNob.setArcWidth(20);
+				rectyNob.setArcHeight(20);
+				anchorPanePercorsi.getChildren().add(rectyNob);
+				rectyNob.setVisible(false);
+				rectyNob.setFill(ParseColor.colorAwtToFx(g.getColore()));
+				rettangoliNobilta.add(rectyNob);
+				
 			}
 			primoTabellone = true;
 		}
@@ -1107,6 +1121,33 @@ public class ViewGUI extends View implements Initializable {
 			}
 		}
 	}
+	public void aggiornaNobilta(){
+		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
+			Rectangle recty = rettangoliNobilta.get(index);
+			if (tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g) == 0) {
+
+				recty.setVisible(true);
+				recty.setX(82 + ((MoveTo) pathNobilta.getElements()
+						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 158
+								+ ((MoveTo) pathNobilta.getElements()
+										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
+												.getY());
+			} else {
+
+				recty.setVisible(true);
+				recty.setX(82 + ((LineTo) pathNobilta.getElements()
+						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
+				recty.setY(
+						(5 * index) + 158
+								+ ((LineTo) pathNobilta.getElements()
+										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
+												.getY());
+			}
+		}
+	}
 
 	public void aggiornaRicchezza() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
@@ -1118,7 +1159,7 @@ public class ViewGUI extends View implements Initializable {
 				recty.setX(66 + ((MoveTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(3 * index) + 200
+						(5 * index) + 195
 								+ ((MoveTo) pathRicchezza.getElements()
 										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
 												.getY());
@@ -1128,7 +1169,7 @@ public class ViewGUI extends View implements Initializable {
 				recty.setX(66 + ((LineTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
 				recty.setY(
-						(3 * index) + 200
+						(5 * index) + 195
 								+ ((LineTo) pathRicchezza.getElements()
 										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
 												.getY());

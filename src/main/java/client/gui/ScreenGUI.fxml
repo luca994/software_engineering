@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.LineTo?>
@@ -89,28 +90,33 @@
                               <Path fx:id="pathNobilta" fill="DODGERBLUE" layoutX="89.0" layoutY="169.0" stroke="BLACK" strokeType="INSIDE">
                                   <elements>
                                       <MoveTo />
-                                    <LineTo x="42.0" />
-                                    <LineTo x="84.0" />
-                                    <LineTo x="126.0" />
-                                      <LineTo x="164.0" />
-                                    <LineTo x="208.0" />
-                                    <LineTo x="250.0" />
-                                    <LineTo x="292.0" />
+                                    <LineTo x="41.0" />
+                                    <LineTo x="83.0" />
+                                    <LineTo x="124.0" />
+                                      <LineTo x="166.0" />
+                                    <LineTo x="207.0" />
+                                    <LineTo x="249.0" />
+                                    <LineTo x="290.0" />
                                     <LineTo x="332.0" />
-                                    <LineTo x="374.0" />
-                                    <LineTo x="414.0" />
-                                    <LineTo x="457.0" />
-                                    <LineTo x="497.0" />
-                                    <LineTo x="537.0" />
-                                    <LineTo x="577.0" />
-                                    <LineTo x="620.0" />
-                                    <LineTo x="660.0" />
-                                    <LineTo x="704.0" />
-                                    <LineTo x="744.0" />
-                                    <LineTo x="786.0" />
-                                    <LineTo x="828.0" />
+                                    <LineTo x="373.0" />
+                                    <LineTo x="415.0" />
+                                    <LineTo x="456.0" />
+                                    <LineTo x="498.0" />
+                                    <LineTo x="539.0" />
+                                    <LineTo x="581.0" />
+                                    <LineTo x="622.0" />
+                                    <LineTo x="664.0" />
+                                    <LineTo x="705.0" />
+                                    <LineTo x="747.0" />
+                                    <LineTo x="788.0" />
+                                    <LineTo x="830.0" />
                                   </elements>
                               </Path>
+                              <ImageView fitHeight="259.0" fitWidth="1278.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@../../../resources/immaginiGUI/mappe/percorsi.jpg" />
+                                 </image>
+                              </ImageView>
                               <ImageView fx:id="tesseraMontagna1Image" fitHeight="50.0" fitWidth="80.0" layoutX="1096.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="tesseraMontagna0Image" fitHeight="50.0" fitWidth="80.0" layoutX="996.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="tesseraPianura1Image" fitHeight="50.0" fitWidth="80.0" layoutX="666.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
