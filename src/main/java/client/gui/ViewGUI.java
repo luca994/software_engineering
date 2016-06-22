@@ -83,6 +83,7 @@ public class ViewGUI extends View implements Initializable {
 	private TesseraCostruzione tesseraInput;
 	private Consiglio consiglioInput;
 	private Consigliere consigliereInput;
+	private List<Rectangle> rettangoliVittoria;
 	private List<Rectangle> rettangoliRicchezza;
 	private List<Rectangle> rettangoliNobilta;
 	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
@@ -106,6 +107,8 @@ public class ViewGUI extends View implements Initializable {
 	private ComboBox<Color> consigliereDisponibileComboBox;
 
 	@FXML
+	private Path pathVittoria;
+	@FXML
 	private Path pathRicchezza;
 	@FXML
 	private Path pathNobilta;
@@ -117,7 +120,7 @@ public class ViewGUI extends View implements Initializable {
 	private ImageView imgViewMontagna;
 	@FXML
 	private ImageView imgViewPercorsi;
-	
+
 	@FXML
 	private ListView<ImageView> tessereValideListView;
 	@FXML
@@ -528,6 +531,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaConsiglioRe();
 		aggiornaRicchezza();
 		aggiornaNobilta();
+		aggiornaVittoria();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
@@ -786,52 +790,119 @@ public class ViewGUI extends View implements Initializable {
 		tesseraMontagna1Image.setImage(new Image(getClass().getClassLoader()
 				.getResource("immaginiGUI/tessereCostruzione/tessera" + id5 + ".jpg").toString(), 80, 50, false,
 				false));
-		if(tabelloneClient.getRegioni().get(0).getTessereCoperte().size()>0)
-			tesseraCopertaMareImage.setImage(new Image(getClass().getClassLoader()
-					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMareRetro.jpg").toString(), 80, 50, false,
-					false));
-		if(tabelloneClient.getRegioni().get(1).getTessereCoperte().size()>0)
+		if (tabelloneClient.getRegioni().get(0).getTessereCoperte().size() > 0)
+			tesseraCopertaMareImage.setImage(new Image(
+					getClass().getClassLoader()
+							.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMareRetro.jpg").toString(),
+					80, 50, false, false));
+		if (tabelloneClient.getRegioni().get(1).getTessereCoperte().size() > 0)
 			tesseraCopertaPianuraImage.setImage(new Image(getClass().getClassLoader()
-					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzionePianuraRetro.jpg").toString(), 80, 50, false,
-					false));
-		if(tabelloneClient.getRegioni().get(2).getTessereCoperte().size()>0)
+					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzionePianuraRetro.jpg").toString(), 80,
+					50, false, false));
+		if (tabelloneClient.getRegioni().get(2).getTessereCoperte().size() > 0)
 			tesseraCopertaMontagnaImage.setImage(new Image(getClass().getClassLoader()
-					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMontagnaRetro.jpg").toString(), 80, 50, false,
-					false));
+					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMontagnaRetro.jpg").toString(), 80,
+					50, false, false));
 	}
-	
-	public void aggiornaTessereBonus(){
-		for(TesseraBonusCitta tessera: tabelloneClient.getTessereBonusCitta()){
+
+	public void aggiornaTessereBonus() {
+		for (TesseraBonusCitta tessera : tabelloneClient.getTessereBonusCitta()) {
 			String colore = ParseColor.colorIntToString(tessera.getColore().getRGB());
-			if("blue".equalsIgnoreCase(colore))
-				tesseraBonusFerroImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusFerro.jpg").toString(), 57, 42, false, false));
-			else if("red".equalsIgnoreCase(colore))
-				tesseraBonusBronzoImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusBronzo.jpg").toString(), 57, 42, false, false));
-			else if("gray".equalsIgnoreCase(colore))
-				tesseraBonusArgentoImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusArgento.jpg").toString(), 57, 42, false, false));
-			else if("yellow".equalsIgnoreCase(colore))
-				tesseraBonusOroImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusOro.jpg").toString(), 57, 42, false, false));
+			if ("blue".equalsIgnoreCase(colore))
+				tesseraBonusFerroImageView
+						.setImage(new Image(
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereBonus/tesseraBonusFerro.jpg").toString(),
+								57, 42, false, false));
+			else if ("red".equalsIgnoreCase(colore))
+				tesseraBonusBronzoImageView
+						.setImage(new Image(
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereBonus/tesseraBonusBronzo.jpg").toString(),
+								57, 42, false, false));
+			else if ("gray".equalsIgnoreCase(colore))
+				tesseraBonusArgentoImageView
+						.setImage(new Image(
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereBonus/tesseraBonusArgento.jpg").toString(),
+								57, 42, false, false));
+			else if ("yellow".equalsIgnoreCase(colore))
+				tesseraBonusOroImageView
+						.setImage(
+								new Image(
+										getClass().getClassLoader()
+												.getResource("immaginiGUI/tessereBonus/tesseraBonusOro.jpg").toString(),
+										57, 42, false, false));
 		}
-		if(tabelloneClient.getTesserePremioRe().size()>0){
-			tesseraPremioReImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraPremioRe"+tabelloneClient.getTesserePremioRe().size()+".jpg").toString(), 57, 42, false, false));
+		if (tabelloneClient.getTesserePremioRe().size() > 0) {
+			tesseraPremioReImageView.setImage(new Image(
+					getClass().getClassLoader()
+							.getResource("immaginiGUI/tessereBonus/tesseraPremioRe"
+									+ tabelloneClient.getTesserePremioRe().size() + ".jpg")
+							.toString(),
+					57, 42, false, false));
 		}
-		for(TesseraBonusRegione tessera: tabelloneClient.getTessereBonusRegione()){
+		for (TesseraBonusRegione tessera : tabelloneClient.getTessereBonusRegione()) {
 			String regione = tessera.getRegione().getNome();
-			if("mare".equalsIgnoreCase(regione))
-				tesseraBonusMareImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusMare.jpg").toString(), 79, 26, false, false));
-			else if("pianura".equalsIgnoreCase(regione))
-				tesseraBonusPianuraImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusPianura.jpg").toString(), 79, 26, false, false));
-			else if("montagna".equalsIgnoreCase(regione))
-				tesseraBonusMontagnaImageView.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/tessereBonus/tesseraBonusMontagna.jpg").toString(), 79, 26, false, false));
+			if ("mare".equalsIgnoreCase(regione))
+				tesseraBonusMareImageView.setImage(new Image(getClass().getClassLoader()
+						.getResource("immaginiGUI/tessereBonus/tesseraBonusMare.jpg").toString(), 79, 26, false,
+						false));
+			else if ("pianura".equalsIgnoreCase(regione))
+				tesseraBonusPianuraImageView
+						.setImage(new Image(
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereBonus/tesseraBonusPianura.jpg").toString(),
+								79, 26, false, false));
+			else if ("montagna".equalsIgnoreCase(regione))
+				tesseraBonusMontagnaImageView
+						.setImage(new Image(
+								getClass().getClassLoader()
+										.getResource("immaginiGUI/tessereBonus/tesseraBonusMontagna.jpg").toString(),
+								79, 26, false, false));
 		}
 	}
 
-	public void aggiornaNobilta(){
+	public void aggiornaVittoria() {
+		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
+			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
+			Rectangle recty = rettangoliVittoria.get(index);
+			if (tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(g) == 0) {
+
+				recty.setVisible(true);
+				recty.setX(
+						(3 * index) + 35
+								+ ((MoveTo) pathVittoria.getElements()
+										.get(tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(g)))
+												.getX());
+				recty.setY(
+						(3 * index) + 17
+								+ ((MoveTo) pathVittoria.getElements()
+										.get(tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(g)))
+												.getY());
+			} else {
+
+				recty.setVisible(true);
+				recty.setX(
+						(3 * index) + 35
+								+ ((LineTo) pathVittoria.getElements()
+										.get(tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(g)))
+												.getX());
+				recty.setY(
+						(3 * index) + 17
+								+ ((LineTo) pathVittoria.getElements()
+										.get(tabelloneClient.getPercorsoVittoria().posizioneAttualeGiocatore(g)))
+												.getY());
+			}
+		}
+	}
+
+	public void aggiornaNobilta() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
 			Rectangle recty = rettangoliNobilta.get(index);
 			if (tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g) == 0) {
-	
+
 				recty.setVisible(true);
 				recty.setX(85 + ((MoveTo) pathNobilta.getElements()
 						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
@@ -841,7 +912,7 @@ public class ViewGUI extends View implements Initializable {
 										.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g)))
 												.getY());
 			} else {
-	
+
 				recty.setVisible(true);
 				recty.setX(85 + ((LineTo) pathNobilta.getElements()
 						.get(tabelloneClient.getPercorsoNobilta().posizioneAttualeGiocatore(g))).getX());
@@ -859,7 +930,7 @@ public class ViewGUI extends View implements Initializable {
 			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
 			Rectangle recty = rettangoliRicchezza.get(index);
 			if (tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g) == 0) {
-	
+
 				recty.setVisible(true);
 				recty.setX(64 + ((MoveTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
@@ -869,7 +940,7 @@ public class ViewGUI extends View implements Initializable {
 										.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g)))
 												.getY());
 			} else {
-	
+
 				recty.setVisible(true);
 				recty.setX(64 + ((LineTo) pathRicchezza.getElements()
 						.get(tabelloneClient.getPercorsoRicchezza().posizioneAttualeGiocatore(g))).getX());
@@ -935,13 +1006,13 @@ public class ViewGUI extends View implements Initializable {
 			});
 			if (oggetto instanceof NomeGiaScelto) {
 				Platform.runLater(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						((Stage) confermaAzioneButton.getScene().getWindow()).close();
 					}
 				});
-				
+
 			}
 		}
 		if (oggetto instanceof Bonus) {
@@ -958,6 +1029,7 @@ public class ViewGUI extends View implements Initializable {
 	public void startClient() {
 		semInizializzazione.release();
 		primoTabellone = false;
+		rettangoliVittoria = new ArrayList<>();
 		rettangoliRicchezza = new ArrayList<>();
 		rettangoliNobilta = new ArrayList<>();
 		cartePoliticaInput = new ArrayList<>();
@@ -1020,7 +1092,7 @@ public class ViewGUI extends View implements Initializable {
 	public synchronized void aggiornaStato() {
 		if (!primoTabellone) {
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
-				//Rettangoli ricchezza
+				// Rettangoli ricchezza
 				Rectangle rectyRicch = new Rectangle(15, 15);
 				rectyRicch.setArcWidth(20);
 				rectyRicch.setArcHeight(20);
@@ -1028,17 +1100,25 @@ public class ViewGUI extends View implements Initializable {
 				rectyRicch.setVisible(false);
 				rectyRicch.setFill(ParseColor.colorAwtToFx(g.getColore()));
 				rettangoliRicchezza.add(rectyRicch);
-				
-				//rettangoli nobiltà
+
+				// rettangoli nobiltà
 				Rectangle rectyNob = new Rectangle(15, 15);
-				rectyNob = new Rectangle(15, 15);
 				rectyNob.setArcWidth(20);
 				rectyNob.setArcHeight(20);
 				anchorPaneMappa.getChildren().add(rectyNob);
 				rectyNob.setVisible(false);
 				rectyNob.setFill(ParseColor.colorAwtToFx(g.getColore()));
 				rettangoliNobilta.add(rectyNob);
-				
+
+				// rettangoli vittoria
+				Rectangle rectyVit = new Rectangle(15, 15);
+				rectyVit.setArcWidth(20);
+				rectyVit.setArcHeight(20);
+				anchorPaneMappa.getChildren().add(rectyVit);
+				rectyVit.setVisible(false);
+				rectyVit.setFill(ParseColor.colorAwtToFx(g.getColore()));
+				rettangoliVittoria.add(rectyVit);
+
 			}
 			primoTabellone = true;
 		}
@@ -1095,64 +1175,64 @@ public class ViewGUI extends View implements Initializable {
 		int num = Integer.parseInt(tabelloneClient.getNumeroMappa());
 
 		if (0 == num) {
-			mare = 	new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
-							false, true);
+			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427,
+					377, false, true);
 		} else if (1 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427,
+					377, false, true);
 		} else if (2 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427,
+					377, false, true);
 		} else if (3 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/01.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427,
+					377, false, true);
 		} else if (4 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427,
+					377, false, true);
 		} else if (5 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/02.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427,
+					377, false, true);
 		} else if (6 == num) {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/03.jpg").toString(), 427,
+					377, false, true);
 		} else {
 			mare = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/11.jpg").toString(), 427, 377,
-							false, true);
-			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426, 377,
-							false, true);
-			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427, 377,
-							false, true);
+					false, true);
+			pianura = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/12.jpg").toString(), 426,
+					377, false, true);
+			montagna = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/13.jpg").toString(), 427,
+					377, false, true);
 		}
 		percorsi = new Image(getClass().getClassLoader().getResource("immaginiGUI/mappe/percorsi.jpg").toString(), 1280,
-						263, false, true);
+				263, false, true);
 		imgViewPercorsi.setImage(percorsi);
 		imgViewMare.setImage(mare);
 		imgViewPianura.setImage(pianura);
@@ -1170,6 +1250,7 @@ public class ViewGUI extends View implements Initializable {
 			}
 		}
 	}
+
 	public synchronized void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
 		costruisciConReButton.setDisable(value);

@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.LineTo?>
@@ -26,10 +27,126 @@
 					<items>
 						<AnchorPane fx:id="anchorPaneMappa" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1280.0">
 							<children>
-								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0" />
-								<ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-								<ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0" />
-								<ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0" />
+                        <Path fx:id="pathVittoria" fill="#ffffff00" layoutX="38.0" layoutY="20.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                            <elements>
+                                <MoveTo />
+                              <LineTo x="45.0" />
+                              <LineTo x="90.0" />
+                              <LineTo x="134.0" />
+                              <LineTo x="179.0" />
+                              <LineTo x="224.0" />
+                              <LineTo x="268.0" />
+                              <LineTo x="313.0" />
+                              <LineTo x="358.0" />
+                              <LineTo x="402.0" />
+                              <LineTo x="447.0" />
+                              <LineTo x="492.0" />
+                              <LineTo x="536.0" />
+                              <LineTo x="581.0" />
+                              <LineTo x="626.0" />
+                              <LineTo x="670.0" />
+                              <LineTo x="715.0" />
+                              <LineTo x="760.0" />
+                              <LineTo x="804.0" />
+                              <LineTo x="849.0" />
+                              <LineTo x="894.0" />
+                              <LineTo x="938.0" />
+                              <LineTo x="983.0" />
+                              <LineTo x="1028.0" />
+                              <LineTo x="1072.0" />
+                              <LineTo x="1117.0" />
+                              <LineTo x="1162.0" />
+                              <LineTo x="1206.0" />
+                              <LineTo x="1206.0" y="26.0" />
+                              <LineTo x="1206.0" y="52.0" />
+                              <LineTo x="1206.0" y="78.0" />
+                              <LineTo x="1206.0" y="104.0" />
+                              <LineTo x="1206.0" y="130.0" />
+                              <LineTo x="1206.0" y="156.0" />
+                              <LineTo x="1206.0" y="182.0" />
+                              <LineTo x="1206.0" y="208.0" />
+                              <LineTo x="1206.0" y="234.0" />
+                              <LineTo x="1206.0" y="260.0" />
+                              <LineTo x="1206.0" y="287.0" />
+                              <LineTo x="1206.0" y="314.0" />
+                              <LineTo x="1206.0" y="340.0" />
+                              <LineTo x="1206.0" y="366.0" />
+                              <LineTo x="1206.0" y="392.0" />
+                              <LineTo x="1206.0" y="418.0" />
+                              <LineTo x="1206.0" y="444.0" />
+                              <LineTo x="1206.0" y="470.0" />
+                              <LineTo x="1206.0" y="496.0" />
+                              <LineTo x="1206.0" y="522.0" />
+                              <LineTo x="1206.0" y="548.0" />
+                              <LineTo x="1206.0" y="574.0" />
+                              <LineTo x="1206.0" y="600.0" />
+                              <LineTo x="1162.0" y="600.0" />
+                              <LineTo x="1117.0" y="600.0" />
+                              <LineTo x="1072.0" y="600.0" />
+                              <LineTo x="1028.0" y="600.0" />
+                              <LineTo x="983.0" y="600.0" />
+                              <LineTo x="938.0" y="600.0" />
+                              <LineTo x="894.0" y="600.0" />
+                              <LineTo x="849.0" y="600.0" />
+                              <LineTo x="804.0" y="600.0" />
+                              <LineTo x="760.0" y="600.0" />
+                              <LineTo x="715.0" y="600.0" />
+                              <LineTo x="670.0" y="600.0" />
+                              <LineTo x="626.0" y="600.0" />
+                              <LineTo x="581.0" y="600.0" />
+                              <LineTo x="536.0" y="600.0" />
+                              <LineTo x="492.0" y="600.0" />
+                              <LineTo x="447.0" y="600.0" />
+                              <LineTo x="402.0" y="600.0" />
+                              <LineTo x="358.0" y="600.0" />
+                              <LineTo x="313.0" y="600.0" />
+                              <LineTo x="268.0" y="600.0" />
+                              <LineTo x="224.0" y="600.0" />
+                              <LineTo x="179.0" y="600.0" />
+                              <LineTo x="134.0" y="600.0" />
+                              <LineTo x="90.0" y="600.0" />
+                              <LineTo x="45.0" y="600.0" />
+                              <LineTo y="600.0" />
+                              <LineTo y="574.0" />
+                              <LineTo y="548.0" />
+                              <LineTo y="521.0" />
+                              <LineTo y="494.0" />
+                              <LineTo y="468.0" />
+                              <LineTo y="442.0" />
+                              <LineTo y="416.0" />
+                              <LineTo y="390.0" />
+                              <LineTo y="364.0" />
+                              <LineTo y="338.0" />
+                              <LineTo y="312.0" />
+                              <LineTo y="286.0" />
+                              <LineTo y="260.0" />
+                              <LineTo y="234.0" />
+                              <LineTo y="208.0" />
+                              <LineTo y="182.0" />
+                              <LineTo y="156.0" />
+                              <LineTo y="130.0" />
+                              <LineTo y="104.0" />
+                              <LineTo y="78.0" />
+                              <LineTo y="52.0" />
+                              <LineTo y="26.0" />
+                            </elements>
+                        </Path>
+								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0">
+                           <image>
+                              <Image url="@../../../resources/immaginiGUI/mappe/percorsi.jpg" />
+                           </image></ImageView>
+								<ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../resources/immaginiGUI/mappe/03.jpg" />
+                           </image></ImageView>
+								<ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../resources/immaginiGUI/mappe/01.jpg" />
+                           </image></ImageView>
+								<ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../resources/immaginiGUI/mappe/02.jpg" />
+                           </image></ImageView>
 								<Button fx:id="castrum" disable="true" layoutX="294.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
 								<Button fx:id="arkon" disable="true" layoutX="104.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />
 								<Button fx:id="burgen" disable="true" layoutX="81.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Burgen" />
