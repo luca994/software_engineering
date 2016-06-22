@@ -136,6 +136,13 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 		 * regione e prendo la tessera bonus se mi spetta
 		 */
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, destinazione);
+		
+		/*
+		 * sposto il re
+		 */
+		this.getGioco().getTabellone().getRe().getCitta().setRe(null);
+		destinazione.setRe(this.getGioco().getTabellone().getRe());
+		this.getGioco().getTabellone().getRe().setCitta(destinazione);
 
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}

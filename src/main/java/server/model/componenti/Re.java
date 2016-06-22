@@ -81,4 +81,11 @@ public class Re implements Serializable{
 		return citta;
 	}
 
+	/**
+	 * @param citta the citta to set
+	 */
+	public void setCitta(Citta citta) {
+		this.citta = citta;
+	}
+	
 }

@@ -453,7 +453,7 @@ public class Tabellone implements Serializable{
 	 *            the city where the player has built the emporium
 	 */
 	public void prendiTesseraBonus(Giocatore giocatore, Citta citta) {
-		if (verificaEmporioColoreBonus(giocatore, citta)) {
+		if (verificaEmporioColoreBonus(giocatore, citta) && !"juvelar".equalsIgnoreCase(citta.getNome())) {
 			for (TesseraBonusCitta t : tessereBonusCitta) {
 				if (citta.getColore().equals(t.getColore())) {
 					t.eseguiBonus(giocatore);

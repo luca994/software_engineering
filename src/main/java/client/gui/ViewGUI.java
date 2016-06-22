@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -56,6 +57,7 @@ import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
 import server.model.componenti.Jolly;
 import server.model.componenti.OggettoVendibile;
+import server.model.componenti.Regione;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
@@ -112,6 +114,7 @@ public class ViewGUI extends View implements Initializable {
 	private Path pathRicchezza;
 	@FXML
 	private Path pathNobilta;
+
 	@FXML
 	private ImageView imgViewMare;
 	@FXML
@@ -120,6 +123,8 @@ public class ViewGUI extends View implements Initializable {
 	private ImageView imgViewMontagna;
 	@FXML
 	private ImageView imgViewPercorsi;
+	@FXML
+	private ImageView imgViewRe;
 
 	@FXML
 	private ListView<ImageView> tessereValideListView;
@@ -532,7 +537,21 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaRicchezza();
 		aggiornaNobilta();
 		aggiornaVittoria();
+		aggiornaRe();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
+	}
+
+	public void aggiornaRe() {
+		for (Regione r : tabelloneClient.getRegioni())
+			for (Citta c : r.getCitta())
+				if (c.getRe() != null)
+					for (Node n : anchorPaneMappa.getChildren())
+						if (n.getId() != null)
+							if (n.getId().contains(c.getNome().toLowerCase())) {
+								imgViewRe.setX(n.getLayoutX());
+								imgViewRe.setY(n.getLayoutY());
+								System.out.println(n.getLayoutX());
+							}
 	}
 
 	public void aggiornaAssistenti() {
@@ -1039,6 +1058,8 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		turnoCambiato = true;
+		imgViewRe.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/corona.png").toString(), 50,
+				50, false, false));
 		semInizializzazione = new Semaphore(0);
 		labelNumeroAssistenti.setDisable(true);
 		cartePoliticaListView.setDisable(true);
