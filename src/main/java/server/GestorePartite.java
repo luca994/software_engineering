@@ -128,7 +128,7 @@ public class GestorePartite implements Runnable {
 			giocatori.add(giocatore);
 			serverSocketView.inviaOggetto("Giocatore aggiunto alla partita");
 		} catch (NomeGiaScelto e) {
-			LOG.log(Level.SEVERE, "Nome già utilizzato, giocatore non aggiunto",e);
+			LOG.log(Level.INFO, "Nome già utilizzato, giocatore non aggiunto");
 		} catch (IOException e1) {
 			LOG.log(Level.SEVERE, "CONNESSIONE COL CLIENT NON STABILITA",e1);
 		} 

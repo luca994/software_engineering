@@ -38,6 +38,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import server.model.Giocatore;
 import server.model.ParseColor;
@@ -420,8 +421,7 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniAzione(true);
 		confermaAzioneButton.setDisable(false);
 		labelAzioneDaFare.setText(
-				"Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere,"
-						+ "\n" + " poi clicca su conferma azione");
+				"Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
 		consigliereDisponibileComboBox.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		azioneFactory.setTipoAzione("2");
@@ -934,7 +934,14 @@ public class ViewGUI extends View implements Initializable {
 				}
 			});
 			if (oggetto instanceof NomeGiaScelto) {
-				((Stage) confermaAzioneButton.getScene().getWindow()).close();
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						((Stage) confermaAzioneButton.getScene().getWindow()).close();
+					}
+				});
+				
 			}
 		}
 		if (oggetto instanceof Bonus) {
@@ -967,6 +974,7 @@ public class ViewGUI extends View implements Initializable {
 		tessereValideListView.setDisable(true);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenAcquistoMercato.fxml"));
 		stageMercato = new Stage();
+		stageMercato.initStyle(StageStyle.UNDECORATED);
 		stageMercato.setTitle("Mercato");
 		try {
 			stageMercato.setScene(new Scene((AnchorPane) loader.load()));

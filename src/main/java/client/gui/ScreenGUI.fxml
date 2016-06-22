@@ -11,7 +11,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.LineTo?>
@@ -27,10 +26,7 @@
 					<items>
 						<AnchorPane fx:id="anchorPaneMappa" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1280.0">
 							<children>
-								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0">
-                           <image>
-                              <Image url="@../../../resources/immaginiGUI/mappe/percorsi.jpg" />
-                           </image></ImageView>
+								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0" />
 								<ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 								<ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0" />
 								<ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0" />
