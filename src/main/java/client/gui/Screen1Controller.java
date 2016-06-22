@@ -97,13 +97,6 @@ public class Screen1Controller implements Initializable {
 		azioneConfermaDati();
 	}
 
-	@FXML
-	public void buttonPressed(KeyEvent e) {
-		if (e.getCode() == KeyCode.ENTER) {
-			azioneConfermaDati();
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

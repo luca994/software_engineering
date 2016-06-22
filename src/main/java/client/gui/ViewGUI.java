@@ -22,7 +22,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -104,9 +103,10 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<Color> consiglioPianura = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioMontagna = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioRe = FXCollections.observableArrayList();
+	
 
 	@FXML
-	private ComboBox<Color> consigliereDisponibileComboBox;
+	private ListView<Color> consiglieriDisponibiliListView;
 
 	@FXML
 	private Path pathVittoria;
@@ -308,9 +308,7 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniConsigli(true);
 		cartePoliticaListView.setDisable(true);
 		confermaAzioneButton.setDisable(true);
-		consigliereDisponibileComboBox.valueProperty().set(null);
-		consigliereDisponibileComboBox.setDisable(true);
-		consigliereDisponibileComboBox.setValue(null);
+		consiglieriDisponibiliListView.setDisable(true);
 		cittaInput = null;
 		tesseraInput = null;
 		disabilitazioneBottoniCitta(true);
@@ -386,8 +384,7 @@ public class ViewGUI extends View implements Initializable {
 			cartePoliticaListView.setDisable(true);
 			confermaAzioneButton.setDisable(true);
 			annullaAzioneButton.setDisable(true);
-			consigliereDisponibileComboBox.setDisable(true);
-			consigliereDisponibileComboBox.valueProperty().set(null);
+			consiglieriDisponibiliListView.setDisable(true);
 			disabilitazioneBottoniAzione(false);
 		}
 		cittaInput = null;
@@ -405,7 +402,7 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniAzione(true);
 		labelAzioneDaFare.setText(
 				"Clicca sul consiglio nel quale vuoi eleggere il consigliere e scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
-		consigliereDisponibileComboBox.setDisable(false);
+		consiglieriDisponibiliListView.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		annullaAzioneButton.setDisable(false);
 	}
@@ -461,7 +458,7 @@ public class ViewGUI extends View implements Initializable {
 		confermaAzioneButton.setDisable(false);
 		labelAzioneDaFare.setText(
 				"Clicca sul consiglio nel quale vuoi eleggere il consigliere scegli il consigliere che vuoi eleggere, poi clicca su conferma azione");
-		consigliereDisponibileComboBox.setDisable(false);
+		consiglieriDisponibiliListView.setDisable(false);
 		disabilitazioneBottoniConsigli(false);
 		azioneFactory.setTipoAzione("2");
 		annullaAzioneButton.setDisable(false);
@@ -515,8 +512,8 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	@FXML
-	private void handleConsigliereComboBox(ActionEvent event) {
-		int posizione = ((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
+	private void handleConsiglieriDisponibiliListView(MouseEvent event) {
+		int posizione = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		consigliereInput = tabelloneClient.getConsiglieriDisponibili().get(posizione);
 	}
 
@@ -763,53 +760,22 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void aggiornaConsiglieriDisponibili() {
-
-		anchorPaneAzioni.getChildren().remove(consigliereDisponibileComboBox);
-		consigliereDisponibileComboBox = new ComboBox<Color>();  // do whatever else you need to format your ComboBox
-		consigliereDisponibileComboBox.setDisable(true);
-		consigliereDisponibileComboBox.setId("consigliereDisponibileComboBox");
-		consigliereDisponibileComboBox.setLayoutX(142.0);
-		consigliereDisponibileComboBox.setLayoutY(201.0);
-		consigliereDisponibileComboBox.setOnAction(this::handleConsigliereComboBox);
-		consigliereDisponibileComboBox.setPrefHeight(25.0);
-		consigliereDisponibileComboBox.setPrefWidth(93.0);
-		anchorPaneAzioni.getChildren().add(consigliereDisponibileComboBox);
 		
 		consiglieriDisponibili.clear();
 
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
 			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
-		consigliereDisponibileComboBox.setItems(consiglieriDisponibili);
+		consiglieriDisponibiliListView.setItems(consiglieriDisponibili);
 
-		consigliereDisponibileComboBox.setButtonCell(new ListCell<Color>() {
-			private final Rectangle rectangle;
-			{
-				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-				rectangle = new Rectangle(60, 20);
-			}
-
-			@Override
-			protected void updateItem(Color item, boolean empty) {
-				super.updateItem(item, empty);
-
-				if (item == null || empty) {
-					setGraphic(null);
-				} else {
-					rectangle.setFill(item);
-					setGraphic(rectangle);
-				}
-			}
-		});
-
-		consigliereDisponibileComboBox.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+		consiglieriDisponibiliListView.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
 					private final Rectangle rectangle;
 					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-						rectangle = new Rectangle(60, 20);
+						rectangle = new Rectangle(20, 20);
 					}
 
 					@Override
