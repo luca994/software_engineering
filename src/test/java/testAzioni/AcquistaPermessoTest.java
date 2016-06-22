@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import eccezione.CartePoliticaIncorrette;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
@@ -97,8 +98,7 @@ public class AcquistaPermessoTest {
 	 * @throws FuoriDalLimiteDelPercorso
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa1Consigliere()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa1Consigliere() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -143,14 +143,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa2Consiglieri()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa2Consiglieri() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -195,14 +191,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa3Consiglieri()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa3Consiglieri() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -248,14 +240,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa4Consiglieri()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa4Consiglieri() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -302,14 +290,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa4ConsiglieriCon4Jolly()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa4ConsiglieriCon4Jolly() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -356,14 +340,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneSoddisfa2ConsiglieriCon2Jolly()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa2ConsiglieriCon2Jolly() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -408,14 +388,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test(expected = FuoriDalLimiteDelPercorso.class)
-	public void testEseguiAzioneSoddisfa1ConsiglieriCon1Jolly()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa1ConsiglieriCon1Jolly() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();
@@ -455,14 +431,10 @@ public class AcquistaPermessoTest {
 	 * {@link server.model.azione.AcquistaPermesso#eseguiAzione(server.model.Giocatore)}
 	 * .
 	 * 
-	 * @throws EmporioGiaCostruito
-	 * @throws NumeroAiutantiIncorretto
-	 * @throws CartePoliticaIncorrette
-	 * @throws FuoriDalLimiteDelPercorso
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test(expected = CartePoliticaIncorrette.class)
-	public void testEseguiAzioneSoddisfa0Consiglieri()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSoddisfa0Consiglieri() throws EccezioneConsiglioDeiQuattro {
 		/* Imposto tutti i parametri dell'azione */
 
 		List<CartaPolitica> carteTest = new ArrayList<>();

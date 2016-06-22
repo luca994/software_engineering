@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.gui.MessaggioChat;
-import eccezione.CartePoliticaIncorrette;
-import eccezione.EmporioGiaCostruito;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.FuoriDalLimiteDelPercorso;
-import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;
@@ -47,8 +45,9 @@ public class Controller implements Observer<Object, Bonus> {
 	public void updateBonus(Bonus cambiamento, Giocatore giocatore) {
 		if (cambiamento instanceof BonusGettoneCitta) {
 			try {
-				if (((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus()!=null) {
-					Citta citta = this.gioco.getTabellone().cercaCitta(((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus().getNome());
+				if (((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus() != null) {
+					Citta citta = this.gioco.getTabellone()
+							.cercaCitta(((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus().getNome());
 					if (citta == null) {
 						((BonusGettoneCitta) cambiamento).setCittaGiusta(false);
 						gioco.notificaObservers("nome città non corretto", giocatore);
@@ -122,8 +121,7 @@ public class Controller implements Observer<Object, Bonus> {
 						if (giocatore.getStatoGiocatore() instanceof TurnoNormale)
 							gioco.notificaObservers(gioco.getTabellone(), giocatore);
 					}
-				} catch (FuoriDalLimiteDelPercorso | CartePoliticaIncorrette | NumeroAiutantiIncorretto
-						| EmporioGiaCostruito e) {
+				} catch (EccezioneConsiglioDeiQuattro e) {
 					gioco.notificaObservers(e, giocatore);
 					gioco.notificaObservers(gioco.getTabellone(), giocatore);
 				}
@@ -131,7 +129,7 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")){
+		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")) {
 			giocatore.setStatoGiocatore(new Sospeso(giocatore));
 		}
 		if (oggetto instanceof String && ((String) oggetto).equals("-")
@@ -165,7 +163,7 @@ public class Controller implements Observer<Object, Bonus> {
 
 	@Override
 	public void update(Object cambiamento) {
-		if (cambiamento instanceof MessaggioChat){
+		if (cambiamento instanceof MessaggioChat) {
 			gioco.notificaObservers(cambiamento);
 		}
 	}

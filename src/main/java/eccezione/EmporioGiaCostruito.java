@@ -1,6 +1,6 @@
 package eccezione;
 
-public class EmporioGiaCostruito extends Exception {
+public class EmporioGiaCostruito extends EccezioneConsiglioDeiQuattro {
 
 	private static final long serialVersionUID = -7538637834425289247L;
 

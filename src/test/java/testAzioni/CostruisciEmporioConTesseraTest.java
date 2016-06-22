@@ -12,9 +12,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import eccezione.CartePoliticaIncorrette;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -54,8 +53,7 @@ public class CostruisciEmporioConTesseraTest {
 	}
 
 	@Test
-	public void testEseguiAzioneQuandoNonCeLEmporioEIlGiocatorePossiedeLaTessera()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneQuandoNonCeLEmporioEIlGiocatorePossiedeLaTessera() throws EccezioneConsiglioDeiQuattro {
 		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
 		giocoTester.getTabellone().getRegioni().get(0)
@@ -85,7 +83,7 @@ public class CostruisciEmporioConTesseraTest {
 
 	@Test(expected = EmporioGiaCostruito.class)
 	public void testEseguiAzioneQuandoLEmporioEGiaCostruitoEIlGiocatorePossiedeLaTessera()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
 		giocoTester.getTabellone().getRegioni().get(0)
@@ -117,8 +115,7 @@ public class CostruisciEmporioConTesseraTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testEseguiAzioneConGiocatoreNullo()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneConGiocatoreNullo() throws EccezioneConsiglioDeiQuattro {
 		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
 		giocoTester.getTabellone().getRegioni().get(0)
@@ -148,8 +145,7 @@ public class CostruisciEmporioConTesseraTest {
 	}
 
 	@Test(expected = NumeroAiutantiIncorretto.class)
-	public void testEseguiAzioneSenzaSufficientiAiutanti()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneSenzaSufficientiAiutanti() throws EccezioneConsiglioDeiQuattro {
 		// Aggiungo una tessera valida a g1
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));
 		giocoTester.getTabellone().getRegioni().get(0)
@@ -183,8 +179,7 @@ public class CostruisciEmporioConTesseraTest {
 	}
 
 	@Test
-	public void testAggiuntaPuntiQuandoGliEmporiSonoFiniti()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testAggiuntaPuntiQuandoGliEmporiSonoFiniti() throws EccezioneConsiglioDeiQuattro {
 		// Aggiungo una tessera valida a g1 e sostituisco il bonus con uno che
 		// non modifica i punti vittoria
 		g1.getTessereValide().add(giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0));

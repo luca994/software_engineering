@@ -1,12 +1,10 @@
 package eccezione;
 
-public class FuoriDalLimiteDelPercorso extends Exception {
+public class FuoriDalLimiteDelPercorso extends EccezioneConsiglioDeiQuattro {
 
 
 	private static final long serialVersionUID = 1875792286778184877L;
 
-	public FuoriDalLimiteDelPercorso() {
-	}
 
 	public FuoriDalLimiteDelPercorso(String message) {
 		super(message);

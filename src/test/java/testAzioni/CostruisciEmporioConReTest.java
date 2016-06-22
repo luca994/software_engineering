@@ -17,7 +17,7 @@ import java.util.Queue;
 import org.junit.Before;
 import org.junit.Test;
 
-import eccezione.CartePoliticaIncorrette;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
@@ -58,13 +58,11 @@ public class CostruisciEmporioConReTest {
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneValidaSpesa9Soldi() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneValidaSpesa9Soldi() throws EccezioneConsiglioDeiQuattro {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
 
@@ -85,16 +83,16 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"));
 		creaAzioniTester.setTipoAzione("1");
 		azioneTester = creaAzioniTester.createAzione();
-		//Tolgo il bonus dalla citta indur
+		// Tolgo il bonus dalla citta indur
 		giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
-		
+
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
+		assertEquals(10, g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
-		assertEquals(9,g1.getEmporiRimasti());
-		assertEquals(1,giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		assertEquals(9, g1.getEmporiRimasti());
+		assertEquals(1, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
 
 	}
 
@@ -102,13 +100,11 @@ public class CostruisciEmporioConReTest {
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
-	@Test(expected=FuoriDalLimiteDelPercorso.class)
-	public void testEseguiAzioneValidaSpesa12Soldi() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	@Test(expected = FuoriDalLimiteDelPercorso.class)
+	public void testEseguiAzioneValidaSpesa12Soldi() throws EccezioneConsiglioDeiQuattro {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
 
@@ -129,28 +125,25 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"));
 		creaAzioniTester.setTipoAzione("1");
 		azioneTester = creaAzioniTester.createAzione();
-		//Tolgo il bonus dalla citta indur
+		// Tolgo il bonus dalla citta indur
 		giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
-		
+
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
+		assertEquals(10, g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
 	}
-	
-	
+
 	/**
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
 	@Test
-	public void testEseguiAzioneValidaSpesa10Soldi() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	public void testEseguiAzioneValidaSpesa10Soldi() throws EccezioneConsiglioDeiQuattro {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
 
@@ -171,27 +164,24 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("juvelar"));
 		creaAzioniTester.setTipoAzione("1");
 		azioneTester = creaAzioniTester.createAzione();
-	
-		
+
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
+		assertEquals(10, g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
-		assertEquals(9,g1.getEmporiRimasti());
+		assertEquals(9, g1.getEmporiRimasti());
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
-	@Test(expected=NumeroAiutantiIncorretto.class)
-	public void testEseguiAzioneSenzaAiutantiSuCittaConEmporioAvversario() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	@Test(expected = NumeroAiutantiIncorretto.class)
+	public void testEseguiAzioneSenzaAiutantiSuCittaConEmporioAvversario() throws EccezioneConsiglioDeiQuattro {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
 
@@ -206,7 +196,7 @@ public class CostruisciEmporioConReTest {
 		consiglieri.add(new Consigliere(Color.black));
 		consiglieri.add(new Consigliere(Color.magenta));
 
-		//Azzero aiutanti
+		// Azzero aiutanti
 		g1.setAssistenti(new ArrayList<>());
 		giocoTester.getTabellone().getRe().getConsiglio().setConsiglieri(consiglieri);
 
@@ -214,28 +204,26 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"));
 		creaAzioniTester.setTipoAzione("1");
 		azioneTester = creaAzioniTester.createAzione();
-		//Tolgo il bonus dalla citta indur
+		// Tolgo il bonus dalla citta indur
 		giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
 		giocoTester.getTabellone().cercaCitta("indur").getEmpori().add(new Giocatore("prova"));
-		
+
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
+		assertEquals(10, g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
-	@Test(expected=EmporioGiaCostruito.class)
-	public void testEseguiAzioneCostruisciSuCittaCheHaGiaEmporioGiocatore() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+	@Test(expected = EmporioGiaCostruito.class)
+	public void testEseguiAzioneCostruisciSuCittaCheHaGiaEmporioGiocatore() throws EccezioneConsiglioDeiQuattro {
 		// Setup carte
 		List<CartaPolitica> carteTest = new ArrayList<>();
 
@@ -250,7 +238,7 @@ public class CostruisciEmporioConReTest {
 		consiglieri.add(new Consigliere(Color.black));
 		consiglieri.add(new Consigliere(Color.magenta));
 
-		//Azzero aiutanti
+		// Azzero aiutanti
 		g1.setAssistenti(new ArrayList<>());
 		giocoTester.getTabellone().getRe().getConsiglio().setConsiglieri(consiglieri);
 
@@ -258,57 +246,52 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"));
 		creaAzioniTester.setTipoAzione("1");
 		azioneTester = creaAzioniTester.createAzione();
-		//Tolgo il bonus dalla citta indur
+		// Tolgo il bonus dalla citta indur
 		giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
 		giocoTester.getTabellone().cercaCitta("indur").getEmpori().add(g1);
-		
+
 		g1.getStatoGiocatore().prossimoStato();
 		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
 		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
+		assertEquals(10, g1.getEmporiRimasti());
 		azioneTester.eseguiAzione(g1);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#eseguiAzione(server.model.Giocatore)}
 	 * .
-	 * @throws EmporioGiaCostruito 
-	 * @throws NumeroAiutantiIncorretto 
-	 * @throws CartePoliticaIncorrette 
-	 * @throws FuoriDalLimiteDelPercorso 
+	 * 
+	 * @throws EccezioneConsiglioDeiQuattro
 	 */
-	/*@Test(expected=CartePoliticaIncorrette.class)
-	public void testEseguiAzioneSenzaCartePolitica() throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
-		// Setup carte
-		List<CartaPolitica> carteTest = new ArrayList<>();
+	/*
+	 * @Test(expected=CartePoliticaIncorrette.class) public void
+	 * testEseguiAzioneSenzaCartePolitica() throws EccezioneConsiglioDeiQuattro
+	 * { // Setup carte List<CartaPolitica> carteTest = new ArrayList<>();
+	 * 
+	 * // Setup consiglieri Queue<Consigliere> consiglieri = new LinkedList<>();
+	 * 
+	 * consiglieri.add(new Consigliere(Color.white)); consiglieri.add(new
+	 * Consigliere(Color.white)); consiglieri.add(new Consigliere(Color.black));
+	 * consiglieri.add(new Consigliere(Color.magenta));
+	 * 
+	 * //Azzero aiutanti g1.setAssistenti(new ArrayList<>());
+	 * giocoTester.getTabellone().getRe().getConsiglio().setConsiglieri(
+	 * consiglieri);
+	 * 
+	 * creaAzioniTester.setCartePolitica(carteTest);
+	 * creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"))
+	 * ; creaAzioniTester.setTipoAzione("1"); azioneTester =
+	 * creaAzioniTester.createAzione(); //Tolgo il bonus dalla citta indur
+	 * giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
+	 * 
+	 * g1.getStatoGiocatore().prossimoStato(); assertTrue(g1.getStatoGiocatore()
+	 * instanceof TurnoNormale); assertEquals(10,
+	 * giocoTester.getTabellone().getPercorsoRicchezza().
+	 * posizioneAttualeGiocatore(g1)); assertEquals(10,g1.getEmporiRimasti());
+	 * azioneTester.eseguiAzione(g1); }
+	 */
 
-		// Setup consiglieri
-		Queue<Consigliere> consiglieri = new LinkedList<>();
-
-		consiglieri.add(new Consigliere(Color.white));
-		consiglieri.add(new Consigliere(Color.white));
-		consiglieri.add(new Consigliere(Color.black));
-		consiglieri.add(new Consigliere(Color.magenta));
-
-		//Azzero aiutanti
-		g1.setAssistenti(new ArrayList<>());
-		giocoTester.getTabellone().getRe().getConsiglio().setConsiglieri(consiglieri);
-
-		creaAzioniTester.setCartePolitica(carteTest);
-		creaAzioniTester.setCitta(giocoTester.getTabellone().cercaCitta("indur"));
-		creaAzioniTester.setTipoAzione("1");
-		azioneTester = creaAzioniTester.createAzione();
-		//Tolgo il bonus dalla citta indur
-		giocoTester.getTabellone().cercaCitta("indur").setBonus(new HashSet<>());
-		
-		g1.getStatoGiocatore().prossimoStato();
-		assertTrue(g1.getStatoGiocatore() instanceof TurnoNormale);
-		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
-		assertEquals(10,g1.getEmporiRimasti());
-		azioneTester.eseguiAzione(g1);
-	}*/
-	
 	/**
 	 * Test method for
 	 * {@link server.model.azione.CostruisciEmporioConRe#CostruisciEmporioConRe(server.model.Gioco, java.util.List, server.model.Citta)}
@@ -329,16 +312,5 @@ public class CostruisciEmporioConReTest {
 		creaAzioniTester.setTipoAzione("1");
 		assertNotNull(azioneTester = creaAzioniTester.createAzione());
 	}
-
-	/**
-	 * Test method for
-	 * {@link server.model.azione.CostruisciEmporioConRe#CostruisciEmporioConRe(server.model.Gioco, java.util.List, server.model.Citta)}
-	 * .
-	 */
-	/*@Test
-	public void testCostruisciEmporioConReInputNull() {
-		creaAzioniTester.setTipoAzione("1");
-		assertNotNull(azioneTester = creaAzioniTester.createAzione());
-	}*/
 
 }
