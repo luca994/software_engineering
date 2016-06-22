@@ -9,9 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import eccezione.CartePoliticaIncorrette;
-import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -47,7 +45,7 @@ public class TestCambioTessereCostruzione {
 
 	@Test(expected = NumeroAiutantiIncorretto.class)
 	public void testEseguiAzioneSenzaAvereIlNumeroDiAiutantiCorretto()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("5");
 		creaAzioniTester.setRegione(this.giocoTester.getTabellone().getRegioneDaNome("mare"));
 		azioneTester = creaAzioniTester.createAzione();
@@ -58,7 +56,7 @@ public class TestCambioTessereCostruzione {
 
 	@Test
 	public void testEseguiAzioneConNumeroDiAiutantiCorretto()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("5");
 		creaAzioniTester.setRegione(this.giocoTester.getTabellone().getRegioneDaNome("mare"));
 		azioneTester = creaAzioniTester.createAzione();
@@ -84,7 +82,7 @@ public class TestCambioTessereCostruzione {
 
 	@Test(expected = NullPointerException.class)
 	public void testCambioTessereCostruzioneConGiocatoreNullo()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("5");
 		creaAzioniTester.setRegione(this.giocoTester.getTabellone().getRegioneDaNome("mare"));
 		azioneTester = creaAzioniTester.createAzione();

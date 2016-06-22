@@ -3,6 +3,7 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
+import eccezione.CittaNonCorretta;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
@@ -42,15 +43,20 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 	 *             if the player builds an emporium in a city where there are
 	 *             already other emporiums of other player and has no helpers
 	 *             needed to build
+	 * @throws CittaNonCorretta
+	 *             if the city selected in which you want to build an emporium
+	 *             is not in TesseraCostruzione
 	 * 
 	 * @throws NullPointerException
 	 *             if the player is null
 	 */
 	@Override
-	public void eseguiAzione(Giocatore giocatore) throws EmporioGiaCostruito, NumeroAiutantiIncorretto {
+	public void eseguiAzione(Giocatore giocatore)
+			throws EmporioGiaCostruito, NumeroAiutantiIncorretto, CittaNonCorretta {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-
+		if (!tessera.verifyCitta(citta))
+			throw new CittaNonCorretta("La citta selezionata non è presente nella tessera");
 		if (citta.getEmpori().contains(giocatore))
 			throw new EmporioGiaCostruito("Hai già un Emporio in questa città");
 		if (citta.getEmpori().size() > giocatore.getAssistenti().size())
@@ -63,9 +69,12 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 		giocatore.spostaTesseraValidaInTesseraUsata(tessera);
 		giocatore.decrementaEmporiRimasti();
 
-		/* Se il giocatore ha finito gli empori guadagna 3 punti vittoria,
-		l'eccezione FuoriDalLimiteDelPercorso diventa unchecked perchè non deve
-		essere lanciata visto che il giocatore si sposta di un numero di passi positivo */
+		/*
+		 * Se il giocatore ha finito gli empori guadagna 3 punti vittoria,
+		 * l'eccezione FuoriDalLimiteDelPercorso diventa unchecked perchè non
+		 * deve essere lanciata visto che il giocatore si sposta di un numero di
+		 * passi positivo
+		 */
 		if (giocatore.getEmporiRimasti() == 0) {
 			try {
 				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);

@@ -1,6 +1,8 @@
 package server.model.azione;
 
 import eccezione.CartePoliticaIncorrette;
+import eccezione.CittaNonCorretta;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.EmporioGiaCostruito;
 import eccezione.FuoriDalLimiteDelPercorso;
 import eccezione.NumeroAiutantiIncorretto;
@@ -28,8 +30,9 @@ public abstract class Azione {
 	 * @throws CartePoliticaIncorrette 
 	 * @throws NumeroAiutantiIncorretto 
 	 * @throws EmporioGiaCostruito 
+	 * @throws CittaNonCorretta 
 	 */
-	public abstract void eseguiAzione(Giocatore giocatore) throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito;
+	public abstract void eseguiAzione(Giocatore giocatore) throws EccezioneConsiglioDeiQuattro;
 
 	/**
 	 * @return the gioco

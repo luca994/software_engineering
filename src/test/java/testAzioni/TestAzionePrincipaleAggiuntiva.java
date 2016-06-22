@@ -8,9 +8,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import eccezione.CartePoliticaIncorrette;
-import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
+import eccezione.EccezioneConsiglioDeiQuattro;
 import eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
@@ -45,7 +43,7 @@ public class TestAzionePrincipaleAggiuntiva {
 
 	@Test(expected = NumeroAiutantiIncorretto.class)
 	public void testEseguiAzioneSenzaAvereIlNumeroDiAiutantiCorretto()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("7");
 		azioneTester = creaAzioniTester.createAzione();
 		g1.getStatoGiocatore().prossimoStato();
@@ -54,7 +52,7 @@ public class TestAzionePrincipaleAggiuntiva {
 
 	@Test
 	public void testEseguiAzioneConNumeroDiAiutantiCorretto()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("7");
 		azioneTester = creaAzioniTester.createAzione();
 		g1.getAssistenti().add(new Assistente());
@@ -69,7 +67,7 @@ public class TestAzionePrincipaleAggiuntiva {
 
 	@Test(expected= NullPointerException.class)
 	public void testEseguiAzioneConGiocatoreNullo()
-			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
+			throws EccezioneConsiglioDeiQuattro {
 		creaAzioniTester.setTipoAzione("7");
 		azioneTester = creaAzioniTester.createAzione();
 		azioneTester.eseguiAzione(null);

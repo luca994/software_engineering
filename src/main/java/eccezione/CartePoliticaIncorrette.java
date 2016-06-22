@@ -1,6 +1,6 @@
 package eccezione;
 
-public class CartePoliticaIncorrette extends Exception {
+public class CartePoliticaIncorrette extends EccezioneConsiglioDeiQuattro {
 
 	private static final long serialVersionUID = -5077267466359299485L;
 

@@ -1,6 +1,6 @@
 package eccezione;
 
-public class NomeGiaScelto extends Exception {
+public class NomeGiaScelto extends EccezioneConsiglioDeiQuattro {
 
 	/**
 	 * 
@@ -10,7 +10,7 @@ public class NomeGiaScelto extends Exception {
 	public NomeGiaScelto() {
 		super();
 	}
-
+	
 	public NomeGiaScelto(String arg0, Throwable arg1) {
 		super(arg0, arg1);
 	}
@@ -22,4 +22,5 @@ public class NomeGiaScelto extends Exception {
 	public NomeGiaScelto(Throwable arg0) {
 		super(arg0);
 	}
+
 }

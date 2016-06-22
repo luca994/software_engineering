@@ -35,7 +35,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 
-
 /**
  * @author Massimiliano Ventura
  *
@@ -47,8 +46,10 @@ public class Screen1Controller implements Initializable {
 
 	private ViewGUI view;
 	private Parent rootGUI;
+
 	/**
-	 * @param rootGUI the rootGUI to set
+	 * @param rootGUI
+	 *            the rootGUI to set
 	 */
 	public void setRootGUI(Parent rootGUI) {
 		this.rootGUI = rootGUI;
@@ -68,8 +69,8 @@ public class Screen1Controller implements Initializable {
 	private ChoiceBox<String> tipoConnessioneChoiceBox;
 	@FXML
 	private ChoiceBox<String> sceltaMappaChoiceBox;
-	
-	private void azioneConfermaDati(){
+
+	private void azioneConfermaDati() {
 		if (controlloCompletamentoCampi())
 			if (impostaConnessione()) {
 				Platform.runLater(new Runnable() {
@@ -77,15 +78,15 @@ public class Screen1Controller implements Initializable {
 					@Override
 					public void run() {
 						Stage stageGUI = new Stage();
-                        Scene scene = new Scene(rootGUI);
-                       
-                        scene.getStylesheets().add(getClass().getResource("stileGUI.css").toExternalForm());
+						Scene scene = new Scene(rootGUI);
 
-                        stageGUI.setScene(scene);
-                        stageGUI.setTitle("Gioco:vediamo se va");
-                        stageGUI.show();
+						scene.getStylesheets().add(getClass().getResource("stileGUI.css").toExternalForm());
+
+						stageGUI.setScene(scene);
+						stageGUI.setTitle("Council Of Four");
+						stageGUI.show();
 					}
-                 });
+				});
 				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
 				stageScreen1.close();
 			}
@@ -95,14 +96,14 @@ public class Screen1Controller implements Initializable {
 	private void handleConfirmButtonAction(ActionEvent event) {
 		azioneConfermaDati();
 	}
+
 	@FXML
-	public void buttonPressed(KeyEvent e)
-	{
-	    if(e.getCode()==KeyCode.ENTER)
-	    {
-	    	azioneConfermaDati();
-	    }
+	public void buttonPressed(KeyEvent e) {
+		if (e.getCode() == KeyCode.ENTER) {
+			azioneConfermaDati();
+		}
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -111,7 +112,7 @@ public class Screen1Controller implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//Setup sfondo
+		// Setup sfondo
 		BackgroundImage myBI = new BackgroundImage(
 				new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500,
 						377, false, true),
@@ -141,7 +142,7 @@ public class Screen1Controller implements Initializable {
 			scelta = 0;
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(view);
 		try {
-			
+
 			view.setConnessione(connessioneFactory.createConnessione(scelta, ipTextField.getText(),
 					Integer.parseInt(portaTextField.getText()), nomeUtenteTextField.getText(),
 					sceltaMappaChoiceBox.getValue()));
@@ -193,7 +194,7 @@ public class Screen1Controller implements Initializable {
 	 * @param view2
 	 */
 	public void setView(ViewGUI view) {
-		this.view=view;		
+		this.view = view;
 	}
-	
+
 }
