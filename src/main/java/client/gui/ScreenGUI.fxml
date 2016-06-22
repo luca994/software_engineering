@@ -11,7 +11,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.LineTo?>
@@ -131,22 +130,24 @@
                               <LineTo y="26.0" />
                             </elements>
                         </Path>
-								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0">
-                           <image>
-                              <Image url="@../../../resources/immaginiGUI/mappe/percorsi.jpg" />
-                           </image></ImageView>
-								<ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <image>
-                              <Image url="@../../../resources/immaginiGUI/mappe/03.jpg" />
-                           </image></ImageView>
-								<ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0">
-                           <image>
-                              <Image url="@../../../resources/immaginiGUI/mappe/01.jpg" />
-                           </image></ImageView>
-								<ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0">
-                           <image>
-                              <Image url="@../../../resources/immaginiGUI/mappe/02.jpg" />
-                           </image></ImageView>
+								<ImageView fx:id="imgViewPercorsi" fitHeight="263.0" fitWidth="1280.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="377.0" />
+								<ImageView fx:id="imgViewMontagna" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="853.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+								<ImageView fx:id="imgViewMare" fitHeight="377.0" fitWidth="427.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="853.0" AnchorPane.topAnchor="0.0" />
+								<ImageView fx:id="imgViewPianura" fitHeight="377.0" fitWidth="426.0" pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="427.0" AnchorPane.rightAnchor="1200.0" AnchorPane.topAnchor="0.0" />
+                        <ImageView fx:id="gettoneArkon" fitHeight="35.0" fitWidth="56.0" layoutX="88.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneBurgen" fitHeight="35.0" fitWidth="56.0" layoutX="76.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneEsti" fitHeight="35.0" fitWidth="56.0" layoutX="140.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneDortid" fitHeight="35.0" fitWidth="56.0" layoutX="262.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneCastrum" fitHeight="35.0" fitWidth="56.0" layoutX="274.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneFramek" fitHeight="35.0" fitWidth="56.0" layoutX="491.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneGraden" fitHeight="35.0" fitWidth="56.0" layoutX="500.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneHellar" fitHeight="35.0" fitWidth="56.0" layoutX="522.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneIndur" fitHeight="35.0" fitWidth="56.0" layoutX="699.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneKultos" fitHeight="35.0" fitWidth="56.0" layoutX="912.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneNaris" fitHeight="35.0" fitWidth="56.0" layoutX="1079.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneLyram" fitHeight="35.0" fitWidth="56.0" layoutX="876.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneOsium" fitHeight="35.0" fitWidth="56.0" layoutX="1088.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="gettoneMerkatim" fitHeight="35.0" fitWidth="56.0" layoutX="863.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="imgViewRe" fitHeight="50.0" fitWidth="50.0" layoutX="715.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
 								<Button fx:id="castrum" disable="true" layoutX="294.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Castrum" />
 								<Button fx:id="arkon" disable="true" layoutX="104.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleCittaButton" opacity="0.0" prefHeight="53.0" prefWidth="92.0" text="Arkon" />

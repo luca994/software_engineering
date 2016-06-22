@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ElencoBonus QuantitàBonus="14"><Set>
+<ElencoBonus QuantitàBonus="14">
+	<Set numGettone="0">
 	<Bonus id="BonusMoneta" attributo="3"></Bonus></Set>
-	<Set>
+	<Set numGettone="1">
 		<Bonus id="BonusMoneta" attributo="2"></Bonus></Set>
-	<Set>
+	<Set numGettone="2">
 		<Bonus id="BonusPuntoVittoria" attributo="3"></Bonus></Set>
-	<Set>
+	<Set numGettone="3">
 		<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
 		<Bonus id="BonusAssistenti" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="4">
 		<Bonus id="BonusMoneta" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="5"> 
 		<Bonus id="BonusAssistenti" attributo="2"></Bonus></Set>
-	<Set>
+	<Set numGettone="6">
 		<Bonus id="BonusAssistenti" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="7">
 		<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="8">
 		<Bonus id="BonusPercorsoNobiltà" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="9">
 		<Bonus id="BonusAssistenti" attributo="1"></Bonus>
 		<Bonus id="BonusMoneta" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="10">
 		<Bonus id="BonusCartaPolitica" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="11">
 		<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus></Set>
-	<Set>
+	<Set numGettone="12">
 		<Bonus id="BonusPuntoVittoria" attributo="2"></Bonus></Set>
-	<Set>
+	<Set numGettone="13">
 		<Bonus id="BonusCartaPolitica" attributo="1"></Bonus>
 		<Bonus id="BonusPuntoVittoria" attributo="1"></Bonus></Set>
 </ElencoBonus>

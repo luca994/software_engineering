@@ -57,6 +57,7 @@ public class Tabellone implements Serializable{
 	private Re re;
 	private Gioco gioco;
 	private String numeroMappa;
+	private List<Integer> idGettoni;
 
 
 
@@ -77,6 +78,11 @@ public class Tabellone implements Serializable{
 		if (nomeFileMappa == null)
 			throw new NullPointerException();
 		this.gioco = gioco;
+		
+		idGettoni = new ArrayList<>();
+		for(int i=0;i<14;i++)
+			idGettoni.add(i);
+		Collections.shuffle(idGettoni);
 
 		/*
 		 * Creo percorsi passando al costruttore del percorso il nome del file
@@ -225,7 +231,6 @@ public class Tabellone implements Serializable{
 			}
 			gettoniCitta.add(bonus);
 		}
-		Collections.shuffle(gettoniCitta);
 		return gettoniCitta;
 
 	}
@@ -265,8 +270,9 @@ public class Tabellone implements Serializable{
 								re = new Re(cit, new Consiglio(this), this);
 								cit.setRe(re);
 							} else {
-								cit.setBonus(gettoniCitta.get(0));
-								gettoniCitta.remove(0);
+								cit.setBonus(gettoniCitta.get(idGettoni.get(0)));
+								cit.setNumGettone(idGettoni.get(0));
+								idGettoni.remove(0);
 							}
 							List<Element> elencoCollegamenti = cittaMappa.getChildren();
 							for (Element coll : elencoCollegamenti) {

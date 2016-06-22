@@ -21,6 +21,7 @@ public class Citta extends OggettoConBonus implements Serializable {
 	 */
 	private static final long serialVersionUID = -7048245012061517818L;
 
+	private int numGettone;
 	private final String nome;
 	private final Regione regione;
 	private Color colore;
@@ -130,5 +131,19 @@ public class Citta extends OggettoConBonus implements Serializable {
 	 */
 	public String getNome() {
 		return nome;
+	}
+
+	/**
+	 * @return the numGettone
+	 */
+	public int getNumGettone() {
+		return numGettone;
+	}
+
+	/**
+	 * @param numGettone the numGettone to set
+	 */
+	public void setNumGettone(int numGettone) {
+		this.numGettone = numGettone;
 	}
 }

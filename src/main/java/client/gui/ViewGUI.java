@@ -143,6 +143,8 @@ public class ViewGUI extends View implements Initializable {
 
 	@FXML
 	private AnchorPane anchorPaneMappa;
+	@FXML
+	private AnchorPane anchorPaneAzioni;
 
 	@FXML
 	private TextArea chatTextArea;
@@ -204,6 +206,34 @@ public class ViewGUI extends View implements Initializable {
 	private Button osium;
 	@FXML
 	private Button merkatim;
+	@FXML
+	private ImageView gettoneArkon;
+	@FXML
+	private ImageView gettoneBurgen;
+	@FXML
+	private ImageView gettoneCastrum;
+	@FXML
+	private ImageView gettoneDortid;
+	@FXML
+	private ImageView gettoneEsti;
+	@FXML
+	private ImageView gettoneFramek;
+	@FXML
+	private ImageView gettoneGraden;
+	@FXML
+	private ImageView gettoneHellar;
+	@FXML
+	private ImageView gettoneIndur;
+	@FXML
+	private ImageView gettoneKultos;
+	@FXML
+	private ImageView gettoneLyram;
+	@FXML
+	private ImageView gettoneMerkatim;
+	@FXML
+	private ImageView gettoneOsium;
+	@FXML
+	private ImageView gettoneNaris;
 	@FXML
 	private ImageView tesseraCopertaMareImage;
 	@FXML
@@ -357,6 +387,7 @@ public class ViewGUI extends View implements Initializable {
 			confermaAzioneButton.setDisable(true);
 			annullaAzioneButton.setDisable(true);
 			consigliereDisponibileComboBox.setDisable(true);
+			consigliereDisponibileComboBox.valueProperty().set(null);
 			disabilitazioneBottoniAzione(false);
 		}
 		cittaInput = null;
@@ -538,6 +569,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaNobilta();
 		aggiornaVittoria();
 		aggiornaRe();
+		aggiornaGettoni();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
@@ -546,7 +578,7 @@ public class ViewGUI extends View implements Initializable {
 			for (Citta c : r.getCitta())
 				if (c.getRe() != null)
 					for (Node n : anchorPaneMappa.getChildren())
-						if (n.getId() != null)
+						if (n.getId() != null && n instanceof Button)
 							if (n.getId().contains(c.getNome().toLowerCase())) {
 								imgViewRe.setLayoutX(n.getLayoutX());
 								imgViewRe.setLayoutY(n.getLayoutY());
@@ -731,7 +763,20 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void aggiornaConsiglieriDisponibili() {
+
+		anchorPaneAzioni.getChildren().remove(consigliereDisponibileComboBox);
+		consigliereDisponibileComboBox = new ComboBox<Color>();  // do whatever else you need to format your ComboBox
+		consigliereDisponibileComboBox.setDisable(true);
+		consigliereDisponibileComboBox.setId("consigliereDisponibileComboBox");
+		consigliereDisponibileComboBox.setLayoutX(142.0);
+		consigliereDisponibileComboBox.setLayoutY(201.0);
+		consigliereDisponibileComboBox.setOnAction(this::handleConsigliereComboBox);
+		consigliereDisponibileComboBox.setPrefHeight(25.0);
+		consigliereDisponibileComboBox.setPrefWidth(93.0);
+		anchorPaneAzioni.getChildren().add(consigliereDisponibileComboBox);
+		
 		consiglieriDisponibili.clear();
+
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
 			consiglieriDisponibili.add(ParseColor.colorAwtToFx(c.getColore()));
 		}
@@ -821,6 +866,24 @@ public class ViewGUI extends View implements Initializable {
 			tesseraCopertaMontagnaImage.setImage(new Image(getClass().getClassLoader()
 					.getResource("immaginiGUI/tessereCostruzione/tesseraCostruzioneMontagnaRetro.jpg").toString(), 80,
 					50, false, false));
+	}
+
+	public void aggiornaGettoni() {
+		String immagine;
+		for (Node i : anchorPaneMappa.getChildren())
+			for (Regione r : tabelloneClient.getRegioni())
+				for (Citta c : r.getCitta()) {
+					if (i.getId() != null && i.getId().contains(c.getNome())) {
+						if (c.getEmpori().size() > 0)
+							immagine = new String(String.valueOf(c.getNumGettone()));
+						else
+							immagine = new String("gettoneRetro");
+						((ImageView) i).setImage(new Image(getClass().getClassLoader()
+								.getResource("immaginiGUI/gettoniCittà/" + immagine + ".png").toString(), 56, 35, false,
+								false));
+
+					}
+				}
 	}
 
 	public void aggiornaTessereBonus() {
