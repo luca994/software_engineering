@@ -548,9 +548,8 @@ public class ViewGUI extends View implements Initializable {
 					for (Node n : anchorPaneMappa.getChildren())
 						if (n.getId() != null)
 							if (n.getId().contains(c.getNome().toLowerCase())) {
-								imgViewRe.setX(n.getLayoutX());
-								imgViewRe.setY(n.getLayoutY());
-								System.out.println(n.getLayoutX());
+								imgViewRe.setLayoutX(n.getLayoutX());
+								imgViewRe.setLayoutY(n.getLayoutY());
 							}
 	}
 
