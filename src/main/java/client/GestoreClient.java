@@ -4,6 +4,8 @@ import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 
 import client.cli.InputOutput;
+import client.view.View;
+import client.view.ViewFactory;
 
 /**
  * this class handles the choice of view and the choice of the type of

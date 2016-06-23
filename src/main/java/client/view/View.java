@@ -1,4 +1,6 @@
-package client;
+package client.view;
+
+import client.Connessione;
 
 public abstract class View implements Runnable{
 

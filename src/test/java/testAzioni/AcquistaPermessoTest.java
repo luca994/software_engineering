@@ -18,11 +18,11 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.eccezione.CartePoliticaIncorrette;
-import server.eccezione.EccezioneConsiglioDeiQuattro;
-import server.eccezione.EmporioGiaCostruito;
-import server.eccezione.FuoriDalLimiteDelPercorso;
-import server.eccezione.NumeroAiutantiIncorretto;
+import server.eccezioni.CartePoliticaIncorrette;
+import server.eccezioni.EccezioneConsiglioDeiQuattro;
+import server.eccezioni.EmporioGiaCostruito;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
+import server.eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

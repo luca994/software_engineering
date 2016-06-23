@@ -31,7 +31,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
-import server.eccezione.NomeGiaScelto;
+import server.eccezioni.NomeGiaScelto;
 
 /**
  * @author Massimiliano Ventura

@@ -55,6 +55,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	@FXML
 	private Button fineButton;
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void tesseraClick(MouseEvent e) {
 		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();
@@ -70,6 +71,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void cartaClick(MouseEvent e) {
 		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();
@@ -85,6 +87,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void assistenteClick(MouseEvent e) {
 		int numeroTessera = ((ListView) e.getSource()).getSelectionModel().getSelectedIndex();

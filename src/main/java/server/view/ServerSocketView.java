@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import client.gui.MessaggioChat;
+import client.view.MessaggioChat;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

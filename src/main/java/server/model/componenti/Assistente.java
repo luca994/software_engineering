@@ -2,7 +2,7 @@ package server.model.componenti;
 
 import java.io.Serializable;
 
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 
 /**

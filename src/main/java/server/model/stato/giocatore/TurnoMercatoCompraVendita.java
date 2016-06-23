@@ -1,6 +1,6 @@
 package server.model.stato.giocatore;
 
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.azione.Azione;
 import server.model.componenti.OggettoVendibile;

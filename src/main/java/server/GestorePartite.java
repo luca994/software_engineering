@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 import client.ConnessioneRMIInterface;
 import server.controller.Controller;
-import server.eccezione.NomeGiaScelto;
+import server.eccezioni.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.view.ServerRMIView;

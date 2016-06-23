@@ -3,7 +3,7 @@ package server.view;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import client.gui.MessaggioChat;
+import client.view.MessaggioChat;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.componenti.OggettoVendibile;

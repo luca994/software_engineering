@@ -8,9 +8,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import client.gui.MessaggioChat;
+import client.view.MessaggioChat;
+import client.view.View;
 import server.ServerRMIInterface;
-import server.eccezione.NomeGiaScelto;
+import server.eccezioni.NomeGiaScelto;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.componenti.OggettoVendibile;

@@ -14,8 +14,9 @@ import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
-import client.View;
-import server.eccezione.NomeGiaScelto;
+import client.view.MessaggioChat;
+import client.view.View;
+import server.eccezioni.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;
@@ -188,6 +189,8 @@ public class ViewCLI extends View implements Runnable {
 		InputOutput.stampa("8) Salta azione rapida");
 		InputOutput.stampa("- Informazioni:\n");
 		InputOutput.stampa("9) Scegli cosa stampare dello stato attuale del gioco\n");
+		InputOutput.stampa("- Chat:\n");
+		InputOutput.stampa("10) Invia messaggio chat\n");
 		scelta = InputOutput.leggiIntero(false);
 		if (scelta < 9) {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
@@ -197,8 +200,12 @@ public class ViewCLI extends View implements Runnable {
 				inserimentoAzione.set(false);
 			} else
 				return false;
-		} else if (scelta == 9)
+		} else if (scelta == 9){
 			stampeTabellone();
+			}
+		else if (scelta == 10){
+			inviaMessaggioChat();
+		}
 		else {
 			InputOutput.stampa("");
 			InputOutput.stampa("Input non valido");
@@ -207,10 +214,20 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
+	private void inviaMessaggioChat(){
+		InputOutput.stampa("Scrivi il messaggio");
+		String messaggioTemp = InputOutput.leggiStringa(true);
+		if(messaggioTemp!=null){
+			MessaggioChat msg= new MessaggioChat(giocatore.getNome(), messaggioTemp);
+			getConnessione().inviaOggetto(msg);
+		}
+	}
+	
 	private void faseCompraVendita() {
 		Integer scelta;
 		InputOutput.stampa("1) Per acquistare oggetti dal mercato");
 		InputOutput.stampa("2) Per passare il turno");
+		InputOutput.stampa("3) Invia un messaggio di chat");
 		OggettoVendibile oggettoDaAcquistare;
 		scelta = InputOutput.leggiIntero(false);
 		switch (scelta) {
@@ -225,6 +242,9 @@ public class ViewCLI extends View implements Runnable {
 		case 2:
 			getConnessione().inviaOggetto("-");
 			break;
+		case 3:
+			inviaMessaggioChat();
+			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
 			faseCompraVendita();
@@ -235,6 +255,7 @@ public class ViewCLI extends View implements Runnable {
 		Integer scelta;
 		InputOutput.stampa("1) Per aggiungere oggetti al mercato");
 		InputOutput.stampa("2) Per passare il turno");
+		InputOutput.stampa("3) Invia un messaggio di chat");
 		OggettoVendibile oggettoDaAggiungere;
 		scelta = InputOutput.leggiIntero(false);
 		switch (scelta) {
@@ -247,6 +268,9 @@ public class ViewCLI extends View implements Runnable {
 			break;
 		case 2:
 			getConnessione().inviaOggetto("-");
+			break;
+		case 3:
+			inviaMessaggioChat();
 			break;
 		default:
 			InputOutput.stampa("Scelta non valida");
@@ -933,6 +957,14 @@ public class ViewCLI extends View implements Runnable {
 					InputOutput.stampa("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}
+			}
+			if(oggetto instanceof MessaggioChat){
+				InputOutput.stampa("************");
+				InputOutput.stampa("CHAT");
+				InputOutput.stampa("["+((MessaggioChat) oggetto).getAutore()+"]: "+ ((MessaggioChat) oggetto).getMsg());
+				InputOutput.stampa("************");
+				if(((MessaggioChat) oggetto).getAutore().equalsIgnoreCase(giocatore.getNome()) && semaforo.availablePermits() == 0)
+					semaforo.release();
 			}
 		} catch (InterruptedException e) {
 			throw new IllegalStateException();

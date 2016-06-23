@@ -1,7 +1,7 @@
 package server.model.azione;
 
 import server.config.Configurazione;
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Consigliere;

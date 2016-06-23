@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import client.view.View;
+
 public class ConnessioneSocket implements Connessione, Runnable {
 
 	private static final Logger LOG = Logger.getLogger(ConnessioneSocket.class.getName());

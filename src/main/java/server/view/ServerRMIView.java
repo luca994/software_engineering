@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import client.ConnessioneRMIInterface;
-import client.gui.MessaggioChat;
+import client.view.MessaggioChat;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

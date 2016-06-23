@@ -1,7 +1,7 @@
 /**
  * 
  */
-package server.eccezione;
+package server.eccezioni;
 
 /**
  * @author Luca
