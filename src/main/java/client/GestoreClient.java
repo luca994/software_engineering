@@ -3,9 +3,9 @@ package client;
 import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 
+import client.cli.InputOutput;
 import client.view.View;
 import client.view.ViewFactory;
-import client.view.cli.InputOutput;
 
 /**
  * this class handles the choice of view and the choice of the type of

@@ -1,7 +1,7 @@
 package client;
 
+import client.cli.InputOutput;
 import client.view.View;
-import client.view.cli.InputOutput;
 
 public class MainClient {
 

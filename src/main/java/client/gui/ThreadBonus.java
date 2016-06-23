@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.view.gui;
+package client.gui;
 
 import javafx.scene.control.Label;
 import server.model.bonus.BonusGettoneCitta;
