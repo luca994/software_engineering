@@ -6,14 +6,19 @@ package client.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 
 import client.View;
 import eccezione.NomeGiaScelto;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -103,7 +108,22 @@ public class ViewGUI extends View implements Initializable {
 	ObservableList<Color> consiglioPianura = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioMontagna = FXCollections.observableArrayList();
 	ObservableList<Color> consiglioRe = FXCollections.observableArrayList();
-	
+
+	ObservableList<Color> empArkon = FXCollections.observableArrayList();
+	ObservableList<Color> empBurgen = FXCollections.observableArrayList();
+	ObservableList<Color> empCastrum = FXCollections.observableArrayList();
+	ObservableList<Color> empDortid = FXCollections.observableArrayList();
+	ObservableList<Color> empFramek = FXCollections.observableArrayList();
+	ObservableList<Color> empGraden = FXCollections.observableArrayList();
+	ObservableList<Color> empHellar = FXCollections.observableArrayList();
+	ObservableList<Color> empIndur = FXCollections.observableArrayList();
+	ObservableList<Color> empJuvelar = FXCollections.observableArrayList();
+	ObservableList<Color> empKultos = FXCollections.observableArrayList();
+	ObservableList<Color> empLyram = FXCollections.observableArrayList();
+	ObservableList<Color> empMerkatim = FXCollections.observableArrayList();
+	ObservableList<Color> empNaris = FXCollections.observableArrayList();
+	ObservableList<Color> empEsti = FXCollections.observableArrayList();
+	ObservableList<Color> empOsium = FXCollections.observableArrayList();
 
 	@FXML
 	private ListView<Color> consiglieriDisponibiliListView;
@@ -125,6 +145,37 @@ public class ViewGUI extends View implements Initializable {
 	private ImageView imgViewPercorsi;
 	@FXML
 	private ImageView imgViewRe;
+
+	@FXML
+	private ListView<Color> emporiArkon;
+	@FXML
+	private ListView<Color> emporiBurgen;
+	@FXML
+	private ListView<Color> emporiCastrum;
+	@FXML
+	private ListView<Color> emporiDortid;
+	@FXML
+	private ListView<Color> emporiEsti;
+	@FXML
+	private ListView<Color> emporiFramek;
+	@FXML
+	private ListView<Color> emporiGraden;
+	@FXML
+	private ListView<Color> emporiHellar;
+	@FXML
+	private ListView<Color> emporiIndur;
+	@FXML
+	private ListView<Color> emporiJuvelar;
+	@FXML
+	private ListView<Color> emporiKultos;
+	@FXML
+	private ListView<Color> emporiLyram;
+	@FXML
+	private ListView<Color> emporiMerkatim;
+	@FXML
+	private ListView<Color> emporiNaris;
+	@FXML
+	private ListView<Color> emporiOsium;
 
 	@FXML
 	private ListView<ImageView> tessereValideListView;
@@ -567,6 +618,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaVittoria();
 		aggiornaRe();
 		aggiornaGettoni();
+		aggiornaEmpori();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
@@ -760,7 +812,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void aggiornaConsiglieriDisponibili() {
-		
+
 		consiglieriDisponibili.clear();
 
 		for (Consigliere c : tabelloneClient.getConsiglieriDisponibili()) {
@@ -839,7 +891,7 @@ public class ViewGUI extends View implements Initializable {
 		for (Node i : anchorPaneMappa.getChildren())
 			for (Regione r : tabelloneClient.getRegioni())
 				for (Citta c : r.getCitta()) {
-					if (i.getId() != null && i.getId().contains(c.getNome())) {
+					if (i.getId() != null && i.getId().contains(c.getNome()) && i.getId().contains("gettone")) {
 						if (c.getEmpori().size() > 0)
 							immagine = new String(String.valueOf(c.getNumGettone()));
 						else
@@ -850,6 +902,181 @@ public class ViewGUI extends View implements Initializable {
 
 					}
 				}
+	}
+
+	public void aggiornaEmpori() {
+		for (Regione r : tabelloneClient.getRegioni()) {
+			for (Citta c : r.getCitta()) {
+				switch (c.getNome()) {
+				case "Arkon": {
+					empArkon.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empArkon.add(ParseColor.colorAwtToFx(g.getColore()));
+
+					}
+					emporiArkon.setItems(empArkon);
+					setCelleEmpori(emporiArkon);
+					break;
+				}
+				case "Burgen": {
+					empBurgen = FXCollections.observableArrayList();
+					for (Giocatore g : c.getEmpori()) {
+						empBurgen.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiBurgen.setItems(empBurgen);
+					setCelleEmpori(emporiBurgen);
+					break;
+				}
+				case "Castrum": {
+					empCastrum.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empCastrum.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiCastrum.setItems(empCastrum);
+					setCelleEmpori(emporiCastrum);
+					break;
+				}
+				case "Dortid": {
+					empDortid.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empDortid.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+
+					emporiDortid.setItems(empDortid);
+					setCelleEmpori(emporiDortid);
+					break;
+				}
+				case "Esti": {
+					empEsti.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empEsti.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+
+					emporiEsti.setItems(empEsti);
+					setCelleEmpori(emporiEsti);
+					break;
+				}
+				case "Framek": {
+					empFramek.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empFramek.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiFramek.setItems(empFramek);
+					setCelleEmpori(emporiFramek);
+					break;
+				}
+				case "Graden": {
+					empGraden.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empGraden.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiGraden.setItems(empGraden);
+					setCelleEmpori(emporiGraden);
+					break;
+				}
+				case "Hellar": {
+					empHellar.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empHellar.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiHellar.setItems(empHellar);
+					setCelleEmpori(emporiHellar);
+					break;
+				}
+				case "Indur": {
+					empIndur.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empIndur.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiIndur.setItems(empIndur);
+					setCelleEmpori(emporiIndur);
+					break;
+				}
+				case "Juvelar": {
+					empJuvelar.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empJuvelar.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiJuvelar.setItems(empJuvelar);
+					setCelleEmpori(emporiJuvelar);
+					break;
+				}
+				case "Kultos": {
+					empKultos.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empKultos.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiKultos.setItems(empKultos);
+					setCelleEmpori(emporiKultos);
+				}
+				case "Lyram": {
+					empLyram.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empLyram.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiLyram.setItems(empLyram);
+					setCelleEmpori(emporiLyram);
+					break;
+				}
+				case "Merkatim": {
+					empMerkatim.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empMerkatim.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiMerkatim.setItems(empMerkatim);
+					setCelleEmpori(emporiMerkatim);
+					break;
+				}
+				case "Naris": {
+					empNaris.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empNaris.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiNaris.setItems(empNaris);
+					setCelleEmpori(emporiNaris);
+					break;
+				}
+				case "Osium": {
+					empOsium.clear();
+					for (Giocatore g : c.getEmpori()) {
+						empOsium.add(ParseColor.colorAwtToFx(g.getColore()));
+					}
+					emporiOsium.setItems(empOsium);
+					setCelleEmpori(emporiOsium);
+					break;
+				}
+
+				}
+
+			}
+		}
+	}
+
+	private void setCelleEmpori(ListView<Color> i) {
+		i.setCellFactory(new Callback<ListView<Color>, ListCell<Color>>() {
+			@Override
+			public ListCell<Color> call(ListView<Color> p) {
+				return new ListCell<Color>() {
+					private final Rectangle rectangle;
+					{
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+						rectangle = new Rectangle(20, 20);
+					}
+
+					@Override
+					protected void updateItem(Color item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item == null || empty) {
+							setGraphic(null);
+						} else {
+							rectangle.setFill(item);
+							setGraphic(rectangle);
+						}
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaTessereBonus() {
@@ -1022,6 +1249,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 		if (oggetto instanceof MessaggioChat) {
 			Platform.runLater(new Runnable() {
+
 				@Override
 				public void run() {
 					chatTextArea.appendText("\n" + "[" + ((MessaggioChat) oggetto).getAutore() + "]: "
@@ -1042,7 +1270,9 @@ public class ViewGUI extends View implements Initializable {
 				}
 			});
 		}
-		if (oggetto instanceof Exception) {
+		if (oggetto instanceof Exception)
+
+		{
 			Platform.runLater(new Runnable() {
 
 				@Override
@@ -1081,10 +1311,12 @@ public class ViewGUI extends View implements Initializable {
 		rettangoliNobilta = new ArrayList<>();
 		cartePoliticaInput = new ArrayList<>();
 		azioneFactory = new AzioneFactory(null);
+
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		turnoCambiato = true;
 		imgViewRe.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/corona.png").toString(), 50,
 				50, false, false));
