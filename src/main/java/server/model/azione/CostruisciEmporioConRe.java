@@ -3,10 +3,11 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezione.CartePoliticaIncorrette;
-import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
-import eccezione.NumeroAiutantiIncorretto;
+import server.config.Configurazione;
+import server.eccezione.CartePoliticaIncorrette;
+import server.eccezione.EmporioGiaCostruito;
+import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.CartaColorata;
@@ -63,7 +64,7 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 			throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette, NumeroAiutantiIncorretto, EmporioGiaCostruito {
 		if (giocatore == null)
 			throw new NullPointerException();
-		if (cartePolitica.isEmpty()
+		if (cartePolitica.size()< Configurazione.MIN_NUM_CONSIGLIERI_DA_SODDISFARE
 				|| cartePolitica.size() > getGioco().getTabellone().getRe().getConsiglio().getConsiglieri().size())
 			throw new CartePoliticaIncorrette("Il numero di carte Politica scelte non è corretto");
 		List<Jolly> carteJollyUtilizzate = new ArrayList<>();
@@ -85,19 +86,19 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 			throw new CartePoliticaIncorrette("Nessun Consigliere soddisfatto");
 		case 1:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-10 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+					-Configurazione.PREZZO_UNA_CARTA_GIOCATA - carteJollyUtilizzate.size() - Configurazione.PREZZO_STRADA_PERCORSA * getGioco().getTabellone().getRe().contaPassi(destinazione));
 			break;
 		case 2:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-7 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+					-Configurazione.PREZZO_DUE_CARTE_GIOCATE - carteJollyUtilizzate.size() - Configurazione.PREZZO_STRADA_PERCORSA * getGioco().getTabellone().getRe().contaPassi(destinazione));
 			break;
 		case 3:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-4 - carteJollyUtilizzate.size() - 2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+					-Configurazione.PREZZO_TRE_CARTE_GIOCATE - carteJollyUtilizzate.size() - Configurazione.PREZZO_STRADA_PERCORSA * getGioco().getTabellone().getRe().contaPassi(destinazione));
 			break;
 		case 4:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-2 * getGioco().getTabellone().getRe().contaPassi(destinazione));
+					-Configurazione.PREZZO_QUATTRO_CARTE_GIOCATE-Configurazione.PREZZO_STRADA_PERCORSA * getGioco().getTabellone().getRe().contaPassi(destinazione));
 			break;
 		default:
 			throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");

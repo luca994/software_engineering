@@ -1,6 +1,7 @@
 package server.model.azione;
 
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.config.Configurazione;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Assistente;
@@ -11,7 +12,6 @@ import server.model.componenti.Assistente;
  */
 public class IngaggioAiutante extends AzioneRapida {
 
-	private final static int COSTO_AIUTANTE = 3;
 
 	public IngaggioAiutante(Gioco gioco) {
 		super(gioco);
@@ -28,7 +28,7 @@ public class IngaggioAiutante extends AzioneRapida {
 	public void eseguiAzione(Giocatore giocatore) throws FuoriDalLimiteDelPercorso {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -COSTO_AIUTANTE);
+		getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, -Configurazione.COSTO_INGAGGIA_AIUTANTE);
 		giocatore.getAssistenti().add(new Assistente());
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}

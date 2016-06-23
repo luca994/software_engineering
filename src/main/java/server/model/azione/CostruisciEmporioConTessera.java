@@ -3,10 +3,10 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezione.CittaNonCorretta;
-import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
-import eccezione.NumeroAiutantiIncorretto;
+import server.eccezione.CittaNonCorretta;
+import server.eccezione.EmporioGiaCostruito;
+import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Citta;

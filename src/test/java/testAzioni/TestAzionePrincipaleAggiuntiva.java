@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import eccezione.EccezioneConsiglioDeiQuattro;
-import eccezione.NumeroAiutantiIncorretto;
+import server.eccezione.EccezioneConsiglioDeiQuattro;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

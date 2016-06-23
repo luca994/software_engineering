@@ -3,8 +3,9 @@ package server.model.azione;
 import java.util.ArrayList;
 import java.util.List;
 
-import eccezione.CartePoliticaIncorrette;
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.config.Configurazione;
+import server.eccezione.CartePoliticaIncorrette;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.CartaColorata;
@@ -58,7 +59,8 @@ public class AcquistaPermesso extends AzionePrincipale {
 	public void eseguiAzione(Giocatore giocatore) throws FuoriDalLimiteDelPercorso, CartePoliticaIncorrette {
 		if (giocatore == null)
 			throw new NullPointerException();
-		if (cartePoliticaScelte.isEmpty() || cartePoliticaScelte.size() > consiglioDaSoddisfare.getConsiglieri().size())
+		if (cartePoliticaScelte.size() < Configurazione.MIN_NUM_CONSIGLIERI_DA_SODDISFARE
+				|| cartePoliticaScelte.size() > consiglioDaSoddisfare.getConsiglieri().size())
 			throw new CartePoliticaIncorrette("Il numero di carte Politica scelte non è corretto");
 		List<Jolly> carteJollyUtilizzate = new ArrayList<>();
 		for (CartaPolitica c : cartePoliticaScelte)
@@ -66,7 +68,7 @@ public class AcquistaPermesso extends AzionePrincipale {
 				carteJollyUtilizzate.add((Jolly) c);
 			}
 		cartePoliticaScelte.removeAll(carteJollyUtilizzate);
-		
+
 		List<CartaColorata> carteColorateUtilizzate = consiglioDaSoddisfare.soddisfaConsiglio(cartePoliticaScelte);
 
 		switch (carteColorateUtilizzate.size() + carteJollyUtilizzate.size()) {
@@ -74,19 +76,19 @@ public class AcquistaPermesso extends AzionePrincipale {
 			throw new CartePoliticaIncorrette("Nessun Consigliere soddisfatto");
 		case 1:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-10 - carteJollyUtilizzate.size());
+					-Configurazione.PREZZO_UNA_CARTA_GIOCATA - carteJollyUtilizzate.size());
 			break;
 		case 2:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-7 - carteJollyUtilizzate.size());
+					-Configurazione.PREZZO_DUE_CARTE_GIOCATE - carteJollyUtilizzate.size());
 			break;
 		case 3:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					-4 - carteJollyUtilizzate.size());
+					-Configurazione.PREZZO_TRE_CARTE_GIOCATE - carteJollyUtilizzate.size());
 			break;
 		case 4:
 			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore,
-					- carteJollyUtilizzate.size());
+					Configurazione.PREZZO_QUATTRO_CARTE_GIOCATE - carteJollyUtilizzate.size());
 			break;
 		default:
 			throw new IndexOutOfBoundsException("Errore nel conteggio consiglieri da soddisfare");
@@ -96,19 +98,17 @@ public class AcquistaPermesso extends AzionePrincipale {
 		giocatore.getCartePolitica().removeAll(carteColorateUtilizzate);
 		giocatore.getCartePolitica().removeAll(carteJollyUtilizzate);
 
-	
-			/*
-			 * Aggiunta tessera acquistata al set di tessere valide del
-			 * giocatore
-			 */
-			giocatore.getTessereValide().add(tesseraScelta);
-			tesseraScelta.eseguiBonus(giocatore);
+		/*
+		 * Aggiunta tessera acquistata al set di tessere valide del giocatore
+		 */
+		giocatore.getTessereValide().add(tesseraScelta);
+		tesseraScelta.eseguiBonus(giocatore);
 
-			/* Scopri dal mazzetto una nuova tessera costruzione */
-			consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
+		/* Scopri dal mazzetto una nuova tessera costruzione */
+		consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
 
-			giocatore.getStatoGiocatore().azioneEseguita(this);
-		
+		giocatore.getStatoGiocatore().azioneEseguita(this);
+
 	}
 
 }

@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
-import eccezione.NomeGiaScelto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +33,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import server.eccezione.NomeGiaScelto;
 
 /**
  * @author Massimiliano Ventura

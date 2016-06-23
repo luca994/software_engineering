@@ -1,6 +1,7 @@
 package server.model.azione;
 
-import eccezione.NumeroAiutantiIncorretto;
+import server.config.Configurazione;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.componenti.Regione;
 
@@ -35,10 +36,9 @@ public class CambioTessereCostruzione extends AzioneRapida {
 	 */
 	@Override
 	public void eseguiAzione(Giocatore giocatore) throws NumeroAiutantiIncorretto {
-
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		if (giocatore.getAssistenti().isEmpty())
+		if (giocatore.getAssistenti().size() < Configurazione.COSTO_CAMBIA_TESSERE_COSTRUZIONE)
 			throw new NumeroAiutantiIncorretto("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
 		regione.getTessereCoperte().addAll(regione.getTessereCostruzione());
 		regione.getTessereCostruzione().clear();
@@ -46,7 +46,8 @@ public class CambioTessereCostruzione extends AzioneRapida {
 		regione.getTessereCoperte().remove(0);
 		regione.getTessereCostruzione().add(regione.getTessereCoperte().get(0));
 		regione.getTessereCoperte().remove(0);
-		giocatore.getAssistenti().remove(0);
+		for(int counter=0;counter<Configurazione.COSTO_CAMBIA_TESSERE_COSTRUZIONE;counter++)
+			giocatore.getAssistenti().remove(0);
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 
 	}

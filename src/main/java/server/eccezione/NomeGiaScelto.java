@@ -1,4 +1,4 @@
-package eccezione;
+package server.eccezione;
 
 public class NomeGiaScelto extends EccezioneConsiglioDeiQuattro {
 

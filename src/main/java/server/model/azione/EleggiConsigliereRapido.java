@@ -1,6 +1,7 @@
 package server.model.azione;
 
-import eccezione.NumeroAiutantiIncorretto;
+import server.config.Configurazione;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
@@ -10,8 +11,6 @@ import server.model.componenti.Consiglio;
  *
  */
 public class EleggiConsigliereRapido extends AzioneRapida {
-
-	private static final int NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO = 1;
 
 	private Consigliere consigliere;
 	private Consiglio consiglio;
@@ -39,12 +38,13 @@ public class EleggiConsigliereRapido extends AzioneRapida {
 	public void eseguiAzione(Giocatore giocatore) throws NumeroAiutantiIncorretto {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		if (giocatore.getAssistenti().size() < NUM_AIUTANTI_COSTO_ELEGGI_CONSIGLIERE_RAPIDO)
+		if (giocatore.getAssistenti().size() < Configurazione.COSTO_ELEGGI_CONSIGLIERE_RAPIDO)
 			throw new NumeroAiutantiIncorretto("Il giocatore non possiede abbastanza aiutanti per eseguire l'azione");
 
 		consiglio.addConsigliere(consigliere);
 		consiglio.removeConsigliere();
-		giocatore.getAssistenti().remove(0);
+		for(int counter=0;counter<Configurazione.COSTO_ELEGGI_CONSIGLIERE_RAPIDO;counter++)
+			giocatore.getAssistenti().remove(0);
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 
 	}

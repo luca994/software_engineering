@@ -1,6 +1,7 @@
 package server.model.azione;
 
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.config.Configurazione;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.Consigliere;
@@ -13,8 +14,6 @@ import server.model.componenti.Consiglio;
  *
  */
 public class EleggiConsigliere extends AzionePrincipale {
-
-	private static final int MONETE_ELEZIONE_CONSIGLIERE = 4;
 
 	private Consigliere consigliere;
 	private Consiglio consiglio;
@@ -43,7 +42,7 @@ public class EleggiConsigliere extends AzionePrincipale {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
 		try {
-			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, MONETE_ELEZIONE_CONSIGLIERE);
+			getGioco().getTabellone().getPercorsoRicchezza().muoviGiocatore(giocatore, Configurazione.MONETE_ELEZIONE_CONSIGLIERE);
 			consiglio.addConsigliere(consigliere);
 			consiglio.removeConsigliere();
 		} catch (FuoriDalLimiteDelPercorso e) {

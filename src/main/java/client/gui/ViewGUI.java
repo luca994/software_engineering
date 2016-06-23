@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 
 import client.View;
-import eccezione.NomeGiaScelto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,6 +39,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import server.eccezione.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;

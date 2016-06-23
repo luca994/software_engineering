@@ -1,11 +1,11 @@
 package server.model.azione;
 
-import eccezione.CartePoliticaIncorrette;
-import eccezione.CittaNonCorretta;
-import eccezione.EccezioneConsiglioDeiQuattro;
-import eccezione.EmporioGiaCostruito;
-import eccezione.FuoriDalLimiteDelPercorso;
-import eccezione.NumeroAiutantiIncorretto;
+import server.eccezione.CartePoliticaIncorrette;
+import server.eccezione.CittaNonCorretta;
+import server.eccezione.EccezioneConsiglioDeiQuattro;
+import server.eccezione.EmporioGiaCostruito;
+import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 

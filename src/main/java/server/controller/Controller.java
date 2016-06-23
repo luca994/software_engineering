@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.gui.MessaggioChat;
-import eccezione.EccezioneConsiglioDeiQuattro;
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.EccezioneConsiglioDeiQuattro;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

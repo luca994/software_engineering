@@ -2,7 +2,7 @@ package server.model.stato.giocatore;
 
 import java.io.Serializable;
 
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.azione.Azione;
 import server.model.componenti.OggettoVendibile;

@@ -1,6 +1,6 @@
 package server.model.bonus;
 
-import eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezione.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.percorso.Percorso;
 

@@ -15,7 +15,7 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import client.View;
-import eccezione.NomeGiaScelto;
+import server.eccezione.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;

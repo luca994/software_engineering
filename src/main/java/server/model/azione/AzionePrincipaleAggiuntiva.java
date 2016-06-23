@@ -1,6 +1,7 @@
 package server.model.azione;
 
-import eccezione.NumeroAiutantiIncorretto;
+import server.config.Configurazione;
+import server.eccezione.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 
 /**
@@ -27,9 +28,9 @@ public class AzionePrincipaleAggiuntiva extends AzioneRapida {
 	public void eseguiAzione(Giocatore giocatore) throws NumeroAiutantiIncorretto {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");
-		if (giocatore.getAssistenti().size() < 3)
+		if (giocatore.getAssistenti().size() < Configurazione.COSTO_AZIONE_PRINCIPALE_AGGIUNTIVA)
 			throw new NumeroAiutantiIncorretto("Il giocatore non ha abbastanza assistenti");
-		for (int i = 0; i < 3; i++)
+		for (int counter = 0; counter < Configurazione.COSTO_AZIONE_PRINCIPALE_AGGIUNTIVA; counter++)
 			giocatore.getAssistenti().remove(0);
 		giocatore.getStatoGiocatore().azionePrincipaleAggiuntiva();
 		giocatore.getStatoGiocatore().azioneEseguita(this);

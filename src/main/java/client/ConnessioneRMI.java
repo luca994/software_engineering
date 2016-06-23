@@ -9,8 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import client.gui.MessaggioChat;
-import eccezione.NomeGiaScelto;
 import server.ServerRMIInterface;
+import server.eccezione.NomeGiaScelto;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.componenti.OggettoVendibile;
