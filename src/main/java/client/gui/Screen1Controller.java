@@ -12,9 +12,9 @@ import java.util.zip.DataFormatException;
 
 import client.ConnessioneFactory;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,8 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -93,10 +91,10 @@ public class Screen1Controller implements Initializable {
 	}
 
 	@FXML // è l'onAction del bottone nell'fxml
-	private void handleConfirmButtonAction(ActionEvent event) {
+	private void handleConfirmButtonAction() {
 		azioneConfermaDati();
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -126,7 +124,19 @@ public class Screen1Controller implements Initializable {
 		sceltaMappaChoiceBox.setValue("8");
 		ipTextField.setText("127.0.0.1");
 		portaTextField.setText("29999");
+		handlePortaHost();
 
+	}
+
+	private void handlePortaHost() {
+		tipoConnessioneChoiceBox.getSelectionModel().selectedItemProperty()
+				.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+					if ("rmi".equalsIgnoreCase(newValue)) {
+						portaTextField.setText("1099");
+					} else if ("socket".equalsIgnoreCase(newValue)) {
+						portaTextField.setText("29999");
+					}
+				});
 	}
 
 	private boolean impostaConnessione() {

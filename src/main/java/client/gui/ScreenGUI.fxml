@@ -146,21 +146,21 @@
                            <image>
                               <Image url="@../../../resources/immaginiGUI/mappe/02.jpg" />
                            </image></ImageView>
-                        <ListView fx:id="emporiCastrum" layoutX="276.0" layoutY="144.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiArkon" layoutX="91.0" layoutY="108.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiBurgen" layoutX="68.0" layoutY="227.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiEsti" layoutX="134.0" layoutY="331.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiDortid" layoutX="266.0" layoutY="250.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiFramek" layoutX="492.0" layoutY="123.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiGraden" layoutX="506.0" layoutY="227.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiHellar" layoutX="521.0" layoutY="318.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiIndur" layoutX="701.0" layoutY="123.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiJuvelar" layoutX="679.0" layoutY="260.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiKultos" layoutX="914.0" layoutY="120.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiLyram" layoutX="884.0" layoutY="229.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiMerkatim" layoutX="868.0" layoutY="343.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiNaris" layoutX="1065.0" layoutY="180.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
-                        <ListView fx:id="emporiOsium" layoutX="1072.0" layoutY="300.0" orientation="HORIZONTAL" prefHeight="40.0" prefWidth="129.0" rotate="5.0" />
+                        <ListView fx:id="emporiCastrum" layoutX="285.0" layoutY="138.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiArkon" layoutX="96.0" layoutY="102.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiBurgen" layoutX="76.0" layoutY="220.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiEsti" layoutX="143.0" layoutY="327.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiDortid" layoutX="273.0" layoutY="245.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiFramek" layoutX="497.0" layoutY="118.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiGraden" layoutX="511.0" layoutY="221.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiHellar" layoutX="529.0" layoutY="313.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiIndur" layoutX="708.0" layoutY="115.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiJuvelar" layoutX="688.0" layoutY="255.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiKultos" layoutX="920.0" layoutY="112.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiLyram" layoutX="895.0" layoutY="225.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiMerkatim" layoutX="878.0" layoutY="340.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiNaris" layoutX="1074.0" layoutY="173.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
+                        <ListView fx:id="emporiOsium" layoutX="1081.0" layoutY="295.0" orientation="HORIZONTAL" prefHeight="30.0" prefWidth="123.0" rotate="3.2" />
                         <ImageView fx:id="gettoneArkon" fitHeight="35.0" fitWidth="56.0" layoutX="88.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="gettoneBurgen" fitHeight="35.0" fitWidth="56.0" layoutX="76.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="gettoneEsti" fitHeight="35.0" fitWidth="56.0" layoutX="140.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true" />
