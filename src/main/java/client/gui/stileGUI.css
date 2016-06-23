@@ -3,6 +3,6 @@
 	-fx-text-fill: black;
 }
 
-.list-cell:selected:focused{
+.list-cell:selected:hover{
 	-fx-background-color: #ff3300;
 }
