@@ -563,12 +563,14 @@ public class ViewGUI extends View implements Initializable {
 		labelAzioneDaFare.setText("Selezionato consiglio " + nomeConsiglio);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void handleConsiglieriDisponibiliListView(MouseEvent event) {
 		int posizione = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
 		consigliereInput = tabelloneClient.getConsiglieriDisponibili().get(posizione);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void handleCartePoliticaList(MouseEvent event) {
 		int numeroCarta = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
@@ -582,6 +584,7 @@ public class ViewGUI extends View implements Initializable {
 			labelAzioneDaFare.setText("Hai già selezionato 4 carte");
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void handleTessereCostruzioneValideList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
@@ -591,6 +594,7 @@ public class ViewGUI extends View implements Initializable {
 		tesseraInput = giocatore.getTessereValide().get(numeroTessera);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@FXML
 	private void handleTessereCostruzioneUsateList(MouseEvent event) {
 		int numeroTessera = ((ListView) event.getSource()).getSelectionModel().getSelectedIndex();
