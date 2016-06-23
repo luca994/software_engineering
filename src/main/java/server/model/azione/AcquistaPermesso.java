@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.config.Configurazione;
-import server.eccezione.CartePoliticaIncorrette;
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.eccezioni.CartePoliticaIncorrette;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.CartaColorata;

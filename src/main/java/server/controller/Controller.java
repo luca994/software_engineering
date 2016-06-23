@@ -6,9 +6,9 @@ package server.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.gui.MessaggioChat;
-import server.eccezione.EccezioneConsiglioDeiQuattro;
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import client.view.MessaggioChat;
+import server.eccezioni.EccezioneConsiglioDeiQuattro;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

@@ -1,7 +1,7 @@
 package server.model.azione;
 
 import server.config.Configurazione;
-import server.eccezione.NumeroAiutantiIncorretto;
+import server.eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;

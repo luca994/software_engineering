@@ -3,7 +3,8 @@ package server.model.stato.gioco;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.eccezione.FuoriDalLimiteDelPercorso;
+import server.config.Configurazione;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.percorso.Casella;
@@ -14,9 +15,6 @@ public class Terminato extends StatoGioco {
 	 * 
 	 */
 	private static final long serialVersionUID = -2639717549945418496L;
-	private static final int PUNTI_PRIMO_PERCORSO_NOBILTA = 5;
-	private static final int PUNTI_SECONDO_PERCORSO_NOBILTA = 2;
-	private static final int PUNTI_PIU_TESSERE_PERMESSO = 3;
 
 	public Terminato(Gioco gioco) {
 		super(gioco);
@@ -83,12 +81,12 @@ public class Terminato extends StatoGioco {
 		List<Casella> caselleNobilta = getGioco().getTabellone().getPercorsoNobilta().caselleNonVuotePiuAvanti();
 		try {
 			for (Giocatore giocat : caselleNobilta.get(0).getGiocatori())
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PRIMO_PERCORSO_NOBILTA);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, Configurazione.PUNTI_PRIMO_PERCORSO_NOBILTA);
 
 			if (caselleNobilta.get(0).getGiocatori().size() > 1)
 				return;
 			for (Giocatore giocat : caselleNobilta.get(1).getGiocatori())
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_SECONDO_PERCORSO_NOBILTA);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,Configurazione.PUNTI_SECONDO_PERCORSO_NOBILTA);
 		} catch (FuoriDalLimiteDelPercorso e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -111,7 +109,7 @@ public class Terminato extends StatoGioco {
 		}
 		for (Giocatore giocat : giocatoriConPiuPermessi)
 			try {
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, PUNTI_PIU_TESSERE_PERMESSO);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,Configurazione.PUNTI_PIU_TESSERE_PERMESSO);
 			} catch (FuoriDalLimiteDelPercorso e) {
 				throw new IllegalArgumentException(e);
 			}

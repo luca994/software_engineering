@@ -1,23 +1,19 @@
 /**
  * 
  */
-package client.gui;
+package client.view.gui;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 
-import client.View;
+import client.view.MessaggioChat;
+import client.view.View;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,7 +40,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import server.eccezione.NomeGiaScelto;
+import server.eccezioni.NomeGiaScelto;
 import server.model.Giocatore;
 import server.model.ParseColor;
 import server.model.Tabellone;
@@ -531,28 +527,28 @@ public class ViewGUI extends View implements Initializable {
 	private void handleCittaButton(ActionEvent event) {
 		String nomeCitta = ((Button) event.getSource()).getId();
 		cittaInput = tabelloneClient.cercaCitta(nomeCitta);
-		labelAzioneDaFare.setText("Selezionata: "+nomeCitta);
+		labelAzioneDaFare.setText("Selezionata: " + nomeCitta);
 	}
 
 	@FXML
 	private void handleTesseraMareButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("mare").getTessereCostruzione().get(numTessera);
-		labelAzioneDaFare.setText("Selezionata tessera mare numero "+numTessera);
+		labelAzioneDaFare.setText("Selezionata tessera mare numero " + numTessera);
 	}
 
 	@FXML
 	private void handleTesseraPianuraButton(ActionEvent event) {
 		int numTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("pianura").getTessereCostruzione().get(numTessera);
-		labelAzioneDaFare.setText("Selezionata tessera pianura numero "+numTessera);
+		labelAzioneDaFare.setText("Selezionata tessera pianura numero " + numTessera);
 	}
 
 	@FXML
 	private void handleTesseraMontagnaButton(ActionEvent event) {
 		int numeroTessera = Integer.parseInt(((Button) event.getSource()).getText());
 		tesseraInput = tabelloneClient.getRegioneDaNome("montagna").getTessereCostruzione().get(numeroTessera);
-		labelAzioneDaFare.setText("Selezionata tessera montagna numero "+numeroTessera);
+		labelAzioneDaFare.setText("Selezionata tessera montagna numero " + numeroTessera);
 	}
 
 	@FXML
@@ -564,7 +560,7 @@ public class ViewGUI extends View implements Initializable {
 		} else {
 			consiglioInput = tabelloneClient.getRegioneDaNome(nomeConsiglio).getConsiglio();
 		}
-		labelAzioneDaFare.setText("Selezionato consiglio "+nomeConsiglio);
+		labelAzioneDaFare.setText("Selezionato consiglio " + nomeConsiglio);
 	}
 
 	@FXML
@@ -659,10 +655,12 @@ public class ViewGUI extends View implements Initializable {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
-					private final Rectangle rectangle;{
+					private final Rectangle rectangle;
+					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(15, 15);
 					}
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
@@ -673,8 +671,10 @@ public class ViewGUI extends View implements Initializable {
 							rectangle.setFill(item);
 							setGraphic(rectangle);
 						}
-					}};
-			}});
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaConsiglioPianura() {
@@ -687,10 +687,12 @@ public class ViewGUI extends View implements Initializable {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
-					private final Rectangle rectangle;{
+					private final Rectangle rectangle;
+					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(15, 15);
 					}
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
@@ -701,8 +703,10 @@ public class ViewGUI extends View implements Initializable {
 							rectangle.setFill(item);
 							setGraphic(rectangle);
 						}
-					}};
-			}});
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaConsiglioRe() {
@@ -715,10 +719,12 @@ public class ViewGUI extends View implements Initializable {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
-					private final Rectangle rectangle;{
+					private final Rectangle rectangle;
+					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(15, 15);
 					}
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
@@ -729,8 +735,10 @@ public class ViewGUI extends View implements Initializable {
 							rectangle.setFill(item);
 							setGraphic(rectangle);
 						}
-					}};
-			}});
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaConsiglioMontagna() {
@@ -743,10 +751,12 @@ public class ViewGUI extends View implements Initializable {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
-					private final Rectangle rectangle;{
+					private final Rectangle rectangle;
+					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(15, 15);
 					}
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
@@ -757,8 +767,10 @@ public class ViewGUI extends View implements Initializable {
 							rectangle.setFill(item);
 							setGraphic(rectangle);
 						}
-					}};
-			}});
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaCartePolitica() {
@@ -812,10 +824,12 @@ public class ViewGUI extends View implements Initializable {
 			@Override
 			public ListCell<Color> call(ListView<Color> p) {
 				return new ListCell<Color>() {
-					private final Rectangle rectangle;{
+					private final Rectangle rectangle;
+					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 						rectangle = new Rectangle(20, 20);
 					}
+
 					@Override
 					protected void updateItem(Color item, boolean empty) {
 						super.updateItem(item, empty);
@@ -826,8 +840,10 @@ public class ViewGUI extends View implements Initializable {
 							rectangle.setFill(item);
 							setGraphic(rectangle);
 						}
-					}};
-			}});
+					}
+				};
+			}
+		});
 	}
 
 	public void aggiornaTessereTabellone() {

@@ -1,4 +1,4 @@
-package client.cli;
+package client.view.cli;
 
 import java.util.Scanner;
 
@@ -26,10 +26,10 @@ public class InputOutput {
 
 	public static String leggiStringa(boolean tornaIndietroDisponibile) {
 		String in;
-		System.out.print("--> ");
-		System.out.flush();
 		if(tornaIndietroDisponibile)
 			InputOutput.stampa("\nPremi - per tornare indietro\n");
+		System.out.print("--> ");
+		System.out.flush();
 		in = input.nextLine();
 		input.reset();
 		if (in.equals("-") && tornaIndietroDisponibile)

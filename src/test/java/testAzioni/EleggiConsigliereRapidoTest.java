@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import server.eccezione.NumeroAiutantiIncorretto;
+import server.eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.azione.Azione;

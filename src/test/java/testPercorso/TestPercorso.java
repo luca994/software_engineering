@@ -73,7 +73,7 @@ public class TestPercorso {
 		assertEquals(20, percorso.posizioneAttualeGiocatore(g1));
 	}
 
-	@Test(expected = server.eccezione.FuoriDalLimiteDelPercorso.class)
+	@Test(expected = server.eccezioni.FuoriDalLimiteDelPercorso.class)
 	public void testMuoviGiocatoreWithNegativeSteps() throws Exception {
 		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
 		percorso.getCaselle().get(0).setGiocatori(giocatori);

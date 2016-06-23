@@ -1,4 +1,4 @@
-package client.gui;
+package client.view.gui;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

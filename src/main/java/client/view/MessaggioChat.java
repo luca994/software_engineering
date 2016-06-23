@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.gui;
+package client.view;
 
 import java.io.Serializable;
 

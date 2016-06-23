@@ -13,7 +13,7 @@ public class Configurazione {
 
 	/** Game Settings */
 	
-	/** Actions Setup */
+	/** Actions setup */
 		
 	/** The number of money you gain when you elect a councillor */
 	public static final int MONETE_ELEZIONE_CONSIGLIERE = 4;
@@ -47,6 +47,17 @@ public class Configurazione {
 	
 	/** The number of assistants you have to pay to do the rapid action AzionePrincipaleAggiuntiva*/
 	public static final int COSTO_AZIONE_PRINCIPALE_AGGIUNTIVA = 3;
+	
+	/** End of the game and final score settings*/
+	
+	/** The number of victory points awarded to the first player in the path nobility*/
+	public static final int PUNTI_PRIMO_PERCORSO_NOBILTA = 5;
+	/** The number of victory points awarded to the second player in the path nobility*/
+	public static final int PUNTI_SECONDO_PERCORSO_NOBILTA = 2;
+	/** The number of victory points awarded to the player with more tiles building permit */
+	public static final int PUNTI_PIU_TESSERE_PERMESSO = 3;
+	
+	
 	
 	/** Private constructor 	*/
 	private Configurazione() {

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.config.Configurazione;
-import server.eccezione.CartePoliticaIncorrette;
-import server.eccezione.EmporioGiaCostruito;
-import server.eccezione.FuoriDalLimiteDelPercorso;
-import server.eccezione.NumeroAiutantiIncorretto;
+import server.eccezioni.CartePoliticaIncorrette;
+import server.eccezioni.EmporioGiaCostruito;
+import server.eccezioni.FuoriDalLimiteDelPercorso;
+import server.eccezioni.NumeroAiutantiIncorretto;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.componenti.CartaColorata;

@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.util.zip.DataFormatException;
 
-import server.eccezione.NomeGiaScelto;
+import client.view.View;
+import server.eccezioni.NomeGiaScelto;
 
 public class ConnessioneFactory {
 

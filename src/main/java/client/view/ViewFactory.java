@@ -1,11 +1,11 @@
-package client;
+package client.view;
 
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Set;
 
-import client.cli.ViewCLI;
-import client.gui.GuiCreator;
+import client.view.cli.ViewCLI;
+import client.view.gui.GuiCreator;
 import javafx.application.Application;
 
 public class ViewFactory {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.gui;
+package client.view.gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
