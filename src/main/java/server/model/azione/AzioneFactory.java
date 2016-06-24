@@ -53,7 +53,7 @@ public class AzioneFactory implements Serializable{
 			return new EleggiConsigliere(gioco,consigliere, consiglio);
 		}
 		if (Integer.parseInt(tipoAzione)==0) {
-			if(tesseraCostruzione==null || cartePolitica.isEmpty() || consiglio==null)
+			if(tesseraCostruzione==null || cartePolitica.isEmpty() || consiglio==null || consiglioRe)
 				return null;
 			return new AcquistaPermesso(gioco,tesseraCostruzione, cartePolitica, consiglio);
 		}
