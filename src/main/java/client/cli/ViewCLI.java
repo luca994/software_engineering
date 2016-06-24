@@ -200,13 +200,11 @@ public class ViewCLI extends View implements Runnable {
 				inserimentoAzione.set(false);
 			} else
 				return false;
-		} else if (scelta == 9){
+		} else if (scelta == 9) {
 			stampeTabellone();
-			}
-		else if (scelta == 10){
+		} else if (scelta == 10) {
 			inviaMessaggioChat();
-		}
-		else {
+		} else {
 			InputOutput.stampa("");
 			InputOutput.stampa("Input non valido");
 			return false;
@@ -214,15 +212,15 @@ public class ViewCLI extends View implements Runnable {
 		return true;
 	}
 
-	private void inviaMessaggioChat(){
+	private void inviaMessaggioChat() {
 		InputOutput.stampa("Scrivi il messaggio");
 		String messaggioTemp = InputOutput.leggiStringa(true);
-		if(messaggioTemp!=null){
-			MessaggioChat msg= new MessaggioChat(giocatore.getNome(), messaggioTemp);
+		if (messaggioTemp != null) {
+			MessaggioChat msg = new MessaggioChat(giocatore.getNome(), messaggioTemp);
 			getConnessione().inviaOggetto(msg);
 		}
 	}
-	
+
 	private void faseCompraVendita() {
 		Integer scelta;
 		InputOutput.stampa("1) Per acquistare oggetti dal mercato");
@@ -859,12 +857,16 @@ public class ViewCLI extends View implements Runnable {
 	 *            the action factory used by the cli to create the action
 	 */
 	private boolean inserimentoConsiglio(AzioneFactory azioneFactory) {
-		InputOutput.stampa(
-				"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure re per il consiglio del re oppure 'annulla' per annullare");
+		if ("0".equals(azioneFactory.getTipoAzione()))
+			InputOutput.stampa(
+					"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure 'annulla' per annullare");
+		else
+			InputOutput.stampa(
+					"Inserisci il nome della regione che ha il consiglio che vuoi utilizzare oppure re per il consiglio del re oppure 'annulla' per annullare");
 		String scelta = InputOutput.leggiStringa(false);
 		if ("annulla".equalsIgnoreCase(scelta))
 			return false;
-		if (("re").equalsIgnoreCase(scelta)) {
+		if (("re").equalsIgnoreCase(scelta) && !"0".equals(azioneFactory.getTipoAzione())) {
 			azioneFactory.setConsiglio(tabelloneClient.getRe().getConsiglio());
 			azioneFactory.setConsiglioRe(true);
 		} else {
@@ -890,7 +892,8 @@ public class ViewCLI extends View implements Runnable {
 				InputOutput.stampa((String) oggetto);
 				if ("Azione Eseguita!".equalsIgnoreCase((String) oggetto)
 						|| "Non hai più azioni principali".equalsIgnoreCase((String) oggetto)
-						|| "Non hai più azioni rapide".equalsIgnoreCase((String) oggetto))
+						|| "Non hai più azioni rapide".equalsIgnoreCase((String) oggetto)
+						|| "parametri errati".equalsIgnoreCase((String) oggetto))
 					inserimentoAzione.set(true);
 			}
 			if (oggetto instanceof Giocatore)
@@ -958,12 +961,14 @@ public class ViewCLI extends View implements Runnable {
 					riceviOggetto(oggetto);
 				}
 			}
-			if(oggetto instanceof MessaggioChat){
+			if (oggetto instanceof MessaggioChat) {
 				InputOutput.stampa("************");
 				InputOutput.stampa("CHAT");
-				InputOutput.stampa("["+((MessaggioChat) oggetto).getAutore()+"]: "+ ((MessaggioChat) oggetto).getMsg());
+				InputOutput.stampa(
+						"[" + ((MessaggioChat) oggetto).getAutore() + "]: " + ((MessaggioChat) oggetto).getMsg());
 				InputOutput.stampa("************");
-				if(((MessaggioChat) oggetto).getAutore().equalsIgnoreCase(giocatore.getNome()) && semaforo.availablePermits() == 0)
+				if (((MessaggioChat) oggetto).getAutore().equalsIgnoreCase(giocatore.getNome())
+						&& semaforo.availablePermits() == 0)
 					semaforo.release();
 			}
 		} catch (InterruptedException e) {
@@ -977,11 +982,11 @@ public class ViewCLI extends View implements Runnable {
 	public synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
-				for (CartaPolitica c : g.getCartePolitica()) {
+				/*for (CartaPolitica c : g.getCartePolitica()) {
 					if (giocatore.cercaCarta(c) == null) {
 						InputOutput.stampa("Hai pescato: " + c);
 					}
-				}
+				}*/
 				giocatore = g;
 			}
 		}
