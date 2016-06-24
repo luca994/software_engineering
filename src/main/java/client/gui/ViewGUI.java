@@ -626,7 +626,7 @@ public class ViewGUI extends View implements Initializable {
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
 	}
 
-	public void aggiornaRe() {
+	private void aggiornaRe() {
 		for (Regione r : tabelloneClient.getRegioni())
 			for (Citta c : r.getCitta())
 				if (c.getRe() != null)
@@ -638,7 +638,7 @@ public class ViewGUI extends View implements Initializable {
 							}
 	}
 
-	public void aggiornaAssistenti() {
+	private void aggiornaAssistenti() {
 		int num = 0;
 		for (Assistente a : giocatore.getAssistenti()) {
 			if (a.getPrezzo() == 0)
@@ -649,7 +649,7 @@ public class ViewGUI extends View implements Initializable {
 			labelNumeroAssistenti.setDisable(true);
 	}
 
-	public void aggiornaConsiglioMare() {
+	private void aggiornaConsiglioMare() {
 		consiglioMare.clear();
 		for (Consigliere c : tabelloneClient.getRegioneDaNome("mare").getConsiglio().getConsiglieri()) {
 			consiglioMare.add(ParseColor.colorAwtToFx(c.getColore()));
@@ -681,7 +681,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaConsiglioPianura() {
+	private void aggiornaConsiglioPianura() {
 		consiglioPianura.clear();
 		for (Consigliere c : tabelloneClient.getRegioneDaNome("pianura").getConsiglio().getConsiglieri()) {
 			consiglioPianura.add(ParseColor.colorAwtToFx(c.getColore()));
@@ -713,7 +713,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaConsiglioRe() {
+	private void aggiornaConsiglioRe() {
 		consiglioRe.clear();
 		for (Consigliere c : tabelloneClient.getRe().getConsiglio().getConsiglieri()) {
 			consiglioRe.add(ParseColor.colorAwtToFx(c.getColore()));
@@ -745,7 +745,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaConsiglioMontagna() {
+	private void aggiornaConsiglioMontagna() {
 		consiglioMontagna.clear();
 		for (Consigliere c : tabelloneClient.getRegioneDaNome("Montagna").getConsiglio().getConsiglieri()) {
 			consiglioMontagna.add(ParseColor.colorAwtToFx(c.getColore()));
@@ -777,7 +777,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaCartePolitica() {
+	private void aggiornaCartePolitica() {
 		cartePolitica.clear();
 		for (CartaPolitica c : giocatore.getCartePolitica()) {
 			if (c instanceof Jolly && c.getPrezzo() == 0) {
@@ -794,7 +794,7 @@ public class ViewGUI extends View implements Initializable {
 		cartePoliticaListView.setItems(cartePolitica);
 	}
 
-	public void aggiornaTessereCostruzioneGiocatore() {
+	private void aggiornaTessereCostruzioneGiocatore() {
 		tessereCostruzioneUsate.clear();
 		tessereCostruzioneValide.clear();
 		for (TesseraCostruzione t : giocatore.getTessereValide()) {
@@ -815,7 +815,7 @@ public class ViewGUI extends View implements Initializable {
 		tessereUsateListView.setItems(tessereCostruzioneUsate);
 	}
 
-	public void aggiornaConsiglieriDisponibili() {
+	private void aggiornaConsiglieriDisponibili() {
 
 		consiglieriDisponibili.clear();
 
@@ -850,7 +850,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaTessereTabellone() {
+	private void aggiornaTessereTabellone() {
 		String id0 = tabelloneClient.getRegioni().get(0).getTessereCostruzione().get(0).getId();
 		tesseraMare0Image.setImage(new Image(getClass().getClassLoader()
 				.getResource("immaginiGUI/tessereCostruzione/tessera" + id0 + ".jpg").toString(), 80, 50, false,
@@ -890,7 +890,7 @@ public class ViewGUI extends View implements Initializable {
 					50, false, false));
 	}
 
-	public void aggiornaGettoni() {
+	private void aggiornaGettoni() {
 		String immagine;
 		for (Node i : anchorPaneMappa.getChildren())
 			for (Regione r : tabelloneClient.getRegioni())
@@ -908,7 +908,7 @@ public class ViewGUI extends View implements Initializable {
 				}
 	}
 
-	public void aggiornaEmpori() {
+	private void aggiornaEmpori() {
 		for (Regione r : tabelloneClient.getRegioni()) {
 			for (Citta c : r.getCitta()) {
 				switch (c.getNome()) {
@@ -1064,7 +1064,7 @@ public class ViewGUI extends View implements Initializable {
 					private final Rectangle rectangle;
 					{
 						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-						rectangle = new Rectangle(20, 20);
+						rectangle = new Rectangle(15, 15);
 					}
 
 					@Override
@@ -1083,7 +1083,7 @@ public class ViewGUI extends View implements Initializable {
 		});
 	}
 
-	public void aggiornaTessereBonus() {
+	private void aggiornaTessereBonus() {
 		for (TesseraBonusCitta tessera : tabelloneClient.getTessereBonusCitta()) {
 			String colore = ParseColor.colorIntToString(tessera.getColore().getRGB());
 			if ("blue".equalsIgnoreCase(colore))
@@ -1141,7 +1141,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	public void aggiornaVittoria() {
+	private void aggiornaVittoria() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
 			Rectangle recty = rettangoliVittoria.get(index);
@@ -1175,7 +1175,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	public void aggiornaNobilta() {
+	private void aggiornaNobilta() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
 			Rectangle recty = rettangoliNobilta.get(index);
@@ -1203,7 +1203,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	public void aggiornaRicchezza() {
+	private void aggiornaRicchezza() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			int index = tabelloneClient.getGioco().getGiocatori().indexOf(g);
 			Rectangle recty = rettangoliRicchezza.get(index);
@@ -1341,7 +1341,7 @@ public class ViewGUI extends View implements Initializable {
 		controllerMercato = loader.<ScreenAcquistoMercatoController> getController();
 	}
 
-	public void stampaMessaggio(String nomeFinestra, String msg) {
+	private void stampaMessaggio(String nomeFinestra, String msg) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenMessaggioErrore.fxml"));
 		try {
 			Stage stage = new Stage();
@@ -1371,10 +1371,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	/**
-	 * takes the state of the player from the game
-	 */
-	public synchronized void aggiornaStato() {
+	private void inizializzaGrafica() {
 		if (!primoTabellone) {
 			creazioneSfondiMappa();
 			imgViewRe.setVisible(true);
@@ -1409,6 +1406,13 @@ public class ViewGUI extends View implements Initializable {
 			}
 			primoTabellone = true;
 		}
+	}
+
+	/**
+	 * takes the state of the player from the game
+	 */
+	private synchronized void aggiornaStato() {
+		inizializzaGrafica();
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
@@ -1433,7 +1437,8 @@ public class ViewGUI extends View implements Initializable {
 		if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 			labelStatoGioco.setText("Fase mercato aggiunta");
 			if (turnoCambiato)
-				labelAzioneDaFare.setText("E' il tuo turno");
+				labelAzioneDaFare.setText(
+						"E' il tuo turno. Seleziona una carta politica, una tessera costruzione valida oppure clicca sul numero di assistenti per vendere un assistente, poi inserisci il prezzo.");
 			cartePoliticaListView.setDisable(false);
 			tessereValideListView.setDisable(false);
 			if (giocatore.getAssistenti().size() != 0)
@@ -1529,7 +1534,7 @@ public class ViewGUI extends View implements Initializable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	public synchronized void aggiornaGiocatore() {
+	private synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
 				giocatore = g;
@@ -1577,7 +1582,7 @@ public class ViewGUI extends View implements Initializable {
 		tesseraPianura1Button.setDisable(value);
 	}
 
-	public synchronized void disabilitazioneBottoniConsigli(boolean value) {
+	private synchronized void disabilitazioneBottoniConsigli(boolean value) {
 		consiglioMareButton.setDisable(value);
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
