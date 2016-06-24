@@ -13,7 +13,7 @@ import server.model.componenti.Regione;
  */
 public class CambioTessereCostruzione extends AzioneRapida {
 
-	private Regione regione;
+	private final Regione regione;
 
 	/**
 	 * @param regione

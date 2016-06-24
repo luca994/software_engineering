@@ -5,6 +5,7 @@ package server.model.stato.gioco;
 
 import java.util.List;
 
+import server.config.Configurazione;
 import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.stato.giocatore.Sospeso;
@@ -50,9 +51,10 @@ public abstract class Esecuzione extends StatoGioco implements Runnable{
 		Giocatore giocatoreControllato = giocatoreCorrente;
 		long timer = System.currentTimeMillis();
 		while(giocatoreCorrente!=null && giocatoreCorrente.equals(giocatoreControllato)){
-			if(System.currentTimeMillis()-timer>600000){
+			if(System.currentTimeMillis()-timer>Configurazione.getMaxTimeForTurn()){
 				giocatoreCorrente.setStatoGiocatore(new Sospeso(giocatoreControllato));
 				getGioco().notificaObservers("Sei stato sopseso", giocatoreControllato);
+				getGioco().notificaObservers("Il giocatore "+giocatoreControllato.getNome()+" è stato sospeso");
 				break;
 			}
 			try {

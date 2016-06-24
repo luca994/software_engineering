@@ -12,8 +12,8 @@ import server.model.componenti.Consiglio;
  */
 public class EleggiConsigliereRapido extends AzioneRapida {
 
-	private Consigliere consigliere;
-	private Consiglio consiglio;
+	private final Consigliere consigliere;
+	private final Consiglio consiglio;
 
 	/**
 	 * @param consigliere

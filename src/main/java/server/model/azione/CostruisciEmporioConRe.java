@@ -24,8 +24,8 @@ import server.model.componenti.Jolly;
  */
 public class CostruisciEmporioConRe extends AzionePrincipale {
 
-	private Citta destinazione;
-	private List<CartaPolitica> cartePolitica;
+	private final Citta destinazione;
+	private final List<CartaPolitica> cartePolitica;
 
 	/**
 	 * Constructor

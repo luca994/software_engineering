@@ -20,8 +20,8 @@ import server.model.componenti.TesseraCostruzione;
  */
 public class CostruisciEmporioConTessera extends AzionePrincipale {
 
-	private Citta citta;
-	private TesseraCostruzione tessera;
+	private final Citta citta;
+	private final TesseraCostruzione tessera;
 
 	/**
 	 * @param citta
@@ -108,36 +108,6 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, citta);
 
 		giocatore.getStatoGiocatore().azioneEseguita(this);
-	}
-
-	/**
-	 * @return the città
-	 */
-	public Citta getCitta() {
-		return citta;
-	}
-
-	/**
-	 * @param citta
-	 *            the città to set
-	 */
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
-	/**
-	 * @return the tessera
-	 */
-	public TesseraCostruzione getTessera() {
-		return tessera;
-	}
-
-	/**
-	 * @param tessera
-	 *            the tessera to set
-	 */
-	public void setTessera(TesseraCostruzione tessera) {
-		this.tessera = tessera;
 	}
 
 }

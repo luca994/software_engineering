@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import server.config.Configurazione;
 import server.model.bonus.Bonus;
 import server.model.componenti.Assistente;
 import server.model.componenti.CartaPoliticaFactory;
@@ -26,9 +27,6 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 * 
 	 */
 	private static final long serialVersionUID = -3738439371299756375L;
-
-	private static final int MIN_NUM_GIOCATORI = 2;
-	private static final int NUM_EMPORI_MASSIMO = 10;
 
 	private List<Giocatore> giocatori;
 	private Tabellone tabellone;
@@ -60,7 +58,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 	 */
 	public void inizializzaPartita(String numMappa) {
 
-		if (this.giocatori.size() < MIN_NUM_GIOCATORI)
+		if (this.giocatori.size() < Configurazione.MIN_NUM_GIOCATORI)
 			throw new IllegalArgumentException("Numero di giocatori troppo basso per iniziare la partita");
 		if (statoGioco instanceof Esecuzione)
 			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
@@ -91,7 +89,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 		int numGiocatore = 1;
 		for (Giocatore gio : giocatori) {
 
-			gio.setEmporiRimasti(NUM_EMPORI_MASSIMO);
+			gio.setEmporiRimasti(Configurazione.NUM_EMPORI_MASSIMO);
 
 			for (int j = 0; j < numGiocatore; j++) {
 				gio.getAssistenti().add(new Assistente());

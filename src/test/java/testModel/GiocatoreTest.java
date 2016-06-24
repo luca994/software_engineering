@@ -205,14 +205,6 @@ public class GiocatoreTest {
 		assertTrue(carte == giocatoreTester.getCartePolitica());
 	}
 
-	/**
-	 * Test method for {@link server.model.Giocatore#getColore()}.
-	 */
-	@Test
-	public void testSetAndGetColore() {
-		giocatoreTester.setColore(Color.red);
-		assertEquals(Color.red, giocatoreTester.getColore());
-	}
 
 	/**
 	 * Test method for

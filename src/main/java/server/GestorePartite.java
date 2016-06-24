@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import client.ConnessioneRMIInterface;
+import server.config.Configurazione;
 import server.controller.Controller;
 import server.eccezioni.NomeGiaScelto;
 import server.model.Giocatore;
@@ -36,9 +37,7 @@ public class GestorePartite implements Runnable {
 	private Gioco gioco;
 	private Controller controller;
 	private List<Giocatore> giocatori;
-	private static final int PORT = 1099;
 	private Registry registry;
-	private static final String NAME = "consiglioDeiQuattroRegistro";
 	private String mappa;
 
 	/**
@@ -77,7 +76,7 @@ public class GestorePartite implements Runnable {
 			controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
 			while (giocatori.size() < 2
-					|| (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < 5000)) {
+					|| (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < Configurazione.TEMPO_ATTESA_AVVIO_PARTITA)) {
 				if (!giocatoriAttesa.isEmpty()) {
 					timer.set(System.currentTimeMillis());
 					aggiungiGiocatoreSocket();
@@ -166,7 +165,7 @@ public class GestorePartite implements Runnable {
 		if (giocatori.isEmpty())
 			this.mappa = mappa;
 		giocatori.add(giocatore);
-		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, PORT);
+		ServerRMIViewInterface viewRMI = new ServerRMIView(gioco, giocatore, client, Configurazione.RMI_PORT);
 		((ServerRMIView) viewRMI).registerObserver(controller);
 		try {
 			client.passaOggetto(giocatore);
@@ -185,11 +184,11 @@ public class GestorePartite implements Runnable {
 	 * @throws AlreadyBoundException
 	 */
 	public void startRMI() throws RemoteException, AlreadyBoundException {
-		registry = LocateRegistry.createRegistry(PORT);
+		registry = LocateRegistry.createRegistry(Configurazione.RMI_PORT);
 		ServerRMIInterface serverRMI = new ServerRMI(this);
-		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, PORT);
-		registry.bind(NAME, serverRMIRemote);
-		LOG.log(Level.INFO, "RMI registry on port: " + PORT);
+		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, Configurazione.RMI_PORT);
+		registry.bind(Configurazione.RMI_REGISTRY_NAME, serverRMIRemote);
+		LOG.log(Level.INFO, "RMI registry on port: " + Configurazione.RMI_PORT);
 	}
 
 	public void startSocket(){
@@ -209,6 +208,7 @@ public class GestorePartite implements Runnable {
 	@Override
 	public void run() {
 		try {
+				LOG.log(Level.INFO, "Tempo durata turni: "+Configurazione.getMaxTimeForTurn()/1000+" Secondi");
 				startRMI();
 				startSocket();
 		} catch (RemoteException | AlreadyBoundException  e) {

@@ -29,9 +29,9 @@ public class Giocatore implements Serializable {
 	private static final long serialVersionUID = 6264310867945058171L;
 
 	private final String nome;
+	private final Color colore;
 	private List<Assistente> assistenti;
 	private List<CartaPolitica> cartePolitica;
-	private Color colore;
 	private List<TesseraCostruzione> tessereUsate;
 	private List<TesseraCostruzione> tessereValide;
 	private int emporiRimasti;
@@ -193,14 +193,6 @@ public class Giocatore implements Serializable {
 	 */
 	public Color getColore() {
 		return colore;
-	}
-
-	/**
-	 * @param colore
-	 *            the colore to set
-	 */
-	public void setColore(Color colore) {
-		this.colore = colore;
 	}
 
 	/**

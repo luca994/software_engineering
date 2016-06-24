@@ -43,8 +43,6 @@ public class Tabellone implements Serializable{
 	 */
 	private static final long serialVersionUID = 6970346938035769588L;
 	
-	private static final int NUMERO_TOTALE_CONSIGLIERI = 24;
-	private static final int NUMERO_TOTALE_GETTONI = 14;
 
 	private List<Regione> regioni;
 	private Set<TesseraBonusRegione> tessereBonusRegione;
@@ -103,7 +101,7 @@ public class Tabellone implements Serializable{
 		 * corrispondente ai Gettoni Città) Creo la lista di bonus per le
 		 * città(Gettoni città da file), la mischio
 		 */
-		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
+		List<Set<Bonus>> gettoniCitta = new ArrayList<>();
 		gettoniCitta = creaGettoniCitta();
 		/*
 		 * Collego, coloro le città(devo passare attraverso le regioni), creo e
@@ -140,7 +138,7 @@ public class Tabellone implements Serializable{
 	 *             if there is an error in reading files
 	 */
 	private void creaConsiglieriDisponibili() {
-		this.consiglieriDisponibili = new ArrayList<>(NUMERO_TOTALE_CONSIGLIERI);
+		this.consiglieriDisponibili = new ArrayList<>();
 		SAXBuilder builderConsiglieri = new SAXBuilder();
 		Document documentConsiglieri;
 		try {
@@ -210,7 +208,7 @@ public class Tabellone implements Serializable{
 	private List<Set<Bonus>> creaGettoniCitta() {
 		// Creo la lista di bonus per le città(Gettoni città da file), la
 		// mischio
-		List<Set<Bonus>> gettoniCitta = new ArrayList<>(NUMERO_TOTALE_GETTONI);
+		List<Set<Bonus>> gettoniCitta = new ArrayList<>();
 		BonusCreator bonusCreator = new BonusCreator(this);
 		// Leggo i set di bonus
 		SAXBuilder builderGettoni = new SAXBuilder();

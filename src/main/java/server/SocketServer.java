@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import server.config.Configurazione;
+
 /**
  * @author Luca
  *
@@ -13,8 +15,6 @@ import java.util.logging.Logger;
 public class SocketServer {
 
 	private static final Logger LOG = Logger.getLogger(SocketServer.class.getName());
-
-	private static final int PORT = 29999;
 	
 	private final ServerSocket serverSocket;
 
@@ -27,7 +27,7 @@ public class SocketServer {
 	 *             if an I/O error occurs when opening the socket
 	 */
 	public SocketServer() throws IOException {
-		serverSocket = new ServerSocket(PORT);
+		serverSocket = new ServerSocket(Configurazione.SOCKET_PORT);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class SocketServer {
 	 */
 	public void startSocket() {
 		try {
-			LOG.log(Level.INFO, "SERVER SOCKET PRONTO NELLA PORTA: " + PORT);
+			LOG.log(Level.INFO, "SERVER SOCKET PRONTO NELLA PORTA: " + Configurazione.SOCKET_PORT);
 			while(!segnaleStop)
 				accettaConnessioni();
 			serverSocket.close();

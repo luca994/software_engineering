@@ -176,20 +176,20 @@ public class ViewCLI extends View implements Runnable {
 	private boolean faseAzione() throws IOException {
 		Integer scelta;
 		InputOutput.stampa("Inserisci un azione:\n");
-		InputOutput.stampa("- Azioni principali:\n");
+		InputOutput.stampa("- Azioni principali:");
 		InputOutput.stampa("0) Acquista permesso");
 		InputOutput.stampa("1) Costruisci emporio con re");
 		InputOutput.stampa("2) Eleggi consigliere");
 		InputOutput.stampa("3) Costruisci emporio con tessera costruzione");
-		InputOutput.stampa("- Azioni rapide:\n");
+		InputOutput.stampa("- Azioni rapide:");
 		InputOutput.stampa("4) Ingaggia aiutante");
 		InputOutput.stampa("5) Cambia tessere costruzione in una regione");
 		InputOutput.stampa("6) Eleggi consigliere rapido");
 		InputOutput.stampa("7) Azione principale aggiuntiva");
 		InputOutput.stampa("8) Salta azione rapida");
-		InputOutput.stampa("- Informazioni:\n");
+		InputOutput.stampa("- Informazioni:");
 		InputOutput.stampa("9) Scegli cosa stampare dello stato attuale del gioco\n");
-		InputOutput.stampa("- Chat:\n");
+		InputOutput.stampa("- Chat:");
 		InputOutput.stampa("10) Invia messaggio chat\n");
 		scelta = InputOutput.leggiIntero(false);
 		if (scelta < 9) {
@@ -925,11 +925,11 @@ public class ViewCLI extends View implements Runnable {
 					if (tmp != null)
 						((BonusTesseraPermesso) oggetto).setTessera(tmp);
 					else {
-						System.out.println("Il numero inserito non è corretto");
+						InputOutput.stampa("Il numero inserito non è corretto");
 						riceviOggetto(oggetto);
 					}
 				} catch (NumberFormatException e) {
-					System.out.println("la stringa deve essere un numero");
+					InputOutput.stampa("la stringa deve essere un numero");
 					riceviOggetto(oggetto);
 				}
 				this.getConnessione().inviaOggetto(oggetto);
