@@ -54,15 +54,13 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato{
 		setGiocatoreCorrente(null);
 		/*
 		 * Ora che il mercato è finito, posso svuotarlo e resettare gli
-		 * attributi degli oggetti invenduti lasciando il vecchio
-		 * proprietario,ma togliendo il reference al mercato. Poi posso
+		 * attributi degli oggetti invenduti togliendo il reference al mercato. Poi posso
 		 * rimuovere l'oggetto dalla lista degli oggetti in vendita. Nessuno
 		 * avrà più il reference al mercato, che sarà quindi cancellato dal
 		 * GarbageCollector
 		 */
 		for (OggettoVendibile ogg : mercato.getOggettiInVendita()) {
 			ogg.resettaAttributiOggettoVendibile();
-			mercato.getOggettiInVendita().remove(ogg);
 		}
 		mercato.getOggettiInVendita().clear();
 	}

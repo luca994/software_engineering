@@ -142,7 +142,7 @@ public class GiocatoreTest {
 		CartaPolitica carta2 = new CartaColorata(Color.black);
 		CartaPolitica carta3 = new CartaColorata(Color.black);
 		giocatoreTester.getCartePolitica().add(carta1);
-		giocatoreTester.getCartePolitica().add(new CartaColorata(Color.white));
+		giocatoreTester.getCartePolitica().add(new Jolly());
 		giocatoreTester.getCartePolitica().add(new CartaColorata(Color.magenta));
 		giocatoreTester.getCartePolitica().add(carta3);
 		assertEquals(carta1, giocatoreTester.cercaCarta(carta1));
@@ -159,6 +159,27 @@ public class GiocatoreTest {
 		assertNull(giocatoreTester.cercaCarta(carta1));
 		assertNull(giocatoreTester.cercaCarta(carta2));
 		assertNull(giocatoreTester.cercaCarta(carta3));
+	}
+	
+	/**
+	 * Test method for
+	 * {@link server.model.Giocatore#cercaCarta(server.model.componenti.CartaPolitica)}
+	 * .
+	 */
+	@Test
+	public void testCercaJollyEsistenteConDueCarteNerePossedute() {
+		CartaPolitica carta1 = new Jolly();
+		CartaPolitica carta2 = new Jolly();
+		giocatoreTester.getCartePolitica().add(new CartaColorata(Color.pink));
+		giocatoreTester.getCartePolitica().add(carta1);
+		giocatoreTester.getCartePolitica().add(new CartaColorata(Color.magenta));
+		assertEquals(carta1, giocatoreTester.cercaCarta(carta2));
+		giocatoreTester.getCartePolitica().add(carta2);
+		giocatoreTester.getCartePolitica().remove(carta1);
+		assertEquals(carta2, giocatoreTester.cercaCarta(carta1));
+		giocatoreTester.getCartePolitica().remove(carta2);
+		assertNull(giocatoreTester.cercaCarta(carta1));
+		assertNull(giocatoreTester.cercaCarta(carta2));
 	}
 
 	/**
