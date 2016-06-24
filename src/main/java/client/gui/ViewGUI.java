@@ -896,7 +896,7 @@ public class ViewGUI extends View implements Initializable {
 			for (Regione r : tabelloneClient.getRegioni())
 				for (Citta c : r.getCitta()) {
 					if (i.getId() != null && i.getId().contains(c.getNome()) && i.getId().contains("gettone")) {
-						if (c.getEmpori().size() > 0)
+						if (c.getEmpori().size() > 0 && controllaEmporioDummy(c))
 							immagine = new String(String.valueOf(c.getNumGettone()));
 						else
 							immagine = new String("gettoneRetro");
@@ -908,6 +908,13 @@ public class ViewGUI extends View implements Initializable {
 				}
 	}
 
+	private boolean controllaEmporioDummy(Citta c){
+		List<Giocatore> emporiCitta = new ArrayList<>(c.getEmpori());
+		if(emporiCitta.size() == 1 && "dummy".equals(emporiCitta.get(0).getNome()))
+			return false;
+		return true;
+	}
+	
 	private void aggiornaEmpori() {
 		for (Regione r : tabelloneClient.getRegioni()) {
 			for (Citta c : r.getCitta()) {
