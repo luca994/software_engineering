@@ -89,7 +89,7 @@ public class Configurazione {
 	 * @return the maxTimeForTurn
 	 */
 	public static synchronized void setMaxTimeForTurn(int time) {
-		if(durataTurnoMassima==null)
+		if(durataTurnoMassima!=null)
 			durataTurnoMassima=time;
 	}
 
@@ -97,6 +97,8 @@ public class Configurazione {
 	 * @return the maxTimeForTurn
 	 */
 	public static synchronized int getMaxTimeForTurn() {
+		if(durataTurnoMassima==null)
+			durataTurnoMassima=10000;
 		return durataTurnoMassima;
 	}
 
