@@ -102,10 +102,11 @@ public class AcquistaPermesso extends AzionePrincipale {
 		 * Aggiunta tessera acquistata al set di tessere valide del giocatore
 		 */
 		giocatore.getTessereValide().add(tesseraScelta);
-		tesseraScelta.eseguiBonus(giocatore);
 
 		/* Scopri dal mazzetto una nuova tessera costruzione */
 		consiglioDaSoddisfare.getRegione().nuovaTessera(tesseraScelta);
+		
+		tesseraScelta.eseguiBonus(giocatore);
 
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 

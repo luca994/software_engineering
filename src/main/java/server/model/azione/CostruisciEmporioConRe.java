@@ -123,6 +123,13 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
 		}
 
+		/*
+		 * sposto il re
+		 */
+		this.getGioco().getTabellone().getRe().getCitta().setRe(null);
+		destinazione.setRe(this.getGioco().getTabellone().getRe());
+		this.getGioco().getTabellone().getRe().setCitta(destinazione);
+		
 		/* Prendo i bonus di questa e delle città collegate */
 		List<Citta> cittaConBonusDaOttenere = new ArrayList<>();
 		cittaConBonusDaOttenere.add(destinazione);
@@ -132,18 +139,12 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 			if (citt.getBonus()!=null)
 				citt.eseguiBonus(giocatore);
 		}
+		
 		/*
 		 * controllo se ho gli empori in tutte le città di un colore o di una
 		 * regione e prendo la tessera bonus se mi spetta
 		 */
 		getGioco().getTabellone().prendiTesseraBonus(giocatore, destinazione);
-		
-		/*
-		 * sposto il re
-		 */
-		this.getGioco().getTabellone().getRe().getCitta().setRe(null);
-		destinazione.setRe(this.getGioco().getTabellone().getRe());
-		this.getGioco().getTabellone().getRe().setCitta(destinazione);
 
 		giocatore.getStatoGiocatore().azioneEseguita(this);
 	}

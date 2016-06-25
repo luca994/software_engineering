@@ -628,6 +628,10 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaGettoni();
 		aggiornaEmpori();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
+		//
+		for(Giocatore g: tabelloneClient.cercaCitta("lyram").getEmpori())
+			System.out.println("nome: "+g.getNome());
+		System.out.println("**************");
 	}
 
 	private void aggiornaRe() {
@@ -929,7 +933,6 @@ public class ViewGUI extends View implements Initializable {
 					empArkon.clear();
 					for (Giocatore g : c.getEmpori()) {
 						empArkon.add(ParseColor.colorAwtToFx(g.getColore()));
-
 					}
 					emporiArkon.setItems(empArkon);
 					setCelleEmpori(emporiArkon);
