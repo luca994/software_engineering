@@ -88,7 +88,8 @@ public class ViewGUI extends View implements Initializable {
 	private List<Rectangle> rettangoliVittoria;
 	private List<Rectangle> rettangoliRicchezza;
 	private List<Rectangle> rettangoliNobilta;
-	private List<CartaPolitica> cartePoliticaInput = new ArrayList<>();
+	private List<CartaPolitica> cartePoliticaInput;
+	private List<CartaPolitica> copiaCartePoliticaGiocatore;
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
 	private Bonus bonus;
 	private ScreenAcquistoMercatoController controllerMercato;
@@ -577,8 +578,9 @@ public class ViewGUI extends View implements Initializable {
 		if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 			apriScreenPrezzo("Carta Politica", giocatore.getCartePolitica().get(numeroCarta));
 		} else if (cartePoliticaInput.size() < 4) {
-			cartePoliticaInput.add(giocatore.getCartePolitica().get(numeroCarta));
+			cartePoliticaInput.add(copiaCartePoliticaGiocatore.get(numeroCarta));
 			cartePolitica.remove(numeroCarta);
+			copiaCartePoliticaGiocatore.remove(numeroCarta);
 			cartePoliticaListView.setItems(cartePolitica);
 		} else
 			labelAzioneDaFare.setText("Hai già selezionato 4 carte");
@@ -779,6 +781,7 @@ public class ViewGUI extends View implements Initializable {
 
 	private void aggiornaCartePolitica() {
 		cartePolitica.clear();
+		copiaCartePoliticaGiocatore.clear();
 		for (CartaPolitica c : giocatore.getCartePolitica()) {
 			if (c instanceof Jolly && c.getPrezzo() == 0) {
 				cartePolitica.add(new ImageView(new Image(
@@ -790,6 +793,7 @@ public class ViewGUI extends View implements Initializable {
 								+ ParseColor.colorIntToString(((CartaColorata) c).getColore().getRGB()) + ".jpg")
 						.toString(), 100, 170, false, false)));
 			}
+			copiaCartePoliticaGiocatore.add(c);
 		}
 		cartePoliticaListView.setItems(cartePolitica);
 	}
@@ -1328,6 +1332,8 @@ public class ViewGUI extends View implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		cartePoliticaInput = new ArrayList<>();
+		copiaCartePoliticaGiocatore = new ArrayList<>();
 		turnoCambiato = true;
 		imgViewRe.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/corona.png").toString(), 50,
 				50, false, false));
