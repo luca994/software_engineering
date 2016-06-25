@@ -16,7 +16,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -152,19 +151,19 @@ public class Screen1Controller implements Initializable {
 
 			return true;
 		} catch (NomeGiaScelto e) {
-			stampaMessaggio("Errore", "Nome già scelto");
+			view.stampaMessaggio("Errore", "Nome già scelto");
 			return false;
 		} catch (DataFormatException e) {
-			stampaMessaggio("Errore", e.getMessage());
+			view.stampaMessaggio("Errore", e.getMessage());
 			return false;
 		} catch (UnknownHostException e) {
-			stampaMessaggio("Errore", "Indirizzo ip non corretto o non raggiungibile");
+			view.stampaMessaggio("Errore", "Indirizzo ip non corretto o non raggiungibile");
 			return false;
 		} catch (IOException e) {
-			stampaMessaggio("Errore", "C'è un problema nella connessione");
+			view.stampaMessaggio("Errore", "C'è un problema nella connessione");
 			return false;
 		} catch (NotBoundException e) {
-			stampaMessaggio("Errore", "il nome del registro non è corretto");
+			view.stampaMessaggio("Errore", "il nome del registro non è corretto");
 			return false;
 		}
 	}
@@ -172,25 +171,10 @@ public class Screen1Controller implements Initializable {
 	private boolean controlloCompletamentoCampi() {
 		if (nomeUtenteTextField.getText().equals("") || ipTextField.getText().equals("")
 				|| portaTextField.getText().equals("")) {
-			stampaMessaggio("Errore", "Completa tutti i campi");
+			view.stampaMessaggio("Errore", "Completa tutti i campi");
 			return false;
 		}
 		return true;
-	}
-
-	public void stampaMessaggio(String nomeFinestra, String msg) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenMessaggioErrore.fxml"));
-		try {
-			Stage stage = new Stage();
-			stage.setTitle(nomeFinestra);
-			stage.setScene(new Scene((AnchorPane) loader.load()));
-			MessaggioErroreController controller = loader.<MessaggioErroreController> getController();
-			controller.setMsg(msg);
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**

@@ -50,7 +50,7 @@ public abstract class Esecuzione extends StatoGioco implements Runnable{
 	public void run() {
 		Giocatore giocatoreControllato = giocatoreCorrente;
 		long timer = System.currentTimeMillis();
-		while(giocatoreCorrente!=null && giocatoreCorrente.equals(giocatoreControllato)){
+		while(giocatoreCorrente!=null && giocatoreCorrente.equals(giocatoreControllato) && this.getGioco().getStato() instanceof Esecuzione){
 			if(System.currentTimeMillis()-timer>Configurazione.getMaxTimeForTurn()){
 				giocatoreCorrente.setStatoGiocatore(new Sospeso(giocatoreControllato));
 				getGioco().notificaObservers("Sei stato sopseso", giocatoreControllato);

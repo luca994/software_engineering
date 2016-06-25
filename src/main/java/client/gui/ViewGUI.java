@@ -1348,7 +1348,7 @@ public class ViewGUI extends View implements Initializable {
 		controllerMercato = loader.<ScreenAcquistoMercatoController> getController();
 	}
 
-	private void stampaMessaggio(String nomeFinestra, String msg) {
+	public void stampaMessaggio(String nomeFinestra, String msg) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenMessaggioErrore.fxml"));
 		try {
 			Stage stage = new Stage();
