@@ -8,7 +8,7 @@ import server.model.componenti.Consigliere;
 import server.model.componenti.Consiglio;
 
 /**
- * Main action that allows you to elect a councilor. Choose one of the
+ * Main action that allows you to elect a councillor. Choose one of the
  * counselors available from the board , put it on the board by eliminating the
  * last. Gain 4 coins.
  *

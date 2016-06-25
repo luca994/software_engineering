@@ -1,5 +1,6 @@
 package server.model.stato.giocatore;
 
+import server.config.Configurazione;
 import server.model.Giocatore;
 import server.model.azione.Azione;
 import server.model.azione.AzionePrincipale;
@@ -14,20 +15,16 @@ public class TurnoNormale extends StatoGiocatore {
 	 */
 	private static final long serialVersionUID = -2774878766914139008L;
 
-	private static final int AZIONI_PRINCIPALI_PER_TURNO = 1;
-	private static final int AZIONI_RAPIDE_PER_TURNO = 1;
-
 	private int azioniPrincipaliEseguibili;
 	private int azioniRapideEseguibili;
 	private boolean tuttiGliEmporiCostruiti;
 
 	public TurnoNormale(Giocatore giocatore) {
 		super(giocatore);
-		this.azioniPrincipaliEseguibili = AZIONI_PRINCIPALI_PER_TURNO;
-		this.azioniRapideEseguibili = AZIONI_RAPIDE_PER_TURNO;
+		this.azioniPrincipaliEseguibili = Configurazione.AZIONI_PRINCIPALI_PER_TURNO;
+		this.azioniRapideEseguibili = Configurazione.AZIONI_RAPIDE_PER_TURNO;
 		giocatore.getCartePolitica().add(new CartaPoliticaFactory().creaCartaPolitica());
 	}
-
 
 	/**
 	 * This method should be called every time an AzionePrincipale is performed.

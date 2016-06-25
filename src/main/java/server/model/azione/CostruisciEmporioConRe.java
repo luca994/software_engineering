@@ -121,6 +121,7 @@ public class CostruisciEmporioConRe extends AzionePrincipale {
 		if (giocatore.getEmporiRimasti() == 0) {
 			getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocatore, 3);
 			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
+			getGioco().notificaObservers("Il giocatore "+giocatore.getNome()+" ha costruito tutti gli empori!");
 		}
 
 		/*

@@ -136,9 +136,8 @@ public class Percorso implements Serializable{
 	 *         non-empty casella in the route is the first of the list returned.
 	 */
 	public List<Casella> caselleNonVuotePiuAvanti() {
-		List<Casella> ordineInvertito = new ArrayList<>();
+		List<Casella> ordineInvertito = new ArrayList<>(caselle);
 		List<Casella> caselleNonVuote = new ArrayList<>();
-		Collections.copy(ordineInvertito, caselle);
 		Collections.reverse(ordineInvertito);
 		for (Casella c : ordineInvertito) {
 			if (!c.getGiocatori().isEmpty())

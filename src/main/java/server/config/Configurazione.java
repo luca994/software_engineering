@@ -15,8 +15,15 @@ public class Configurazione {
 	
 	/** The minimum number of a player to play a game */
 	public static final int MIN_NUM_GIOCATORI = 2;
+	
 	/** The number of emporiums that you have to build to finish a game*/
-	public static final int NUM_EMPORI_MASSIMO = 10;
+	public static final int NUM_EMPORI_MASSIMO = 1;
+	
+	/** The standard number of main actions that a player can executes in a turn*/
+	public static final int AZIONI_PRINCIPALI_PER_TURNO = 1;
+
+	/** The standard number of rapid actions that a player can executes in a turn*/
+	public static final int AZIONI_RAPIDE_PER_TURNO = 1;
 	
 	/** Actions setup */
 		
@@ -98,7 +105,7 @@ public class Configurazione {
 	 */
 	public static synchronized int getMaxTimeForTurn() {
 		if(durataTurnoMassima==null)
-			durataTurnoMassima=10000;
+			durataTurnoMassima=20000;
 		return durataTurnoMassima;
 	}
 

@@ -42,6 +42,8 @@ public class FaseTurnoSemplice extends Esecuzione{
 					break;
 				}
 				giocat.getStatoGiocatore().prossimoStato();
+				if(ultimoTurno)
+					getGioco().notificaObservers("Ultimo turno!",giocat);
 			}
 			getGioco().notificaObservers(getGioco().getTabellone());
 			

@@ -11,6 +11,8 @@ import server.model.percorso.Casella;
 
 public class Terminato extends StatoGioco {
 
+	private Giocatore vincitore;
+
 	/**
 	 * 
 	 */
@@ -18,12 +20,12 @@ public class Terminato extends StatoGioco {
 
 	public Terminato(Gioco gioco) {
 		super(gioco);
+		this.vincitore=null;
 	}
 
 	@Override
 	public void eseguiFase() {
 		List<Giocatore> possibiliVincitori;
-		Giocatore vincitore = null;
 		assegnaPuntiFinaliNobilta();
 		assegnoPuntiGiocatoriConPiuPermessi();
 		possibiliVincitori = calcoloVincitore();
@@ -35,6 +37,7 @@ public class Terminato extends StatoGioco {
 			vincitore = ricalcoloVincitore(possibiliVincitori);
 		if (vincitore == null)
 			throw new NullPointerException();
+		getGioco().notificaObservers(getGioco().getTabellone());
 	}
 
 	/**
@@ -81,12 +84,14 @@ public class Terminato extends StatoGioco {
 		List<Casella> caselleNobilta = getGioco().getTabellone().getPercorsoNobilta().caselleNonVuotePiuAvanti();
 		try {
 			for (Giocatore giocat : caselleNobilta.get(0).getGiocatori())
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat, Configurazione.PUNTI_PRIMO_PERCORSO_NOBILTA);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,
+						Configurazione.PUNTI_PRIMO_PERCORSO_NOBILTA);
 
 			if (caselleNobilta.get(0).getGiocatori().size() > 1)
 				return;
 			for (Giocatore giocat : caselleNobilta.get(1).getGiocatori())
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,Configurazione.PUNTI_SECONDO_PERCORSO_NOBILTA);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,
+						Configurazione.PUNTI_SECONDO_PERCORSO_NOBILTA);
 		} catch (FuoriDalLimiteDelPercorso e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -109,7 +114,8 @@ public class Terminato extends StatoGioco {
 		}
 		for (Giocatore giocat : giocatoriConPiuPermessi)
 			try {
-				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,Configurazione.PUNTI_PIU_TESSERE_PERMESSO);
+				getGioco().getTabellone().getPercorsoVittoria().muoviGiocatore(giocat,
+						Configurazione.PUNTI_PIU_TESSERE_PERMESSO);
 			} catch (FuoriDalLimiteDelPercorso e) {
 				throw new IllegalArgumentException(e);
 			}
@@ -117,5 +123,12 @@ public class Terminato extends StatoGioco {
 
 	@Override
 	public void prossimoStato() {
+	}
+
+	/**
+	 * @return the vincitore
+	 */
+	public synchronized Giocatore getVincitore() {
+		return vincitore;
 	}
 }

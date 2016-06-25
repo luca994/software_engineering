@@ -37,11 +37,13 @@ import server.model.percorso.Casella;
 import server.model.percorso.CasellaConBonus;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
+import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
 import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
+import server.model.stato.gioco.Terminato;
 
 public class ViewCLI extends View implements Runnable {
 
@@ -162,13 +164,15 @@ public class ViewCLI extends View implements Runnable {
 					}
 				}
 			}
-			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
-				InputOutput.stampa("Turno mercato:");
-				faseAggiuntaOggetti();
-			}
-			if (statoAttuale instanceof TurnoMercatoCompraVendita) {
-				InputOutput.stampa("Turno mercato:");
-				faseCompraVendita();
+			synchronized (statoAttuale) {
+				if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+					InputOutput.stampa("Turno mercato:");
+					faseAggiuntaOggetti();
+				}
+				if (statoAttuale instanceof TurnoMercatoCompraVendita) {
+					InputOutput.stampa("Turno mercato:");
+					faseCompraVendita();
+				}
 			}
 		}
 	}
@@ -900,8 +904,10 @@ public class ViewCLI extends View implements Runnable {
 				this.giocatore = (Giocatore) oggetto;
 			if (oggetto instanceof Tabellone) {
 				tabelloneClient = (Tabellone) oggetto;
-				aggiornaStato();
-				aggiornaGiocatore();
+				synchronized (statoAttuale) {
+					aggiornaStato();
+					aggiornaGiocatore();
+				}
 				semaforo.release();
 			}
 			if (oggetto instanceof Exception) {
@@ -982,11 +988,11 @@ public class ViewCLI extends View implements Runnable {
 	public synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
-				/*for (CartaPolitica c : g.getCartePolitica()) {
-					if (giocatore.cercaCarta(c) == null) {
-						InputOutput.stampa("Hai pescato: " + c);
-					}
-				}*/
+				/*
+				 * for (CartaPolitica c : g.getCartePolitica()) { if
+				 * (giocatore.cercaCarta(c) == null) { InputOutput.stampa(
+				 * "Hai pescato: " + c); } }
+				 */
 				giocatore = g;
 			}
 		}
@@ -1011,5 +1017,9 @@ public class ViewCLI extends View implements Runnable {
 			InputOutput.stampa("E' il tuo turno");
 			InputOutput.stampa("");
 		}
+		if (statoAttuale instanceof TurniConclusi && tabelloneClient.getGioco().getStato() instanceof Terminato)
+			InputOutput.stampa(
+					"Partita terminata: " + ((Terminato) tabelloneClient.getGioco().getStato()).getVincitore().getNome()
+							+ " ha vinto la partita!");
 	}
 }

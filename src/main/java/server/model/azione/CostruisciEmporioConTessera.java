@@ -82,6 +82,7 @@ public class CostruisciEmporioConTessera extends AzionePrincipale {
 				throw new IllegalArgumentException(e);
 			}
 			giocatore.getStatoGiocatore().tuttiGliEmporiCostruiti();
+			getGioco().notificaObservers("Il giocatore "+giocatore.getNome()+" ha costruito tutti gli empori!");
 		}
 
 		// Il giocatore ottiene i bonus di questa e delle città collegate
