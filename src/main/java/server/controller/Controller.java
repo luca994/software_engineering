@@ -67,6 +67,11 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 		if (cambiamento instanceof BonusTesseraPermesso) {
 			boolean tesseraTrovata = false;
+			if(((BonusTesseraPermesso) cambiamento).getTessera()==null){
+				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
+				tesseraTrovata= true;
+				return;
+			}
 			for (Regione r : gioco.getTabellone().getRegioni()) {
 				for (TesseraCostruzione t : r.getTessereCostruzione()) {
 					if (t.isUguale(((BonusTesseraPermesso) cambiamento).getTessera())) {

@@ -47,14 +47,15 @@ public class FaseTurnoSemplice extends Esecuzione{
 			
 			//prova bonus
 			/*try {
-				getGioco().getTabellone().getPercorsoNobilta().muoviGiocatore(giocat, 3);
+				giocat.getTessereUsate().add(getGioco().getTabellone().getRegioni().get(2).getTessereCostruzione().get(1));
+				getGioco().getTabellone().getPercorsoNobilta().muoviGiocatore(giocat, 13);
 				getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0).getBonus().clear();
 				getGioco().getTabellone().getRegioni().get(0).getTessereCostruzione().get(0).getBonus().add(new BonusPercorsoNobilta(getGioco().getTabellone().getPercorsoNobilta(), 1));
 				getGioco().notificaObservers(getGioco().getTabellone());
 			} catch (FuoriDalLimiteDelPercorso e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}*/
+			//
 			
 			while (true) {
 				synchronized (giocat.getStatoGiocatore()) {

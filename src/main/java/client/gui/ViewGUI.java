@@ -404,10 +404,12 @@ public class ViewGUI extends View implements Initializable {
 			cartePoliticaListView.setDisable(true);
 			tessereValideListView.setDisable(true);
 			labelNumeroAssistenti.setDisable(true);
-			confermaAzioneButton.setDisable(true);
 		} else if (bonus != null) {
 			if (bonus instanceof BonusGettoneCitta) {
-				((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
+				if(cittaInput != null)
+					((BonusGettoneCitta) bonus).getCitta().add(cittaInput);
+				else
+					((BonusGettoneCitta) bonus).getCitta().add(new Citta("passa", null));
 			} else if (bonus instanceof BonusTesseraPermesso) {
 				((BonusTesseraPermesso) bonus).setTessera(tesseraInput);
 			} else {
@@ -430,7 +432,6 @@ public class ViewGUI extends View implements Initializable {
 			consiglioInput = null;
 			disabilitazioneBottoniConsigli(true);
 			cartePoliticaListView.setDisable(true);
-			confermaAzioneButton.setDisable(true);
 			annullaAzioneButton.setDisable(true);
 			consiglieriDisponibiliListView.setDisable(true);
 			disabilitazioneBottoniAzione(false);
@@ -441,6 +442,7 @@ public class ViewGUI extends View implements Initializable {
 		disabilitazioneBottoniTessereCostruzione(true);
 		tessereValideListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
+		confermaAzioneButton.setDisable(true);
 	}
 
 	@FXML
@@ -1308,6 +1310,8 @@ public class ViewGUI extends View implements Initializable {
 			}
 		}
 		if (oggetto instanceof Bonus) {
+			bonus = (Bonus) oggetto;
+			confermaAzioneButton.setDisable(false);
 			ThreadBonus threadBonus = new ThreadBonus(this, oggetto, labelAzioneDaFare);
 			Platform.runLater(threadBonus);
 
