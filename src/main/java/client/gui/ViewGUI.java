@@ -61,6 +61,7 @@ import server.model.componenti.Regione;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
+import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
@@ -1448,7 +1449,7 @@ public class ViewGUI extends View implements Initializable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-		if (statoAttuale instanceof AttesaTurno) {
+		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi) {
 			disabilitazioneBottoniAzione(true);
 			turnoCambiato = true;
 			labelStatoGioco.setText("Attesa turno");
