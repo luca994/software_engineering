@@ -51,6 +51,8 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	@FXML
 	private Label labelPrezzo;
 	@FXML
+	private Label labelProprietario;
+	@FXML
 	private Button compraButton;
 	@FXML
 	private Button fineButton;
@@ -63,6 +65,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (indice == numeroTessera && o instanceof TesseraCostruzione) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
+				labelProprietario.setText(o.getGiocatore().getNome());
 				oggettoSelezionato = o;
 				break;
 			}
@@ -79,6 +82,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (indice == numeroTessera && o instanceof CartaPolitica) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
+				labelProprietario.setText(o.getGiocatore().getNome());
 				oggettoSelezionato = o;
 				break;
 			}
@@ -95,6 +99,7 @@ public class ScreenAcquistoMercatoController implements Initializable {
 		for (OggettoVendibile o : mercato.getOggettiInVendita()) {
 			if (indice == numeroTessera && o instanceof Assistente) {
 				labelPrezzo.setText(String.valueOf(o.getPrezzo()));
+				labelProprietario.setText(o.getGiocatore().getNome());
 				oggettoSelezionato = o;
 				break;
 			}

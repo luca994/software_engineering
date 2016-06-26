@@ -11,8 +11,10 @@
       <ListView fx:id="tessereListView" layoutX="134.0" layoutY="150.0" onMouseClicked="#tesseraClick" orientation="HORIZONTAL" prefHeight="150.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="150.0" />
       <ListView fx:id="assistentiListView" layoutX="150.0" layoutY="300.0" onMouseClicked="#assistenteClick" orientation="HORIZONTAL" prefHeight="150.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="300.0" />
       <Label layoutX="14.0" layoutY="467.0" text="Prezzo:" />
-      <Label fx:id="labelPrezzo" layoutX="64.0" layoutY="467.0" />
+      <Label fx:id="labelPrezzo" layoutX="64.0" layoutY="467.0" prefHeight="17.0" prefWidth="59.0" />
       <Button fx:id="compraButton" layoutX="214.0" layoutY="462.0" mnemonicParsing="false" onAction="#compraButtonAction" text="Compra" />
       <Button fx:id="fineButton" layoutX="438.0" layoutY="462.0" mnemonicParsing="false" onAction="#fineButtonAction" text="Fine" />
+      <Label layoutX="14.0" layoutY="487.0" text="Proprietario:" />
+      <Label fx:id="labelProprietario" layoutX="89.0" layoutY="487.0" prefHeight="17.0" prefWidth="112.0" />
    </children>
 </AnchorPane>

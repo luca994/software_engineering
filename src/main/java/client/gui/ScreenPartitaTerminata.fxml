@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ScreenPartitaTerminataController">
+   <children>
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Group>
+               <children>
+                  <ImageView fx:id="imageViewBackground" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" />
+                  <Label fx:id="labelText" alignment="CENTER" contentDisplay="CENTER" prefHeight="500.0" prefWidth="500.0" textAlignment="CENTER">
+                     <font>
+                        <Font name="Times New Roman" size="67.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Group>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>
