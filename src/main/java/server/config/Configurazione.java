@@ -17,7 +17,7 @@ public class Configurazione {
 	public static final int MIN_NUM_GIOCATORI = 2;
 	
 	/** The number of emporiums that you have to build to finish a game*/
-	public static final int NUM_EMPORI_MASSIMO = 1;
+	public static final int NUM_EMPORI_MASSIMO = 10;
 	
 	/** The standard number of main actions that a player can executes in a turn*/
 	public static final int AZIONI_PRINCIPALI_PER_TURNO = 1;
