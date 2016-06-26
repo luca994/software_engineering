@@ -112,12 +112,16 @@ public class ScreenAcquistoMercatoController implements Initializable {
 	private void compraButtonAction(ActionEvent e) {
 		connessione.inviaOggetto(oggettoSelezionato);
 		oggettoSelezionato = null;
+		labelPrezzo.setText("");
+		labelProprietario.setText("");
 	}
 
 	@FXML
 	private void fineButtonAction(ActionEvent e) {
 		connessione.inviaOggetto("-");
 		Stage stage = ((Stage) fineButton.getScene().getWindow());
+		labelPrezzo.setText("");
+		labelProprietario.setText("");
 		stage.hide();
 	}
 
