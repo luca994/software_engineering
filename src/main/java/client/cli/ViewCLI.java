@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
@@ -57,6 +59,7 @@ public class ViewCLI extends View implements Runnable {
 	private ExecutorService executor;
 	private Semaphore semaforo;
 	private Semaphore semBonus;
+	private Lock lockStato;
 
 	/**
 	 * builds a ViewCLI object
@@ -64,6 +67,7 @@ public class ViewCLI extends View implements Runnable {
 	public ViewCLI() {
 		semaforo = new Semaphore(0);
 		semBonus = new Semaphore(0);
+		lockStato = new ReentrantLock();
 		inserimentoBonus = new AtomicBoolean(false);
 		inserimentoAzione = new AtomicBoolean(true);
 		statoAttuale = new AttesaTurno(giocatore);
@@ -164,16 +168,16 @@ public class ViewCLI extends View implements Runnable {
 					}
 				}
 			}
-			synchronized (statoAttuale) {
-				if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
-					InputOutput.stampa("Turno mercato:");
-					faseAggiuntaOggetti();
-				}
-				if (statoAttuale instanceof TurnoMercatoCompraVendita) {
-					InputOutput.stampa("Turno mercato:");
-					faseCompraVendita();
-				}
+			lockStato.lock();
+			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+				InputOutput.stampa("Turno mercato:");
+				faseAggiuntaOggetti();
 			}
+			if (statoAttuale instanceof TurnoMercatoCompraVendita) {
+				InputOutput.stampa("Turno mercato:");
+				faseCompraVendita();
+			}
+			lockStato.unlock();
 		}
 	}
 
@@ -904,10 +908,10 @@ public class ViewCLI extends View implements Runnable {
 				this.giocatore = (Giocatore) oggetto;
 			if (oggetto instanceof Tabellone) {
 				tabelloneClient = (Tabellone) oggetto;
-				synchronized (statoAttuale) {
-					aggiornaStato();
-					aggiornaGiocatore();
-				}
+				lockStato.lock();
+				aggiornaStato();
+				aggiornaGiocatore();
+				lockStato.unlock();
 				semaforo.release();
 			}
 			if (oggetto instanceof Exception) {
