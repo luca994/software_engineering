@@ -71,7 +71,7 @@ public class Screen1Controller implements Initializable {
 						Stage stageGUI = new Stage();
 						Scene scene = new Scene(rootGUI);
 
-						scene.getStylesheets().add(getClass().getResource("stileGUI.css").toExternalForm());
+						scene.getStylesheets().add(getClass().getResource("/GUIfiles/stileGUI.css").toExternalForm());
 
 						stageGUI.setScene(scene);
 						stageGUI.setTitle("Council Of Four");

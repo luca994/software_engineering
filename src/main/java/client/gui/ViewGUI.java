@@ -61,13 +61,11 @@ import server.model.componenti.Regione;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
-import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoMercato;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 import server.model.stato.giocatore.TurnoNormale;
 import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
-import server.model.stato.gioco.Terminato;
 import server.model.tesserebonus.TesseraBonusCitta;
 import server.model.tesserebonus.TesseraBonusRegione;
 
@@ -94,10 +92,7 @@ public class ViewGUI extends View implements Initializable {
 	private List<CartaPolitica> copiaCartePoliticaGiocatore;
 	private AzioneFactory azioneFactory = new AzioneFactory(null);
 	private Bonus bonus;
-	private Stage stageMercato;
 	private ScreenAcquistoMercatoController controllerMercato;
-	private Stage stagePartitaTerminata;
-	private ScreenPartitaTerminataController controllerPartitaTerminata;
 
 	ObservableList<ImageView> tessereValide = FXCollections.observableArrayList();
 	ObservableList<ImageView> cartePolitica = FXCollections.observableArrayList();
@@ -349,6 +344,7 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelNumeroAssistenti;
 	@FXML
 	private Label labelStatoGioco;
+	private Stage stageMercato;
 
 	@FXML
 	private void annullaAzioneButtonAction() {
@@ -632,6 +628,7 @@ public class ViewGUI extends View implements Initializable {
 		aggiornaGettoni();
 		aggiornaEmpori();
 		playerColorRectangle.setFill(ParseColor.colorAwtToFx(giocatore.getColore()));
+		
 	}
 
 	private void aggiornaRe() {
@@ -1028,7 +1025,6 @@ public class ViewGUI extends View implements Initializable {
 					}
 					emporiKultos.setItems(empKultos);
 					setCelleEmpori(emporiKultos);
-					break;
 				}
 				case "Lyram": {
 					empLyram.clear();
@@ -1339,7 +1335,7 @@ public class ViewGUI extends View implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//inizializzo le variabili
+
 		cartePoliticaInput = new ArrayList<>();
 		copiaCartePoliticaGiocatore = new ArrayList<>();
 		turnoCambiato = true;
@@ -1350,7 +1346,6 @@ public class ViewGUI extends View implements Initializable {
 		cartePoliticaListView.setDisable(true);
 		tessereUsateListView.setDisable(true);
 		tessereValideListView.setDisable(true);
-		//carico il controller dello screen del mercato
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenAcquistoMercato.fxml"));
 		stageMercato = new Stage();
 		stageMercato.initStyle(StageStyle.UNDECORATED);
@@ -1361,16 +1356,6 @@ public class ViewGUI extends View implements Initializable {
 			e.printStackTrace();
 		}
 		controllerMercato = loader.<ScreenAcquistoMercatoController> getController();
-		//carico il controller dello screen del termine della partita
-		FXMLLoader loaderPartitaTerminata = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenPartitaTerminata.fxml"));
-		stagePartitaTerminata = new Stage();
-		stagePartitaTerminata.setTitle("Partita Terminata");
-		try{
-			stagePartitaTerminata.setScene(new Scene((AnchorPane)loaderPartitaTerminata.load()));
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		controllerPartitaTerminata = loaderPartitaTerminata.getController();
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -1449,7 +1434,7 @@ public class ViewGUI extends View implements Initializable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi) {
+		if (statoAttuale instanceof AttesaTurno) {
 			disabilitazioneBottoniAzione(true);
 			turnoCambiato = true;
 			labelStatoGioco.setText("Attesa turno");
@@ -1488,15 +1473,6 @@ public class ViewGUI extends View implements Initializable {
 				stageMercato.show();
 				turnoCambiato = false;
 			}
-		}
-		if(tabelloneClient.getGioco().getStato() instanceof Terminato){
-			String nomeVincitore = ((Terminato) tabelloneClient.getGioco().getStato()).getVincitore().getNome();
-			if(nomeVincitore.equals(giocatore.getNome()))
-				controllerPartitaTerminata.setText("HAI VINTO!");
-			else
-				controllerPartitaTerminata.setText("HAI PERSO!");
-			stagePartitaTerminata.show();
-			((Stage) confermaAzioneButton.getScene().getWindow()).close();
 		}
 	}
 
