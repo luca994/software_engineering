@@ -142,6 +142,8 @@ public class GestorePartite implements Runnable {
 	 * @return true if the name isn't taken yet, otherwise false
 	 */
 	public boolean controllaNome(String nome) {
+		if (nome.equals("dummy"))
+			return false;
 		for (Giocatore g : giocatori) {
 			if (g.getNome().equals(nome))
 				return false;
