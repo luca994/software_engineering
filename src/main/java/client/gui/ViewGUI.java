@@ -1351,7 +1351,7 @@ public class ViewGUI extends View implements Initializable {
 		tessereUsateListView.setDisable(true);
 		tessereValideListView.setDisable(true);
 		//carico il controller dello screen del mercato
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenAcquistoMercato.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenAcquistoMercato.fxml"));
 		stageMercato = new Stage();
 		stageMercato.initStyle(StageStyle.UNDECORATED);
 		stageMercato.setTitle("Mercato");
@@ -1362,7 +1362,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 		controllerMercato = loader.<ScreenAcquistoMercatoController> getController();
 		//carico il controller dello screen del termine della partita
-		FXMLLoader loaderPartitaTerminata = new FXMLLoader(getClass().getResource("ScreenPartitaTerminata.fxml"));
+		FXMLLoader loaderPartitaTerminata = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenPartitaTerminata.fxml"));
 		stagePartitaTerminata = new Stage();
 		stagePartitaTerminata.setTitle("Partita Terminata");
 		try{
@@ -1374,7 +1374,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenMessaggioErrore.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenMessaggioErrore.fxml"));
 		try {
 			Stage stage = new Stage();
 			stage.setTitle(nomeFinestra);
@@ -1389,7 +1389,7 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void apriScreenPrezzo(String titolo, OggettoVendibile obj) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ScreenPrezzo.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenPrezzo.fxml"));
 		try {
 			Stage stage = new Stage();
 			stage.setTitle(titolo + ": inserisci il prezzo");

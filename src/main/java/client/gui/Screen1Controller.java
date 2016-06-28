@@ -44,13 +44,7 @@ public class Screen1Controller implements Initializable {
 	private ViewGUI view;
 	private Parent rootGUI;
 
-	/**
-	 * @param rootGUI
-	 *            the rootGUI to set
-	 */
-	public void setRootGUI(Parent rootGUI) {
-		this.rootGUI = rootGUI;
-	}
+	
 
 	@FXML
 	private AnchorPane backgroundPane;
@@ -111,12 +105,6 @@ public class Screen1Controller implements Initializable {
 
 		backgroundPane.setBackground(new Background(myBI));
 
-		/*
-		 * BackgroundFill myBF = new BackgroundFill(Color.BLUEVIOLET, new
-		 * CornerRadii(1), new Insets(0.0,0.0,0.0,0.0));// or null for the
-		 * padding //then you set to your node or container or layout
-		 * backgroundPane.setBackground(new Background(myBF));
-		 */
 		tipoConnessioneChoiceBox.setItems(sceltaConnessione);
 		sceltaMappaChoiceBox.setItems(sceltaMappa);
 		tipoConnessioneChoiceBox.setValue("Socket");
@@ -169,8 +157,8 @@ public class Screen1Controller implements Initializable {
 	}
 
 	private boolean controlloCompletamentoCampi() {
-		if (nomeUtenteTextField.getText().equals("") || ipTextField.getText().equals("")
-				|| portaTextField.getText().equals("")) {
+		if ("".equals(nomeUtenteTextField.getText()) || "".equals(ipTextField.getText())
+				|| "".equals(portaTextField.getText())) {
 			view.stampaMessaggio("Errore", "Completa tutti i campi");
 			return false;
 		}
@@ -178,10 +166,18 @@ public class Screen1Controller implements Initializable {
 	}
 
 	/**
-	 * @param view2
+	 * @param view
 	 */
 	public void setView(ViewGUI view) {
 		this.view = view;
+	}
+	
+	/**
+	 * @param rootGUI
+	 *            the rootGUI to set
+	 */
+	public void setRootGUI(Parent rootGUI) {
+		this.rootGUI = rootGUI;
 	}
 
 }
