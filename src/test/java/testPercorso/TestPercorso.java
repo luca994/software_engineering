@@ -72,6 +72,16 @@ public class TestPercorso {
 		percorso.muoviGiocatore(g1, 8);
 		assertEquals(20, percorso.posizioneAttualeGiocatore(g1));
 	}
+	
+	@Test
+	public void testMuoviGiocatoreOltreLimiteSuperioreEPoiIndietro() throws Exception{
+		Percorso percorso = new Percorso("src/main/resources/percorsoRicchezza.xml", tabellone);
+		percorso.getCaselle().get(0).setGiocatori(giocatori);
+		percorso.muoviGiocatore(g1, 50);
+		assertEquals(20, percorso.posizioneAttualeGiocatore(g1));
+		percorso.muoviGiocatore(g1, -5);
+		assertEquals(15, percorso.posizioneAttualeGiocatore(g1));
+	}
 
 	@Test(expected = server.eccezioni.FuoriDalLimiteDelPercorso.class)
 	public void testMuoviGiocatoreWithNegativeSteps() throws Exception {

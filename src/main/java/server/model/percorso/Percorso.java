@@ -97,11 +97,13 @@ public class Percorso implements Serializable{
 	 */
 	public void muoviGiocatore(Giocatore giocatore, int passi) throws FuoriDalLimiteDelPercorso {
 		int posizioneFinale = posizioneAttualeGiocatore(giocatore) + passi;
+		if(posizioneFinale-passi==-1)
+			throw new NullPointerException("errore nel calcolo della posizione del giocatore");
 		if (posizioneFinale < 0)
 			throw new FuoriDalLimiteDelPercorso("Non hai abbastanza soldi");
 		if (posizioneFinale > caselle.size() - 1)
 			posizioneFinale = caselle.size() - 1;
-		if (posizioneAttualeGiocatore(giocatore) == caselle.size() - 1)
+		if (posizioneAttualeGiocatore(giocatore) == caselle.size() - 1&& passi>0)
 			return;
 		caselle.get(posizioneAttualeGiocatore(giocatore)).getGiocatori().remove(giocatore);
 		caselle.get(posizioneFinale).getGiocatori().add(giocatore);
