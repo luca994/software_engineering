@@ -426,7 +426,7 @@ public class ViewGUI extends View implements Initializable {
 			azioneFactory.setCitta(cittaInput);
 			azioneFactory.setConsigliere(consigliereInput);
 			azioneFactory.setConsiglio(consiglioInput);
-			if ("5".equals(azioneFactory.getTipoAzione()))
+			if ("5".equals(azioneFactory.getTipoAzione()) && consiglioInput!=null)
 				azioneFactory.setRegione(consiglioInput.getRegione());
 			azioneFactory.setTesseraCostruzione(tesseraInput);
 			this.getConnessione().inviaOggetto(azioneFactory);
@@ -1102,6 +1102,14 @@ public class ViewGUI extends View implements Initializable {
 	}
 
 	private void aggiornaTessereBonus() {
+		tesseraBonusFerroImageView.setImage(null);
+		tesseraBonusBronzoImageView.setImage(null);
+		tesseraBonusArgentoImageView.setImage(null);
+		tesseraBonusOroImageView.setImage(null);
+		tesseraBonusMareImageView.setImage(null);
+		tesseraBonusPianuraImageView.setImage(null);
+		tesseraBonusMontagnaImageView.setImage(null);
+		tesseraPremioReImageView.setImage(null);
 		for (TesseraBonusCitta tessera : tabelloneClient.getTessereBonusCitta()) {
 			String colore = ParseColor.colorIntToString(tessera.getColore().getRGB());
 			if ("blue".equalsIgnoreCase(colore))
