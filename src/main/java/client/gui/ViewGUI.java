@@ -1025,6 +1025,7 @@ public class ViewGUI extends View implements Initializable {
 					}
 					emporiKultos.setItems(empKultos);
 					setCelleEmpori(emporiKultos);
+					break;
 				}
 				case "Lyram": {
 					empLyram.clear();
