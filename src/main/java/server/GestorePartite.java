@@ -171,6 +171,7 @@ public class GestorePartite implements Runnable {
 		((ServerRMIView) viewRMI).registerObserver(controller);
 		try {
 			client.passaOggetto(giocatore);
+			client.passaOggetto("Giocatore aggiunto alla partita");
 			timer.set(System.currentTimeMillis());
 			LOG.log(Level.INFO, "NUOVO GIOCATORE CONNESSO CON RMI");
 		} catch (RemoteException e) {

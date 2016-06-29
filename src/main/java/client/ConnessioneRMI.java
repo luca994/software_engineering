@@ -68,16 +68,16 @@ public class ConnessioneRMI extends UnicastRemoteObject implements Connessione, 
 			if (oggetto instanceof Bonus) {
 				serverView.impostaParametriBonus((Bonus) oggetto);
 			}
-			if (oggetto instanceof AzioneFactory) {
+			else if (oggetto instanceof AzioneFactory) {
 				serverView.riceviAzione((AzioneFactory) oggetto);
 			}
-			if (oggetto instanceof OggettoVendibile) {
+			else if (oggetto instanceof OggettoVendibile) {
 				serverView.riceviOggettoVendibile((OggettoVendibile) oggetto);
 			}
-			if (oggetto instanceof String) {
+			else if (oggetto instanceof String) {
 				serverView.riceviStringa((String) oggetto);
 			}
-			if(oggetto instanceof MessaggioChat){
+			else if(oggetto instanceof MessaggioChat){
 				serverView.riceviMessaggioChat((MessaggioChat) oggetto);
 			}
 		} catch (RemoteException e) {
