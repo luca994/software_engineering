@@ -153,6 +153,7 @@ public class ViewCLI extends View implements Runnable {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
+			lockStato.lock();
 			if (statoAttuale instanceof TurnoNormale) {
 				if (inserimentoBonus.get()) {
 					inputString = InputOutput.leggiStringa(false);
@@ -167,13 +168,10 @@ public class ViewCLI extends View implements Runnable {
 						throw new IllegalStateException(e.getMessage());
 					}
 				}
-			}
-			lockStato.lock();
-			if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
+			} else if (statoAttuale instanceof TurnoMercatoAggiuntaOggetti) {
 				InputOutput.stampa("Turno mercato:");
 				faseAggiuntaOggetti();
-			}
-			if (statoAttuale instanceof TurnoMercatoCompraVendita) {
+			} else if (statoAttuale instanceof TurnoMercatoCompraVendita) {
 				InputOutput.stampa("Turno mercato:");
 				faseCompraVendita();
 			}
@@ -204,8 +202,8 @@ public class ViewCLI extends View implements Runnable {
 			AzioneFactory azioneFactory = new AzioneFactory(null);
 			azioneFactory.setTipoAzione(Integer.toString(scelta));
 			if (inserimentoParametriAzione(azioneFactory)) {
-				this.getConnessione().inviaOggetto(azioneFactory);
 				inserimentoAzione.set(false);
+				this.getConnessione().inviaOggetto(azioneFactory);
 			} else
 				return false;
 		} else if (scelta == 9) {
@@ -903,24 +901,21 @@ public class ViewCLI extends View implements Runnable {
 						|| "Non hai più azioni rapide".equalsIgnoreCase((String) oggetto)
 						|| "parametri errati".equalsIgnoreCase((String) oggetto))
 					inserimentoAzione.set(true);
-			}
-			if (oggetto instanceof Giocatore)
+			} else if (oggetto instanceof Giocatore)
 				this.giocatore = (Giocatore) oggetto;
-			if (oggetto instanceof Tabellone) {
+			else if (oggetto instanceof Tabellone) {
 				tabelloneClient = (Tabellone) oggetto;
 				lockStato.lock();
 				aggiornaStato();
 				aggiornaGiocatore();
 				lockStato.unlock();
 				semaforo.release();
-			}
-			if (oggetto instanceof Exception) {
+			} else if (oggetto instanceof Exception) {
 				InputOutput.stampa(((Exception) oggetto).getMessage());
 				inserimentoAzione.set(true);
 				if (oggetto instanceof NomeGiaScelto)
 					inizializzazione();
-			}
-			if (oggetto instanceof BonusGettoneCitta) {
+			} else if (oggetto instanceof BonusGettoneCitta) {
 				InputOutput.stampa("Inserisci il nome di una città dove hai un emporio"
 						+ " e di cui vuoi ottenere il bonus, se non hai un'emporio scrivi 'passa'");
 				inserimentoBonus.set(true);
@@ -928,8 +923,7 @@ public class ViewCLI extends View implements Runnable {
 				semBonus.acquire();
 				((BonusGettoneCitta) oggetto).getCitta().add(new Citta(inputString, null));
 				this.getConnessione().inviaOggetto(oggetto);
-			}
-			if (oggetto instanceof BonusTesseraPermesso) {
+			} else if (oggetto instanceof BonusTesseraPermesso) {
 				InputOutput.stampa("Inserisci il numero della tessera permesso che vuoi ottenere");
 				inserimentoBonus.set(true);
 				semBonus.acquire();
@@ -946,8 +940,7 @@ public class ViewCLI extends View implements Runnable {
 					riceviOggetto(oggetto);
 				}
 				this.getConnessione().inviaOggetto(oggetto);
-			}
-			if (oggetto instanceof BonusRiutilizzoCostruzione) {
+			} else if (oggetto instanceof BonusRiutilizzoCostruzione) {
 				InputOutput.stampa(
 						"inserisci 0 se la tessera è nella lista delle tessere valide, altrimenti 1. Scrivi 'passa' se non hai tessere");
 				inserimentoBonus.set(true);
@@ -970,8 +963,7 @@ public class ViewCLI extends View implements Runnable {
 					InputOutput.stampa("numero tessera non corretto");
 					riceviOggetto(oggetto);
 				}
-			}
-			if (oggetto instanceof MessaggioChat) {
+			} else if (oggetto instanceof MessaggioChat) {
 				InputOutput.stampa("************");
 				InputOutput.stampa("CHAT");
 				InputOutput.stampa(
@@ -1016,14 +1008,14 @@ public class ViewCLI extends View implements Runnable {
 					InputOutput.stampa("Turno di " + g.getNome() + "..");
 					InputOutput.stampa("");
 				}
-		}
-		if (statoAttuale instanceof TurnoNormale || statoAttuale instanceof TurnoMercato) {
+		} else if (statoAttuale instanceof TurnoNormale || statoAttuale instanceof TurnoMercato) {
 			InputOutput.stampa("E' il tuo turno");
 			InputOutput.stampa("");
-		}
-		if (statoAttuale instanceof TurniConclusi && tabelloneClient.getGioco().getStato() instanceof Terminato)
+		} else if (statoAttuale instanceof TurniConclusi
+				&& tabelloneClient.getGioco().getStato() instanceof Terminato) {
 			InputOutput.stampa(
 					"Partita terminata: " + ((Terminato) tabelloneClient.getGioco().getStato()).getVincitore().getNome()
 							+ " ha vinto la partita!");
+		}
 	}
 }

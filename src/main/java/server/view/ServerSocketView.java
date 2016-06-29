@@ -118,6 +118,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 		while (socket!=null && !socket.isClosed() ) {
 			try {
 				Object object = socketIn.readObject();
+				System.out.println("OggettoRicevuto da: "+getGiocatore().getNome()+"!");
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
@@ -137,13 +138,13 @@ public class ServerSocketView extends ServerView implements Runnable {
 					}
 				}
 
-				if (object instanceof OggettoVendibile) {
+				else if (object instanceof OggettoVendibile) {
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), getGiocatore());
 				}
-				if (object instanceof String) {
+				else if (object instanceof String) {
 					this.notificaObservers(object, getGiocatore());
 				}
-				if(object instanceof MessaggioChat){
+				else if(object instanceof MessaggioChat){
 					this.notificaObservers(object);
 				}
 			} catch (IOException e) {
