@@ -103,7 +103,7 @@ public class Percorso implements Serializable{
 			throw new FuoriDalLimiteDelPercorso("Non hai abbastanza soldi");
 		if (posizioneFinale > caselle.size() - 1)
 			posizioneFinale = caselle.size() - 1;
-		if (posizioneAttualeGiocatore(giocatore) == caselle.size() - 1&& passi>0)
+		if (posizioneAttualeGiocatore(giocatore) == caselle.size() - 1 && passi>0)
 			return;
 		caselle.get(posizioneAttualeGiocatore(giocatore)).getGiocatori().remove(giocatore);
 		caselle.get(posizioneFinale).getGiocatori().add(giocatore);

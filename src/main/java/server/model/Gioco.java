@@ -64,7 +64,7 @@ public class Gioco extends Observable<Object, Bonus> implements Runnable, Serial
 			throw new IllegalStateException("La partita non deve essere in esecuzione per essere inizializzato");
 
 		if ("8".equals(numMappa))
-			numMappa = Integer.toString((int) Math.random() * 7);
+			numMappa = Integer.toString((int) (Math.random() * 7));
 		String nomeMappaScelta = new String("src/main/resources/mappacollegamenti" + numMappa + ".xml");
 
 		this.tabellone = new Tabellone(nomeMappaScelta, this, numMappa);

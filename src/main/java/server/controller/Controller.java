@@ -42,7 +42,7 @@ public class Controller implements Observer<Object, Bonus> {
 		this.gioco = gioco;
 	}
 
-	public void updateBonus(Bonus cambiamento, Giocatore giocatore) {
+	public synchronized void updateBonus(Bonus cambiamento, Giocatore giocatore) {
 		if (cambiamento instanceof BonusGettoneCitta) {
 			try {
 				if (((BonusGettoneCitta) cambiamento).getCittaPerCompletamentoBonus() != null) {
@@ -108,7 +108,7 @@ public class Controller implements Observer<Object, Bonus> {
 	}
 
 	@Override
-	public void update(Object oggetto, Giocatore giocatore) {
+	public synchronized void update(Object oggetto, Giocatore giocatore) {
 		if (oggetto instanceof Azione) {
 			if (giocatore.getStatoGiocatore() instanceof TurnoNormale) {
 				try {
@@ -123,8 +123,9 @@ public class Controller implements Observer<Object, Bonus> {
 					} else {
 						((Azione) oggetto).eseguiAzione(giocatore);
 						gioco.notificaObservers("Azione Eseguita!", giocatore);
-						if (giocatore.getStatoGiocatore() instanceof TurnoNormale)
+						if (giocatore.getStatoGiocatore() instanceof TurnoNormale){
 							gioco.notificaObservers(gioco.getTabellone(), giocatore);
+						}
 					}
 				} catch (EccezioneConsiglioDeiQuattro e) {
 					gioco.notificaObservers(e, giocatore);
@@ -134,16 +135,16 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")) {
+		else if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")) {
 			giocatore.setStatoGiocatore(new Sospeso(giocatore));
 		}
-		if (oggetto instanceof String && ((String) oggetto).equals("-")
+		else if (oggetto instanceof String && ((String) oggetto).equals("-")
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {
 			synchronized (giocatore.getStatoGiocatore()) {
 				giocatore.getStatoGiocatore().prossimoStato();
 			}
 		}
-		if (oggetto instanceof OggettoVendibile) {
+		else if (oggetto instanceof OggettoVendibile) {
 			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
 				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
@@ -161,13 +162,15 @@ public class Controller implements Observer<Object, Bonus> {
 				}
 			}
 		}
-		if (oggetto instanceof Bonus) {
+		else if (oggetto instanceof Bonus) {
 			updateBonus((Bonus) oggetto, giocatore);
 		}
+		else
+			throw new IllegalStateException("Non conosco l'oggetto ricevuto");
 	}
 
 	@Override
-	public void update(Object cambiamento) {
+	public synchronized void update(Object cambiamento) {
 		if (cambiamento instanceof MessaggioChat) {
 			gioco.notificaObservers(cambiamento);
 		}

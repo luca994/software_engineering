@@ -118,7 +118,6 @@ public class ServerSocketView extends ServerView implements Runnable {
 		while (socket!=null && !socket.isClosed() ) {
 			try {
 				Object object = socketIn.readObject();
-				System.out.println("OggettoRicevuto da: "+getGiocatore().getNome()+"!");
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
@@ -127,8 +126,7 @@ public class ServerSocketView extends ServerView implements Runnable {
 							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 							this.notificaObservers(azioneGiocatore, getGiocatore());
 						}
-						else
-						{
+						else{
 							inviaOggetto("Parametri errati");
 							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 							inviaOggetto(azioneFactory.getGioco().getTabellone());
