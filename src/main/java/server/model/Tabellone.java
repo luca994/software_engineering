@@ -458,21 +458,25 @@ public class Tabellone implements Serializable{
 	 */
 	public void prendiTesseraBonus(Giocatore giocatore, Citta citta) {
 		if (verificaEmporioColoreBonus(giocatore, citta) && !"juvelar".equalsIgnoreCase(citta.getNome())) {
+			List<TesseraBonusCitta> tessereBonusCittaDaRimuovere = new ArrayList<>();
 			for (TesseraBonusCitta t : tessereBonusCitta) {
 				if (citta.getColore().equals(t.getColore())) {
 					t.eseguiBonus(giocatore);
-					tessereBonusCitta.remove(t);
+					tessereBonusCittaDaRimuovere.add(t);
 				}
 			}
+			tessereBonusCitta.removeAll(tessereBonusCittaDaRimuovere);
 			prendiLaTesseraBonus(giocatore);
 		}
 		if (verificaEmporioRegioneBonus(giocatore, citta)) {
+			List<TesseraBonusRegione> tessereBonusRegioneDaRimuovere = new ArrayList<>();
 			for (TesseraBonusRegione t : tessereBonusRegione) {
 				if (t.getRegione().equals(citta.getRegione())) {
 					t.eseguiBonus(giocatore);
-					tessereBonusRegione.remove(t);
+					tessereBonusRegioneDaRimuovere.add(t);
 				}
 			}
+			tessereBonusRegione.removeAll(tessereBonusRegioneDaRimuovere);
 			prendiLaTesseraBonus(giocatore);
 		}
 		
