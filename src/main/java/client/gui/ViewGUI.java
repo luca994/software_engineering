@@ -353,7 +353,7 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelNumeroAssistenti;
 	@FXML
 	private Label labelStatoGioco;
-	
+
 	@FXML
 	private TabPane tabPane;
 	@FXML
@@ -435,7 +435,7 @@ public class ViewGUI extends View implements Initializable {
 			azioneFactory.setCitta(cittaInput);
 			azioneFactory.setConsigliere(consigliereInput);
 			azioneFactory.setConsiglio(consiglioInput);
-			if ("5".equals(azioneFactory.getTipoAzione()) && consiglioInput!=null)
+			if ("5".equals(azioneFactory.getTipoAzione()) && consiglioInput != null)
 				azioneFactory.setRegione(consiglioInput.getRegione());
 			azioneFactory.setTesseraCostruzione(tesseraInput);
 			this.getConnessione().inviaOggetto(azioneFactory);
@@ -1293,11 +1293,16 @@ public class ViewGUI extends View implements Initializable {
 				public void run() {
 					chatTextArea.appendText("\n" + "[" + ((MessaggioChat) oggetto).getAutore() + "]: "
 							+ ((MessaggioChat) oggetto).getMsg());
-					if(!tabPane.getSelectionModel().getSelectedItem().getText().equals("Chat")){
-						URL resource = getClass().getResource("/suoni/chatMsg.mp3");
-					    Media media = new Media(resource.toString());
-					    MediaPlayer mediaPlayer = new MediaPlayer(media);
-					    mediaPlayer.play();
+					if (!tabPane.getSelectionModel().getSelectedItem().getText().equals("Chat")
+							&& !((MessaggioChat) oggetto).getMsg().equalsIgnoreCase("wololo")) {
+						MediaPlayer notifChat = new MediaPlayer(
+								new Media(getClass().getResource("/suoni/chatMsg.mp3").toString()));
+						notifChat.play();
+					}
+					if (((MessaggioChat) oggetto).getMsg().equalsIgnoreCase("wololo")) {
+						MediaPlayer wololo = new MediaPlayer(
+								new Media(getClass().getResource("/suoni/wololo.mp3").toString()));
+						wololo.play();
 					}
 				}
 			});
