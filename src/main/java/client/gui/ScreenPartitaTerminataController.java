@@ -16,6 +16,8 @@ public class ScreenPartitaTerminataController implements Initializable {
 	private Label labelText;
 	@FXML
 	private ImageView imageViewBackground;
+	@FXML
+	private Label credits;
 	
 	public void setText(String testo){
 		labelText.setText(testo);
@@ -26,5 +28,6 @@ public class ScreenPartitaTerminataController implements Initializable {
 		imageViewBackground.setImage(new Image(getClass().getClassLoader().getResource("immaginiGUI/Screen1background.jpg").toString(), 500, 500, false, false));
 		Font font = Font.loadFont(getClass().getClassLoader().getResource("font.ttf").toString(), 56);
 		labelText.setFont(font);
+		credits.setText("Consiglio\ndei\nQuattro\n\nProgetto di Ingegneria\ndel Software\nCG 8\nAA 2015-2016\nRiccardo Remigio\nLuca Santini\nMassimiliano Giovanni Ventura");
 	}
 }
