@@ -303,7 +303,7 @@
                               <ListView fx:id="consiglieriDisponibiliListView" layoutX="134.0" layoutY="192.0" onMouseClicked="#handleConsiglieriDisponibiliListView" orientation="HORIZONTAL" prefHeight="55.0" prefWidth="101.0" />
 									</children>
 								</AnchorPane>
-								<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+								<TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
 									<tabs>
 										<Tab closable="false" text="Carte Politica">
 											<content>
@@ -320,7 +320,7 @@
 												<ListView fx:id="tessereUsateListView" disable="true" onMouseClicked="#handleTessereCostruzioneUsateList" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DEB887;" />
 											</content>
 										</Tab>
-										<Tab closable="false" text="Chat">
+										<Tab fx:id="chatTab" closable="false" text="Chat">
 											<content>
 												<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #DEB887;">
 													<children>

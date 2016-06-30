@@ -26,12 +26,16 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -349,6 +353,11 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelNumeroAssistenti;
 	@FXML
 	private Label labelStatoGioco;
+	
+	@FXML
+	private TabPane tabPane;
+	@FXML
+	private Tab chatTab;
 
 	@FXML
 	private void annullaAzioneButtonAction() {
@@ -1284,6 +1293,12 @@ public class ViewGUI extends View implements Initializable {
 				public void run() {
 					chatTextArea.appendText("\n" + "[" + ((MessaggioChat) oggetto).getAutore() + "]: "
 							+ ((MessaggioChat) oggetto).getMsg());
+					if(!tabPane.getSelectionModel().getSelectedItem().getText().equals("Chat")){
+						URL resource = getClass().getResource("/suoni/chatMsg.mp3");
+					    Media media = new Media(resource.toString());
+					    MediaPlayer mediaPlayer = new MediaPlayer(media);
+					    mediaPlayer.play();
+					}
 				}
 			});
 		}
