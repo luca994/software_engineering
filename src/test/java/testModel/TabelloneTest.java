@@ -44,7 +44,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testTabelloneConMappaCollegamenti0() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		assertNotNull(tabelloneTester);
 		assertNotNull(tabelloneTester.getConsiglieriDisponibili());
 		assertNotNull(tabelloneTester.getRegioni());
@@ -68,7 +68,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testTabelloneConInputGiocoNull() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", null,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", null,"0");
 		assertNotNull(tabelloneTester);
 		assertNotNull(tabelloneTester.getConsiglieriDisponibili());
 		assertNotNull(tabelloneTester.getRegioni());
@@ -112,7 +112,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testCercaCittaInesistente() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		assertEquals(tabelloneTester.cercaCitta("pippo"),null);
 	}
 
@@ -122,7 +122,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testCercaCittaValida() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		Citta cittaTester = new Citta("test", tabelloneTester.getRegioni().get(0));
 		tabelloneTester.getRegioni().get(0).getCitta().add(cittaTester);
 		assertEquals(cittaTester, tabelloneTester.cercaCitta("tEsT"));
@@ -159,7 +159,7 @@ public class TabelloneTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testCercaCittaConRegioneNonValida() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		Citta cittaTester = new Citta("test", tabelloneTester.getRegioni().get(0));
 		tabelloneTester.getRegioni().get(0).getCitta().add(cittaTester);
 		tabelloneTester.cercaCitta("test", tabelloneTester.getRegioni().get(1));
@@ -172,7 +172,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testCercaCittaConRegioneValida() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		Citta cittaTester = new Citta("test", tabelloneTester.getRegioni().get(0));
 		tabelloneTester.getRegioni().get(0).getCitta().add(cittaTester);
 		assertEquals(cittaTester, tabelloneTester.cercaCitta("test", tabelloneTester.getRegioni().get(0)));
@@ -185,7 +185,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testVerificaEmporioColoreBonusFalso() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		tabelloneTester.cercaCitta("Arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
 		assertFalse(tabelloneTester.verificaEmporioColoreBonus(giocoTester.getGiocatori().get(0),
 				tabelloneTester.cercaCitta("Arkon")));
@@ -198,7 +198,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testVerificaEmporioColoreBonusVero() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		tabelloneTester.cercaCitta("Arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
 		tabelloneTester.cercaCitta("Merkatim").getEmpori().add(giocoTester.getGiocatori().get(0));
 		assertTrue(tabelloneTester.verificaEmporioColoreBonus(giocoTester.getGiocatori().get(0),
@@ -212,7 +212,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testVerificaEmporioRegioneBonusVero() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
 		tabelloneTester.cercaCitta("burgen").getEmpori().add(giocoTester.getGiocatori().get(0));
 		tabelloneTester.cercaCitta("castrum").getEmpori().add(giocoTester.getGiocatori().get(0));
@@ -229,7 +229,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testVerificaEmporioRegioneBonusFalso() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
 		assertFalse(tabelloneTester.verificaEmporioRegioneBonus(giocoTester.getGiocatori().get(0),
 				tabelloneTester.cercaCitta("arkon")));
@@ -242,7 +242,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testVerificaEmporioRegioneBonusNullGiocatore() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		tabelloneTester.cercaCitta("arkon").getEmpori().add(giocoTester.getGiocatori().get(0));
 		assertFalse(tabelloneTester.verificaEmporioRegioneBonus(null, tabelloneTester.cercaCitta("arkon")));
 	}
@@ -271,7 +271,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testGetRegioneInesistenteDaNome() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		assertEquals(tabelloneTester.getRegioneDaNome("test"),null);
 	}
 
@@ -291,7 +291,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testGetRegioneValidaDaNome() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		assertEquals(tabelloneTester.getRegioni().get(0), tabelloneTester.getRegioneDaNome("mare"));
 	}
 
@@ -300,7 +300,7 @@ public class TabelloneTest {
 	 */
 	@Test
 	public void testGeneraGrafo() {
-		Tabellone tabelloneTester = new Tabellone("src/main/resources/mappacollegamenti0.xml", giocoTester,"0");
+		Tabellone tabelloneTester = new Tabellone("mappacollegamenti0.xml", giocoTester,"0");
 		UndirectedGraph<Citta, DefaultEdge> mappaTest = tabelloneTester.generaGrafo();
 		assertNotNull(mappaTest);
 		for (Regione r : tabelloneTester.getRegioni())

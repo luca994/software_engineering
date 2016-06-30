@@ -81,7 +81,7 @@ public class Configurazione {
 	public static final String RMI_REGISTRY_NAME = "consiglioDeiQuattroRegistro";
 	
 	/** The time (in milliseconds) to wait before a game of two players starts */
-	public static final int TEMPO_ATTESA_AVVIO_PARTITA = 5000;
+	public static final int TEMPO_ATTESA_AVVIO_PARTITA = 20000;
 	
 
 	/** The time (in milliseconds) available to each player to take their turn */

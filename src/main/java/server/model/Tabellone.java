@@ -1,7 +1,6 @@
 package server.model;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -121,9 +120,9 @@ public class Tabellone implements Serializable{
 	 */
 	private void creaPercorsi() {
 		try {
-			this.percorsoVittoria = new Percorso("src/main/resources/percorsoVittoria.xml", this);
-			this.percorsoRicchezza = new Percorso("src/main/resources/percorsoRicchezza.xml", this);
-			this.percorsoNobilta = new Percorso("src/main/resources/percorsoNobiltà.xml", this);
+			this.percorsoVittoria = new Percorso("percorsoVittoria.xml", this);
+			this.percorsoRicchezza = new Percorso("percorsoRicchezza.xml", this);
+			this.percorsoNobilta = new Percorso("percorsoNobiltà.xml", this);
 		} catch (JDOMException | IOException e) {
 			throw new IllegalArgumentException("Errore nella lettura dei file xml dei percorsi", e);
 		}
@@ -142,7 +141,7 @@ public class Tabellone implements Serializable{
 		SAXBuilder builderConsiglieri = new SAXBuilder();
 		Document documentConsiglieri;
 		try {
-			documentConsiglieri = builderConsiglieri.build(new File("src/main/resources/Consiglieri.xml"));
+			documentConsiglieri = builderConsiglieri.build(getClass().getClassLoader().getResource("Consiglieri.xml"));
 		} catch (JDOMException | IOException e1) {
 			throw new IllegalArgumentException("Errore nella lettura del file Consiglieri.xml", e1);
 		}
@@ -173,7 +172,7 @@ public class Tabellone implements Serializable{
 		SAXBuilder builderRegioni = new SAXBuilder();
 		Document documentRegioni;
 		try {
-			documentRegioni = builderRegioni.build(new File("src/main/resources/Regioni.xml"));
+			documentRegioni = builderRegioni.build(getClass().getClassLoader().getResource("Regioni.xml"));
 		} catch (JDOMException | IOException e) {
 			throw new IllegalArgumentException("Errore nella lettura del file Regioni.xml", e);
 		}
@@ -214,7 +213,7 @@ public class Tabellone implements Serializable{
 		SAXBuilder builderGettoni = new SAXBuilder();
 		Document documentGettoni;
 		try {
-			documentGettoni = builderGettoni.build(new File("src/main/resources/BonusCittà.xml"));
+			documentGettoni = builderGettoni.build(getClass().getClassLoader().getResource("BonusCittà.xml"));
 		} catch (JDOMException | IOException e) {
 			throw new IllegalArgumentException("Errore nella lettura del file BonusCittà.xml", e);
 		}
@@ -248,7 +247,7 @@ public class Tabellone implements Serializable{
 		SAXBuilder builderCollegamenti = new SAXBuilder();
 		Document documentCollegamenti;
 		try {
-			documentCollegamenti = builderCollegamenti.build(new File(nomeFileMappa));
+			documentCollegamenti = builderCollegamenti.build(getClass().getClassLoader().getResource(nomeFileMappa));
 		} catch (JDOMException | IOException e1) {
 			throw new IllegalArgumentException(e1);
 		}
@@ -303,7 +302,7 @@ public class Tabellone implements Serializable{
 		// leggo il documento xml per le tessere
 		Document documentTessereBonus;
 		try {
-			documentTessereBonus = builderTessereBonus.build(new File("src/main/resources/TessereBonus.xml"));
+			documentTessereBonus = builderTessereBonus.build(getClass().getClassLoader().getResource("TessereBonus.xml"));
 		} catch (JDOMException | IOException e) {
 			throw new IllegalArgumentException("Errore nella lettura del file TessereBonus.xml", e);
 		}

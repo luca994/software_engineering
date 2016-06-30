@@ -1,6 +1,5 @@
 package server.model.componenti;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -74,12 +73,12 @@ public class Regione implements Serializable{
 	public void creaTesserePermesso(Tabellone tabellone) {
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		// Creo il nome del file a partire dal nome della regione
-		String nomefile = new String("src/main/resources/TessereCostruzione" + this.nome + ".xml");
+		String nomefile = "TessereCostruzione" + this.nome + ".xml";
 		// Leggo file e creo le TesserePermessoDiCostruzione
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione;
 		try {
-			documentTessereCostruzione = builderTessereCostruzione.build(new File(nomefile));
+			documentTessereCostruzione = builderTessereCostruzione.build(getClass().getClassLoader().getResource(nomefile));
 		} catch (JDOMException | IOException e) {
 			throw new IllegalStateException(e);
 		}

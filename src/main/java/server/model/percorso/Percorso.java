@@ -1,6 +1,5 @@
 package server.model.percorso;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class Percorso implements Serializable{
 			throw new NullPointerException("il nomefile e il tabellone non possono essere nulli");
 		BonusCreator bonusCreator = new BonusCreator(tabellone);
 		SAXBuilder builderPercorso = new SAXBuilder();
-		Document documentPercorso = builderPercorso.build(new File(nomefile));
+		Document documentPercorso = builderPercorso.build(getClass().getClassLoader().getResource(nomefile));
 		Element percorsoRootElement = documentPercorso.getRootElement();
 		List<Element> elencoCaselle = percorsoRootElement.getChildren();
 		this.caselle = new ArrayList<>();
