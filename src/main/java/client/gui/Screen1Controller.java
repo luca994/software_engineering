@@ -29,6 +29,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import server.eccezioni.NomeGiaScelto;
 
@@ -43,7 +45,7 @@ public class Screen1Controller implements Initializable {
 
 	private ViewGUI view;
 	private Parent rootGUI;
-
+	private MediaPlayer sound;
 	
 
 	@FXML
@@ -78,6 +80,7 @@ public class Screen1Controller implements Initializable {
 						stageGUI.show();
 					}
 				});
+				sound.stop();
 				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
 				stageScreen1.close();
 			}
@@ -112,6 +115,9 @@ public class Screen1Controller implements Initializable {
 		ipTextField.setText("127.0.0.1");
 		portaTextField.setText("29999");
 		handlePortaHost();
+		sound = new MediaPlayer(
+				new Media(getClass().getResource("/suoni/screen1theme.mp3").toString()));
+		sound.play();
 
 	}
 
