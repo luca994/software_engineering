@@ -80,7 +80,9 @@ public class Screen1Controller implements Initializable {
 						stageGUI.show();
 					}
 				});
+				
 				sound.stop();
+				view.getSound().play();
 				Stage stageScreen1 = (Stage) confirmButton.getScene().getWindow();
 				stageScreen1.close();
 			}

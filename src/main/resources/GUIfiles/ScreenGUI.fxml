@@ -280,8 +280,8 @@
 							<items>
 								<AnchorPane fx:id="anchorPaneAzioni" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="827.0" style="-fx-background-color: #996633;">
 									<children>
-										<Label layoutX="70.0" layoutY="12.0" text="Azioni Principali" />
-										<Label layoutX="340.0" layoutY="12.0" text="Azioni Rapide" />
+										<Label layoutX="28.0" layoutY="12.0" text="Azioni Principali" />
+										<Label layoutX="273.0" layoutY="12.0" text="Azioni Rapide" />
 										<Button fx:id="ingaggiaAiutanteButton" disable="true" layoutX="245.0" layoutY="40.0" mnemonicParsing="false" onAction="#ingaggiaAiutanteButtonAction" prefHeight="30.0" prefWidth="280.0" text="Ingaggia aiutante" />
 										<Button fx:id="cambiaTessereButton" disable="true" layoutX="245.0" layoutY="80.0" mnemonicParsing="false" onAction="#cambiaTessereButtonAction" prefHeight="30.0" prefWidth="280.0" text="Cambia tessere costruzione in una regione" />
 										<Button fx:id="consigliereRapidoButton" disable="true" layoutX="245.0" layoutY="120.0" mnemonicParsing="false" onAction="#consigliereRapidoButtonAction" prefHeight="30.0" prefWidth="280.0" text="Eleggi consigliere rapido" />
@@ -299,8 +299,9 @@
 										<Button fx:id="confermaAzioneButton" disable="true" layoutX="680.0" layoutY="190.0" mnemonicParsing="false" onAction="#confermaAzioneButtonAction" prefHeight="30.0" prefWidth="130.0" text="Conferma Azione" />
 										<Label layoutX="14.0" layoutY="205.0" text="Consiglieri disp." />
 										<Button fx:id="annullaAzioneButton" disable="true" layoutX="540.0" layoutY="190.0" mnemonicParsing="false" onAction="#annullaAzioneButtonAction" prefHeight="30.0" prefWidth="130.0" text="Annulla Azione" />
-										<Rectangle fx:id="playerColorRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="17.0" layoutX="527.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="314.0" />
+										<Rectangle fx:id="playerColorRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="17.0" layoutX="534.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
                               <ListView fx:id="consiglieriDisponibiliListView" layoutX="134.0" layoutY="192.0" onMouseClicked="#handleConsiglieriDisponibiliListView" orientation="HORIZONTAL" prefHeight="55.0" prefWidth="101.0" />
+                              <Button fx:id="muteButton" layoutX="460.0" layoutY="7.0" mnemonicParsing="false" onAction="#muteButtonAction" prefHeight="5.0" prefWidth="65.0" text="Mute" />
 									</children>
 								</AnchorPane>
 								<TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">

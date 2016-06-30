@@ -353,12 +353,23 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelNumeroAssistenti;
 	@FXML
 	private Label labelStatoGioco;
-
+	@FXML
+	private Button muteButton;
+	
 	@FXML
 	private TabPane tabPane;
 	@FXML
 	private Tab chatTab;
+	
+	private MediaPlayer sound;
 
+	@FXML
+	private void muteButtonAction(){
+		if(sound.getStatus().equals(MediaPlayer.Status.PLAYING))
+			sound.pause();
+		else
+			sound.play();
+	}
 	@FXML
 	private void annullaAzioneButtonAction() {
 		azioneFactory = new AzioneFactory(null);
@@ -396,7 +407,7 @@ public class ViewGUI extends View implements Initializable {
 		azioneFactory = new AzioneFactory(null);
 		disabilitazioneBottoniAzione(false);
 	}
-
+	
 	@FXML
 	private void cambiaTessereButtonAction() {
 		disabilitazioneBottoniAzione(true);
@@ -1401,7 +1412,11 @@ public class ViewGUI extends View implements Initializable {
 			e.printStackTrace();
 		}
 		controllerPartitaTerminata = loaderPartitaTerminata.getController();
-
+		sound = new MediaPlayer(
+				new Media(getClass().getResource("/suoni/barberyCoast.mp3").toString()));
+		sound.setVolume(0.5);
+		sound.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE);
+		
 	}
 
 	public void stampaMessaggio(String nomeFinestra, String msg) {
@@ -1674,5 +1689,11 @@ public class ViewGUI extends View implements Initializable {
 	public ListView<ImageView> getTessereUsateListView() {
 		return tessereUsateListView;
 	}
-
+	/**
+	 * @return the MediaPlayer sound
+	 */
+	public MediaPlayer getSound() {
+		return sound;
+	}
+	
 }
