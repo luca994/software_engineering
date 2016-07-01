@@ -64,6 +64,7 @@ import server.model.componenti.OggettoVendibile;
 import server.model.componenti.Regione;
 import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
+import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.StatoGiocatore;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoMercato;
@@ -367,7 +368,7 @@ public class ViewGUI extends View implements Initializable {
 	private void muteButtonAction(){
 		if(sound.getStatus().equals(MediaPlayer.Status.PLAYING))
 			sound.pause();
-		else
+		else if(sound.getStatus().equals(MediaPlayer.Status.PAUSED))
 			sound.play();
 	}
 	@FXML
@@ -1495,10 +1496,10 @@ public class ViewGUI extends View implements Initializable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi) {
+		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi || statoAttuale instanceof Sospeso) {
 			disabilitazioneBottoniAzione(true);
+			labelStatoGioco.setText(statoAttuale.getClass().getSimpleName());
 			turnoCambiato = true;
-			labelStatoGioco.setText("Attesa turno");
 			for (Giocatore g : tabelloneClient.getGioco().getGiocatori())
 				if (g.getStatoGiocatore() instanceof TurnoNormale || g.getStatoGiocatore() instanceof TurnoMercato) {
 					labelAzioneDaFare.setText("Turno di " + g.getNome() + "..");
