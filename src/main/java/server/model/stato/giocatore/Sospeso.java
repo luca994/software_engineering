@@ -15,36 +15,37 @@ public class Sospeso extends StatoGiocatore {
 
 	@Override
 	public void azioneEseguita(Azione azione) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void azionePrincipaleAggiuntiva() {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void azioneRapidaAggiuntiva() {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void tuttiGliEmporiCostruiti() {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void prossimoStato() {
+		throw new UnsupportedOperationException();
 	}
 
 }

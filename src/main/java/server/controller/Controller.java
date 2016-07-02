@@ -39,6 +39,8 @@ public class Controller implements Observer<Object, Bonus> {
 	private final Gioco gioco;
 
 	public Controller(Gioco gioco) {
+		if(gioco==null)
+			throw new NullPointerException();
 		this.gioco = gioco;
 	}
 
@@ -135,10 +137,10 @@ public class Controller implements Observer<Object, Bonus> {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
 		}
-		else if (oggetto instanceof String && ((String) oggetto).equalsIgnoreCase("Sospendi")) {
+		else if (oggetto instanceof String && "Sospendi".equalsIgnoreCase((String) oggetto)) {
 			giocatore.setStatoGiocatore(new Sospeso(giocatore));
 		}
-		else if (oggetto instanceof String && ((String) oggetto).equals("-")
+		else if (oggetto instanceof String && "-".equals((String) oggetto)
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {
 			synchronized (giocatore.getStatoGiocatore()) {
 				giocatore.getStatoGiocatore().prossimoStato();
@@ -174,11 +176,13 @@ public class Controller implements Observer<Object, Bonus> {
 		if (cambiamento instanceof MessaggioChat) {
 			gioco.notificaObservers(cambiamento);
 		}
+		else
+			throw new UnsupportedOperationException();
 	}
 
+	/**Not used*/
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException();
 	}
 }

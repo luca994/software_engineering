@@ -21,17 +21,19 @@ public class BonusTesseraPermesso implements Bonus {
 	private Gioco gioco;
 	private boolean tesseraCorretta;
 
-	/* (non-Javadoc)
+	public BonusTesseraPermesso(Gioco gioco) {
+		this.gioco = gioco;
+		tesseraCorretta = false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "BonusTesseraPermesso";
-	}
-
-	public BonusTesseraPermesso(Gioco gioco) {
-		this.gioco = gioco;
-		tesseraCorretta=false;
 	}
 
 	/**
@@ -48,15 +50,17 @@ public class BonusTesseraPermesso implements Bonus {
 	public void setTessera(TesseraCostruzione tessera) {
 		this.tessera = tessera;
 	}
-	
+
 	/**
 	 * set the boolean tesseraCorretta
-	 * @param tesseraCorretta the value of tesseraCorretta to set
+	 * 
+	 * @param tesseraCorretta
+	 *            the value of tesseraCorretta to set
 	 */
 	public void setTesseraCorretta(boolean tesseraCorretta) {
 		this.tesseraCorretta = tesseraCorretta;
 	}
-	
+
 	/**
 	 * @return the tesseraCorretta
 	 */
@@ -73,21 +77,21 @@ public class BonusTesseraPermesso implements Bonus {
 
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
-		if(giocatore==null)
+		if (giocatore == null)
 			throw new NullPointerException();
 		gioco.notificaObservers(gioco.getTabellone(), giocatore);
-		while(!tesseraCorretta){
+		while (!tesseraCorretta) {
 			gioco.notificaObservers(this, giocatore);
 		}
-		if(tessera!=null){
+		if (tessera != null) {
 			giocatore.getTessereValide().add(tessera);
 			tessera.getRegioneDiAppartenenza().nuovaTessera(tessera);
 			for (Bonus b : tessera.getBonus()) {
 				b.azioneBonus(giocatore);
 			}
 		}
-		tessera=null;
-		tesseraCorretta=false;
+		tessera = null;
+		tesseraCorretta = false;
 	}
 
 	@Override

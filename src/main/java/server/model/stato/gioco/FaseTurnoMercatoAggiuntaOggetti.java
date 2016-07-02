@@ -50,4 +50,11 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato{
 	public void prossimoStato() {
 		getGioco().setStato(new FaseTurnoMercatoCompraVendita(getGioco(), mercato));
 	}
+
+	/**
+	 * @return the mercato
+	 */
+	public Mercato getMercato() {
+		return mercato;
+	}
 }

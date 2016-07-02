@@ -16,13 +16,6 @@ public class BonusMoneta implements Bonus {
 	private final int steps;
 	private final Percorso percorsoRicchezza;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "BonusMoneta [Monete=" + steps + "]";
-	}
 
 	public BonusMoneta(Percorso percorsoRicchezza, int steps) {
 		if (steps < 0 || percorsoRicchezza == null)
@@ -31,6 +24,14 @@ public class BonusMoneta implements Bonus {
 		this.percorsoRicchezza = percorsoRicchezza;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusMoneta [Monete=" + steps + "]";
+	}
+	
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)

@@ -19,13 +19,6 @@ public class BonusPercorsoNobilta implements Bonus {
 	private final int steps;
 	private final Percorso percorsoNobilta;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "BonusPercorsoNobilta [steps=" + steps + "]";
-	}
 
 	public BonusPercorsoNobilta(Percorso percorsoNobilta, int steps) {
 		if (steps < 0 || percorsoNobilta == null)
@@ -34,6 +27,14 @@ public class BonusPercorsoNobilta implements Bonus {
 		this.steps = steps;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusPercorsoNobilta [steps=" + steps + "]";
+	}
+	
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 		if (giocatore == null)

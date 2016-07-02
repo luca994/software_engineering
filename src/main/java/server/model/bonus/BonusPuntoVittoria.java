@@ -14,13 +14,6 @@ public class BonusPuntoVittoria implements Bonus {
 	private final Percorso percorsoVittoria;
 	private final int steps;
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "BonusPuntoVittoria [Punti=" + steps + "]";
-	}
 
 	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
 		if (steps < 0 || percorsoVittoria == null)
@@ -29,6 +22,14 @@ public class BonusPuntoVittoria implements Bonus {
 		this.steps = steps;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BonusPuntoVittoria [Punti=" + steps + "]";
+	}
+	
 	/**
 	 * @param steps
 	 *            the steps to set

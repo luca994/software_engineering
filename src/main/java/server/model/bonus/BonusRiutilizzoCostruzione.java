@@ -26,17 +26,19 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 	private Gioco gioco;
 	private boolean tesseraCostruzioneCorretta;
 
-	/* (non-Javadoc)
+	public BonusRiutilizzoCostruzione(Gioco gioco) {
+		this.gioco = gioco;
+		tesseraCostruzioneCorretta = false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "BonusRiutilizzoCostruzione";
-	}
-
-	public BonusRiutilizzoCostruzione(Gioco gioco) {
-		this.gioco = gioco;
-		tesseraCostruzioneCorretta = false;
 	}
 
 	/**
@@ -46,7 +48,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		return tessera;
 	}
 
-	
 	/**
 	 * @return the gioco
 	 */
@@ -62,7 +63,6 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		this.tessera = tessera;
 	}
 
-	
 	/**
 	 * @return the value of tesseraCostruzioneCorretta
 	 */
@@ -94,8 +94,8 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 				b.azioneBonus(giocatore);
 			}
 		}
-		tessera=null;
-		tesseraCostruzioneCorretta=false;
+		tessera = null;
+		tesseraCostruzioneCorretta = false;
 	}
 
 	@Override

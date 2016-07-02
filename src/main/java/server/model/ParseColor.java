@@ -5,8 +5,12 @@ import java.lang.reflect.Field;
 
 public class ParseColor {
 	
+	/** Unused private Constructor*/
+	private ParseColor(){
+	}
+	
 	/**
-	 * 
+	 * converts color form javaAWT to JavaFx
 	 * @param color the javaAWT color you want to convert
 	 * @return a javaFx color from a javaAWT color
 	 */
@@ -16,12 +20,11 @@ public class ParseColor {
 		int b = color.getBlue();
 		int a = color.getAlpha();
 		double opacity = a / 255.0 ;
-		javafx.scene.paint.Color fxColor = javafx.scene.paint.Color.rgb(r, g, b, opacity);
-		return fxColor;
+		return javafx.scene.paint.Color.rgb(r, g, b, opacity);
 	}
 	
 	/**
-	 * 
+	 * converts color from integer value to String
 	 * @param color
 	 *            the integer value of the color
 	 * @return the string of the color
@@ -66,7 +69,7 @@ public class ParseColor {
 	}
 
 	/**
-	 * 
+	 * converts the name of the color from String to integer value
 	 * @param color
 	 *            the string of the color
 	 * @return the integer value of the color
@@ -91,7 +94,7 @@ public class ParseColor {
 	}
 
 	/**
-	 * 
+	 * converts intger value of a color in an object of color class
 	 * @param color
 	 *            the integer value of the color
 	 * @return the object color which has the value color
@@ -101,7 +104,7 @@ public class ParseColor {
 	}
 
 	/**
-	 * 
+	 * converts color name from String to an object of color class
 	 * @param color
 	 *            the string of the color
 	 * @return the object color which has the string color as name
