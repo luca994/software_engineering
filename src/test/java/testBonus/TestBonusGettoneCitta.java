@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import server.model.Giocatore;
 import server.model.Gioco;
+import server.model.bonus.BonusAssistenti;
 import server.model.bonus.BonusGettoneCitta;
 import server.model.componenti.Citta;
 
@@ -86,6 +87,20 @@ public class TestBonusGettoneCitta {
 	public void testGetGioco() {
 		BonusGettoneCitta bonus = new BonusGettoneCitta(0, gioco);
 		assertEquals(gioco, bonus.getGioco());
+	}
+	
+	@Test
+	public void azioneBonusConParametriCorretti(){
+		Giocatore giocatoreBonus = gioco.getGiocatori().get(0);
+		BonusGettoneCitta bonus = new BonusGettoneCitta(1, gioco);
+		Citta cittaBonus = gioco.getTabellone().cercaCitta("castrum");
+		cittaBonus.getBonus().clear();
+		cittaBonus.getBonus().add(new BonusAssistenti(1));
+		cittaBonus.getEmpori().add(giocatoreBonus);
+		bonus.getCitta().add(cittaBonus);
+		int numAssistentiPrima = giocatoreBonus.getAssistenti().size();
+		bonus.azioneBonus(giocatoreBonus);
+		assertEquals(numAssistentiPrima+1, giocatoreBonus.getAssistenti().size());
 	}
 
 }

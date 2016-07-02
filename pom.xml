@@ -59,6 +59,8 @@
 				<version>8.5.0</version>
 				<configuration>
 					<mainClass>client.gui.GuiCreator</mainClass>
+					<jfxMainAppJarName>CoF_GUI.jar</jfxMainAppJarName>
+					<jfxAppOutputDir>${project.build.directory}/fileJar</jfxAppOutputDir>
 				</configuration>
 			</plugin>
 
