@@ -21,9 +21,11 @@ import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusCartaPolitica;
 import server.model.componenti.Assistente;
+import server.model.componenti.CartaPolitica;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Mercato;
 import server.model.componenti.OggettoVendibile;
+import server.model.componenti.TesseraCostruzione;
 import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
@@ -246,6 +248,122 @@ public class ControllerTest {
 		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
 	}
 
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateAzioneGiocatoreAcquistaCartaPoliticaTurnoMercatoCompraVendita() {
+		giocoTester.setStato(new FaseTurnoMercatoAggiuntaOggetti(giocoTester));
+		Controller cTest = new Controller(giocoTester);
+		Mercato mercTest = ((FaseTurnoMercatoAggiuntaOggetti) giocoTester.getStato()).getMercato();
+		g1.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(g1, mercTest));
+		CartaPolitica oggettoTest = g1.getCartePolitica().get(0);
+		oggettoTest.setPrezzo(5);
+		oggettoTest.setGiocatore(g1);
+		assertTrue(!mercTest.getOggettiInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g1);
+		assertTrue(mercTest.getOggettiInVendita().contains(oggettoTest));
+		giocoTester.getStato().prossimoStato();
+		g2.setStatoGiocatore(new TurnoMercatoCompraVendita(g2));
+		assertTrue(giocoTester.getStato() instanceof FaseTurnoMercatoCompraVendita);
+		assertTrue(g2.getStatoGiocatore() instanceof TurnoMercatoCompraVendita);
+		assertEquals(11, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		assertTrue(!g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g2);
+		assertEquals(11 - 5, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		giocoTester.getStato().prossimoStato();
+		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+	}
+	
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateAzioneGiocatoreAcquistaAssistenteTurnoMercatoCompraVendita() {
+		giocoTester.setStato(new FaseTurnoMercatoAggiuntaOggetti(giocoTester));
+		Controller cTest = new Controller(giocoTester);
+		Mercato mercTest = ((FaseTurnoMercatoAggiuntaOggetti) giocoTester.getStato()).getMercato();
+		g1.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(g1, mercTest));
+		Assistente oggettoTest = g1.getAssistenti().get(0);
+		oggettoTest.setPrezzo(5);
+		oggettoTest.setGiocatore(g1);
+		assertTrue(!mercTest.getOggettiInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g1);
+		assertTrue(mercTest.getOggettiInVendita().contains(oggettoTest));
+		giocoTester.getStato().prossimoStato();
+		g2.setStatoGiocatore(new TurnoMercatoCompraVendita(g2));
+		assertTrue(giocoTester.getStato() instanceof FaseTurnoMercatoCompraVendita);
+		assertTrue(g2.getStatoGiocatore() instanceof TurnoMercatoCompraVendita);
+		assertEquals(11, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		assertTrue(!g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g2);
+		assertEquals(11 - 5, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		giocoTester.getStato().prossimoStato();
+		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+	}
+	
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateAzioneGiocatoreAcquistaTesseraCostruzioneTurnoMercatoCompraVendita() {
+		giocoTester.setStato(new FaseTurnoMercatoAggiuntaOggetti(giocoTester));
+		Controller cTest = new Controller(giocoTester);
+		Mercato mercTest = ((FaseTurnoMercatoAggiuntaOggetti) giocoTester.getStato()).getMercato();
+		g1.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(g1, mercTest));
+		TesseraCostruzione oggettoTest = giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(0);
+		g1.getTessereValide().add(oggettoTest);
+		oggettoTest.setPrezzo(5);
+		oggettoTest.setGiocatore(g1);
+		assertTrue(!mercTest.getOggettiInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g1);
+		assertTrue(mercTest.getOggettiInVendita().contains(oggettoTest));
+		giocoTester.getStato().prossimoStato();
+		g2.setStatoGiocatore(new TurnoMercatoCompraVendita(g2));
+		assertTrue(giocoTester.getStato() instanceof FaseTurnoMercatoCompraVendita);
+		assertTrue(g2.getStatoGiocatore() instanceof TurnoMercatoCompraVendita);
+		assertEquals(11, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		assertTrue(!g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+		cTest.update(oggettoTest, g2);
+		assertEquals(11 - 5, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g2));
+		giocoTester.getStato().prossimoStato();
+		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateAzioneGiocatorePassaTurnoTurnoMercatoAggiuntaOggetti() {
+		giocoTester.setStato(new FaseTurnoMercatoAggiuntaOggetti(giocoTester));
+		Controller cTest = new Controller(giocoTester);
+		Mercato mercTest = ((FaseTurnoMercatoAggiuntaOggetti) giocoTester.getStato()).getMercato();
+		g1.setStatoGiocatore(new TurnoMercatoAggiuntaOggetti(g1, mercTest));
+		assertTrue(giocoTester.getStato() instanceof FaseTurnoMercatoAggiuntaOggetti);
+		assertTrue(g1.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti);
+		cTest.update("-", g1);
+		assertTrue(g1.getStatoGiocatore() instanceof AttesaTurno);
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
+	 * .
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void testUpdateAzioneGiocatoreOggettoACaso() {
+		Controller cTest = new Controller(giocoTester);
+		cTest.update("TEST", g1);
+	}
+	
 	/**
 	 * Test method for
 	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
