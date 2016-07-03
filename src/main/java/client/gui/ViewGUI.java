@@ -356,21 +356,22 @@ public class ViewGUI extends View implements Initializable {
 	private Label labelStatoGioco;
 	@FXML
 	private Button muteButton;
-	
+
 	@FXML
 	private TabPane tabPane;
 	@FXML
 	private Tab chatTab;
-	
+
 	private MediaPlayer sound;
 
 	@FXML
-	private void muteButtonAction(){
-		if(sound.getStatus().equals(MediaPlayer.Status.PLAYING))
+	private void muteButtonAction() {
+		if (sound.getStatus().equals(MediaPlayer.Status.PLAYING))
 			sound.pause();
-		else if(sound.getStatus().equals(MediaPlayer.Status.PAUSED))
+		else if (sound.getStatus().equals(MediaPlayer.Status.PAUSED))
 			sound.play();
 	}
+
 	@FXML
 	private void annullaAzioneButtonAction() {
 		azioneFactory = new AzioneFactory(null);
@@ -408,7 +409,7 @@ public class ViewGUI extends View implements Initializable {
 		azioneFactory = new AzioneFactory(null);
 		disabilitazioneBottoniAzione(false);
 	}
-	
+
 	@FXML
 	private void cambiaTessereButtonAction() {
 		disabilitazioneBottoniAzione(true);
@@ -1413,14 +1414,21 @@ public class ViewGUI extends View implements Initializable {
 			e.printStackTrace();
 		}
 		controllerPartitaTerminata = loaderPartitaTerminata.getController();
-		sound = new MediaPlayer(
-				new Media(getClass().getResource("/suoni/barberyCoast.mp3").toString()));
+		sound = new MediaPlayer(new Media(getClass().getResource("/suoni/barberyCoast.mp3").toString()));
 		sound.setVolume(0.5);
 		sound.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE);
-		
+
 	}
 
-	public void stampaMessaggio(String nomeFinestra, String msg) {
+	/**
+	 * creates a window whit nomeFinestra as title and msg as text of the window
+	 * 
+	 * @param nomeFinestra
+	 *            the title of the window
+	 * @param msg
+	 *            the text of the window
+	 */
+	protected void stampaMessaggio(String nomeFinestra, String msg) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUIfiles/ScreenMessaggioErrore.fxml"));
 		try {
 			Stage stage = new Stage();
@@ -1496,7 +1504,8 @@ public class ViewGUI extends View implements Initializable {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();
 		}
-		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi || statoAttuale instanceof Sospeso) {
+		if (statoAttuale instanceof AttesaTurno || statoAttuale instanceof TurniConclusi
+				|| statoAttuale instanceof Sospeso) {
 			disabilitazioneBottoniAzione(true);
 			labelStatoGioco.setText(statoAttuale.getClass().getSimpleName());
 			turnoCambiato = true;
@@ -1631,7 +1640,7 @@ public class ViewGUI extends View implements Initializable {
 		}
 	}
 
-	public synchronized void disabilitazioneBottoniAzione(boolean value) {
+	protected synchronized void disabilitazioneBottoniAzione(boolean value) {
 		acquistaPermessoButton.setDisable(value);
 		costruisciConReButton.setDisable(value);
 		eleggiConsigliereButton.setDisable(value);
@@ -1643,7 +1652,7 @@ public class ViewGUI extends View implements Initializable {
 		saltaRapidaButton.setDisable(value);
 	}
 
-	public synchronized void disabilitazioneBottoniCitta(boolean value) {
+	protected synchronized void disabilitazioneBottoniCitta(boolean value) {
 		arkon.setDisable(value);
 		burgen.setDisable(value);
 		castrum.setDisable(value);
@@ -1661,7 +1670,7 @@ public class ViewGUI extends View implements Initializable {
 		merkatim.setDisable(value);
 	}
 
-	public synchronized void disabilitazioneBottoniTessereCostruzione(boolean value) {
+	protected synchronized void disabilitazioneBottoniTessereCostruzione(boolean value) {
 		tesseraMare0Button.setDisable(value);
 		tesseraMare1Button.setDisable(value);
 		tesseraMontagna0Button.setDisable(value);
@@ -1670,7 +1679,7 @@ public class ViewGUI extends View implements Initializable {
 		tesseraPianura1Button.setDisable(value);
 	}
 
-	private synchronized void disabilitazioneBottoniConsigli(boolean value) {
+	protected synchronized void disabilitazioneBottoniConsigli(boolean value) {
 		consiglioMareButton.setDisable(value);
 		consiglioMontagnaButton.setDisable(value);
 		consiglioPianuraButton.setDisable(value);
@@ -1690,11 +1699,12 @@ public class ViewGUI extends View implements Initializable {
 	public ListView<ImageView> getTessereUsateListView() {
 		return tessereUsateListView;
 	}
+
 	/**
 	 * @return the MediaPlayer sound
 	 */
 	public MediaPlayer getSound() {
 		return sound;
 	}
-	
+
 }

@@ -3,6 +3,11 @@ package client;
 import client.cli.InputOutput;
 import client.view.View;
 
+/**
+ * 
+ * the class MainClient starts e manages the client
+ *
+ */
 public class MainClient {
 
 	/**

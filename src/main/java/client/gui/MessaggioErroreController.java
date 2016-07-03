@@ -35,7 +35,7 @@ public class MessaggioErroreController implements Initializable {
 	}
 
 	@FXML
-	public void buttonPressed(KeyEvent e) {
+	private void buttonPressed(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
 			Stage thisStage = (Stage) confirmButton.getScene().getWindow();
 			thisStage.close();

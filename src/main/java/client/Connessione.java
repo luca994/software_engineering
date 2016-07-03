@@ -2,6 +2,11 @@ package client;
 
 import java.io.IOException;
 
+/**
+ * 
+ * the connection interface
+ *
+ */
 public interface Connessione{ 
 	
 	/**

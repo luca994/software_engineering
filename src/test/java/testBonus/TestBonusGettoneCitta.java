@@ -102,5 +102,39 @@ public class TestBonusGettoneCitta {
 		bonus.azioneBonus(giocatoreBonus);
 		assertEquals(numAssistentiPrima+1, giocatoreBonus.getAssistenti().size());
 	}
+	
+	@Test
+	public void azioneBonusConDueCitta(){
+		Giocatore giocatoreBonus = gioco.getGiocatori().get(0);
+		BonusGettoneCitta bonus = new BonusGettoneCitta(2, gioco);
+		Citta cittaBonus = gioco.getTabellone().cercaCitta("castrum");
+		cittaBonus.getBonus().clear();
+		cittaBonus.getBonus().add(new BonusAssistenti(1));
+		cittaBonus.getEmpori().add(giocatoreBonus);
+		bonus.getCitta().add(cittaBonus);
+		Citta cittaBonus1 = gioco.getTabellone().cercaCitta("arkon");
+		cittaBonus1.getBonus().clear();
+		cittaBonus1.getBonus().add(new BonusAssistenti(1));
+		cittaBonus1.getEmpori().add(giocatoreBonus);
+		bonus.getCitta().add(cittaBonus1);
+		int numAssistentiPrima = giocatoreBonus.getAssistenti().size();
+		bonus.azioneBonus(giocatoreBonus);
+		assertEquals(numAssistentiPrima+2, giocatoreBonus.getAssistenti().size());
+	}
+	
+	@Test
+	public void azioneBonusConCittaNull(){
+		Giocatore giocatoreBonus = gioco.getGiocatori().get(0);
+		BonusGettoneCitta bonus = new BonusGettoneCitta(1, gioco);
+		int numAssistentiPrima = giocatoreBonus.getAssistenti().size();
+		bonus.azioneBonus(giocatoreBonus);
+		assertEquals(numAssistentiPrima, giocatoreBonus.getAssistenti().size());
+		assertEquals(0, giocatoreBonus.getTessereValide().size());
+		assertEquals(6, giocatoreBonus.getCartePolitica().size());
+		assertEquals(1, giocatoreBonus.getAssistenti().size());
+		assertEquals(10, gioco.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(giocatoreBonus));
+		assertEquals(0, gioco.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(giocatoreBonus));
+		assertEquals(0, gioco.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(giocatoreBonus));
+	}
 
 }

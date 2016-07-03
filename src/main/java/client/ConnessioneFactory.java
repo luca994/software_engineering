@@ -7,6 +7,11 @@ import java.util.zip.DataFormatException;
 import client.view.View;
 import server.eccezioni.NomeGiaScelto;
 
+/**
+ * 
+ * the factory of the connections
+ *
+ */
 public class ConnessioneFactory {
 
 	private static final int CONNESSIONE_SOCKET=0;

@@ -9,6 +9,11 @@ import java.util.logging.Logger;
 
 import client.view.View;
 
+/**
+ * 
+ * this class implements the socket connection
+ *
+ */
 public class ConnessioneSocket implements Connessione, Runnable {
 
 	private static final Logger LOG = Logger.getLogger(ConnessioneSocket.class.getName());
@@ -82,6 +87,9 @@ public class ConnessioneSocket implements Connessione, Runnable {
 		}
 	}
 	
+	/**
+	 * closes the socket if it is open, then puts to null the variable socket
+	 */
 	public synchronized void disconnetti(){
 		if (streamOut != null) {
 			try {

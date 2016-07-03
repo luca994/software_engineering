@@ -2,6 +2,11 @@ package client.view;
 
 import client.Connessione;
 
+/**
+ * 
+ * the abstract class of the view
+ *
+ */
 public abstract class View implements Runnable{
 
 	private Connessione connessione;
