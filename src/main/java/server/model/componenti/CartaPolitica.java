@@ -6,7 +6,7 @@ import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 
 /**
- * @author Luca
+ * the abstract class that represents a generic politic card
  *
  */
 public abstract class CartaPolitica extends OggettoVendibile implements Serializable{

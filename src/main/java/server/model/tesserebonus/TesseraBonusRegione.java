@@ -5,11 +5,11 @@ import java.util.Set;
 import server.model.bonus.Bonus;
 import server.model.componenti.Regione;
 
+/**
+ * The class that represents the region's bonus cards
+ */
 public class TesseraBonusRegione extends TesseraBonus {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -201930626017881614L;
 	
 	private Regione regione;

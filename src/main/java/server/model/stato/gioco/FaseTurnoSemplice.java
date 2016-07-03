@@ -6,6 +6,10 @@ import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurniConclusi;
 import server.model.stato.giocatore.TurnoNormale;
 
+/**
+ * The class that represents the phase of the game where you play a simple round
+ *
+ */
 public class FaseTurnoSemplice extends Esecuzione{
 
 	/**
@@ -82,6 +86,9 @@ public class FaseTurnoSemplice extends Esecuzione{
 			eseguiFase();
 	}
 
+	/**
+	 * sets the game state to the next state
+	 */
 	@Override
 	public void prossimoStato() {
 		if (ultimoTurno)

@@ -4,17 +4,16 @@ import java.awt.Color;
 import java.io.Serializable;
 
 /**
- * 
- * @author Riccardo
- *
+ * the class that represents the counselors who preside over the board
  */
-public class Consigliere implements Serializable{
+public class Consigliere implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3452516340892571431L;
-	
+
+	/** the color of the counselor */
 	private final Color colore;
 
 	/**

@@ -5,7 +5,10 @@ import server.model.Gioco;
 import server.model.componenti.Mercato;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoAggiuntaOggetti;
-
+/**
+ * the class that represents the gaming market was on duty when you add items to the market
+ *
+ */
 public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato{
 
 	/**
@@ -14,11 +17,18 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato{
 	private static final long serialVersionUID = -540726560802672676L;
 	private Mercato mercato;
 
+	/**
+	 * Constructor class for faseTurnoMercatoAggiuntaOggetti
+	 * @param gioco
+	 */
 	public FaseTurnoMercatoAggiuntaOggetti(Gioco gioco) {
 		super(gioco);
 		mercato = new Mercato(gioco.getTabellone().getPercorsoRicchezza());
 	}
 
+	/**
+	 * He handles this kind of turn for each player
+	 */
 	@Override
 	public void eseguiFase() {
 		for (Giocatore giocat : getGiocatori()) {
@@ -46,6 +56,9 @@ public class FaseTurnoMercatoAggiuntaOggetti extends FaseTurnoMercato{
 		setGiocatoreCorrente(null);
 	}
 
+	/**
+	 * sets the game state to the next state
+	 */
 	@Override
 	public void prossimoStato() {
 		getGioco().setStato(new FaseTurnoMercatoCompraVendita(getGioco(), mercato));

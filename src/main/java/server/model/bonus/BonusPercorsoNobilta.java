@@ -5,10 +5,7 @@ import server.model.Giocatore;
 import server.model.percorso.Percorso;
 
 /**
- * This specific bonus moves the player-token a previously set number of steps
- * (from file) along the victory route
- * 
- * @author Massimiliano Ventura
+ * the class that represents the nobility path bonus
  */
 public class BonusPercorsoNobilta implements Bonus {
 

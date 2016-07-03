@@ -5,15 +5,14 @@ import server.model.Giocatore;
 import server.model.percorso.Percorso;
 
 /**
- * @author Massimiliano Ventura
- *
+ * 
+ * the class that represents the victory point bonus
  */
 public class BonusPuntoVittoria implements Bonus {
 
 	private static final long serialVersionUID = 4725534973807481625L;
 	private final Percorso percorsoVittoria;
 	private final int steps;
-
 
 	public BonusPuntoVittoria(Percorso percorsoVittoria, int steps) {
 		if (steps < 0 || percorsoVittoria == null)
@@ -22,14 +21,16 @@ public class BonusPuntoVittoria implements Bonus {
 		this.steps = steps;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "BonusPuntoVittoria [Punti=" + steps + "]";
 	}
-	
+
 	/**
 	 * @param steps
 	 *            the steps to set

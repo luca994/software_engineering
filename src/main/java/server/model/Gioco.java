@@ -18,18 +18,21 @@ import server.model.stato.gioco.Terminato;
 import server.observer.Observable;
 
 /**
- * @author Luca
+ * the main class of the model . is the class that handles all information and the flow of the game.
  *
  */
 public class Gioco extends Observable<Object, Bonus> implements Runnable, Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3738439371299756375L;
 
+	private static final long serialVersionUID = -3738439371299756375L;
+	
+	/** The list of players added to this game*/
 	private List<Giocatore> giocatori;
+	
+	/** The board of the game*/
 	private Tabellone tabellone;
+	
+	/** The state of the game*/
 	private StatoGioco statoGioco;
 
 	/**

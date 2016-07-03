@@ -7,8 +7,7 @@ import server.model.Giocatore;
 import server.model.componenti.CartaPoliticaFactory;
 
 /**
- * @author Massimiliano Ventura
- *
+ * the class that represents the politic card bonus
  */
 public class BonusCartaPolitica implements Bonus {
 	/**

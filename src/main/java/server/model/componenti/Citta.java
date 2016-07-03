@@ -9,8 +9,7 @@ import java.util.Set;
 import server.model.Giocatore;
 
 /**
- * 
- * @author Riccardo
+ * the class that represents the city in the map
  *
  */
 
@@ -71,6 +70,11 @@ public class Citta extends OggettoConBonus implements Serializable {
 		return cittaVicineConEmpori;
 	}
 
+	/**
+	 * compares the two cities and returns true if the names are equal
+	 * @param cittaDaControllare
+	 * @return true if the names are equals
+	 */
 	public boolean isUguale(Citta cittaDaControllare) {
 		return cittaDaControllare.getNome().equals(nome);
 	}

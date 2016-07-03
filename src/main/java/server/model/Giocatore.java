@@ -14,27 +14,35 @@ import server.model.stato.giocatore.AttesaTurno;
 import server.model.stato.giocatore.StatoGiocatore;
 
 /**
- * @author Luca
- *
- */
-/**
- * @author Luca
- *
+ * the class that represents the real player
  */
 public class Giocatore implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6264310867945058171L;
-
+	
+	/** the name of the player*/
 	private final String nome;
+	
+	/** the color assigned to the player*/
 	private final Color colore;
+	
+	/** The list of available helpers Player */
 	private List<Assistente> assistenti;
+	
+	/** The list of the player's politics cards*/
 	private List<CartaPolitica> cartePolitica;
+	
+	/** The list of used cards construction*/
 	private List<TesseraCostruzione> tessereUsate;
+	
+	/** The list of available cards construction*/
 	private List<TesseraCostruzione> tessereValide;
+	
+	/** The number of emporiums that still needs to build the player to end the game */
 	private int emporiRimasti;
+	
+	/** The state of the player*/
 	private StatoGiocatore statoGiocatore;
 
 	/**
@@ -274,7 +282,4 @@ public class Giocatore implements Serializable {
 	public void setCartePolitica(List<CartaPolitica> cartePolitica) {
 		this.cartePolitica = cartePolitica;
 	}
-
-
-	
 }

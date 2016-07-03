@@ -5,11 +5,13 @@ import java.util.Set;
 
 import server.model.bonus.Bonus;
 
+/**
+ * the class that represents the city bonus cards
+ *
+ */
 public class TesseraBonusCitta extends TesseraBonus {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -1935703575003252450L;
 	
 	private Color colore;

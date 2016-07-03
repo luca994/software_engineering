@@ -8,19 +8,22 @@ import org.jgrapht.graph.DefaultEdge;
 import server.model.Tabellone;
 
 /**
- * 
- * @author Riccardo
- *
+ * the class that represents the king
  */
-public class Re implements Serializable{
+public class Re implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6854976496303892844L;
-	
+
+	/** the council of king */
 	private Consiglio consiglio;
+
+	/** the city where the king is located now */
 	private Citta citta;
+
+	/** the board to which the king belongs */
 	private Tabellone tabellone;
 
 	/**
@@ -29,15 +32,15 @@ public class Re implements Serializable{
 	 * @param colore
 	 *            the color of the king
 	 */
-	public Re(Citta citta, Consiglio consiglio,Tabellone tabellone) {
+	public Re(Citta citta, Consiglio consiglio, Tabellone tabellone) {
 		this.citta = citta;
 		this.consiglio = consiglio;
-		this.tabellone=tabellone;
+		this.tabellone = tabellone;
 	}
 
 	/**
-	 * counts the minimum number of steps that the king must do to reach the destination
-	 * city
+	 * counts the minimum number of steps that the king must do to reach the
+	 * destination city
 	 * 
 	 * @param destinazione
 	 *            is the end vertex
@@ -82,10 +85,11 @@ public class Re implements Serializable{
 	}
 
 	/**
-	 * @param citta the citta to set
+	 * @param citta
+	 *            the citta to set
 	 */
 	public void setCitta(Citta citta) {
 		this.citta = citta;
 	}
-	
+
 }

@@ -8,22 +8,25 @@ import java.util.Set;
 import server.model.bonus.Bonus;
 
 /**
- * @author Massimiliano Ventura This is the class that represent the box with
- *         bonus; it's used in the routes that have bonuses.
+ * This is the class that represent the box with bonus; it's used in the routes
+ * that have bonuses.
  */
 public class CasellaConBonus extends Casella {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3111208064884016769L;
-	
-	/**
-	 * giocatori: current set of players standing on this specific box(casella)
-	 * bouns: set of bonuses assigned to this box, it may be empty, with one or
-	 * two bonuses
-	 */
+
 	private Set<Bonus> bonus;
 
+	/**
+	 * constructor for casellaConBonus
+	 * 
+	 * @param bonus
+	 *            set of bonus located in this casellaConBonus
+	 * @throws NullPointerException
+	 *             if the set of bonus is null
+	 */
 	public CasellaConBonus(Set<Bonus> bonus) {
 		if (bonus == null)
 			throw new NullPointerException("il bonus non può essere nullo");

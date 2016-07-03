@@ -6,8 +6,7 @@ package server.model.bonus;
 import server.model.Giocatore;
 
 /**
- * @author Massimiliano Ventura This bonus enables the Player to make another
- *         main move(Azione Principale)
+ * the class that represents the main action bonus
  */
 public class BonusAzionePrincipale implements Bonus {
 	/**

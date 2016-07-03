@@ -8,7 +8,7 @@ import server.model.Gioco;
 import server.model.componenti.TesseraCostruzione;
 
 /**
- * @author Massimiliano Ventura
+ * the class that represents the bonusTesseraPermesso
  *
  */
 public class BonusTesseraPermesso implements Bonus {

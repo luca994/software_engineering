@@ -6,8 +6,7 @@ import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 
 /**
- * @author Luca
- *
+ * the class that represents the assistants
  */
 public class Assistente extends OggettoVendibile implements Serializable {
 
@@ -27,6 +26,11 @@ public class Assistente extends OggettoVendibile implements Serializable {
 		resettaAttributiOggettoVendibile();
 	}
 
+	/**
+	 * compares two assistants and returns true if they are equal
+	 * @param assistente
+	 * @return true if two assistents are equals
+	 */
 	public boolean isUguale(Assistente assistente) {
 		if (assistente != null)
 			return true;

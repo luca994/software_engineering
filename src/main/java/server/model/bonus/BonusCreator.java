@@ -3,9 +3,12 @@ package server.model.bonus;
 import server.model.Gioco;
 import server.model.Tabellone;
 
+/**
+ * factory class for bonus, it is used to generate a bonus
+ */
 public class BonusCreator {
 
-	Tabellone tabellone;
+	private Tabellone tabellone;
 
 	public BonusCreator(Tabellone tabellone) {
 		this.tabellone = tabellone;

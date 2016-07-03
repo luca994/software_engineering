@@ -8,6 +8,10 @@ import server.model.azione.AzioneRapida;
 import server.model.componenti.CartaPoliticaFactory;
 import server.model.componenti.OggettoVendibile;
 
+/**
+ * The class that represents the state in which the player can perform normal
+ * actions
+ */
 public class TurnoNormale extends StatoGiocatore {
 
 	/**
@@ -19,6 +23,11 @@ public class TurnoNormale extends StatoGiocatore {
 	private int azioniRapideEseguibili;
 	private boolean tuttiGliEmporiCostruiti;
 
+	/**
+	 * the constructor for TurnoNormale state
+	 * 
+	 * @param giocatore
+	 */
 	public TurnoNormale(Giocatore giocatore) {
 		super(giocatore);
 		this.azioniPrincipaliEseguibili = Configurazione.AZIONI_PRINCIPALI_PER_TURNO;
@@ -49,22 +58,39 @@ public class TurnoNormale extends StatoGiocatore {
 		}
 	}
 
+	/**
+	 * increases the counter of main actions still available to the player for
+	 * this turn
+	 */
 	@Override
 	public void azionePrincipaleAggiuntiva() {
 		azioniPrincipaliEseguibili++;
 	}
 
+	/**
+	 * increases the counter of rapid actions still available to the player for
+	 * this turn
+	 */
 	@Override
 	public void azioneRapidaAggiuntiva() {
 		azioniRapideEseguibili++;
 
 	}
 
+	/**
+	 * is called when a player has built all its stores and sets the boolean
+	 * tuttiGliEmporiCostruiti to true
+	 */
 	@Override
 	public void tuttiGliEmporiCostruiti() {
 		tuttiGliEmporiCostruiti = true;
 	}
 
+	/**
+	 * sets the state of the player to the next state, if the player has built
+	 * all emporiums is put in the state of rounds concluded else, the state is
+	 * set to attesaTurno
+	 */
 	@Override
 	public void prossimoStato() {
 		if (tuttiGliEmporiCostruiti)
@@ -73,11 +99,17 @@ public class TurnoNormale extends StatoGiocatore {
 			giocatore.setStatoGiocatore(new AttesaTurno(giocatore));
 	}
 
+	/**
+	 * this method can not be called in this state
+	 */
 	@Override
 	public void mettiInVenditaOggetto(OggettoVendibile oggettoDaAggiungere) {
 		throw new IllegalStateException();
 	}
 
+	/**
+	 * this method can not be called in this state
+	 */
 	@Override
 	public void compraOggetto(OggettoVendibile oggettoDaAcquistare) {
 		throw new IllegalStateException();

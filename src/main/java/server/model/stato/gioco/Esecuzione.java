@@ -11,8 +11,7 @@ import server.model.Gioco;
 import server.model.stato.giocatore.Sospeso;
 
 /**
- * @author Luca
- *
+ * The abstract class that represents the generic execution state of the game
  */
 public abstract class Esecuzione extends StatoGioco implements Runnable{
 
@@ -22,7 +21,10 @@ public abstract class Esecuzione extends StatoGioco implements Runnable{
 	private static final long serialVersionUID = 4925505216711534227L;
 	private final List<Giocatore> giocatori;
 	private Giocatore giocatoreCorrente;
-	
+	 /**
+	  * Costructor for state execution
+	  * @param gioco
+	  */
 	public Esecuzione(Gioco gioco) {
 		super(gioco);
 		this.giocatori=gioco.getGiocatori();

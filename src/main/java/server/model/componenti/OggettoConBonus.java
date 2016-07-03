@@ -6,6 +6,9 @@ import java.util.Set;
 import server.model.Giocatore;
 import server.model.bonus.Bonus;
 
+/**
+ * the abstract class that represents a generic object with bonus
+ */
 public abstract class OggettoConBonus implements Serializable {
 
 	/**
@@ -22,6 +25,12 @@ public abstract class OggettoConBonus implements Serializable {
 		this.bonus = bonus;
 	}
 
+	/**
+	 * assign the bonus to the player
+	 * 
+	 * @param giocatore
+	 *            the player who recive the bonus
+	 */
 	public void eseguiBonus(Giocatore giocatore) {
 		if (giocatore == null)
 			throw new NullPointerException("Il giocatore non può essere nullo");

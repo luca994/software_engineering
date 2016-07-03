@@ -18,16 +18,15 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusCreator;
 
 /**
- * @author Riccardo
- *
+ * the class that represents a region of the map
  */
-public class Regione implements Serializable{
+public class Regione implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1282686235365734913L;
-	
+
 	private Set<Citta> citta;
 	private Consiglio consiglio;
 	private String nome;
@@ -43,11 +42,12 @@ public class Regione implements Serializable{
 	 *            the list of the cities names
 	 * @param tabellone
 	 *            the game board
-	 *           @throws NullPointerException if an input parameter is null
-	 *            
+	 * @throws NullPointerException
+	 *             if an input parameter is null
+	 * 
 	 */
 	public Regione(String nomeRegione, List<String> nomiCitta, Tabellone tabellone) {
-		if(nomeRegione==null || nomiCitta==null || tabellone==null)
+		if (nomeRegione == null || nomiCitta == null || tabellone == null)
 			throw new NullPointerException();
 		this.nome = nomeRegione;
 		this.tessereCostruzione = new ArrayList<>();
@@ -78,7 +78,8 @@ public class Regione implements Serializable{
 		SAXBuilder builderTessereCostruzione = new SAXBuilder();
 		Document documentTessereCostruzione;
 		try {
-			documentTessereCostruzione = builderTessereCostruzione.build(getClass().getClassLoader().getResource(nomefile));
+			documentTessereCostruzione = builderTessereCostruzione
+					.build(getClass().getClassLoader().getResource(nomefile));
 		} catch (JDOMException | IOException e) {
 			throw new IllegalStateException(e);
 		}

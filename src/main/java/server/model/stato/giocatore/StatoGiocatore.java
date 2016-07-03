@@ -8,6 +8,10 @@ import server.model.azione.Azione;
 import server.model.componenti.OggettoVendibile;
 import server.model.stato.Stato;
 
+/**
+ * The abstract class that represents a generic state of a player
+ *
+ */
 public abstract class StatoGiocatore implements Stato, Serializable{
 
 	/**
@@ -17,6 +21,9 @@ public abstract class StatoGiocatore implements Stato, Serializable{
 	
 	protected final Giocatore giocatore;
 
+	/**
+	 * The generic constructor for the class statoGiocatore
+	 */
 	public StatoGiocatore(Giocatore giocatore) {
 		this.giocatore = giocatore;
 	}

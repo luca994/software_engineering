@@ -4,8 +4,7 @@
 package server.model.componenti;
 
 /**
- * @author Luca
- *
+ * the class that represents the jolly politic card
  */
 public class Jolly extends CartaPolitica {
 

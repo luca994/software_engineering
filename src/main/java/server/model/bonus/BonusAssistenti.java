@@ -7,8 +7,7 @@ import server.model.Giocatore;
 import server.model.componenti.Assistente;
 
 /**
- * @author Massimiliano Ventura
- *
+ * the class that represents the helpers bonus
  */
 public class BonusAssistenti implements Bonus {
 
@@ -39,14 +38,16 @@ public class BonusAssistenti implements Bonus {
 			giocatore.getAssistenti().add(new Assistente());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "BonusAssistenti [numeroAssistenti=" + numeroAssistenti + "]";
 	}
-	
+
 	@Override
 	public boolean isUguale(Bonus bonusDaConfrontare) {
 		return bonusDaConfrontare instanceof BonusAssistenti

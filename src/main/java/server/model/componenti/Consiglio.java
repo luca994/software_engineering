@@ -11,8 +11,7 @@ import java.util.Queue;
 import server.model.Tabellone;
 
 /**
- * @author Riccardo
- *
+ * the class that represents the council
  */
 public class Consiglio implements Serializable {
 

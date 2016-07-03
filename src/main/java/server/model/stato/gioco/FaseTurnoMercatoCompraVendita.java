@@ -11,6 +11,10 @@ import server.model.componenti.OggettoVendibile;
 import server.model.stato.giocatore.Sospeso;
 import server.model.stato.giocatore.TurnoMercatoCompraVendita;
 
+/**
+ * The class that represents the phase of the turn in which you can buy from market items
+ * 
+ */
 public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato{
 
 	/**
@@ -24,6 +28,10 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato{
 		this.mercato = mercato;
 	}
 
+	
+	/**
+	 * He handles this kind of turn for each player
+	 */
 	@Override
 	public void eseguiFase() {
 		List<Giocatore> listaTurniMercatoGiocatori = new ArrayList<>();
@@ -65,6 +73,9 @@ public class FaseTurnoMercatoCompraVendita extends FaseTurnoMercato{
 		mercato.getOggettiInVendita().clear();
 	}
 
+	/**
+	 * sets the game state to the next state
+	 */
 	@Override
 	public void prossimoStato() {
 		getGioco().setStato(new FaseTurnoSemplice(getGioco()));

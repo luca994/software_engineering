@@ -6,6 +6,9 @@ import server.model.ParseColor;
 import server.model.Tabellone;
 import server.model.bonus.Bonus;
 
+/**
+ * factory class for bonus tiles
+ */
 public class TesseraBonusCreator {
 
 	private Tabellone tabellone;

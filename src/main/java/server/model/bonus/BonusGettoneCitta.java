@@ -10,11 +10,7 @@ import server.model.Gioco;
 import server.model.componenti.Citta;
 
 /**
- * This class asks the player which city bonuses wants to obtain with this
- * particular bonus.
- * 
- * @author Massimiliano Ventura
- *
+ * the class that represents the coin city bonus
  */
 public class BonusGettoneCitta implements Bonus {
 
@@ -29,13 +25,13 @@ public class BonusGettoneCitta implements Bonus {
 	private Citta cittaPerCompletamentoBonus;
 
 	public BonusGettoneCitta(int numeroCitta, Gioco gioco) {
-		if(numeroCitta<0)
+		if (numeroCitta < 0)
 			throw new IllegalArgumentException("Il numero di città non può essere minore di 0");
 		this.gioco = gioco;
 		this.numeroCitta = numeroCitta;
 		this.citta = new HashSet<>();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "BonusGettoneCitta [numeroCitta=" + numeroCitta + "]";
@@ -64,7 +60,7 @@ public class BonusGettoneCitta implements Bonus {
 	public Set<Citta> getCitta() {
 		return citta;
 	}
-	
+
 	/**
 	 * @return the cittaPerCompletamentoBonus
 	 */
@@ -73,7 +69,8 @@ public class BonusGettoneCitta implements Bonus {
 	}
 
 	/**
-	 * @param cittaPerCompletamentoBonus the cittaPerCompletamentoBonus to set
+	 * @param cittaPerCompletamentoBonus
+	 *            the cittaPerCompletamentoBonus to set
 	 */
 	public void setCittaPerCompletamentoBonus(Citta cittaPerCompletamentoBonus) {
 		this.cittaPerCompletamentoBonus = cittaPerCompletamentoBonus;
@@ -104,7 +101,7 @@ public class BonusGettoneCitta implements Bonus {
 					}
 				}
 				citta.removeAll(cittaDaRimuovere);
-				cittaPerCompletamentoBonus=null;
+				cittaPerCompletamentoBonus = null;
 			} while (!cittaGiusta);
 		}
 
@@ -122,7 +119,7 @@ public class BonusGettoneCitta implements Bonus {
 			copiaCitta.addAll(citta);
 			for (Citta c1 : citta)
 				for (Citta c : ((BonusGettoneCitta) bonusDaConfrontare).getCitta())
-					if (c.isUguale(c1)){
+					if (c.isUguale(c1)) {
 						copiaCitta.remove(c1);
 						break;
 					}

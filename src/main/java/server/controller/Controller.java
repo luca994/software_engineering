@@ -31,19 +31,36 @@ import server.model.stato.gioco.FaseTurnoMercatoCompraVendita;
 import server.observer.Observer;
 
 /**
- * @author Massimiliano Ventura
+ * The controller of the game. It must create a controller for each game. It
+ * handles any type of change that view tries to make the model
  *
  */
 public class Controller implements Observer<Object, Bonus> {
 
+	/** Model */
 	private final Gioco gioco;
 
+	/**
+	 * Constructor for controller
+	 * 
+	 * @param gioco
+	 *            the model to be assigned to the controller
+	 */
 	public Controller(Gioco gioco) {
-		if(gioco==null)
+		if (gioco == null)
 			throw new NullPointerException();
 		this.gioco = gioco;
 	}
 
+	/**
+	 * after making appropriate checks the bonus is awarded to the player opure
+	 * are notified to view errors
+	 * 
+	 * @param cambiamento
+	 *            the bonus to be awarded
+	 * @param giocatore
+	 *            the player receiving the bonus
+	 */
 	public synchronized void updateBonus(Bonus cambiamento, Giocatore giocatore) {
 		if (cambiamento instanceof BonusGettoneCitta) {
 			try {
@@ -69,9 +86,9 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 		if (cambiamento instanceof BonusTesseraPermesso) {
 			boolean tesseraTrovata = false;
-			if(((BonusTesseraPermesso) cambiamento).getTessera()==null){
+			if (((BonusTesseraPermesso) cambiamento).getTessera() == null) {
 				((BonusTesseraPermesso) cambiamento).setTesseraCorretta(true);
-				tesseraTrovata= true;
+				tesseraTrovata = true;
 				return;
 			}
 			for (Regione r : gioco.getTabellone().getRegioni()) {
@@ -109,6 +126,12 @@ public class Controller implements Observer<Object, Bonus> {
 		}
 	}
 
+	/**
+	 * depending on the object and the player input the controller performs its
+	 * functions . The actions are performed if the conditions are right to do
+	 * so , the salable objects are added to the market or bought. Any successes
+	 * or failures(exceptions) are then notified to the view.
+	 */
 	@Override
 	public synchronized void update(Object oggetto, Giocatore giocatore) {
 		if (oggetto instanceof Azione) {
@@ -125,7 +148,7 @@ public class Controller implements Observer<Object, Bonus> {
 					} else {
 						((Azione) oggetto).eseguiAzione(giocatore);
 						gioco.notificaObservers("Azione Eseguita!", giocatore);
-						if (giocatore.getStatoGiocatore() instanceof TurnoNormale){
+						if (giocatore.getStatoGiocatore() instanceof TurnoNormale) {
 							gioco.notificaObservers(gioco.getTabellone(), giocatore);
 						}
 					}
@@ -136,17 +159,14 @@ public class Controller implements Observer<Object, Bonus> {
 			} else {
 				gioco.notificaObservers("Non è il tuo turno", giocatore);
 			}
-		}
-		else if (oggetto instanceof String && "Sospendi".equalsIgnoreCase((String) oggetto)) {
+		} else if (oggetto instanceof String && "Sospendi".equalsIgnoreCase((String) oggetto)) {
 			giocatore.setStatoGiocatore(new Sospeso(giocatore));
-		}
-		else if (oggetto instanceof String && "-".equals((String) oggetto)
+		} else if (oggetto instanceof String && "-".equals((String) oggetto)
 				&& giocatore.getStatoGiocatore() instanceof TurnoMercato) {
 			synchronized (giocatore.getStatoGiocatore()) {
 				giocatore.getStatoGiocatore().prossimoStato();
 			}
-		}
-		else if (oggetto instanceof OggettoVendibile) {
+		} else if (oggetto instanceof OggettoVendibile) {
 			if (giocatore.getStatoGiocatore() instanceof TurnoMercatoAggiuntaOggetti) {
 				giocatore.getStatoGiocatore().mettiInVenditaOggetto((OggettoVendibile) oggetto);
 				gioco.notificaObservers("Oggetto aggiunto con successo", giocatore);
@@ -163,24 +183,29 @@ public class Controller implements Observer<Object, Bonus> {
 					gioco.notificaObservers(gioco.getTabellone(), giocatore);
 				}
 			}
-		}
-		else if (oggetto instanceof Bonus) {
+		} else if (oggetto instanceof Bonus) {
 			updateBonus((Bonus) oggetto, giocatore);
-		}
-		else
+		} else
 			throw new IllegalStateException("Non conosco l'oggetto ricevuto");
 	}
 
+	/**
+	 * item received is sent back to the views of all players when it comes to a
+	 * chat message . Other types of objects are not implemented , and
+	 * UnsupportedOperationException is thrown
+	 * 
+	 * @throws UnsupportedOperationException
+	 *             is thrown when the object is not implemented
+	 */
 	@Override
 	public synchronized void update(Object cambiamento) {
 		if (cambiamento instanceof MessaggioChat) {
 			gioco.notificaObservers(cambiamento);
-		}
-		else
+		} else
 			throw new UnsupportedOperationException();
 	}
 
-	/**Not used*/
+	/** Not used */
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {
 		throw new UnsupportedOperationException();

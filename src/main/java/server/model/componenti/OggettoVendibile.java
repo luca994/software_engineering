@@ -6,8 +6,7 @@ import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 
 /**
- * @author Riccardo
- *
+ * the class that represents a generic object salable
  */
 public abstract class OggettoVendibile implements Serializable {
 
@@ -28,16 +27,22 @@ public abstract class OggettoVendibile implements Serializable {
 	 *            the player who wants to buy the object
 	 */
 	public abstract void compra(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso;
-	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public abstract String toString();
-	
 
-
+	/**
+	 * compare parameters of salable items , price and owner. Returns true if
+	 * they are equal
+	 * 
+	 * @param oggettoDaConfrontare
+	 * @return
+	 */
 	public boolean confrontaParametri(OggettoVendibile oggettoDaConfrontare) {
 		return proprietario.getNome().equals(oggettoDaConfrontare.getGiocatore().getNome())
 				&& prezzo == oggettoDaConfrontare.getPrezzo();
@@ -53,6 +58,14 @@ public abstract class OggettoVendibile implements Serializable {
 		mercato = null;
 	}
 
+	/**
+	 * It is called when the item is purchased by another player moves in the
+	 * path wealth positions of the two players are transitioning money
+	 * 
+	 * @param nuovoProprietario the player who is buying this object
+	 * @throws FuoriDalLimiteDelPercorso
+	 *             if the player does not have enough money
+	 */
 	public void transazioneDenaro(Giocatore nuovoProprietario) throws FuoriDalLimiteDelPercorso {
 		mercato.getPercorsoRicchezza().muoviGiocatore(nuovoProprietario, -getPrezzo());
 		mercato.getPercorsoRicchezza().muoviGiocatore(getGiocatore(), getPrezzo());

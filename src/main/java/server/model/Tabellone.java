@@ -32,16 +32,12 @@ import server.model.tesserebonus.TesseraBonusRegione;
 import server.model.tesserebonus.TesseraPremioRe;
 
 /**
- * @author Riccardo
- *
+ * The board of the game. It contains all the main objects of the game
  */
 public class Tabellone implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6970346938035769588L;
-	
+
+	private static final long serialVersionUID = 6970346938035769588L;	
 
 	private List<Regione> regioni;
 	private Set<TesseraBonusRegione> tessereBonusRegione;

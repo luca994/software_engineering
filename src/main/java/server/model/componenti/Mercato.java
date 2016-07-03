@@ -7,7 +7,7 @@ import java.util.List;
 import server.model.percorso.Percorso;
 
 /**
- * @author Riccardo
+ * the class that represents the market
  *
  */
 public class Mercato implements Serializable {

@@ -9,6 +9,9 @@ import server.eccezioni.FuoriDalLimiteDelPercorso;
 import server.model.Giocatore;
 import server.model.bonus.Bonus;
 
+/**
+ * the class that represents the pieces of construction permit
+ */
 public class TesseraCostruzione extends OggettoVendibile implements Serializable {
 
 	/**
@@ -30,9 +33,16 @@ public class TesseraCostruzione extends OggettoVendibile implements Serializable
 		this.bonus = bonus;
 		this.citta = citta;
 		this.regioneDiAppartenenza = regioneDiAppartenenza;
-		this.id=id;
+		this.id = id;
 	}
 
+	/**
+	 * verifies that the city in input belongs cities of the tile
+	 * 
+	 * @param cittaDaVerificare
+	 *            the city to verify
+	 * @return true if the city belongs to the tile
+	 */
 	public boolean verifyCitta(Citta cittaDaVerificare) {
 		return this.citta.contains(cittaDaVerificare);
 	}

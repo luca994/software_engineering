@@ -2,12 +2,21 @@ package server.model.componenti;
 
 import java.awt.Color;
 
+/**
+ * The factory for cartaPolitica
+ */
 public class CartaPoliticaFactory {
-	
-	public CartaPolitica creaCartaPolitica(){
-		
+
+	/**
+	 * creates a politic card randomly, can creates a jolly or a colored paper
+	 * of a random color
+	 * 
+	 * @return a politic card
+	 */
+	public CartaPolitica creaCartaPolitica() {
+
 		int numero = (int) (Math.random() * 89);
-		
+
 		if (numero >= 0 && numero <= 12)
 			return new CartaColorata(Color.black);
 		else if (numero >= 13 && numero <= 25)

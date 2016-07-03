@@ -8,12 +8,7 @@ import server.model.Gioco;
 import server.model.componenti.TesseraCostruzione;
 
 /**
- * To make the method azioneBonus work the class need a
- * method(tesseraDalGiocatore)that returns a tile(tesseraCostruzione), chosen
- * from the player from his set of used card the moment that azioneBonus is
- * called.
- * 
- * @author Massimiliano Ventura
+ * the class that represents the card bonus reuse construction tile
  *
  */
 public class BonusRiutilizzoCostruzione implements Bonus {
@@ -80,6 +75,12 @@ public class BonusRiutilizzoCostruzione implements Bonus {
 		this.tesseraCostruzioneCorretta = tesseraCostruzioneCorretta;
 	}
 
+	/**
+	 * To make the method azioneBonus work the class need a
+	 * method(tesseraDalGiocatore)that returns a tile(tesseraCostruzione),
+	 * chosen from the player from his set of used card the moment that
+	 * azioneBonus is called.
+	 */
 	@Override
 	public void azioneBonus(Giocatore giocatore) {
 

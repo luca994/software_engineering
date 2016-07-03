@@ -9,6 +9,10 @@ import server.model.Giocatore;
 import server.model.Gioco;
 import server.model.percorso.Casella;
 
+/**
+ * The class that represents a complete game
+ *
+ */
 public class Terminato extends StatoGioco {
 
 	private Giocatore vincitore;
@@ -18,11 +22,18 @@ public class Terminato extends StatoGioco {
 	 */
 	private static final long serialVersionUID = -2639717549945418496L;
 
+	/**
+	 * The constructor for state Terminato
+	 */
 	public Terminato(Gioco gioco) {
 		super(gioco);
-		this.vincitore=null;
+		this.vincitore = null;
 	}
 
+	/**
+	 * once the game is called this method that calculates which player will be
+	 * the winner
+	 */
 	@Override
 	public void eseguiFase() {
 		List<Giocatore> possibiliVincitori;
@@ -121,6 +132,9 @@ public class Terminato extends StatoGioco {
 			}
 	}
 
+	/**
+	 * The next state is not implemented
+	 */
 	@Override
 	public void prossimoStato() {
 	}

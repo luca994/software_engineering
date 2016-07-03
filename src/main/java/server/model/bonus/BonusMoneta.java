@@ -4,8 +4,7 @@ import server.model.Giocatore;
 import server.model.percorso.Percorso;
 
 /**
- * @author Massimiliano Ventura
- *
+ * the class that represents the coin bonus
  */
 public class BonusMoneta implements Bonus {
 
