@@ -22,6 +22,7 @@ import server.model.bonus.Bonus;
 import server.model.bonus.BonusAssistenti;
 import server.model.bonus.BonusCartaPolitica;
 import server.model.bonus.BonusRiutilizzoCostruzione;
+import server.model.bonus.BonusTesseraPermesso;
 import server.model.componenti.Assistente;
 import server.model.componenti.CartaPolitica;
 import server.model.componenti.Consigliere;
@@ -449,5 +450,54 @@ public class ControllerTest {
 		assertEquals(tesseraValida, bonus.getTessera());
 		assertEquals(true, bonus.isTesseraCostruzioneCorretta());
 	}
+	
+	@Test
+	public void testUpdateBonusConBonusTesseraPermessoConTesseraNull(){
+		BonusTesseraPermesso bonus = new BonusTesseraPermesso(giocoTester);
+		bonus.setTessera(null);
+		Controller controller = new Controller(giocoTester);
+		controller.updateBonus(bonus, g1);
+		assertEquals(0, g1.getTessereValide().size());
+		assertEquals(6, g1.getCartePolitica().size());
+		assertEquals(1, g1.getAssistenti().size());
+		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		assertEquals(0, giocoTester.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
+		assertEquals(0, giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1));
+		assertEquals(0, g1.getTessereUsate().size());
+		assertEquals(0, g1.getTessereValide().size());
+		assertEquals(null, bonus.getTessera());
+		assertEquals(true, bonus.isTesseraCorretta());
+	}
 
+	@Test
+	public void testUpdateBonusConBonusTesseraPermessoConTesseraNonCorretta(){
+		BonusTesseraPermesso bonus = new BonusTesseraPermesso(giocoTester);
+		TesseraCostruzione tesseraNonValida = giocoTester.getTabellone().getRegioni().get(0).getTessereCoperte().get(2);
+		bonus.setTessera(tesseraNonValida);
+		Controller controller = new Controller(giocoTester);
+		controller.updateBonus(bonus, g1);
+		assertEquals(0, g1.getTessereValide().size());
+		assertEquals(6, g1.getCartePolitica().size());
+		assertEquals(1, g1.getAssistenti().size());
+		assertEquals(10, giocoTester.getTabellone().getPercorsoRicchezza().posizioneAttualeGiocatore(g1));
+		assertEquals(0, giocoTester.getTabellone().getPercorsoVittoria().posizioneAttualeGiocatore(g1));
+		assertEquals(0, giocoTester.getTabellone().getPercorsoNobilta().posizioneAttualeGiocatore(g1));
+		assertEquals(tesseraNonValida, bonus.getTessera());
+		assertEquals(false, bonus.isTesseraCorretta());
+	}
+	
+	@Test
+	public void testUpdateBonusConBonusTesseraPermessoConTesseraCorretta(){
+		BonusTesseraPermesso bonus = new BonusTesseraPermesso(giocoTester);
+		TesseraCostruzione tesseraValida = giocoTester.getTabellone().getRegioni().get(0).getTessereCostruzione().get(1);
+		tesseraValida.getBonus().clear();
+		tesseraValida.getBonus().add(new BonusAssistenti(2));
+		g1.getTessereUsate().add(tesseraValida);
+		bonus.setTessera(g1.getTessereUsate().get(0));
+		Controller controller = new Controller(giocoTester);
+		controller.updateBonus(bonus, g1);
+		assertEquals(tesseraValida, bonus.getTessera());
+		assertEquals(true, bonus.isTesseraCorretta());
+	}
+	
 }
