@@ -9,16 +9,17 @@ import java.util.logging.Logger;
 import server.config.Configurazione;
 
 /**
- * @author Luca
+ * the socket server class , opens the socket server on port set and receives
+ * client socket connections
  *
  */
 public class SocketServer {
 
 	private static final Logger LOG = Logger.getLogger(SocketServer.class.getName());
-	
+
 	private final ServerSocket serverSocket;
 
-	private boolean segnaleStop=false;
+	private boolean segnaleStop = false;
 
 	/**
 	 * builds a server on port "PORT"
@@ -40,52 +41,57 @@ public class SocketServer {
 	public void startSocket() {
 		try {
 			LOG.log(Level.INFO, "SERVER SOCKET PRONTO NELLA PORTA: " + Configurazione.SOCKET_PORT);
-			while(!segnaleStop)
+			while (!segnaleStop)
 				accettaConnessioni();
 			serverSocket.close();
 		} catch (IOException e) {
-			LOG.log(Level.SEVERE, "SERVER SOCKET GIA CHIUSO",e);
+			LOG.log(Level.SEVERE, "SERVER SOCKET GIA CHIUSO", e);
 		}
 	}
 
-	public void accettaConnessioni() {
+	private void accettaConnessioni() {
 		Socket nuovoSocket;
 		try {
 			nuovoSocket = serverSocket.accept();
-			if (nuovoSocket != null && !segnaleStop){
+			if (nuovoSocket != null && !segnaleStop) {
 				GestorePartite.getGestorePartite().getGiocatoriAttesa().add(nuovoSocket);
 				LOG.log(Level.INFO, "NUOVO GIOCATORE CONNESSO AL SERVER SOCKET");
 			}
 		} catch (IOException e) {
-			LOG.log(Level.INFO, "CONNESSIONE SOCKET CHIUSA",e);
+			LOG.log(Level.INFO, "CONNESSIONE SOCKET CHIUSA", e);
 		}
 	}
-	
-	
-	public synchronized void spegni(){
-		segnaleStop = true;
-        try {
-            if(serverSocket != null)
-                serverSocket.close();
-        } catch (IOException e) {
-            LOG.log(Level.FINEST, e.toString(), e);
-        }
-    }	
-	
-    public synchronized boolean isAttivo() {
-        if(serverSocket == null)
-            return true;
-        if(serverSocket.isClosed())
-            return true;
-        return false;
-    }
 
-    
-    public synchronized boolean isSpento() {
-        if(serverSocket == null)
-            return false;
-        if(serverSocket.isBound() && !serverSocket.isClosed())
-            return true;
-        return false;
-    }	
+	/**
+	 * closes connections to the server
+	 */
+	public synchronized void spegni() {
+		segnaleStop = true;
+		try {
+			if (serverSocket != null)
+				serverSocket.close();
+		} catch (IOException e) {
+			LOG.log(Level.FINEST, e.toString(), e);
+		}
+	}
+
+	/**
+	 * checks if the server is up and running
+	 * 
+	 */
+	public synchronized boolean isAttivo() {
+		if (serverSocket == null)
+			return true;
+		if (serverSocket.isClosed())
+			return true;
+		return false;
+	}
+
+	public synchronized boolean isSpento() {
+		if (serverSocket == null)
+			return false;
+		if (serverSocket.isBound() && !serverSocket.isClosed())
+			return true;
+		return false;
+	}
 }

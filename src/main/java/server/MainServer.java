@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 import server.config.Configurazione;
 
+/**
+ * the class  MainServer, manages the server
+ */
 public class MainServer {
 
+	/** private constructor for class main server, to hide the public constructor */
 	private MainServer() {
 	}
 

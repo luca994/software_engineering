@@ -24,19 +24,19 @@ import server.model.bonus.BonusTesseraPermesso;
 import server.model.componenti.Citta;
 import server.model.componenti.OggettoVendibile;
 
-
-
+/**
+ * the class that represents the view server connected via socket
+ */
 public class ServerSocketView extends ServerView implements Runnable {
 
-
 	private static final Logger LOG = Logger.getLogger(ServerSocketView.class.getName());
-	
+
 	private Socket socket;
-	
+
 	private final ObjectOutputStream socketOut;
 
 	private final ObjectInputStream socketIn;
-	
+
 	private AzioneFactory azioneFactory;
 
 	/**
@@ -48,9 +48,9 @@ public class ServerSocketView extends ServerView implements Runnable {
 	 *            the socket to which the player client is connected
 	 * @param nuovoGiocatore
 	 *            the player connected to this view
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public ServerSocketView(Gioco gioco, Socket socket) throws IOException{
+	public ServerSocketView(Gioco gioco, Socket socket) throws IOException {
 		gioco.registerObserver(this);
 		socketOut = new ObjectOutputStream(socket.getOutputStream());
 		socketIn = new ObjectInputStream(socket.getInputStream());
@@ -74,7 +74,10 @@ public class ServerSocketView extends ServerView implements Runnable {
 			disconnetti();
 		}
 	}
-	
+
+	/**
+	 * disconnects the socket
+	 */
 	public synchronized void disconnetti() {
 		if (socketOut != null) {
 			try {
@@ -94,19 +97,21 @@ public class ServerSocketView extends ServerView implements Runnable {
 		socket = null;
 		this.notificaObservers("Sospendi", getGiocatore());
 	}
-	
-	public synchronized String riceviString(){
+
+	/**
+	 * it return the string received via socket
+	 */
+	public synchronized String riceviString() {
 		try {
-			return (String)socketIn.readObject();
+			return (String) socketIn.readObject();
 		} catch (ClassNotFoundException e) {
-			LOG.log(Level.FINE, "Errore nella lettura della stringa" , e);
+			LOG.log(Level.FINE, "Errore nella lettura della stringa", e);
 		} catch (IOException e1) {
 			LOG.log(Level.SEVERE, "ERRORE NELLA CONNESSIONE CON CLIENT");
 			disconnetti();
 		}
 		return null;
 	}
-
 
 	/**
 	 * reads the socket and does an action when receives an object
@@ -115,18 +120,17 @@ public class ServerSocketView extends ServerView implements Runnable {
 	 */
 	@Override
 	public void run() {
-		while (socket!=null && !socket.isClosed() ) {
+		while (socket != null && !socket.isClosed()) {
 			try {
 				Object object = socketIn.readObject();
 				if (object instanceof AzioneFactory) {
 					azioneFactory.setTipoAzione(((AzioneFactory) object).getTipoAzione());
 					if (azioneFactory.completaAzioneFactory(((AzioneFactory) object), getGiocatore())) {
 						Azione azioneGiocatore = azioneFactory.createAzione();
-						if(azioneGiocatore != null){
+						if (azioneGiocatore != null) {
 							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 							this.notificaObservers(azioneGiocatore, getGiocatore());
-						}
-						else{
+						} else {
 							inviaOggetto("Parametri errati");
 							azioneFactory = new AzioneFactory(azioneFactory.getGioco());
 							inviaOggetto(azioneFactory.getGioco().getTabellone());
@@ -138,18 +142,16 @@ public class ServerSocketView extends ServerView implements Runnable {
 
 				else if (object instanceof OggettoVendibile) {
 					this.notificaObservers(cercaOggettoVendibile(((OggettoVendibile) object)), getGiocatore());
-				}
-				else if (object instanceof String) {
+				} else if (object instanceof String) {
 					this.notificaObservers(object, getGiocatore());
-				}
-				else if(object instanceof MessaggioChat){
+				} else if (object instanceof MessaggioChat) {
 					this.notificaObservers(object);
 				}
 			} catch (IOException e) {
 				LOG.log(Level.SEVERE, "Il giocatore " + getGiocatore().getNome() + " si è disconnesso");
 				disconnetti();
 			} catch (ClassNotFoundException e1) {
-				LOG.log(Level.SEVERE, "OGGETTO SCONOSCIUTO RICEVUTO",e1);
+				LOG.log(Level.SEVERE, "OGGETTO SCONOSCIUTO RICEVUTO", e1);
 				disconnetti();
 			}
 		}
@@ -164,13 +166,12 @@ public class ServerSocketView extends ServerView implements Runnable {
 	}
 
 	/**
-	 * * if cambiamento is a bonus, the method sends it to the client (only if
+	 * if cambiamento is a bonus, the method sends it to the client (only if
 	 * this is the view of the player attributo), waits for an attribute, then
 	 * sends the attribute and the bonus to the controller. if cambiamento is
 	 * another type of object the method sends the object to the client only if
 	 * this is the view of the player attributo
 	 */
-
 	@Override
 	public void update(Object cambiamento, Giocatore attributo) {
 
@@ -185,20 +186,24 @@ public class ServerSocketView extends ServerView implements Runnable {
 			}
 		} else if (getGiocatore().equals(attributo)) {
 			inviaOggetto(cambiamento);
-		}	
+		}
 	}
 
+	/** It can not be called */
 	@Override
 	public void update(Bonus cambiamento, List<String> input) {
 		throw new IllegalArgumentException();
 	}
-	
+
 	/**
 	 * completes the bonus of the server with the parameters sent by the client
-	 * @param bonusClient the bonus sent by the client
-	 * @param bonusServer the bonus to complete
+	 * 
+	 * @param bonusClient
+	 *            the bonus sent by the client
+	 * @param bonusServer
+	 *            the bonus to complete
 	 */
-	public void completaBonus(Bonus bonusClient, Bonus bonusServer){
+	public void completaBonus(Bonus bonusClient, Bonus bonusServer) {
 		if (bonusClient instanceof BonusGettoneCitta) {
 			List<Citta> tmp = new ArrayList<>(((BonusGettoneCitta) bonusClient).getCitta());
 			if (!"passa".equals(tmp.get(0).getNome()))

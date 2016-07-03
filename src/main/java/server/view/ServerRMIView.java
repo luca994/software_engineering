@@ -19,6 +19,12 @@ import server.model.bonus.BonusTesseraPermesso;
 import server.model.componenti.Citta;
 import server.model.componenti.OggettoVendibile;
 
+/**
+ * 
+ * the class that represents the view side RMI server that communicates with the
+ * client
+ *
+ */
 public class ServerRMIView extends ServerView implements ServerRMIViewInterface, Runnable {
 
 	private ConnessioneRMIInterface client;
@@ -26,6 +32,9 @@ public class ServerRMIView extends ServerView implements ServerRMIViewInterface,
 	private Bonus bonusDaCompletare;
 	private Semaphore semBonus;
 
+	/**
+	 * constructor for serverRMIView
+	 */
 	public ServerRMIView(Gioco gioco, Giocatore giocatore, ConnessioneRMIInterface client, int port) {
 		try {
 			UnicastRemoteObject.exportObject(this, port);

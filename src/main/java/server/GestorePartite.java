@@ -26,6 +26,14 @@ import server.view.ServerRMIView;
 import server.view.ServerRMIViewInterface;
 import server.view.ServerSocketView;
 
+/**
+ *
+ * the class GestorePartite is responsible for managing the various game that
+ * can be created simultaneously . It adds and removes players from the game or
+ * via rmi socket and handles start the timer when there are two players and
+ * start the game at the right time. It can be instanziated only one time
+ * (singleton).
+ */
 public class GestorePartite implements Runnable {
 
 	private static final Logger LOG = Logger.getLogger(GestorePartite.class.getName());
@@ -47,7 +55,7 @@ public class GestorePartite implements Runnable {
 	 *             if there is an error while the server is waiting the
 	 *             connection
 	 */
-	private GestorePartite(){
+	private GestorePartite() {
 		giocatoriAttesa = Collections.synchronizedList(new ArrayList<>());
 		controllersGiochi = new ArrayList<>();
 		timer = new AtomicLong();
@@ -55,7 +63,13 @@ public class GestorePartite implements Runnable {
 		giocatori = Collections.synchronizedList(new ArrayList<>());
 	}
 
-	public static synchronized GestorePartite getGestorePartite(){
+	/**
+	 * the method to call to have the reference to the only existent instance of
+	 * GestorePartite
+	 * 
+	 * @return
+	 */
+	public static synchronized GestorePartite getGestorePartite() {
 		if (gestorePartite == null)
 			gestorePartite = new GestorePartite();
 		return gestorePartite;
@@ -63,20 +77,20 @@ public class GestorePartite implements Runnable {
 
 	/**
 	 * builds the games with a list of players who connect to the server. When
-	 * the timer expires, the method builds an other game.
+	 * the timer expires, starts the current game and builds other game.
 	 * 
 	 * @throws IOException
 	 *             if there is an error while the server is waiting the
 	 *             connection
 	 */
-	public void creaGiochi(){
+	public void creaGiochi() {
 		executor.submit(this);
 		while (true) {
 			gioco = new Gioco();
 			controller = new Controller(gioco);
 			timer.set(System.currentTimeMillis());
-			while (giocatori.size() < 2
-					|| (giocatori.size() >= 2 && (System.currentTimeMillis() - timer.get()) < Configurazione.TEMPO_ATTESA_AVVIO_PARTITA)) {
+			while (giocatori.size() < 2 || (giocatori.size() >= 2
+					&& (System.currentTimeMillis() - timer.get()) < Configurazione.TEMPO_ATTESA_AVVIO_PARTITA)) {
 				if (!giocatoriAttesa.isEmpty()) {
 					timer.set(System.currentTimeMillis());
 					aggiungiGiocatoreSocket();
@@ -107,7 +121,7 @@ public class GestorePartite implements Runnable {
 	 *             if the class of the input object of the socket cannot be
 	 *             found
 	 */
-	public void aggiungiGiocatoreSocket(){
+	public void aggiungiGiocatoreSocket() {
 		try {
 			ServerSocketView serverSocketView = new ServerSocketView(gioco, giocatoriAttesa.remove(0));
 			String nomeGiocatore = serverSocketView.riceviString();
@@ -129,9 +143,9 @@ public class GestorePartite implements Runnable {
 		} catch (NomeGiaScelto e) {
 			LOG.log(Level.INFO, "Nome già utilizzato, giocatore non aggiunto");
 		} catch (IOException e1) {
-			LOG.log(Level.SEVERE, "CONNESSIONE COL CLIENT NON STABILITA",e1);
-		} 
-		
+			LOG.log(Level.SEVERE, "CONNESSIONE COL CLIENT NON STABILITA", e1);
+		}
+
 	}
 
 	/**
@@ -189,18 +203,22 @@ public class GestorePartite implements Runnable {
 	public void startRMI() throws RemoteException, AlreadyBoundException {
 		registry = LocateRegistry.createRegistry(Configurazione.RMI_PORT);
 		ServerRMIInterface serverRMI = new ServerRMI(this);
-		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI, Configurazione.RMI_PORT);
+		ServerRMIInterface serverRMIRemote = (ServerRMIInterface) UnicastRemoteObject.exportObject(serverRMI,
+				Configurazione.RMI_PORT);
 		registry.bind(Configurazione.RMI_REGISTRY_NAME, serverRMIRemote);
 		LOG.log(Level.INFO, "RMI registry on port: " + Configurazione.RMI_PORT);
 	}
 
-	public void startSocket(){
+	/**
+	 * starts the socket server
+	 */
+	public void startSocket() {
 		try {
 			SocketServer socketServer = new SocketServer();
 			socketServer.startSocket();
 		} catch (IOException e) {
-			LOG.log(Level.SEVERE, "ERRORE NELL AVVIO DEL SOCKET SERVER",e);
-			LOG.log(Level.INFO, "SOCKET SERVER NON CONNESSO",e);
+			LOG.log(Level.SEVERE, "ERRORE NELL AVVIO DEL SOCKET SERVER", e);
+			LOG.log(Level.INFO, "SOCKET SERVER NON CONNESSO", e);
 		}
 	}
 
@@ -211,10 +229,10 @@ public class GestorePartite implements Runnable {
 	@Override
 	public void run() {
 		try {
-				LOG.log(Level.INFO, "Tempo durata turni: "+Configurazione.getMaxTimeForTurn()/1000+" Secondi");
-				startRMI();
-				startSocket();
-		} catch (RemoteException | AlreadyBoundException  e) {
+			LOG.log(Level.INFO, "Tempo durata turni: " + Configurazione.getMaxTimeForTurn() / 1000 + " Secondi");
+			startRMI();
+			startSocket();
+		} catch (RemoteException | AlreadyBoundException e) {
 			e.printStackTrace();
 		}
 	}

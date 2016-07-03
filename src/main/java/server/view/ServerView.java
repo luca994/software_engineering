@@ -9,10 +9,22 @@ import server.model.componenti.TesseraCostruzione;
 import server.observer.Observable;
 import server.observer.Observer;
 
+/**
+ * the abstract class that represents the generic view server
+ */
 public abstract class ServerView extends Observable<Object, Bonus> implements Observer<Object, Bonus> {
 
 	private Giocatore giocatore;
 
+	/**
+	 * looks for the copy of salable object in input into the model. If the
+	 * object is found in the model, it returns the reference, else, returns
+	 * null.
+	 * 
+	 * @param oggettoVendibileDaCercare
+	 *            the object to find
+	 * @return the reference to the object in the model
+	 */
 	protected OggettoVendibile cercaOggettoVendibile(OggettoVendibile oggettoVendibileDaCercare) {
 		if (oggettoVendibileDaCercare.getGiocatore() == null && oggettoVendibileDaCercare.getMercato() == null
 				&& oggettoVendibileDaCercare.getPrezzo() > 0) {
@@ -45,11 +57,11 @@ public abstract class ServerView extends Observable<Object, Bonus> implements Ob
 	}
 
 	/**
-	 * @param giocatore the giocatore to set
+	 * @param giocatore
+	 *            the giocatore to set
 	 */
 	public synchronized void setGiocatore(Giocatore giocatore) {
 		this.giocatore = giocatore;
 	}
-
 
 }

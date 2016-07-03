@@ -4,9 +4,13 @@ import client.ConnessioneRMIInterface;
 import server.model.Giocatore;
 import server.view.ServerRMIViewInterface;
 
+/**
+ * the RMI server class, it manages the RMIServer
+ */
 public class ServerRMI implements ServerRMIInterface {
 
 	private GestorePartite gestorePartite;
+	
 	
 	public ServerRMI(GestorePartite gestorePartite) {
 		this.gestorePartite = gestorePartite;

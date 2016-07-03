@@ -8,6 +8,9 @@ import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.componenti.OggettoVendibile;
 
+/**
+ * the interface implemented by view servers using rmi
+ */
 public interface ServerRMIViewInterface extends Remote {
 
 	public void impostaParametriBonus(Bonus bonus) throws RemoteException;
@@ -17,6 +20,6 @@ public interface ServerRMIViewInterface extends Remote {
 	public void riceviOggettoVendibile(OggettoVendibile oggettoVendibile) throws RemoteException;
 
 	public void riceviStringa(String messaggio) throws RemoteException;
-	
+
 	public void riceviMessaggioChat(MessaggioChat messaggioChat) throws RemoteException;
 }
