@@ -259,7 +259,7 @@ public class Tabellone implements Serializable{
 					if (cittaMappa.getAttributeValue("nome").equals(cit.getNome())) {
 						try {
 							cit.setColore(ParseColor.colorStringToColor(cittaMappa.getAttributeValue("colore")));
-							if (cit.getColore().equals(ParseColor.colorStringToColor("magenta"))) {
+							if (cit.getNome().equalsIgnoreCase("Juvelar")) {
 								re = new Re(cit, new Consiglio(this), this);
 								cit.setRe(re);
 							} else {
