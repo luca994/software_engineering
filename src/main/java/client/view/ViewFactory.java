@@ -8,6 +8,11 @@ import client.cli.ViewCLI;
 import client.gui.GuiCreator;
 import javafx.application.Application;
 
+/**
+ * 
+ * the factory of the views
+ *
+ */
 public class ViewFactory {
 
 	private static final int VIEW_CLI = 1;
@@ -15,12 +20,19 @@ public class ViewFactory {
 
 	private Set<String> listaView;
 
+	/**
+	 * builds the object ViewFactory
+	 */
 	public ViewFactory() {
 		listaView = new HashSet<>();
 		listaView.add("CommandLineInterface-CLI");
 		listaView.add("GraphicUserInterface-GUI");
 	}
 
+	/**
+	 * 
+	 * @return return listaView
+	 */
 	public Set<String> getListaView() {
 		return listaView;
 	}

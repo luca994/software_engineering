@@ -78,7 +78,7 @@ public class ViewCLI extends View implements Runnable {
 	 * ask a connection type, the host and the port, then creates a connection
 	 * with the server
 	 */
-	public void impostaConnessione(String nome, String mappa) {
+	private void impostaConnessione(String nome, String mappa) {
 		ConnessioneFactory connessioneFactory = new ConnessioneFactory(this);
 		try {
 			InputOutput.stampa("Inserisci il tipo di connessione" + "\n" + "0) Socket" + "\n" + "1) RMI");
@@ -111,13 +111,13 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * asks the name that the player wants, then starts impostaConnessione
 	 */
-	public void inizializzazione() {
+	private void inizializzazione() {
 		InputOutput.stampa("Inserisci il nome:");
 		String nome = InputOutput.leggiStringa(false);
 		impostaConnessione(nome, inserisciMappa());
 	}
 
-	public String inserisciMappa() {
+	private String inserisciMappa() {
 		InputOutput.stampa("Inserisci un numero da 0 a 7 per la mappa, oppure 8 per casuale");
 		String mappa = InputOutput.leggiStringa(false);
 		try {
@@ -764,7 +764,7 @@ public class ViewCLI extends View implements Runnable {
 	 *            the number of the tile
 	 * @return return the business permit tile
 	 */
-	public TesseraCostruzione selezionaTesseraDaTabellone(int numTessera) {
+	private TesseraCostruzione selezionaTesseraDaTabellone(int numTessera) {
 		if (numTessera < 6 && numTessera >= 0) {
 			List<TesseraCostruzione> listaTessere = new ArrayList<TesseraCostruzione>();
 			for (Regione r : tabelloneClient.getRegioni()) {
@@ -981,7 +981,7 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the player from the game and puts it in the attribute giocatore
 	 */
-	public synchronized void aggiornaGiocatore() {
+	private synchronized void aggiornaGiocatore() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (g.getNome().equals(giocatore.getNome())) {
 				/*
@@ -997,7 +997,7 @@ public class ViewCLI extends View implements Runnable {
 	/**
 	 * takes the state of the player from the game
 	 */
-	public synchronized void aggiornaStato() {
+	private synchronized void aggiornaStato() {
 		for (Giocatore g : tabelloneClient.getGioco().getGiocatori()) {
 			if (this.giocatore.getNome().equals(g.getNome()))
 				this.statoAttuale = g.getStatoGiocatore();

@@ -6,6 +6,8 @@ package client.view;
 import java.io.Serializable;
 
 /**
+ * 
+ * represent the chat message
  * @author Massimiliano Ventura
  *
  */
@@ -17,6 +19,7 @@ public class MessaggioChat implements Serializable{
 	private String autore;
 	private String msg;
 	/**
+	 * builds an object MessaggioChat
 	 * @param autore
 	 * @param msg
 	 */
