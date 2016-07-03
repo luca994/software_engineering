@@ -30,8 +30,8 @@ import server.view.ServerSocketView;
  *
  * the class GestorePartite is responsible for managing the various game that
  * can be created simultaneously . It adds and removes players from the game or
- * via rmi socket and handles start the timer when there are two players and
- * start the game at the right time. It can be instanziated only one time
+ * via RMI or via socket and handles start the timer when there are two players
+ * and start the game at the right time. It can be instantiated only one time
  * (singleton).
  */
 public class GestorePartite implements Runnable {
