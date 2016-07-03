@@ -20,8 +20,10 @@ import server.model.Gioco;
 import server.model.azione.AzioneFactory;
 import server.model.bonus.Bonus;
 import server.model.bonus.BonusCartaPolitica;
+import server.model.bonus.BonusGettoneCitta;
 import server.model.componenti.Assistente;
 import server.model.componenti.CartaPolitica;
+import server.model.componenti.Citta;
 import server.model.componenti.Consigliere;
 import server.model.componenti.Mercato;
 import server.model.componenti.OggettoVendibile;
@@ -84,8 +86,125 @@ public class ControllerTest {
 	 * .
 	 */
 	@Test
-	public void testUpdateBonus() {
-		// fail("Not yet implemented"); // TODO
+	public void testUpdateBonusGettoneCitta1Citta() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(1, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateBonusGettoneCitta2Citta() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(2, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		giocoTester.getTabellone().cercaCitta("juvelar").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
+		bTest.setCittaPerCompletamentoBonus(new Citta("juvelar", giocoTester.getTabellone().getRegioni().get(0)));
+		cTest.updateBonus(bTest, g1);
+		assertEquals(2, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateBonusGettoneCitta3Citta() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(3, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		giocoTester.getTabellone().cercaCitta("juvelar").getEmpori().add(g1);
+		giocoTester.getTabellone().cercaCitta("indur").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
+		bTest.setCittaPerCompletamentoBonus(new Citta("juvelar", giocoTester.getTabellone().getRegioni().get(0)));
+		cTest.updateBonus(bTest, g1);
+		assertEquals(2, bTest.getCitta().size());
+		bTest.setCittaPerCompletamentoBonus(new Citta("indur", giocoTester.getTabellone().getRegioni().get(0)));
+		cTest.updateBonus(bTest, g1);
+		assertEquals(3, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateBonusGettoneCitta2CittaGiaScelta() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(2, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		giocoTester.getTabellone().cercaCitta("juvelar").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateBonusGettoneCitta1CittaInesistente() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(1, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta("TEST", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(0, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testUpdateBonusGettoneCitta1CittaNull() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(1, giocoTester);
+		giocoTester.getTabellone().cercaCitta("arkon").getEmpori().add(g1);
+		bTest.setCittaPerCompletamentoBonus(new Citta(null, giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(0, bTest.getCitta().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link server.controller.Controller#updateBonus(server.model.bonus.Bonus, server.model.Giocatore)}
+	 * .
+	 */
+	@Test
+	public void testUpdateBonusGettoneCittaSenzaEmporio() {
+		Controller cTest = new Controller(giocoTester);
+		BonusGettoneCitta bTest = new BonusGettoneCitta(1, giocoTester);
+		bTest.setCittaPerCompletamentoBonus(new Citta("arkon", giocoTester.getTabellone().getRegioni().get(0)));
+		assertEquals(0, bTest.getCitta().size());
+		cTest.updateBonus(bTest, g1);
+		assertEquals(1, bTest.getCitta().size());
 	}
 
 	/**
@@ -276,7 +395,7 @@ public class ControllerTest {
 		giocoTester.getStato().prossimoStato();
 		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
@@ -305,7 +424,7 @@ public class ControllerTest {
 		giocoTester.getStato().prossimoStato();
 		assertTrue(g2.generaListaOggettiVendibiliNonInVendita().contains(oggettoTest));
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
@@ -358,12 +477,12 @@ public class ControllerTest {
 	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}
 	 * .
 	 */
-	@Test(expected=IllegalStateException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testUpdateAzioneGiocatoreOggettoACaso() {
 		Controller cTest = new Controller(giocoTester);
 		cTest.update("TEST", g1);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link server.controller.Controller#update(java.lang.Object, server.model.Giocatore)}

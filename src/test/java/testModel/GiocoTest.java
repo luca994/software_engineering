@@ -163,6 +163,26 @@ public class GiocoTest {
 	}
 
 	/**
+	 * Test method for {@link server.model.Gioco#CercaGiocatoreDaNome()}.
+	 */
+	@Test
+	public void testCercaGiocatorePippoDaNome() {
+		Giocatore g1 = new Giocatore("pippo");
+		giocoTester.getGiocatori().add(g1);
+		assertEquals(g1,giocoTester.cercaGiocatoreDaNome("pippo"));
+	}
+	
+	/**
+	 * Test method for {@link server.model.Gioco#CercaGiocatoreDaNome()}.
+	 */
+	@Test
+	public void testCercaGiocatoreDaNomeNull() {
+		Giocatore g1 = new Giocatore("pippo");
+		giocoTester.getGiocatori().add(g1);
+		assertNull(giocoTester.cercaGiocatoreDaNome("TEST"));
+	}
+	
+	/**
 	 * Test method for {@link server.model.Gioco#getStato()}.
 	 */
 	@Test
